@@ -1,0 +1,32 @@
+# Dataset and path configuration for SCOPE
+project_name: SCOPE
+random_seed: 42
+
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  reports: reports
+  figures: reports/figures
+  metrics: reports/metrics
+  models: reports/models
+
+datasets:
+  primary:
+    name: SCMS_with_inventory
+    filename: SCMS_with_inventory.csv
+    relative_path: data/raw/SCMS_with_inventory.csv
+    format: csv
+    encoding: utf-8
+
+splits:
+  train_ratio: 0.70
+  validation_ratio: 0.15
+  test_ratio: 0.15
+  stratify: true
+
+# Target placeholders — refined in later phases
+targets:
+  late_delivery: null
+  delivery_duration: null
+  inventory: null

@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Source Sans 3", Segoe UI, sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(27, 107, 147, 0.12), transparent 40%),
+    radial-gradient(circle at 90% 0%, rgba(196, 92, 38, 0.10), transparent 35%),
+    #F3EDE4;
+}
+
+.panel {
+  @apply rounded-xl border border-ink/10 bg-white/80 backdrop-blur p-5 shadow-sm;
+}

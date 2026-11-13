@@ -1,0 +1,24 @@
+# RAG chunking and retrieval settings (Phase 0 placeholders)
+enabled: false
+
+chunking:
+  chunk_size: 512
+  chunk_overlap: 64
+  strategy: recursive
+
+retrieval:
+  top_k: 5
+  similarity_metric: cosine
+  vector_store: faiss  # or chroma
+
+embeddings:
+  provider: null
+  model_name: null
+  dimension: null
+
+documents:
+  source_dir: docs
+  allowed_extensions:
+    - .md
+    - .txt
+    - .pdf

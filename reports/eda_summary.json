@@ -1,0 +1,1250 @@
+{
+  "generated_at": "2026-11-06T12:54:42.609579+00:00",
+  "overview": {
+    "n_rows": 10324,
+    "n_columns": 45,
+    "memory_bytes": 19872899.0,
+    "memory_mb": 19.873,
+    "columns": [
+      "ID",
+      "Project Code",
+      "PQ #",
+      "PO / SO #",
+      "ASN/DN #",
+      "Country",
+      "Managed By",
+      "Fulfill Via",
+      "Vendor INCO Term",
+      "Shipment Mode",
+      "PQ First Sent to Client Date",
+      "PO Sent to Vendor Date",
+      "Scheduled Delivery Date",
+      "Delivered to Client Date",
+      "Delivery Recorded Date",
+      "Product Group",
+      "Sub Classification",
+      "Vendor",
+      "Item Description",
+      "Molecule/Test Type",
+      "Brand",
+      "Dosage",
+      "Dosage Form",
+      "Unit of Measure (Per Pack)",
+      "Line Item Quantity",
+      "Line Item Value",
+      "Pack Price",
+      "Unit Price",
+      "Manufacturing Site",
+      "First Line Designation",
+      "Weight (Kilograms)",
+      "Freight Cost (USD)",
+      "Line Item Insurance (USD)",
+      "Inventory_Product_Key",
+      "Inventory_Warehouse_ID",
+      "Inventory_Date",
+      "Inventory_Opening_Stock",
+      "Inventory_Stock_In",
+      "Inventory_Stock_Out",
+      "Inventory_Closing_Stock",
+      "Inventory_Reorder_Level",
+      "Inventory_Lead_Time_Days",
+      "Inventory_Stockout_Flag",
+      "Inventory_Shortage_Quantity",
+      "Inventory_Replenishment_Triggered"
+    ],
+    "dtypes": {
+      "ID": "int64",
+      "Project Code": "object",
+      "PQ #": "object",
+      "PO / SO #": "object",
+      "ASN/DN #": "object",
+      "Country": "object",
+      "Managed By": "object",
+      "Fulfill Via": "object",
+      "Vendor INCO Term": "object",
+      "Shipment Mode": "object",
+      "PQ First Sent to Client Date": "object",
+      "PO Sent to Vendor Date": "object",
+      "Scheduled Delivery Date": "object",
+      "Delivered to Client Date": "object",
+      "Delivery Recorded Date": "object",
+      "Product Group": "object",
+      "Sub Classification": "object",
+      "Vendor": "object",
+      "Item Description": "object",
+      "Molecule/Test Type": "object",
+      "Brand": "object",
+      "Dosage": "object",
+      "Dosage Form": "object",
+      "Unit of Measure (Per Pack)": "int64",
+      "Line Item Quantity": "int64",
+      "Line Item Value": "float64",
+      "Pack Price": "float64",
+      "Unit Price": "float64",
+      "Manufacturing Site": "object",
+      "First Line Designation": "object",
+      "Weight (Kilograms)": "object",
+      "Freight Cost (USD)": "object",
+      "Line Item Insurance (USD)": "float64",
+      "Inventory_Product_Key": "object",
+      "Inventory_Warehouse_ID": "object",
+      "Inventory_Date": "object",
+      "Inventory_Opening_Stock": "int64",
+      "Inventory_Stock_In": "int64",
+      "Inventory_Stock_Out": "int64",
+      "Inventory_Closing_Stock": "int64",
+      "Inventory_Reorder_Level": "int64",
+      "Inventory_Lead_Time_Days": "int64",
+      "Inventory_Stockout_Flag": "int64",
+      "Inventory_Shortage_Quantity": "int64",
+      "Inventory_Replenishment_Triggered": "int64"
+    },
+    "unique_counts": {
+      "ID": 10324,
+      "Project Code": 142,
+      "PQ #": 1237,
+      "PO / SO #": 6233,
+      "ASN/DN #": 7030,
+      "Country": 43,
+      "Managed By": 4,
+      "Fulfill Via": 2,
+      "Vendor INCO Term": 8,
+      "Shipment Mode": 4,
+      "PQ First Sent to Client Date": 765,
+      "PO Sent to Vendor Date": 897,
+      "Scheduled Delivery Date": 2006,
+      "Delivered to Client Date": 2093,
+      "Delivery Recorded Date": 2042,
+      "Product Group": 5,
+      "Sub Classification": 6,
+      "Vendor": 73,
+      "Item Description": 184,
+      "Molecule/Test Type": 86,
+      "Brand": 48,
+      "Dosage": 54,
+      "Dosage Form": 17,
+      "Unit of Measure (Per Pack)": 31,
+      "Line Item Quantity": 5065,
+      "Line Item Value": 8741,
+      "Pack Price": 1175,
+      "Unit Price": 183,
+      "Manufacturing Site": 88,
+      "First Line Designation": 2,
+      "Weight (Kilograms)": 4688,
+      "Freight Cost (USD)": 6733,
+      "Line Item Insurance (USD)": 6722,
+      "Inventory_Product_Key": 184,
+      "Inventory_Warehouse_ID": 43,
+      "Inventory_Date": 2093,
+      "Inventory_Opening_Stock": 5851,
+      "Inventory_Stock_In": 1,
+      "Inventory_Stock_Out": 5065,
+      "Inventory_Closing_Stock": 5195,
+      "Inventory_Reorder_Level": 760,
+      "Inventory_Lead_Time_Days": 1,
+      "Inventory_Stockout_Flag": 2,
+      "Inventory_Shortage_Quantity": 2456,
+      "Inventory_Replenishment_Triggered": 2
+    },
+    "duplicate_rows": 0,
+    "duplicate_ids": 0
+  },
+  "dirty_numeric": {
+    "Weight (Kilograms)": {
+      "n_numeric": 6372,
+      "n_non_numeric": 3952,
+      "n_null_original": 0,
+      "top_non_numeric": {
+        "Weight Captured Separately": 1507,
+        "See DN-304 (ID#:10589)": 16,
+        "See ASN-32231 (ID#:13648)": 14,
+        "See ASN-31750 (ID#:19272)": 14,
+        "See ASN-28279 (ID#:13547)": 13,
+        "See DN-3015 (ID#:82554)": 12,
+        "See ASN-26738 (ID#:15115)": 10,
+        "See DN-3561 (ID#:82654)": 10,
+        "See DN-2035 (ID#:82356)": 10,
+        "See DN-2812 (ID#:83068)": 9,
+        "See ASN-24721 (ID#:13708)": 9,
+        "See DN-2981 (ID#:82538)": 9,
+        "See DN-332 (ID#:10613)": 9,
+        "See DN-3843 (ID#:82707)": 9,
+        "See DN-2090 (ID#:82366)": 8
+      }
+    },
+    "Freight Cost (USD)": {
+      "n_numeric": 6198,
+      "n_non_numeric": 4126,
+      "n_null_original": 0,
+      "top_non_numeric": {
+        "Freight Included in Commodity Cost": 1442,
+        "Invoiced Separately": 239,
+        "See DN-304 (ID#:10589)": 16,
+        "See ASN-32231 (ID#:13648)": 14,
+        "See ASN-31750 (ID#:19272)": 14,
+        "See ASN-28279 (ID#:13547)": 13,
+        "See DN-3015 (ID#:82554)": 12,
+        "See ASN-26738 (ID#:15115)": 10,
+        "See DN-3561 (ID#:82654)": 10,
+        "See DN-2035 (ID#:82356)": 10,
+        "See DN-2812 (ID#:83068)": 9,
+        "See ASN-24721 (ID#:13708)": 9,
+        "See DN-2981 (ID#:82538)": 9,
+        "See DN-332 (ID#:10613)": 9,
+        "See DN-3843 (ID#:82707)": 9
+      }
+    }
+  },
+  "date_parsing": {
+    "PQ First Sent to Client Date": {
+      "present": true,
+      "n_rows": 10324,
+      "n_null": 0,
+      "n_placeholder": 2681,
+      "n_parse_ok": 7643,
+      "n_parse_failed": 0,
+      "placeholder_counts": {
+        "Pre-PQ Process": 2476,
+        "Date Not Captured": 205
+      },
+      "min_parsed": "2009-01-07T00:00:00",
+      "max_parsed": "2015-12-01T00:00:00"
+    },
+    "PO Sent to Vendor Date": {
+      "present": true,
+      "n_rows": 10324,
+      "n_null": 0,
+      "n_placeholder": 5732,
+      "n_parse_ok": 4592,
+      "n_parse_failed": 0,
+      "placeholder_counts": {
+        "N/A - From RDC": 5404,
+        "Date Not Captured": 328
+      },
+      "min_parsed": "2006-01-12T00:00:00",
+      "max_parsed": "2015-12-05T00:00:00"
+    },
+    "Scheduled Delivery Date": {
+      "present": true,
+      "n_rows": 10324,
+      "n_null": 0,
+      "n_placeholder": 0,
+      "n_parse_ok": 10324,
+      "n_parse_failed": 0,
+      "placeholder_counts": {},
+      "min_parsed": "2006-05-02T00:00:00",
+      "max_parsed": "2015-12-31T00:00:00"
+    },
+    "Delivered to Client Date": {
+      "present": true,
+      "n_rows": 10324,
+      "n_null": 0,
+      "n_placeholder": 0,
+      "n_parse_ok": 10324,
+      "n_parse_failed": 0,
+      "placeholder_counts": {},
+      "min_parsed": "2006-05-02T00:00:00",
+      "max_parsed": "2015-09-14T00:00:00"
+    },
+    "Delivery Recorded Date": {
+      "present": true,
+      "n_rows": 10324,
+      "n_null": 0,
+      "n_placeholder": 0,
+      "n_parse_ok": 10324,
+      "n_parse_failed": 0,
+      "placeholder_counts": {},
+      "min_parsed": "2006-05-02T00:00:00",
+      "max_parsed": "2015-09-14T00:00:00"
+    },
+    "Inventory_Date": {
+      "present": true,
+      "n_rows": 10324,
+      "n_null": 0,
+      "n_placeholder": 0,
+      "n_parse_ok": 10324,
+      "n_parse_failed": 0,
+      "placeholder_counts": {},
+      "min_parsed": "2006-05-02T00:00:00",
+      "max_parsed": "2015-09-14T00:00:00"
+    }
+  },
+  "chronology": {
+    "delivered_before_scheduled_count": 2814,
+    "delivered_after_scheduled_count": 1186,
+    "delivered_on_scheduled_count": 6324,
+    "valid_schedule_delivery_pairs": 10324,
+    "recorded_before_delivered_count": 3,
+    "valid_delivered_recorded_pairs": 10324,
+    "po_sent_after_delivered_count": 432,
+    "valid_po_delivered_pairs": 4592
+  },
+  "constants": {
+    "constant": [
+      "Inventory_Stock_In",
+      "Inventory_Lead_Time_Days"
+    ],
+    "near_constant": [
+      {
+        "column": "Managed By",
+        "dominant_value": "PMO - US",
+        "dominant_share": 0.9943,
+        "n_unique": 4
+      }
+    ]
+  },
+  "numerical_profile": [
+    {
+      "column": "Line Item Quantity",
+      "count": 10324,
+      "missing": 0,
+      "mean": 18332.534870205345,
+      "median": 3000.0,
+      "std": 40035.30296149489,
+      "min": 1.0,
+      "q25": 408.0,
+      "q75": 17039.75,
+      "max": 619999.0,
+      "skewness": 5.038314698810932,
+      "iqr_outlier_count": 1371
+    },
+    {
+      "column": "Line Item Value",
+      "count": 10324,
+      "missing": 0,
+      "mean": 157650.56734695853,
+      "median": 30471.465,
+      "std": 345292.0669788389,
+      "min": 0.0,
+      "q25": 4314.592500000001,
+      "q75": 166447.13999999998,
+      "max": 5951990.4,
+      "skewness": 5.8370201862389655,
+      "iqr_outlier_count": 1127
+    },
+    {
+      "column": "Pack Price",
+      "count": 10324,
+      "missing": 0,
+      "mean": 21.910241185586983,
+      "median": 9.3,
+      "std": 45.60922308447081,
+      "min": 0.0,
+      "q25": 4.12,
+      "q75": 23.5925,
+      "max": 1345.64,
+      "skewness": 12.988432142155938,
+      "iqr_outlier_count": 1160
+    },
+    {
+      "column": "Unit Price",
+      "count": 10324,
+      "missing": 0,
+      "mean": 0.6117008911274701,
+      "median": 0.16,
+      "std": 3.275807740843419,
+      "min": 0.0,
+      "q25": 0.08,
+      "q75": 0.47,
+      "max": 238.65,
+      "skewness": 40.584849393028136,
+      "iqr_outlier_count": 880
+    },
+    {
+      "column": "Weight (Kilograms)",
+      "count": 6372,
+      "missing": 3952,
+      "mean": 3424.441305712492,
+      "median": 1047.0,
+      "std": 13526.968269833156,
+      "min": 0.0,
+      "q25": 206.75,
+      "q75": 3334.0,
+      "max": 857354.0,
+      "skewness": 42.50590318409664,
+      "iqr_outlier_count": 623
+    },
+    {
+      "column": "Freight Cost (USD)",
+      "count": 6198,
+      "missing": 4126,
+      "mean": 11103.234819296547,
+      "median": 5869.655000000001,
+      "std": 15813.02669238992,
+      "min": 0.75,
+      "q25": 2131.12,
+      "q75": 14406.57,
+      "max": 289653.2,
+      "skewness": 4.688022585166202,
+      "iqr_outlier_count": 388
+    },
+    {
+      "column": "Line Item Insurance (USD)",
+      "count": 10037,
+      "missing": 287,
+      "mean": 240.11762578459698,
+      "median": 47.04,
+      "std": 500.19056766255534,
+      "min": 0.0,
+      "q25": 6.51,
+      "q75": 252.4,
+      "max": 7708.44,
+      "skewness": 4.8271623737952964,
+      "iqr_outlier_count": 1116
+    },
+    {
+      "column": "Inventory_Opening_Stock",
+      "count": 10324,
+      "missing": 0,
+      "mean": 23944.71406431616,
+      "median": 5016.0,
+      "std": 44022.76693151062,
+      "min": 0.0,
+      "q25": 386.75,
+      "q75": 25550.0,
+      "max": 465000.0,
+      "skewness": 3.2370018187387237,
+      "iqr_outlier_count": 1291
+    },
+    {
+      "column": "Inventory_Stock_In",
+      "count": 10324,
+      "missing": 0,
+      "mean": 0.0,
+      "median": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "max": 0.0,
+      "skewness": 0.0,
+      "iqr_outlier_count": 0
+    },
+    {
+      "column": "Inventory_Stock_Out",
+      "count": 10324,
+      "missing": 0,
+      "mean": 18332.534870205345,
+      "median": 3000.0,
+      "std": 40035.30296149489,
+      "min": 1.0,
+      "q25": 408.0,
+      "q75": 17039.75,
+      "max": 619999.0,
+      "skewness": 5.038314698810932,
+      "iqr_outlier_count": 1371
+    },
+    {
+      "column": "Inventory_Closing_Stock",
+      "count": 10324,
+      "missing": 0,
+      "mean": 14266.372917473847,
+      "median": 999.0,
+      "std": 33721.30962249872,
+      "min": 0.0,
+      "q25": 0.0,
+      "q75": 10529.5,
+      "max": 381250.0,
+      "skewness": 4.410226520259753,
+      "iqr_outlier_count": 1590
+    },
+    {
+      "column": "Inventory_Reorder_Level",
+      "count": 10324,
+      "missing": 0,
+      "mean": 18934.186555598604,
+      "median": 5475.0,
+      "std": 28485.043213687823,
+      "min": 2.0,
+      "q25": 791.0,
+      "q75": 23693.0,
+      "max": 195750.0,
+      "skewness": 2.2384908783617306,
+      "iqr_outlier_count": 1425
+    },
+    {
+      "column": "Inventory_Shortage_Quantity",
+      "count": 10324,
+      "missing": 0,
+      "mean": 8654.193723363038,
+      "median": 0.0,
+      "std": 30573.48313295678,
+      "min": 0.0,
+      "q25": 0.0,
+      "q75": 405.0,
+      "max": 515000.0,
+      "skewness": 6.629098629407544,
+      "iqr_outlier_count": 2383
+    }
+  ],
+  "categorical_profile": {
+    "Country": {
+      "n_unique": 43,
+      "top": [
+        {
+          "value": "South Africa",
+          "count": 1406,
+          "pct": 13.62
+        },
+        {
+          "value": "Nigeria",
+          "count": 1194,
+          "pct": 11.57
+        },
+        {
+          "value": "Côte d'Ivoire",
+          "count": 1083,
+          "pct": 10.49
+        },
+        {
+          "value": "Uganda",
+          "count": 779,
+          "pct": 7.55
+        },
+        {
+          "value": "Vietnam",
+          "count": 688,
+          "pct": 6.66
+        },
+        {
+          "value": "Zambia",
+          "count": 683,
+          "pct": 6.62
+        },
+        {
+          "value": "Haiti",
+          "count": 655,
+          "pct": 6.34
+        },
+        {
+          "value": "Mozambique",
+          "count": 631,
+          "pct": 6.11
+        },
+        {
+          "value": "Zimbabwe",
+          "count": 538,
+          "pct": 5.21
+        },
+        {
+          "value": "Tanzania",
+          "count": 519,
+          "pct": 5.03
+        },
+        {
+          "value": "Rwanda",
+          "count": 430,
+          "pct": 4.17
+        },
+        {
+          "value": "Congo, DRC",
+          "count": 333,
+          "pct": 3.23
+        },
+        {
+          "value": "Guyana",
+          "count": 237,
+          "pct": 2.3
+        },
+        {
+          "value": "Ethiopia",
+          "count": 216,
+          "pct": 2.09
+        },
+        {
+          "value": "South Sudan",
+          "count": 164,
+          "pct": 1.59
+        }
+      ],
+      "other_count": 768,
+      "other_pct": 7.44
+    },
+    "Managed By": {
+      "n_unique": 4,
+      "top": [
+        {
+          "value": "PMO - US",
+          "count": 10265,
+          "pct": 99.43
+        },
+        {
+          "value": "South Africa Field Office",
+          "count": 57,
+          "pct": 0.55
+        },
+        {
+          "value": "Haiti Field Office",
+          "count": 1,
+          "pct": 0.01
+        },
+        {
+          "value": "Ethiopia Field Office",
+          "count": 1,
+          "pct": 0.01
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
+    },
+    "Fulfill Via": {
+      "n_unique": 2,
+      "top": [
+        {
+          "value": "From RDC",
+          "count": 5404,
+          "pct": 52.34
+        },
+        {
+          "value": "Direct Drop",
+          "count": 4920,
+          "pct": 47.66
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
+    },
+    "Vendor INCO Term": {
+      "n_unique": 8,
+      "top": [
+        {
+          "value": "N/A - From RDC",
+          "count": 5404,
+          "pct": 52.34
+        },
+        {
+          "value": "EXW",
+          "count": 2778,
+          "pct": 26.91
+        },
+        {
+          "value": "DDP",
+          "count": 1443,
+          "pct": 13.98
+        },
+        {
+          "value": "FCA",
+          "count": 397,
+          "pct": 3.85
+        },
+        {
+          "value": "CIP",
+          "count": 275,
+          "pct": 2.66
+        },
+        {
+          "value": "DDU",
+          "count": 15,
+          "pct": 0.15
+        },
+        {
+          "value": "DAP",
+          "count": 9,
+          "pct": 0.09
+        },
+        {
+          "value": "CIF",
+          "count": 3,
+          "pct": 0.03
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
+    },
+    "Shipment Mode": {
+      "n_unique": 4,
+      "top": [
+        {
+          "value": "Air",
+          "count": 6113,
+          "pct": 59.21
+        },
+        {
+          "value": "Truck",
+          "count": 2830,
+          "pct": 27.41
+        },
+        {
+          "value": "Air Charter",
+          "count": 650,
+          "pct": 6.3
+        },
+        {
+          "value": "Ocean",
+          "count": 371,
+          "pct": 3.59
+        },
+        {
+          "value": "(Missing)",
+          "count": 360,
+          "pct": 3.49
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
+    },
+    "Product Group": {
+      "n_unique": 5,
+      "top": [
+        {
+          "value": "ARV",
+          "count": 8550,
+          "pct": 82.82
+        },
+        {
+          "value": "HRDT",
+          "count": 1728,
+          "pct": 16.74
+        },
+        {
+          "value": "ANTM",
+          "count": 22,
+          "pct": 0.21
+        },
+        {
+          "value": "ACT",
+          "count": 16,
+          "pct": 0.15
+        },
+        {
+          "value": "MRDT",
+          "count": 8,
+          "pct": 0.08
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
+    },
+    "Sub Classification": {
+      "n_unique": 6,
+      "top": [
+        {
+          "value": "Adult",
+          "count": 6595,
+          "pct": 63.88
+        },
+        {
+          "value": "Pediatric",
+          "count": 1955,
+          "pct": 18.94
+        },
+        {
+          "value": "HIV test",
+          "count": 1567,
+          "pct": 15.18
+        },
+        {
+          "value": "HIV test - Ancillary",
+          "count": 161,
+          "pct": 1.56
+        },
+        {
+          "value": "Malaria",
+          "count": 30,
+          "pct": 0.29
+        },
+        {
+          "value": "ACT",
+          "count": 16,
+          "pct": 0.15
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
+    },
+    "Vendor": {
+      "n_unique": 73,
+      "top": [
+        {
+          "value": "SCMS from RDC",
+          "count": 5404,
+          "pct": 52.34
+        },
+        {
+          "value": "Orgenics, Ltd",
+          "count": 754,
+          "pct": 7.3
+        },
+        {
+          "value": "S. BUYS WHOLESALER",
+          "count": 715,
+          "pct": 6.93
+        },
+        {
+          "value": "Aurobindo Pharma Limited",
+          "count": 668,
+          "pct": 6.47
+        },
+        {
+          "value": "Trinity Biotech, Plc",
+          "count": 356,
+          "pct": 3.45
+        },
+        {
+          "value": "ABBVIE LOGISTICS (FORMERLY ABBOTT LOGISTICS BV)",
+          "count": 347,
+          "pct": 3.36
+        },
+        {
+          "value": "PHARMACY DIRECT",
+          "count": 326,
+          "pct": 3.16
+        },
+        {
+          "value": "MYLAN LABORATORIES LTD (FORMERLY MATRIX LABORATORIES)",
+          "count": 317,
+          "pct": 3.07
+        },
+        {
+          "value": "HETERO LABS LIMITED",
+          "count": 277,
+          "pct": 2.68
+        },
+        {
+          "value": "CIPLA LIMITED",
+          "count": 175,
+          "pct": 1.7
+        },
+        {
+          "value": "CHEMBIO DIAGNOSTIC SYSTEMS, INC.",
+          "count": 109,
+          "pct": 1.06
+        },
+        {
+          "value": "Standard Diagnostics, Inc.",
+          "count": 98,
+          "pct": 0.95
+        },
+        {
+          "value": "STRIDES ARCOLAB LIMITED",
+          "count": 93,
+          "pct": 0.9
+        },
+        {
+          "value": "SHANGHAI KEHUA BIOENGINEERING CO.,LTD.  (KHB)",
+          "count": 70,
+          "pct": 0.68
+        },
+        {
+          "value": "MERCK SHARP & DOHME IDEA GMBH (FORMALLY MERCK SHARP & DOHME B.V.)",
+          "count": 68,
+          "pct": 0.66
+        }
+      ],
+      "other_count": 547,
+      "other_pct": 5.3
+    },
+    "Manufacturing Site": {
+      "n_unique": 88,
+      "top": [
+        {
+          "value": "Aurobindo Unit III, India",
+          "count": 3172,
+          "pct": 30.72
+        },
+        {
+          "value": "Mylan (formerly Matrix) Nashik",
+          "count": 1415,
+          "pct": 13.71
+        },
+        {
+          "value": "Hetero Unit III Hyderabad IN",
+          "count": 869,
+          "pct": 8.42
+        },
+        {
+          "value": "Cipla, Goa, India",
+          "count": 665,
+          "pct": 6.44
+        },
+        {
+          "value": "Strides, Bangalore, India.",
+          "count": 540,
+          "pct": 5.23
+        },
+        {
+          "value": "Alere Medical Co., Ltd.",
+          "count": 481,
+          "pct": 4.66
+        },
+        {
+          "value": "Trinity Biotech, Plc",
+          "count": 405,
+          "pct": 3.92
+        },
+        {
+          "value": "ABBVIE Ludwigshafen Germany",
+          "count": 366,
+          "pct": 3.55
+        },
+        {
+          "value": "Inverness Japan",
+          "count": 345,
+          "pct": 3.34
+        },
+        {
+          "value": "ABBVIE (Abbott) Logis. UK",
+          "count": 219,
+          "pct": 2.12
+        },
+        {
+          "value": "BMS Meymac, France",
+          "count": 148,
+          "pct": 1.43
+        },
+        {
+          "value": "Aspen-OSD, Port Elizabeth, SA",
+          "count": 141,
+          "pct": 1.37
+        },
+        {
+          "value": "Chembio Diagnostics Sys. Inc.",
+          "count": 124,
+          "pct": 1.2
+        },
+        {
+          "value": "MSD, Haarlem, NL",
+          "count": 121,
+          "pct": 1.17
+        },
+        {
+          "value": "Standard Diagnostics, Korea",
+          "count": 114,
+          "pct": 1.1
+        }
+      ],
+      "other_count": 1199,
+      "other_pct": 11.61
+    },
+    "Brand": {
+      "n_unique": 48,
+      "top": [
+        {
+          "value": "Generic",
+          "count": 7285,
+          "pct": 70.56
+        },
+        {
+          "value": "Determine",
+          "count": 799,
+          "pct": 7.74
+        },
+        {
+          "value": "Uni-Gold",
+          "count": 373,
+          "pct": 3.61
+        },
+        {
+          "value": "Aluvia",
+          "count": 250,
+          "pct": 2.42
+        },
+        {
+          "value": "Kaletra",
+          "count": 165,
+          "pct": 1.6
+        },
+        {
+          "value": "Norvir",
+          "count": 136,
+          "pct": 1.32
+        },
+        {
+          "value": "Stat-Pak",
+          "count": 115,
+          "pct": 1.11
+        },
+        {
+          "value": "Bioline",
+          "count": 113,
+          "pct": 1.09
+        },
+        {
+          "value": "Truvada",
+          "count": 94,
+          "pct": 0.91
+        },
+        {
+          "value": "Videx",
+          "count": 84,
+          "pct": 0.81
+        },
+        {
+          "value": "Colloidal Gold",
+          "count": 70,
+          "pct": 0.68
+        },
+        {
+          "value": "Stocrin/Sustiva",
+          "count": 69,
+          "pct": 0.67
+        },
+        {
+          "value": "OraQuick",
+          "count": 60,
+          "pct": 0.58
+        },
+        {
+          "value": "Invirase",
+          "count": 53,
+          "pct": 0.51
+        },
+        {
+          "value": "Viread",
+          "count": 52,
+          "pct": 0.5
+        }
+      ],
+      "other_count": 606,
+      "other_pct": 5.87
+    },
+    "Dosage Form": {
+      "n_unique": 17,
+      "top": [
+        {
+          "value": "Tablet",
+          "count": 3532,
+          "pct": 34.21
+        },
+        {
+          "value": "Tablet - FDC",
+          "count": 2749,
+          "pct": 26.63
+        },
+        {
+          "value": "Test kit",
+          "count": 1575,
+          "pct": 15.26
+        },
+        {
+          "value": "Capsule",
+          "count": 729,
+          "pct": 7.06
+        },
+        {
+          "value": "Oral solution",
+          "count": 727,
+          "pct": 7.04
+        },
+        {
+          "value": "Chewable/dispersible tablet - FDC",
+          "count": 239,
+          "pct": 2.31
+        },
+        {
+          "value": "Oral suspension",
+          "count": 214,
+          "pct": 2.07
+        },
+        {
+          "value": "Test kit - Ancillary",
+          "count": 161,
+          "pct": 1.56
+        },
+        {
+          "value": "Chewable/dispersible tablet",
+          "count": 146,
+          "pct": 1.41
+        },
+        {
+          "value": "Delayed-release capsules",
+          "count": 131,
+          "pct": 1.27
+        },
+        {
+          "value": "Delayed-release capsules - blister",
+          "count": 41,
+          "pct": 0.4
+        },
+        {
+          "value": "Powder for oral solution",
+          "count": 28,
+          "pct": 0.27
+        },
+        {
+          "value": "Tablet - FDC + co-blister",
+          "count": 20,
+          "pct": 0.19
+        },
+        {
+          "value": "Tablet - FDC + blister",
+          "count": 15,
+          "pct": 0.15
+        },
+        {
+          "value": "Tablet - blister",
+          "count": 10,
+          "pct": 0.1
+        }
+      ],
+      "other_count": 7,
+      "other_pct": 0.07
+    }
+  },
+  "late_delivery": {
+    "n_valid_target": 10324,
+    "n_excluded": 0,
+    "n_late": 1186,
+    "n_on_time": 9138,
+    "late_pct": 11.4878,
+    "delay_days_mean": -6.023537388609066,
+    "delay_days_median": 0.0,
+    "delay_days_std": 27.233640041310977,
+    "delay_days_min": -372.0,
+    "delay_days_max": 192.0,
+    "exclusion_reason": "Rows excluded when Scheduled Delivery Date or Delivered to Client Date could not be parsed to a valid datetime (null/placeholder/invalid)."
+  },
+  "late_rate_by_shipment_mode": [
+    {
+      "Shipment Mode": "Ocean",
+      "shipment_count": 371,
+      "late_count": 65,
+      "delay_mean": 5.870619946091645,
+      "delay_median": 0.0,
+      "on_time_count": 306,
+      "late_rate": 0.1752021563342318
+    },
+    {
+      "Shipment Mode": "Truck",
+      "shipment_count": 2830,
+      "late_count": 455,
+      "delay_mean": -9.92190812720848,
+      "delay_median": 0.0,
+      "on_time_count": 2375,
+      "late_rate": 0.1607773851590106
+    },
+    {
+      "Shipment Mode": "Air Charter",
+      "shipment_count": 650,
+      "late_count": 75,
+      "delay_mean": -19.036923076923078,
+      "delay_median": -13.0,
+      "on_time_count": 575,
+      "late_rate": 0.11538461538461539
+    },
+    {
+      "Shipment Mode": "Air",
+      "shipment_count": 6113,
+      "late_count": 587,
+      "delay_mean": -3.763782103713398,
+      "delay_median": 0.0,
+      "on_time_count": 5526,
+      "late_rate": 0.09602486504171438
+    }
+  ],
+  "late_rate_by_product_group": [
+    {
+      "Product Group": "ARV",
+      "shipment_count": 8550,
+      "late_count": 1073,
+      "delay_mean": -7.244093567251462,
+      "delay_median": 0.0,
+      "on_time_count": 7477,
+      "late_rate": 0.1254970760233918
+    },
+    {
+      "Product Group": "HRDT",
+      "shipment_count": 1728,
+      "late_count": 113,
+      "delay_mean": -0.011574074074074073,
+      "delay_median": 0.0,
+      "on_time_count": 1615,
+      "late_rate": 0.06539351851851852
+    },
+    {
+      "Product Group": "ANTM",
+      "shipment_count": 22,
+      "late_count": 0,
+      "delay_mean": -2.772727272727273,
+      "delay_median": 0.0,
+      "on_time_count": 22,
+      "late_rate": 0.0
+    },
+    {
+      "Product Group": "ACT",
+      "shipment_count": 16,
+      "late_count": 0,
+      "delay_mean": -10.5625,
+      "delay_median": 0.0,
+      "on_time_count": 16,
+      "late_rate": 0.0
+    },
+    {
+      "Product Group": "MRDT",
+      "shipment_count": 8,
+      "late_count": 0,
+      "delay_mean": 0.0,
+      "delay_median": 0.0,
+      "on_time_count": 8,
+      "late_rate": 0.0
+    }
+  ],
+  "inventory_audit_highlights": {
+    "provenance_note": "Inventory fields appear augmented/synthetic relative to classic SCMS shipment data. Do not treat them as authentic operational inventory records without independent evidence.",
+    "stock_in_all_zero": true,
+    "lead_time_all_30": true,
+    "arithmetic": {
+      "formula": "Expected Closing = Opening + Stock_In - Stock_Out",
+      "n_match": 7181,
+      "n_mismatch": 3143,
+      "match_pct": 69.5564
+    },
+    "flag_shortage_alignment": {
+      "n_aligned": 10324,
+      "n_misaligned": 0,
+      "aligned_pct": 100.0,
+      "rule": "flag==1 iff shortage_quantity > 0"
+    },
+    "constant_columns": {
+      "Inventory_Stock_In": {
+        "n_unique": 1,
+        "value": 0
+      },
+      "Inventory_Lead_Time_Days": {
+        "n_unique": 1,
+        "value": 30
+      }
+    },
+    "leakage_risks": [
+      {
+        "field": "Inventory_Stockout_Flag",
+        "risk": "high",
+        "note": "May encode outcome-like stock shortage; unsuitable as a feature for predicting shortage/stockout without careful leakage review."
+      },
+      {
+        "field": "Inventory_Shortage_Quantity",
+        "risk": "high",
+        "note": "Direct shortage outcome; treat as target/proxy, not a feature."
+      },
+      {
+        "field": "Inventory_Replenishment_Triggered",
+        "risk": "medium",
+        "note": "May be derived from closing vs reorder; confirm timing before use."
+      },
+      {
+        "field": "Inventory_Closing_Stock",
+        "risk": "medium",
+        "note": "End-of-period value may not be known at prediction time."
+      }
+    ]
+  },
+  "figure_paths": {
+    "missingness": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\01_missingness.png",
+    "numerical_distributions": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\02_numerical_distributions.png",
+    "numerical_boxplots": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\03_numerical_boxplots.png",
+    "shipment_mode": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\05_shipment_mode_distribution.png",
+    "top_vendors": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\06_top_vendors.png",
+    "countries": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\07_country_distribution.png",
+    "late_target": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\08_late_target_distribution.png",
+    "delay_hist": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\09_delay_distribution.png",
+    "late_by_vendor": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\10_late_rate_by_vendor.png",
+    "late_by_mode": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\11_late_rate_by_shipment_mode.png",
+    "late_by_country": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\12_late_rate_by_country.png",
+    "inventory_dist": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\13_inventory_distributions.png",
+    "inventory_consistency": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\14_inventory_consistency.png",
+    "date_coverage": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\15_date_coverage.png",
+    "correlation_pearson": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\04_correlation_heatmap_pearson.png",
+    "correlation_spearman": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\04b_correlation_heatmap_spearman.png"
+  },
+  "correlations_note": "Pearson and Spearman matrices saved under reports/figures/eda/"
+}

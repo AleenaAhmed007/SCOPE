@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-11-10T13:11:01.706252+00:00",
+  "column_mapping": {
+    "ID": "ID",
+    "Project Code": "Project_Code",
+    "PQ #": "PQ_Number",
+    "PO / SO #": "PO_SO_Number",
+    "ASN/DN #": "ASN_DN_Number",
+    "Country": "Country",
+    "Managed By": "Managed_By",
+    "Fulfill Via": "Fulfill_Via",
+    "Vendor INCO Term": "Vendor_INCO_Term",
+    "Shipment Mode": "Shipment_Mode",
+    "PQ First Sent to Client Date": "PQ_First_Sent_To_Client_Date",
+    "PO Sent to Vendor Date": "PO_Sent_To_Vendor_Date",
+    "Scheduled Delivery Date": "Scheduled_Delivery_Date",
+    "Delivered to Client Date": "Delivered_To_Client_Date",
+    "Delivery Recorded Date": "Delivery_Recorded_Date",
+    "Product Group": "Product_Group",
+    "Sub Classification": "Sub_Classification",
+    "Vendor": "Vendor",
+    "Item Description": "Item_Description",
+    "Molecule/Test Type": "Molecule_Test_Type",
+    "Brand": "Brand",
+    "Dosage": "Dosage",
+    "Dosage Form": "Dosage_Form",
+    "Unit of Measure (Per Pack)": "Unit_Of_Measure_Per_Pack",
+    "Line Item Quantity": "Line_Item_Quantity",
+    "Line Item Value": "Line_Item_Value",
+    "Pack Price": "Pack_Price",
+    "Unit Price": "Unit_Price",
+    "Manufacturing Site": "Manufacturing_Site",
+    "First Line Designation": "First_Line_Designation",
+    "Weight (Kilograms)": "Weight_Kilograms",
+    "Freight Cost (USD)": "Freight_Cost_USD",
+    "Line Item Insurance (USD)": "Line_Item_Insurance_USD",
+    "Inventory_Product_Key": "Inventory_Product_Key",
+    "Inventory_Warehouse_ID": "Inventory_Warehouse_ID",
+    "Inventory_Date": "Inventory_Date",
+    "Inventory_Opening_Stock": "Inventory_Opening_Stock",
+    "Inventory_Stock_In": "Inventory_Stock_In",
+    "Inventory_Stock_Out": "Inventory_Stock_Out",
+    "Inventory_Closing_Stock": "Inventory_Closing_Stock",
+    "Inventory_Reorder_Level": "Inventory_Reorder_Level",
+    "Inventory_Lead_Time_Days": "Inventory_Lead_Time_Days",
+    "Inventory_Stockout_Flag": "Inventory_Stockout_Flag",
+    "Inventory_Shortage_Quantity": "Inventory_Shortage_Quantity",
+    "Inventory_Replenishment_Triggered": "Inventory_Replenishment_Triggered"
+  },
+  "reverse_note": "Raw CSV column names preserved in data/raw; mapping applied only to interim/processed",
+  "early_warning_features": [
+    "Country",
+    "Managed_By",
+    "Fulfill_Via",
+    "Vendor_INCO_Term",
+    "Shipment_Mode",
+    "Product_Group",
+    "Sub_Classification",
+    "Vendor",
+    "Manufacturing_Site",
+    "Brand",
+    "Dosage_Form",
+    "First_Line_Designation",
+    "Line_Item_Quantity",
+    "Line_Item_Value",
+    "Pack_Price",
+    "Unit_Price",
+    "Unit_Of_Measure_Per_Pack",
+    "Weight_Kilograms_Numeric",
+    "Freight_Cost_USD_Numeric",
+    "Line_Item_Insurance_USD",
+    "Scheduled_Month",
+    "Scheduled_Quarter",
+    "Scheduled_DOW",
+    "Weight_NonNumeric_Flag",
+    "Freight_NonNumeric_Flag"
+  ],
+  "vendor_history_method": "Expanding, one-row-shifted statistics within training data; validation and test use the training-period aggregates only.",
+  "leakage_forbidden": [
+    "Delivered_To_Client_Date",
+    "Delivery_Recorded_Date",
+    "Inventory_Closing_Stock",
+    "Inventory_Replenishment_Triggered",
+    "Inventory_Shortage_Quantity",
+    "Inventory_Stockout_Flag",
+    "delay_days",
+    "delivery_duration_days",
+    "is_late"
+  ],
+  "prediction_moment": "After shipment attributes and scheduled delivery date are known, before actual delivery outcome is observed.",
+  "split": {
+    "method": "chronological_on_Scheduled_Delivery_Date_Parsed",
+    "counts": {
+      "train": 7226,
+      "test": 1550,
+      "val": 1548
+    },
+    "train_end": "2013-08-06 00:00:00"
+  },
+  "exclusions": [
+    {
+      "rule": "exact_duplicate_rows",
+      "count": 0,
+      "action": "retained"
+    },
+    {
+      "rule": "duplicate_ids",
+      "count": 0,
+      "action": "retained"
+    },
+    {
+      "rule": "invalid_late_target_dates",
+      "count": 0,
+      "action": "excluded_from_classification_training"
+    },
+    {
+      "rule": "invalid_or_implausible_po_to_delivery_duration",
+      "count": 6164,
+      "action": "excluded_from_regression_training"
+    }
+  ],
+  "inventory": {
+    "provenance": "unverified_augmented",
+    "stock_in_constant": true,
+    "lead_time_constant": true,
+    "leakage_safe_predictors": [
+      "Inventory_Opening_Stock",
+      "Inventory_Reorder_Level",
+      "below_reorder",
+      "Product_Group",
+      "Vendor",
+      "Country",
+      "Line_Item_Quantity"
+    ],
+    "forbidden_predictors": [
+      "Inventory_Shortage_Quantity",
+      "Inventory_Stockout_Flag",
+      "Inventory_Closing_Stock",
+      "Inventory_Replenishment_Triggered",
+      "Inventory_Stock_Out"
+    ],
+    "audited_target_fields": [
+      "Inventory_Stockout_Flag",
+      "Inventory_Shortage_Quantity"
+    ],
+    "stockout_rule_agreement": 1.0,
+    "training_recommendation": "Do not train a stockout classifier: the flag exactly matches Opening_Stock - Line_Item_Quantity < 0 in this augmented dataset. Keep it as a rule consistency check pending source-system provenance."
+  },
+  "outputs": {
+    "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.parquet",
+    "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.parquet",
+    "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.parquet",
+    "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.parquet",
+    "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.parquet",
+    "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.parquet"
+  }
+}

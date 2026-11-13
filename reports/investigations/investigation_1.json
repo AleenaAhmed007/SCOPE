@@ -1,0 +1,78 @@
+{
+  "title": "SCOPE Investigation Report",
+  "generated_at": "2026-11-10T13:09:50.506604+00:00",
+  "query": "Investigate late delivery risk and policy obligations",
+  "plan": [
+    "Resolve order/shipment context",
+    "Run late-delivery prediction",
+    "Estimate delivery duration",
+    "Check unusual shipment profile score",
+    "Retrieve policy/document evidence",
+    "Write evidence-grounded report",
+    "Run Checker validation"
+  ],
+  "order_id": 1,
+  "predictions": {
+    "late_probability": 0.0736199599248277,
+    "late_prediction": 0,
+    "predicted_duration_days": 89.14351895917875,
+    "unusual_shipment_profile": {
+      "score": -0.10342416120539732,
+      "is_anomaly": 0,
+      "label": "unusual_shipment_profile"
+    }
+  },
+  "observations": {
+    "vendor": "RANBAXY Fine Chemicals LTD.",
+    "country": "C\u00f4te d'Ivoire",
+    "shipment_mode": "Air",
+    "actual_is_late_if_known": 0
+  },
+  "document_answer": "Grounded summary for query: Investigate late delivery risk and policy obligations. Vendor RANBAXY Fine Chemicals LTD. country C\u00f4te d'Ivoire shipment mode Air late risk\n\n- nt:** 8 - **Example values:** ['EXW', 'FCA', 'DDU', 'CIP', 'DDP'] - **Identifier:** False - **ML suitability:** Candidate \u2014 subject to leakage and availability review - **Availability time:** Likely available at/before shipment planning \u2014 N... [data_dictionary.md#chunk-7]\n- 'HIV test - Ancillary', 'ACT'] - **Identifier:** False - **ML suitability:** Candidate \u2014 subject to leakage and availability review - **Availability time:** Likely available at/before shipment planning \u2014 Needs confirmation - **Leakage risk:... [data_dictionary.md#chunk-13]\n- # SCOPE EDA Report \u2014 Phase 01  Generated: `2026-11-06T12:54:42.609579+00:00`  ## 1. Dataset Overview  - Rows: **10324** - Columns: **45** - Memory: **19.873 MB** - Duplicate rows: **0** - Duplicate IDs: **0**  ## 2. Late Delivery  - Valid t... [eda_report.md#chunk-1]\n- - **Unique count:** 88 - **Example values:** ['Ranbaxy Fine Chemicals LTD', 'Aurobindo Unit III, India', 'ABBVIE GmbH & Co.KG Wiesbaden', 'Ranbaxy, Paonta Shahib, India', 'MSD South Granville Australia'] - **Identifier:** False - **ML suita... [data_dictionary.md#chunk-22]\n\nNote: Retrieved passages may include clearly labeled synthetic documents.",
+  "citations": [
+    {
+      "document_id": "data_dictionary",
+      "file_name": "data_dictionary.md",
+      "page": 7,
+      "source": "docs\\data_dictionary.md",
+      "score": 0.47776137965953724,
+      "synthetic": false
+    },
+    {
+      "document_id": "data_dictionary",
+      "file_name": "data_dictionary.md",
+      "page": 13,
+      "source": "docs\\data_dictionary.md",
+      "score": 0.43916354968323745,
+      "synthetic": false
+    },
+    {
+      "document_id": "eda_report",
+      "file_name": "eda_report.md",
+      "page": 1,
+      "source": "reports\\eda_report.md",
+      "score": 0.4662391818718274,
+      "synthetic": false
+    },
+    {
+      "document_id": "data_dictionary",
+      "file_name": "data_dictionary.md",
+      "page": 22,
+      "source": "docs\\data_dictionary.md",
+      "score": 0.36687924808341327,
+      "synthetic": false
+    }
+  ],
+  "evidence_ids": [
+    "b4e1d4ef-f36b-474a-b2cc-a24f1af5a888",
+    "e2e10fc9-f618-4567-890b-20037281960b",
+    "edc78f3e-1776-435b-b7bd-eb984f25dca4",
+    "af2a9e5e-64bf-45ba-b870-739c740d3c49",
+    "82193b8d-7263-4e75-88e0-1af91f3309b4"
+  ],
+  "assumptions": [
+    "ML outputs are probabilistic estimates, not certain outcomes.",
+    "Synthetic documents are non-authoritative development fixtures.",
+    "Inventory-augmented fields are not treated as system-of-record here."
+  ]
+}

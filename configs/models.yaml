@@ -1,0 +1,42 @@
+# Model hyperparameters and experiment defaults (Phase 0 placeholders)
+random_seed: 42
+
+classification:
+  algorithm: xgboost
+  params:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    eval_metric: logloss
+
+regression:
+  algorithm: xgboost
+  params:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+forecasting:
+  algorithm: null
+  horizon: null
+  frequency: null
+
+clustering:
+  algorithm: kmeans
+  params:
+    n_clusters: 4
+    random_state: 42
+
+anomaly:
+  algorithm: isolation_forest
+  params:
+    contamination: 0.05
+    random_state: 42
+
+explainability:
+  method: shap
+  sample_size: 200

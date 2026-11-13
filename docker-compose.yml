@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: scope-postgres
+    environment:
+      POSTGRES_USER: scope
+      POSTGRES_PASSWORD: scope
+      POSTGRES_DB: scope
+    ports:
+      - "5432:5432"
+    volumes:
+      - scope_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scope -d scope"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  scope_pgdata:
