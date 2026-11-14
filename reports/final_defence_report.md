@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-14T09:08:38.992718+00:00`
+Generated: `2026-11-14T10:47:47.756526+00:00`
 
 ## System summary
 
@@ -44,7 +44,7 @@ SCOPE integrates:
 - RAG retrieval wiring sanity MRR: **0.8333333333333334** over 3 hand-authored synthetic queries; this is not a retrieval-quality claim.
 - Vendor segmentation: **k=4, silhouette=0.26827670925046854**, with small-history and profile-outlier vendors separated.
 - Unusual shipment profile flags: **181 / 1550** test shipments; flagged late-rate diagnostic **0.20441988950276244** (descriptive only).
-- SHAP status: **fallback_native_importance**
+- SHAP status: **ok**
 
 ## Important limitations
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T09:08:38.992718+00:00",
+  "generated_at": "2026-11-14T10:47:47.756526+00:00",
   "late_delivery": {
     "target": "is_late",
     "definition": "1 if Delivered > Scheduled else 0",
@@ -1187,48 +1187,117 @@
     "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\inventory_stockout_classifier"
   },
   "shap": {
-    "status": "fallback_native_importance",
-    "error": "Can't find a usable init.tcl in the following directories: \n    {C:\\Users\\User\\AppData\\Local\\Python\\pythoncore-3.14-64\\tcl\\tcl8.6}\n\n\n\nThis probably means that Tcl wasn't installed properly.\n",
+    "status": "ok",
+    "model_name": "random_forest",
+    "explainer": "TreeExplainer",
+    "n_samples": 200,
+    "summary_plot": "T:\\SCOPE\\SCOPE\\reports\\figures\\shap\\shap_summary_late_delivery.png",
+    "importance_path": "T:\\SCOPE\\SCOPE\\reports\\metrics\\shap_feature_importance.json",
+    "local_example": {
+      "row_id": 86787,
+      "top_features": [
+        {
+          "feature": "cat__Country_Rwanda",
+          "shap": -0.09676121552959112,
+          "value": 1.0,
+          "abs_shap": 0.09676121552959112
+        },
+        {
+          "feature": "num__vendor_hist_late_rate",
+          "shap": 0.03816651267714435,
+          "value": 0.16879405601066869,
+          "abs_shap": 0.03816651267714435
+        },
+        {
+          "feature": "num__Weight_Kilograms_Numeric",
+          "shap": -0.02812897361087141,
+          "value": 12.0,
+          "abs_shap": 0.02812897361087141
+        },
+        {
+          "feature": "num__Line_Item_Quantity",
+          "shap": -0.026632835658399606,
+          "value": 200.0,
+          "abs_shap": 0.026632835658399606
+        },
+        {
+          "feature": "num__Line_Item_Insurance_USD",
+          "shap": -0.01811211923838681,
+          "value": 0.84,
+          "abs_shap": 0.01811211923838681
+        },
+        {
+          "feature": "cat__Fulfill_Via_Direct Drop",
+          "shap": 0.012763303644808677,
+          "value": 0.0,
+          "abs_shap": 0.012763303644808677
+        },
+        {
+          "feature": "num__Freight_Cost_USD_Numeric",
+          "shap": -0.012185857714377264,
+          "value": 1301.94,
+          "abs_shap": 0.012185857714377264
+        },
+        {
+          "feature": "num__Line_Item_Value",
+          "shap": -0.009984163032680397,
+          "value": 710.0,
+          "abs_shap": 0.009984163032680397
+        },
+        {
+          "feature": "cat__Fulfill_Via_From RDC",
+          "shap": 0.009268255466938036,
+          "value": 1.0,
+          "abs_shap": 0.009268255466938036
+        },
+        {
+          "feature": "cat__Vendor_INCO_Term_N/A - From RDC",
+          "shap": 0.00882491477010372,
+          "value": 1.0,
+          "abs_shap": 0.00882491477010372
+        }
+      ]
+    },
     "top_global": [
       {
         "feature": "num__vendor_hist_late_rate",
-        "importance": 0.26198911421927934
-      },
-      {
-        "feature": "num__Pack_Price",
-        "importance": 0.05943029632647588
+        "mean_abs_shap": 0.07548467650034447
       },
       {
         "feature": "num__Line_Item_Quantity",
-        "importance": 0.05741549564288193
+        "mean_abs_shap": 0.021148156041521014
       },
       {
-        "feature": "num__Unit_Price",
-        "importance": 0.04650768731370999
+        "feature": "num__Pack_Price",
+        "mean_abs_shap": 0.020869863372526304
       },
       {
         "feature": "num__Line_Item_Insurance_USD",
-        "importance": 0.0464091965406546
+        "mean_abs_shap": 0.018989403828822173
       },
       {
-        "feature": "num__Line_Item_Value",
-        "importance": 0.04361835430967317
+        "feature": "cat__Fulfill_Via_Direct Drop",
+        "mean_abs_shap": 0.01680433336242468
       },
       {
-        "feature": "num__Weight_Kilograms_Numeric",
-        "importance": 0.038292783941123086
+        "feature": "cat__Vendor_INCO_Term_EXW",
+        "mean_abs_shap": 0.016392738227185243
       },
       {
-        "feature": "num__Freight_Cost_USD_Numeric",
-        "importance": 0.03636311311350696
+        "feature": "num__Unit_Price",
+        "mean_abs_shap": 0.016386986971270355
       },
       {
-        "feature": "num__Scheduled_Month",
-        "importance": 0.024239761170004738
+        "feature": "cat__Vendor_INCO_Term_N/A - From RDC",
+        "mean_abs_shap": 0.015062580126429748
       },
       {
-        "feature": "num__Unit_Of_Measure_Per_Pack",
-        "importance": 0.02246425825697272
+        "feature": "cat__Fulfill_Via_From RDC",
+        "mean_abs_shap": 0.014430358710956126
+      },
+      {
+        "feature": "cat__Vendor_SCMS from RDC",
+        "mean_abs_shap": 0.014072473777519467
       }
     ]
   },
