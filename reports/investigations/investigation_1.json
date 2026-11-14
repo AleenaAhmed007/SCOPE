@@ -1,11 +1,10 @@
 {
   "title": "SCOPE Investigation Report",
-  "generated_at": "2026-11-14T16:01:51.684311+00:00",
-  "query": "Investigate potential disruption and late delivery risk also check from documents",
+  "generated_at": "2026-11-14T16:07:31.093050+00:00",
+  "query": "Investigate potential disruption and late delivery risk",
   "plan": [
     "Resolve shipment context",
     "Run relevant shipment risk models",
-    "Retrieve policy/document evidence",
     "Record evidence",
     "Run claim Checker"
   ],
@@ -26,167 +25,37 @@
     "shipment_mode": "Air",
     "actual_is_late_if_known": 0
   },
-  "document_answer": "- Evidence for disruption claims must cite shipment identifiers and document\nsources. [1]\n- Notification does not remove the late-delivery classification; it\nonly changes the escalation path. [3]",
-  "citations": [
-    {
-      "index": 1,
-      "chunk_id": "SYNTHETIC_procurement_policy::c4",
-      "document_id": "SYNTHETIC_procurement_policy",
-      "file_name": "SYNTHETIC_procurement_policy.md",
-      "document_type": "policy",
-      "section": "4. Evidence requirements",
-      "page": 4,
-      "source": "data\\documents\\synthetic\\SYNTHETIC_procurement_policy.md",
-      "score": -2.435776472091675,
-      "synthetic": true
-    },
-    {
-      "index": 2,
-      "chunk_id": "SYNTHETIC_supplier_agreement::c3",
-      "document_id": "SYNTHETIC_supplier_agreement",
-      "file_name": "SYNTHETIC_supplier_agreement.md",
-      "document_type": "contract",
-      "section": "3. Repeated failure",
-      "page": 3,
-      "source": "data\\documents\\synthetic\\SYNTHETIC_supplier_agreement.md",
-      "score": -5.889255523681641,
-      "synthetic": true
-    },
-    {
-      "index": 3,
-      "chunk_id": "SYNTHETIC_shipping_sla::c3",
-      "document_id": "SYNTHETIC_shipping_sla",
-      "file_name": "SYNTHETIC_shipping_sla.md",
-      "document_type": "sla",
-      "section": "3. Delay notification",
-      "page": 3,
-      "source": "data\\documents\\synthetic\\SYNTHETIC_shipping_sla.md",
-      "score": -6.337979793548584,
-      "synthetic": true
-    },
-    {
-      "index": 4,
-      "chunk_id": "SYNTHETIC_supplier_agreement::c2",
-      "document_id": "SYNTHETIC_supplier_agreement",
-      "file_name": "SYNTHETIC_supplier_agreement.md",
-      "document_type": "contract",
-      "section": "2. Late delivery penalties",
-      "page": 2,
-      "source": "data\\documents\\synthetic\\SYNTHETIC_supplier_agreement.md",
-      "score": -6.50330924987793,
-      "synthetic": true
-    }
-  ],
+  "document_answer": null,
+  "citations": null,
   "evidence_ids": [
-    "e3c7b3dd-bb99-47af-bb49-b7f4c15a66cc",
-    "af223267-60e7-45e0-b0f9-6b4c58b83d48",
-    "e56fb3a2-e040-4f33-afb6-bd8ac16553ac",
-    "a14eadc0-867c-48ca-a15a-de40104952e4",
-    "653cf8c3-ac8a-44d3-9921-cda45c78f450"
+    "9edc1b4b-23d0-4eef-93c4-25b73ead5dc9"
   ],
   "checker_result": {
-    "checked": 3,
+    "checked": 1,
     "needs_review": 0,
-    "validated": 3,
+    "validated": 1,
     "results": [
       {
-        "evidence_id": "e3c7b3dd-bb99-47af-bb49-b7f4c15a66cc",
+        "evidence_id": "9edc1b4b-23d0-4eef-93c4-25b73ead5dc9",
         "status": "validated",
         "notes": "All numeric values match the evidence payload (at stated precision); Source present"
-      },
-      {
-        "evidence_id": "af223267-60e7-45e0-b0f9-6b4c58b83d48",
-        "status": "validated",
-        "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
-      },
-      {
-        "evidence_id": "a14eadc0-867c-48ca-a15a-de40104952e4",
-        "status": "validated",
-        "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
       }
     ],
     "claim_verification": {
-      "claims_checked": 2,
-      "supported": 2,
+      "claims_checked": 0,
+      "supported": 0,
       "unsupported": 0,
       "needs_review": 0,
-      "support_rate": 1.0,
-      "status_counts": {
-        "supported": 2
-      },
-      "verdicts": [
-        {
-          "claim": "Evidence for disruption claims must cite shipment identifiers and document\nsources.",
-          "status": "supported",
-          "ok": true,
-          "support": 1.0,
-          "cited_chunk_ids": [
-            "SYNTHETIC_procurement_policy::c4"
-          ],
-          "notes": [
-            "Supported by cited passage (overlap 1.00)."
-          ]
-        },
-        {
-          "claim": "Notification does not remove the late-delivery classification; it\nonly changes the escalation path.",
-          "status": "supported",
-          "ok": true,
-          "support": 1.0,
-          "cited_chunk_ids": [
-            "SYNTHETIC_shipping_sla::c3"
-          ],
-          "notes": [
-            "Supported by cited passage (overlap 1.00)."
-          ]
-        }
-      ],
+      "support_rate": null,
+      "status_counts": {},
+      "verdicts": [],
       "support_threshold": 0.42,
       "method": "citation resolution + token-overlap entailment proxy + numeric grounding"
     }
   },
   "validation_status": "validated",
-  "excluded_claims": [
-    {
-      "claim": "Three or more late deliveries within a rolling 90-day window are treated as a\nmaterial breach and entitle the buyer to require a remediation plan within 14 days.",
-      "verdict": {
-        "claim": "Three or more late deliveries within a rolling 90-day window are treated as a\nmaterial breach and entitle the buyer to require a remediation plan within 14 days.",
-        "status": "numeric_mismatch",
-        "ok": false,
-        "support": 1.0,
-        "cited_chunk_ids": [
-          "SYNTHETIC_supplier_agreement::c3"
-        ],
-        "notes": [
-          "Numeric values not supported by payload: ['14']"
-        ]
-      },
-      "evidence_id": "e56fb3a2-e040-4f33-afb6-bd8ac16553ac"
-    },
-    {
-      "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
-      "verdict": {
-        "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
-        "status": "numeric_mismatch",
-        "ok": false,
-        "support": 1.0,
-        "cited_chunk_ids": [
-          "SYNTHETIC_supplier_agreement::c2"
-        ],
-        "notes": [
-          "Numeric values not supported by payload: ['10']"
-        ]
-      },
-      "evidence_id": "653cf8c3-ac8a-44d3-9921-cda45c78f450"
-    }
-  ],
-  "revision_history": [
-    {
-      "attempt": 1,
-      "action": "Removed claims rejected by the Checker; preserved them as needs_review evidence.",
-      "removed_claims": 2,
-      "remaining_claims": 2
-    }
-  ],
+  "excluded_claims": [],
+  "revision_history": [],
   "assumptions": [
     "ML outputs are probabilistic estimates, not certain outcomes.",
     "Synthetic documents are non-authoritative; official extracts apply only within their stated jurisdiction.",
