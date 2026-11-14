@@ -39,7 +39,7 @@ from scope.models.forecasting.train_forecast import _forecast_splits
 MODEL_ARTIFACTS = {
     "late_delivery": "late_delivery_classifier",
     "duration": "delivery_duration_regressor",
-    "inventory": None,
+    "inventory": "inventory_stockout_classifier",
     "forecast_late_rate": "forecast_late_rate_monthly",
     "forecast_volume": "forecast_volume_quantity_monthly",
     "vendor_segmentation": "vendor_segmentation",
@@ -85,20 +85,19 @@ def _classification(bundle: dict[str, Any], target: str, inventory: bool = False
 
 def _evaluate(name: str) -> dict[str, Any]:
     paths = project_paths()
-    bundle = None if name == "inventory" else _bundle(name)
+    bundle = _bundle(name)
     if name == "inventory":
         df = pd.read_parquet(paths["processed"] / "shipments.parquet")
         work = df[(df["split"] == "test") & df["Inventory_Stockout_Flag"].notna()].copy()
         y = work["Inventory_Stockout_Flag"].astype(int)
         rule = (work["Inventory_Opening_Stock"] - work["Line_Item_Quantity"] < 0).astype(int)
-        metrics = {
+        metrics = _classification(bundle, "Inventory_Stockout_Flag")
+        metrics.update({
             "n_test": len(work),
-            "predictive_model_trained": False,
-            "rule": "Inventory_Opening_Stock - Line_Item_Quantity < 0",
-            "target_agreement": float((rule == y).mean()) if len(work) else None,
-            "target_prevalence": float(y.mean()) if len(work) else None,
-            "interpretation": "Rule agreement is a data consistency check, not model accuracy. Inventory provenance is unverified.",
-        }
+            "target_rule": "Inventory_Opening_Stock - Line_Item_Quantity < 0",
+            "target_rule_agreement": float((rule == y).mean()) if len(work) else None,
+            "interpretation": "Experimental ML proxy excludes both deterministic rule operands. The rule agreement is a data consistency check; inventory provenance is unverified.",
+        })
     elif name == "late_delivery":
         metrics = _classification(bundle, "is_late")
     elif name == "duration":

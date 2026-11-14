@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAnomaly, getOrder, getOrders, predictDuration, predictLate } from "../api";
+import { getAnomaly, getOrder, getOrders, predictDuration, predictInventoryStockout, predictLate } from "../api";
 
 export default function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -12,14 +12,15 @@ export default function Orders() {
   }, []);
 
   async function investigate() {
-    const [order, late, duration, anomaly] = await Promise.all([
+    const [order, late, duration, anomaly, inventory] = await Promise.all([
       getOrder(orderId),
       predictLate(orderId),
       predictDuration(orderId),
       getAnomaly(orderId).catch(() => null),
+      predictInventoryStockout(orderId),
     ]);
     setDetail(order);
-    setPred({ late, duration, anomaly });
+    setPred({ late, duration, anomaly, inventory });
   }
 
   return (
@@ -43,7 +44,7 @@ export default function Orders() {
         </button>
       </div>
       {pred && (
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div className="panel">
             <h3 className="font-semibold">Late delivery</h3>
             <p>Prob: {(pred.late.late_probability * 100).toFixed(1)}%</p>
@@ -54,6 +55,14 @@ export default function Orders() {
             <p>{pred.duration.predicted_duration_days.toFixed(1)} days</p>
             {pred.duration.low_confidence && (
               <p className="text-sm text-amber-700">Low confidence: validation did not beat the median baseline.</p>
+            )}
+          </div>
+          <div className="panel">
+            <h3 className="font-semibold">Inventory stockout (experimental)</h3>
+            <p>Risk: {(pred.inventory.stockout_probability * 100).toFixed(1)}%</p>
+            <p>Pred: {pred.inventory.stockout_prediction ? "Stockout" : "No stockout"}</p>
+            {pred.inventory.low_confidence && (
+              <p className="text-sm text-amber-700">Low confidence: model did not beat the prevalence baseline.</p>
             )}
           </div>
           <div className="panel">

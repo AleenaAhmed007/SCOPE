@@ -91,6 +91,6 @@ def build_inventory_experiment_table(shipments: pd.DataFrame) -> tuple[pd.DataFr
         ],
         "audited_target_fields": ["Inventory_Stockout_Flag", "Inventory_Shortage_Quantity"],
         "stockout_rule_agreement": rule_agreement,
-        "training_recommendation": "Do not train a stockout classifier: the flag exactly matches Opening_Stock - Line_Item_Quantity < 0 in this augmented dataset. Keep it as a rule consistency check pending source-system provenance.",
+        "training_recommendation": "An experimental proxy classifier can be trained only after excluding Opening_Stock and Line_Item_Quantity, which exactly define the flag. The augmented inventory source remains unverified; retain the rule audit and do not present proxy metrics as operational validation.",
     }
     return table, meta

@@ -196,6 +196,29 @@ def predict_duration(req: LateDeliveryRequest) -> dict[str, Any]:
     }
 
 
+@app.post("/api/v1/predictions/inventory-stockout")
+def predict_inventory_stockout(req: LateDeliveryRequest) -> dict[str, Any]:
+    bundle = _bundle("inventory_stockout_classifier")
+    if req.order_id is None:
+        raise HTTPException(400, "order_id required")
+    df = load_shipments()
+    row = df[df["ID"] == req.order_id]
+    if row.empty:
+        raise HTTPException(404, "Order not found")
+    probability = float(bundle["pipeline"].predict_proba(row[bundle["features"]])[0, 1])
+    low_confidence = not bool(
+        (bundle.get("metrics") or {}).get("selected_model_beats_prevalence_baseline", False)
+    )
+    return {
+        "order_id": req.order_id,
+        "stockout_probability": probability,
+        "stockout_prediction": int(probability >= bundle.get("threshold", 0.5)),
+        "model": bundle.get("model_name"),
+        "prediction_basis": bundle.get("prediction_basis"),
+        "low_confidence": low_confidence,
+    }
+
+
 @app.get("/api/v1/predictions/anomaly/{order_id}")
 def get_anomaly(order_id: int) -> dict[str, Any]:
     path = project_paths()["processed"] / "anomaly_scores_unusual_profile.parquet"

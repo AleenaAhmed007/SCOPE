@@ -7,6 +7,11 @@ import pandas as pd
 from scope.evaluation.final_report import _best_late_model
 from scope.features.inventory_features import build_inventory_experiment_table
 from scope.features.vendor_features import attach_train_only_vendor_stats
+from scope.models.classification.train_inventory import (
+    INVENTORY_CATEGORICAL,
+    INVENTORY_NUMERIC,
+    INVENTORY_FORBIDDEN_FEATURES,
+)
 
 
 def test_vendor_history_uses_only_previously_delivered_outcomes() -> None:
@@ -57,6 +62,12 @@ def test_inventory_rule_agreement_is_exact() -> None:
     _, metadata = build_inventory_experiment_table(shipments)
 
     assert metadata["stockout_rule_agreement"] == 1.0
+
+
+def test_inventory_classifier_excludes_rule_operands_and_outcomes() -> None:
+    assert not (set(INVENTORY_CATEGORICAL + INVENTORY_NUMERIC) & INVENTORY_FORBIDDEN_FEATURES)
+    assert "Inventory_Opening_Stock" in INVENTORY_FORBIDDEN_FEATURES
+    assert "Line_Item_Quantity" in INVENTORY_FORBIDDEN_FEATURES
 
 
 def test_final_report_uses_saved_late_model_artifact() -> None:

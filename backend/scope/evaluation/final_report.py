@@ -79,6 +79,9 @@ def build_final_evaluation() -> dict[str, Any]:
     shap = payload.get("shap") or {}
     inventory = payload.get("inventory") or {}
     inventory_test = (payload.get("model_evaluations", {}).get("inventory") or {}).get("test") or {}
+    inventory_best = inventory.get("best_model")
+    inventory_validation = ((inventory.get("models") or {}).get(inventory_best) or {}).get("validation") or {}
+    inventory_baseline = inventory.get("validation_baseline") or {}
     rag_retrieval = payload.get("rag_retrieval") or {}
     vendor_baseline = ((late.get("baselines") or {}).get("vendor_history_only") or {}).get("test") or {}
     forecast_evaluations = payload.get("model_evaluations") or {}
@@ -128,8 +131,8 @@ SCOPE integrates:
 - Forecasting frequency: **{forecast.get('frequency')}**; results include naive and mean baselines.
 - Monthly late-rate model MAE: **{monthly_late.get('mae')}**; beats naive: **{monthly_late.get('beats_naive_lag1')}**, beats mean: **{monthly_late.get('beats_development_mean')}**.
 - Monthly volume model MAE: **{monthly_volume.get('mae')}**; beats naive: **{monthly_volume.get('beats_naive_lag1')}**, beats mean: **{monthly_volume.get('beats_development_mean')}**.
-- Inventory predictive model: **not trained**; its target is audited as an arithmetic rule over unverified augmented fields.
-- Inventory rule agreement on test rows: **{inventory_test.get('target_agreement')}** (consistency check, not predictive accuracy).
+- Inventory proxy model: **{inventory_best}**; validation PR-AUC **{inventory_validation.get('pr_auc')}** vs prevalence baseline **{inventory_baseline.get('pr_auc')}**; test ROC-AUC / PR-AUC: **{inventory_test.get('roc_auc')} / {inventory_test.get('pr_auc')}**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
+- Inventory rule agreement on test rows: **{inventory_test.get('target_rule_agreement')}** (consistency check, not model accuracy).
 - RAG retrieval wiring sanity MRR: **{rag_retrieval.get('mrr')}** over {rag_retrieval.get('n_queries')} hand-authored synthetic queries; this is not a retrieval-quality claim.
 - Vendor segmentation: **k={segmentation.get('kmeans_k')}, silhouette={segmentation.get('silhouette')}**, with small-history and profile-outlier vendors separated.
 - Unusual shipment profile flags: **{unusual_profile.get('n_unusual')} / {unusual_profile.get('n_test')}** test shipments; flagged late-rate diagnostic **{(unusual_profile.get('late_rate_diagnostic') or {}).get('flagged')}** (descriptive only).
@@ -137,7 +140,7 @@ SCOPE integrates:
 
 ## Important limitations
 
-1. Inventory fields are **unverified augmented data**; the stockout flag reconstructs from arithmetic and is not used as a learned model target.
+1. Inventory fields are **unverified augmented data**. The proxy classifier does not use the two fields that define its label; its scores are not operationally validated, and rule agreement is only a consistency check.
 2. Synthetic RAG documents are **not official contracts/policies**.
 3. Anomaly scores describe unusual shipment profiles and are not delay predictors; retrospective analysis is forensic only.
 4. Prefer PostgreSQL via `docker compose up -d postgres` and `SCOPE_DATABASE_URL=postgresql+psycopg://scope:scope@127.0.0.1:5432/scope`. SQLite is only an automatic fallback when Postgres is down — do not claim Postgres compliance while on SQLite.

@@ -12,6 +12,8 @@ export const predictLate = (order_id: number) =>
   api.post("/api/v1/predictions/late-delivery", { order_id }).then((r) => r.data);
 export const predictDuration = (order_id: number) =>
   api.post("/api/v1/predictions/delivery-duration", { order_id }).then((r) => r.data);
+export const predictInventoryStockout = (order_id: number) =>
+  api.post("/api/v1/predictions/inventory-stockout", { order_id }).then((r) => r.data);
 export const getAnomaly = (order_id: number) =>
   api.get(`/api/v1/predictions/anomaly/${order_id}`).then((r) => r.data);
 export const getVendors = () => api.get("/api/v1/vendors").then((r) => r.data);

@@ -35,6 +35,13 @@ def test_predict_duration_reports_confidence() -> None:
     assert isinstance(r.json()["low_confidence"], bool)
 
 
+def test_predict_inventory_stockout() -> None:
+    r = client.post("/api/v1/predictions/inventory-stockout", json={"order_id": 1})
+    assert r.status_code == 200
+    assert "stockout_probability" in r.json()
+    assert isinstance(r.json()["low_confidence"], bool)
+
+
 def test_rag_query() -> None:
     r = client.post("/api/v1/rag/query", json={"query": "late delivery escalation"})
     assert r.status_code == 200

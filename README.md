@@ -145,13 +145,13 @@ python backend/scope/evaluation/model_evaluation.py --model duration
 python backend/scope/evaluation/model_evaluation.py --model all
 ```
 
-Available model names: `late_delivery`, `duration`,
+Available model names: `late_delivery`, `duration`, `inventory`,
 `forecast_late_rate`, `forecast_volume`, `vendor_segmentation`,
 `anomaly_unusual_profile`, and `anomaly_retrospective`. Train the relevant model
-and generate processed data first. Inventory has no predictive model artifact:
-evaluation checks its arithmetic target rule against unverified augmented
-fields. Anomaly scores are summaries because there are no ground-truth anomaly
-labels.
+and generate processed data first. Inventory classification is experimental:
+it excludes the fields that define the arithmetic target and reports the rule
+agreement separately. Its augmented source fields are unverified. Anomaly
+scores are summaries because there are no ground-truth anomaly labels.
 
 The full phase runner now refreshes all model evaluation reports before building
 the final defence report. It exits with a nonzero status if any phase fails;
