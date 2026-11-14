@@ -1,7 +1,7 @@
 {
   "title": "SCOPE Investigation Report",
-  "generated_at": "2026-11-14T06:23:18.685087+00:00",
-  "query": "Investigate late delivery risk and policy obligations",
+  "generated_at": "2026-11-14T07:26:18.406473+00:00",
+  "query": "Investigate potential disruption and late delivery risk",
   "plan": [
     "Resolve order/shipment context",
     "Run late-delivery prediction",
@@ -28,7 +28,7 @@
     "shipment_mode": "Air",
     "actual_is_late_if_known": 0
   },
-  "document_answer": "Grounded summary for query: Investigate late delivery risk and policy obligations. Vendor RANBAXY Fine Chemicals LTD. country C\u00f4te d'Ivoire shipment mode Air late risk\n\n- nt:** 8 - **Example values:** ['EXW', 'FCA', 'DDU', 'CIP', 'DDP'] - **Identifier:** False - **ML suitability:** Candidate \u2014 subject to leakage and availability review - **Availability time:** Likely available at/before shipment planning \u2014 N... [data_dictionary.md#chunk-7]\n- 'HIV test - Ancillary', 'ACT'] - **Identifier:** False - **ML suitability:** Candidate \u2014 subject to leakage and availability review - **Availability time:** Likely available at/before shipment planning \u2014 Needs confirmation - **Leakage risk:... [data_dictionary.md#chunk-13]\n- # SCOPE EDA Report \u2014 Phase 01  Generated: `2026-11-06T12:54:42.609579+00:00`  ## 1. Dataset Overview  - Rows: **10324** - Columns: **45** - Memory: **19.873 MB** - Duplicate rows: **0** - Duplicate IDs: **0**  ## 2. Late Delivery  - Valid t... [eda_report.md#chunk-1]\n- - **Unique count:** 88 - **Example values:** ['Ranbaxy Fine Chemicals LTD', 'Aurobindo Unit III, India', 'ABBVIE GmbH & Co.KG Wiesbaden', 'Ranbaxy, Paonta Shahib, India', 'MSD South Granville Australia'] - **Identifier:** False - **ML suita... [data_dictionary.md#chunk-22]\n\nNote: Retrieved passages may include clearly labeled synthetic documents.",
+  "document_answer": "Grounded summary for query: Investigate potential disruption and late delivery risk. Vendor RANBAXY Fine Chemicals LTD. country C\u00f4te d'Ivoire shipment mode Air late risk\n\n- nt:** 8 - **Example values:** ['EXW', 'FCA', 'DDU', 'CIP', 'DDP'] - **Identifier:** False - **ML suitability:** Candidate \u2014 subject to leakage and availability review - **Availability time:** Likely available at/before shipment planning \u2014 N... [data_dictionary.md#chunk-7]\n- 'HIV test - Ancillary', 'ACT'] - **Identifier:** False - **ML suitability:** Candidate \u2014 subject to leakage and availability review - **Availability time:** Likely available at/before shipment planning \u2014 Needs confirmation - **Leakage risk:... [data_dictionary.md#chunk-13]\n- # SCOPE EDA Report \u2014 Phase 01  Generated: `2026-11-06T12:54:42.609579+00:00`  ## 1. Dataset Overview  - Rows: **10324** - Columns: **45** - Memory: **19.873 MB** - Duplicate rows: **0** - Duplicate IDs: **0**  ## 2. Late Delivery  - Valid t... [eda_report.md#chunk-1]\n- - **Unique count:** 88 - **Example values:** ['Ranbaxy Fine Chemicals LTD', 'Aurobindo Unit III, India', 'ABBVIE GmbH & Co.KG Wiesbaden', 'Ranbaxy, Paonta Shahib, India', 'MSD South Granville Australia'] - **Identifier:** False - **ML suita... [data_dictionary.md#chunk-22]\n\nNote: Retrieved passages may include clearly labeled synthetic documents.",
   "citations": [
     {
       "document_id": "data_dictionary",
@@ -64,11 +64,11 @@
     }
   ],
   "evidence_ids": [
-    "9749a97b-db39-4eab-ba72-31f5e52df6ab",
-    "cebaa19f-0689-4e81-bc6b-8faf8d749c77",
-    "6939fd8d-15cb-4b82-9c32-3786bef94b05",
-    "18f049f3-96cb-40e2-8a1e-e0d6ec1d256c",
-    "9b0fb7b1-413f-4f87-91d1-cea00ac6f4ae"
+    "ed929ea6-2f49-42dd-a547-80febc1b7f3d",
+    "de204b7f-140f-4b5c-915e-68d8476b1b77",
+    "92c6d2a8-4aee-4d03-a63b-f15e75e5170d",
+    "12ca9698-a720-4535-829f-1a456ce96160",
+    "9e849a15-eba0-4f23-ae3b-4e6d410b74c1"
   ],
   "assumptions": [
     "ML outputs are probabilistic estimates, not certain outcomes.",
