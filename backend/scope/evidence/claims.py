@@ -20,6 +20,7 @@ codes so a report can show exactly what failed.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import re
 from typing import Any, Iterable, Sequence
 
 from scope.evidence.checker import validate_numeric_claim
@@ -64,17 +65,23 @@ def f1_overlap(claim: str, passage: str) -> float:
     if len(claim_tokens) < MIN_CLAIM_TOKENS:
         return 1.0  # too short to judge; do not fail on brevity
     claim_set = set(claim_tokens)
-    passage_set = set(tokenize(passage))
-    if not claim_set or not passage_set:
+    if not claim_set:
         return 0.0
-    shared = claim_set & passage_set
-    if not shared:
-        return 0.0
-    precision = len(shared) / len(claim_set)
-    recall = len(shared) / len(passage_set)
-    if precision + recall == 0:
-        return 0.0
-    return 2 * precision * recall / (precision + recall)
+
+    # Compare against each sentence independently so a short, supported claim
+    # is not penalized because its containing passage has many unrelated words.
+    candidates = [passage, *re.split(r"(?<=[.!?])\s+", passage)]
+    best = 0.0
+    for candidate in candidates:
+        passage_set = set(tokenize(candidate))
+        shared = claim_set & passage_set
+        if not shared:
+            continue
+        precision = len(shared) / len(claim_set)
+        recall = len(shared) / len(passage_set)
+        if precision + recall:
+            best = max(best, 2 * precision * recall / (precision + recall))
+    return best
 
 
 def verify_claim(
@@ -86,6 +93,14 @@ def verify_claim(
 ) -> ClaimVerdict:
     """Verify one claim against the passages it cites."""
     cited = [chunk_id for chunk_id in cited_chunk_ids if chunk_id]
+    if not claim.strip():
+        return ClaimVerdict(
+            claim=claim,
+            status=STATUS_UNSUPPORTED,
+            support=0.0,
+            cited_chunk_ids=cited,
+            notes=["Claim text is empty."],
+        )
     if not cited:
         return ClaimVerdict(
             claim=claim,
@@ -95,16 +110,16 @@ def verify_claim(
         )
 
     unknown = [chunk_id for chunk_id in cited if chunk_id not in passages]
-    if unknown and len(unknown) == len(cited):
+    resolved = [chunk_id for chunk_id in cited if chunk_id in passages]
+    if unknown:
         return ClaimVerdict(
             claim=claim,
             status=STATUS_UNKNOWN_CITATION,
             support=0.0,
-            cited_chunk_ids=cited,
+            cited_chunk_ids=resolved,
             notes=[f"Cited passage(s) not in the retrieved set: {unknown}"],
         )
 
-    resolved = [chunk_id for chunk_id in cited if chunk_id in passages]
     combined = "\n".join(passages[chunk_id] for chunk_id in resolved)
     support = max(f1_overlap(claim, passages[chunk_id]) for chunk_id in resolved)
 
@@ -120,8 +135,6 @@ def verify_claim(
             notes=notes,
         )
 
-    if unknown:
-        notes.append(f"Some cited passages were not retrieved: {unknown}")
     if support < support_threshold:
         notes.append(
             f"Cited passage shares too little wording with the claim "

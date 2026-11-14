@@ -10,8 +10,9 @@ import joblib
 import pandas as pd
 
 from scope.config.loader import get_project_root
+from scope.evidence.claims import verify_claims
 from scope.evidence.checker import run_checker
-from scope.evidence.ledger import add_evidence
+from scope.evidence.ledger import add_evidence, update_validation
 from scope.logging_config import setup_logging
 from scope.models.common import load_shipments, project_paths
 from scope.rag.index import answer_with_citations
@@ -26,6 +27,7 @@ class InvestigationState(TypedDict, total=False):
     ml_findings: dict[str, Any]
     document_findings: dict[str, Any]
     evidence_ids: list[str]
+    claim_evidence_ids: list[str]
     checker_result: dict[str, Any]
     report: str
     status: str
@@ -139,20 +141,41 @@ def evidence_writer(state: InvestigationState) -> InvestigationState:
         )
         eids.append(e["evidence_id"])
 
-    for cite in docs.get("citations") or []:
+    citations = {int(c.get("index", 0)): c for c in docs.get("citations") or []}
+    passages = {str(hit.get("chunk_id", "")): hit for hit in docs.get("retrieved") or []}
+    claim_eids: list[str] = []
+    for claim in docs.get("claims") or []:
+        claim_text = str(claim.get("text", ""))
+        cited_chunks = [str(cid) for cid in claim.get("chunk_ids", [])]
+        cited_hits = [passages[cid] for cid in cited_chunks if cid in passages]
+        cited_indices = [int(i) for i in claim.get("citation_indices", [])]
+        cited = [citations[i] for i in cited_indices if i in citations]
+        primary = cited[0] if cited else {}
+        payload = {
+            "claim": claim_text,
+            "cited_chunk_ids": cited_chunks,
+            "passages": [str(hit.get("text", "")) for hit in cited_hits],
+            "citation_sources": cited,
+        }
         e = add_evidence(
             evidence_type="document",
-            source=cite.get("source", ""),
-            claim=f"Retrieved support from {cite.get('file_name')} page/chunk {cite.get('page')}",
+            source=str(primary.get("source", "")),
+            claim=claim_text,
             related_order_id=str(ml.get("order_id")),
             related_vendor=str(ml.get("vendor")),
-            document_page=str(cite.get("page")),
-            payload=cite,
-            synthetic_source=bool(cite.get("synthetic")),
+            document_page=str(primary.get("page")) if primary else None,
+            payload=payload,
+            synthetic_source=any(bool(c.get("synthetic")) for c in cited),
         )
         eids.append(e["evidence_id"])
+        claim_eids.append(e["evidence_id"])
 
-    return {**state, "evidence_ids": eids, "status": "evidence_recorded"}
+    return {
+        **state,
+        "evidence_ids": eids,
+        "claim_evidence_ids": claim_eids,
+        "status": "evidence_recorded",
+    }
 
 
 def report_writer(state: InvestigationState) -> InvestigationState:
@@ -184,6 +207,8 @@ def report_writer(state: InvestigationState) -> InvestigationState:
         "document_answer": docs.get("answer"),
         "citations": docs.get("citations"),
         "evidence_ids": state.get("evidence_ids"),
+        "checker_result": state.get("checker_result"),
+        "validation_status": state.get("status"),
         "assumptions": [
             "ML outputs are probabilistic estimates, not certain outcomes.",
             "Synthetic documents are non-authoritative development fixtures.",
@@ -195,12 +220,36 @@ def report_writer(state: InvestigationState) -> InvestigationState:
     out.mkdir(parents=True, exist_ok=True)
     path = out / f"investigation_{state.get('order_id')}.json"
     path.write_text(text, encoding="utf-8")
-    return {**state, "report": text, "status": "report_written"}
+    return {**state, "report": text, "status": state.get("status", "report_written")}
 
 
 def checker_node(state: InvestigationState) -> InvestigationState:
-    result = run_checker(state.get("evidence_ids"))
-    status = "validated" if result.get("needs_review", 0) == 0 else "needs_review"
+    evidence_ids = state.get("evidence_ids", [])
+    result = run_checker(evidence_ids)
+    docs = state.get("document_findings") or {}
+    claim_verification = verify_claims(docs.get("claims") or [], docs.get("retrieved") or [])
+
+    # Persist failed claim-level verdicts on the matching evidence records.
+    claim_evidence_ids = state.get("claim_evidence_ids", [])
+    for evidence_id, verdict in zip(
+        claim_evidence_ids, claim_verification["verdicts"]
+    ):
+        if not verdict["ok"]:
+            update_validation(evidence_id, "needs_review", "; ".join(verdict["notes"]))
+            for item in result["results"]:
+                if item["evidence_id"] == evidence_id:
+                    item["status"] = "needs_review"
+                    item["notes"] = "; ".join(verdict["notes"])
+
+    result["claim_verification"] = claim_verification
+    result["needs_review"] = sum(item["status"] != "validated" for item in result["results"])
+    result["validated"] = result["checked"] - result["needs_review"]
+    status = (
+        "validated"
+        if result.get("needs_review", 0) == 0
+        and claim_verification.get("needs_review", 0) == 0
+        else "needs_review"
+    )
     return {**state, "checker_result": result, "status": status}
 
 
@@ -210,8 +259,8 @@ def _run_deterministic(state: InvestigationState) -> InvestigationState:
         data_analyst,
         document_researcher,
         evidence_writer,
-        report_writer,
         checker_node,
+        report_writer,
     ]:
         state = fn(state)
     return state
@@ -233,6 +282,7 @@ def run_investigation(query: str, order_id: int | None = None) -> InvestigationS
             ml_findings: dict[str, Any]
             document_findings: dict[str, Any]
             evidence_ids: list[str]
+            claim_evidence_ids: list[str]
             checker_result: dict[str, Any]
             report: str
             status: str
@@ -248,9 +298,9 @@ def run_investigation(query: str, order_id: int | None = None) -> InvestigationS
         graph.add_edge("planner", "data_analyst")
         graph.add_edge("data_analyst", "document_researcher")
         graph.add_edge("document_researcher", "evidence_writer")
-        graph.add_edge("evidence_writer", "report_writer")
-        graph.add_edge("report_writer", "checker")
-        graph.add_edge("checker", END)
+        graph.add_edge("evidence_writer", "checker")
+        graph.add_edge("checker", "report_writer")
+        graph.add_edge("report_writer", END)
         app = graph.compile()
         final = app.invoke(state)
         if not final.get("ml_findings"):

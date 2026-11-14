@@ -281,6 +281,8 @@ def investigations_run(body: InvestigationRequest) -> dict[str, Any]:
         "ml_findings": result.get("ml_findings"),
         "document_findings": {
             "answer": (result.get("document_findings") or {}).get("answer"),
+            "claims": (result.get("document_findings") or {}).get("claims"),
+            "claim_verification": (result.get("checker_result") or {}).get("claim_verification"),
             "citations": (result.get("document_findings") or {}).get("citations"),
         },
         "evidence_ids": result.get("evidence_ids"),

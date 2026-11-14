@@ -78,7 +78,7 @@ def validate_citation(evidence: dict[str, Any]) -> tuple[bool, str]:
 
 def run_checker(evidence_ids: list[str] | None = None) -> dict[str, Any]:
     items = list_evidence(limit=500)
-    if evidence_ids:
+    if evidence_ids is not None:
         items = [e for e in items if e["evidence_id"] in evidence_ids]
 
     results = []

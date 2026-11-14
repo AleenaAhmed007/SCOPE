@@ -140,6 +140,7 @@ export default function Investigate() {
 
   const ml = result?.ml_findings || {};
   const checker = result?.checker_result || {};
+  const claimVerification = checker.claim_verification || {};
   const checked = checker.checked ?? 0;
   const validated = checker.validated ?? 0;
 
@@ -287,6 +288,30 @@ export default function Investigate() {
                 </li>
               ))}
             </ul>
+            <div className="mt-5 border-t border-white/10 pt-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="panel-title">Claim support checks</p>
+                <span className="text-xs text-muted">
+                  {claimVerification.supported ?? 0}/{claimVerification.claims_checked ?? 0} supported
+                </span>
+              </div>
+              <ul className="mt-3 space-y-3">
+                {(claimVerification.verdicts || []).map((verdict: any, index: number) => (
+                  <li key={`${index}-${verdict.claim}`} className="rounded-xl bg-white/[0.03] p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-sm text-ink">{verdict.claim}</p>
+                      <Badge tone={verdict.ok ? "ok" : "warn"}>{verdict.status}</Badge>
+                    </div>
+                    <p className="mt-1 text-xs text-muted">
+                      Support {Math.round((verdict.support ?? 0) * 100)}% · {(verdict.notes || []).join(" ")}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              {claimVerification.claims_checked === 0 && (
+                <p className="mt-2 text-xs text-muted">No document claims were produced for verification.</p>
+              )}
+            </div>
           </motion.div>
 
           <motion.div

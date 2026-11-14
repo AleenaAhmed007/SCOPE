@@ -32,7 +32,7 @@ The current checkout's `reports/models/` contains only `.gitkeep`; model artifac
 | Cross-encoder reranking | Optional implementation only | Wrapper and retrieval integration exist, but dependency/model availability is not guaranteed. Runtime metadata should state whether reranking actually ran. |
 | Hybrid retrieval and evaluation | Implemented in source | Dense/BM25/fused/reranked ablations and 20 hand-written retrieval cases exist. Evaluation remains a wiring check over a small synthetic corpus, not a broad quality claim. Regenerate index metadata to get current results. |
 | LLM answer generation | Optional implementation | OpenAI-compatible chat-completions endpoint is supported through environment variables, with extractive fallback. No provider is configured by default in the checked-in requirements/config. Do not claim generated answers are active unless configured and verified. |
-| Claim-level verification | Helper implemented, not wired end to end | `backend/scope/evidence/claims.py` checks citation resolution, numeric grounding and lexical overlap. The investigation workflow's `checker_node` still calls `run_checker()` from `checker.py`; it does not call `verify_claims()`. Generated RAG claims are not sent through this claim verifier in the workflow. |
+| Claim-level verification | Wired into RAG answers and investigations | RAG claims are checked against retrieved passages. Unsupported claims are excluded from answer text but remain in the response with verdicts. Investigation evidence stores the asserted claim and its passage; `checker_node` runs `verify_claims()`, updates failed ledger rows to `needs_review`, and makes the investigation status `needs_review`. |
 | PDF upload | Not implemented correctly | Upload endpoint saves bytes, then treats non-Markdown files as UTF-8 text. There is no PDF text extraction and no frontend upload control. Markdown/text uploads are the supported path. |
 | Corpus size and provenance | Partial | Eight synthetic policy/agreement documents are present. They are fixtures, not authoritative external contracts or a representative production corpus. |
 
@@ -42,8 +42,8 @@ The current checkout's `reports/models/` contains only `.gitkeep`; model artifac
 |---|---|---|
 | Investigation graph | Implemented, deterministic sequence | Planner, analysis, document retrieval, evidence/report writing and checker nodes exist. |
 | Autonomous planning | Still outstanding | `planner()` returns a hard-coded task list. Graph edges are linear; no goal-dependent tool selection or re-planning. |
-| Checker revision loop | Still outstanding | Checker runs after report writing and graph ends. No conditional retry/report revision is wired. `prune_unsupported()` is currently an unused helper. |
-| Checker negative-path evaluation | Still outstanding | Unit tests cover numeric mismatch. No end-to-end experiment injects corrupted/unsupported generated claims and reports detection and false-positive rates. |
+| Checker revision loop | Still outstanding | Checker now runs before the final report is written, so the report contains verdicts. No conditional retry/report revision is wired; `prune_unsupported()` remains unused. |
+| Checker negative-path evaluation | Implemented on synthetic fixtures | `python -m scope.evaluation.checker_claim_evaluation` evaluates 50 labelled cases: 10 supported and 40 negatives across unsupported, uncited, unknown-citation and wrong-number cases. Latest run: detection 1.00, false-positive rate 0.00, supported-claim false-rejection rate 0.00. These are deterministic wiring metrics, not real-world semantic accuracy. |
 | Evidence ledger | Implemented | PostgreSQL-backed evidence and validation records are present in source. |
 | Analytical scheduling | Not implemented | No scheduler, queue/worker, or analytical job table was found. Remove any proposal/architecture claim that analyses run as scheduled jobs, or implement this layer. |
 
@@ -63,7 +63,7 @@ The current checkout's `reports/models/` contains only `.gitkeep`; model artifac
 
 1. Update the RAG description to say **BM25 is implemented; dense embeddings and cross-encoder reranking are optional and must be confirmed from runtime metadata**. UI currently presents dense/BM25/reranking as a guaranteed stack, which may overstate a fallback-only runtime.
 2. Update the RAG evaluation description from the old TF-IDF/keyword account. Current source uses BM25 and optional dense retrieval; report generation code may still contain stale TF-IDF wording and needs alignment.
-3. Keep the checker claim narrow until `verify_claims()` is wired into investigation and evaluated end to end. At present, claim-level semantic/lexical verification is a helper, not the active workflow checker.
+3. Describe claim support as a lexical/numeric heuristic, not semantic entailment. The checker is active in the investigation flow, but the evaluation is a small synthetic fixture.
 4. Do not claim PDF upload support until real PDF extraction and a UI upload path are implemented.
 5. Rerun model phases/evaluation and reconcile the duration-model selection and vendor-KPI evaluation rows. Artifacts are absent from the current workspace even though source code can create them.
 6. State that LLM generation is optional and only active when configured; otherwise the extractive fallback is used.
@@ -71,17 +71,16 @@ The current checkout's `reports/models/` contains only `.gitkeep`; model artifac
 
 ## Remaining work, in priority order
 
-1. **Wire claim verification into the investigation flow:** pass generated claims and retrieved passages to `verify_claims()`, expose verdicts, and prevent unsupported claims from being labelled validated.
-2. **Evaluate the Checker end to end:** inject supported, unsupported, uncited, unknown-citation and wrong-number claims; report detection rate and false-positive rate.
-3. **Regenerate and reconcile artifacts:** run the intended model/evaluation phases, save bundles, rebuild the RAG index, and regenerate final reports from those current outputs. Resolve duration-model and vendor-KPI report discrepancies.
-4. **Make RAG capability reporting truthful:** include/install the intended optional neural dependency where appropriate, inspect actual index metadata, and make UI/report copy reflect fallback versus dense/reranked mode.
-5. **Implement proper PDF parsing and frontend upload**, if PDF upload is a required deliverable.
-6. **Add planner branching and checker retry/revision**, if autonomous investigation is a required research contribution.
-7. **Either implement job scheduling or remove the scheduling claim.**
-8. **Add Alembic and frontend/API integration tests** if required by the proposal/deployment target.
+1. **Regenerate and reconcile artifacts:** run the intended model/evaluation phases, save bundles, rebuild the RAG index, and regenerate final reports from current outputs. Resolve duration-model and vendor-KPI report discrepancies.
+2. **Make RAG capability reporting truthful:** inspect actual index metadata and ensure UI/report copy reflects fallback versus dense/reranked mode.
+3. **Expand checker evaluation beyond fixtures** before making broad semantic-accuracy claims; current rates use deterministic synthetic examples.
+4. **Implement proper PDF parsing and frontend upload**, if PDF upload is a required deliverable.
+5. **Add planner branching and checker retry/revision**, if autonomous investigation is a required research contribution.
+6. **Either implement job scheduling or remove the scheduling claim.**
+7. **Add Alembic and frontend/API integration tests** if required by the proposal/deployment target.
 
 ## Verdict
 
-Several gaps from the previous audit have been addressed: the RAG corpus is restricted to document fixtures/uploads, BM25 is real Okapi BM25, optional dense/reranker and LLM code exists, claim verification helpers exist, and vendor-KPI artifact saving is implemented. These additions are not all active end to end: neural RAG is optional, claim verification is not connected to the agent checker, and fresh model artifacts are absent from this workspace.
+Several gaps from the previous audit have been addressed: the RAG corpus is restricted to document fixtures/uploads, BM25 is real Okapi BM25, optional dense/reranker and LLM code exists, claim verification is wired into RAG answers and investigations, and a synthetic negative-path checker evaluation is recorded. Neural RAG remains optional, and fresh model artifacts are absent from this workspace.
 
-The highest-priority remaining research work is claim-checker integration plus a measured negative-path evaluation. The main reproducibility task is rerunning phases and reconciling generated artifacts/reports. Autonomous planning, scheduling, and proper PDF handling remain unimplemented.
+The highest-priority remaining work is rerunning phases and reconciling generated artifacts/reports. The checker rejects the tested unsupported claim categories, though the reported rates are synthetic-fixture results. Autonomous planning, scheduling, and proper PDF handling remain unimplemented.

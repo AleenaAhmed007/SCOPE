@@ -24,6 +24,7 @@ from dataclasses import dataclass, field
 from typing import Any, Sequence
 
 from scope.logging_config import setup_logging
+from scope.evidence.claims import verify_claims
 from scope.rag.bm25 import tokenize
 
 logger = setup_logging()
@@ -75,13 +76,20 @@ class GroundedAnswer:
     generator: str
     note: str = ""
 
-    def render(self) -> str:
-        if not self.claims:
+    def render(self, supported_claims: list[dict[str, Any]] | None = None) -> str:
+        claims = self.claims if supported_claims is None else supported_claims
+        if not claims:
             return "Insufficient grounded evidence was found in the document index."
         lines: list[str] = []
-        for claim in self.claims:
-            markers = "".join(f"[{i}]" for i in claim.citation_indices)
-            lines.append(f"- {claim.text} {markers}".rstrip())
+        for claim in claims:
+            if isinstance(claim, dict):
+                text = claim["text"]
+                indices = claim["citation_indices"]
+            else:
+                text = claim.text
+                indices = claim.citation_indices
+            markers = "".join(f"[{i}]" for i in indices)
+            lines.append(f"- {text} {markers}".rstrip())
         body = "\n".join(lines)
         warning = (
             "\n\nRetrieved passages may include clearly labelled synthetic documents."
@@ -91,10 +99,16 @@ class GroundedAnswer:
         return f"{body}{warning}"
 
     def to_dict(self) -> dict[str, Any]:
+        claim_payloads = [claim.to_dict() for claim in self.claims]
+        verification = verify_claims(claim_payloads, self.retrieved)
+        for claim, verdict in zip(claim_payloads, verification["verdicts"]):
+            claim["verification"] = verdict
+        supported = [claim for claim in claim_payloads if claim["verification"]["ok"]]
         return {
             "query": self.query,
-            "answer": self.render(),
-            "claims": [claim.to_dict() for claim in self.claims],
+            "answer": self.render(supported),
+            "claims": claim_payloads,
+            "claim_verification": verification,
             "citations": [
                 {
                     "index": c.index,
@@ -111,7 +125,7 @@ class GroundedAnswer:
                 for c in self.citations
             ],
             "retrieved": self.retrieved,
-            "grounded": self.grounded,
+            "grounded": bool(claim_payloads) and len(supported) == len(claim_payloads),
             "generator": self.generator,
             "note": self.note,
         }
