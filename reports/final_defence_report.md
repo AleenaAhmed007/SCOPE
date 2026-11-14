@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-14T10:47:47.756526+00:00`
+Generated: `2026-11-14T10:57:03.534609+00:00`
 
 ## System summary
 
@@ -45,6 +45,54 @@ SCOPE integrates:
 - Vendor segmentation: **k=4, silhouette=0.26827670925046854**, with small-history and profile-outlier vendors separated.
 - Unusual shipment profile flags: **181 / 1550** test shipments; flagged late-rate diagnostic **0.20441988950276244** (descriptive only).
 - SHAP status: **ok**
+
+## Model evaluation table
+
+Supervised metrics use the held-out test split unless marked as validation. Forecast candidates are selected on validation data; only the selected estimator is scored separately on test data. Unsupervised rows show descriptive diagnostics because they have no labeled ground truth.
+
+| Task | Model | Validation result | Test / sample result | Note |
+|---|---|---|---|---|
+| Late delivery | xgboost | val F1 0.463; ROC-AUC 0.747; PR-AUC 0.336 | test F1 0.340; ROC-AUC 0.764; PR-AUC 0.278 | Candidate; threshold 0.270 |
+| Late delivery | random_forest | val F1 0.511; ROC-AUC 0.789; PR-AUC 0.366 | test F1 0.431; ROC-AUC 0.807; PR-AUC 0.307 | Selected; threshold 0.476 |
+| Delivery duration | dummy_median | val MAE 86.748 days | test MAE 81.188 days; R² -0.111 | Baseline |
+| Delivery duration | gradient_boosting | val MAE 88.151 days | test MAE 79.877 days; R² -0.083 | Candidate |
+| Delivery duration | xgboost | val MAE 89.225 days | test MAE 82.075 days; R² -0.107 | Candidate |
+| Delivery duration | random_forest | val MAE 86.411 days | test MAE 81.223 days; R² -0.124 | Selected |
+| Monthly late-rate forecast | naive_lag1 | validation MAE 0.095 | test MAE 0.087 | Test baseline; n_test 22; shipment_count_weighted |
+| Monthly late-rate forecast | persistence_linear | validation MAE 0.084 | not scored on test | Validation candidate; n_test —; — |
+| Monthly late-rate forecast | gradient_boosting | validation MAE 0.080 | not scored on test | Validation candidate; n_test —; — |
+| Monthly late-rate forecast | random_forest | validation MAE 0.078 | not scored on test | Validation candidate; n_test —; — |
+| Monthly late-rate forecast | extra_trees | validation MAE 0.069 | test MAE 0.068 | Selected; n_test 22; shipment_count_weighted |
+| Monthly late-rate forecast | mean_baseline | validation MAE 0.090 | test MAE 0.064 | Test baseline; n_test 22; shipment_count_weighted |
+| Monthly volume forecast | naive_lag1 | validation MAE 1137035.111 | test MAE 947280.227 | Test baseline; n_test 22; unweighted |
+| Monthly volume forecast | persistence_linear | validation MAE 685063.110 | not scored on test | Validation candidate; n_test —; — |
+| Monthly volume forecast | gradient_boosting | validation MAE 617024.420 | not scored on test | Validation candidate; n_test —; — |
+| Monthly volume forecast | random_forest | validation MAE 646759.741 | not scored on test | Validation candidate; n_test —; — |
+| Monthly volume forecast | extra_trees | validation MAE 602625.224 | test MAE 994005.190 | Selected; n_test 22; unweighted |
+| Monthly volume forecast | mean_baseline | validation MAE 1073664.915 | test MAE 1205206.061 | Test baseline; n_test 22; unweighted |
+| Inventory stockout proxy | logistic_regression | val PR-AUC 0.574; F1 0.559 | test PR-AUC —; ROC-AUC — | Validation candidate; experimental, unverified source |
+| Inventory stockout proxy | random_forest | val PR-AUC 0.652; F1 0.621 | test PR-AUC 0.705; ROC-AUC 0.782 | Selected; experimental, unverified source |
+| Vendor segmentation | K-Means (k=4) | silhouette 0.268 | 28 clustered vendors; sizes {'0': 4, '1': 5, '2': 7, '3': 12} | Unsupervised; not a predictive accuracy score |
+| Unusual shipment profile | Isolation Forest | — | 181 flags / 1550 (11.7%) | Unsupervised; no ground-truth anomaly labels |
+| Retrospective anomaly | Isolation Forest | — | 159 flags / 1550 (10.3%) | Unsupervised; no ground-truth anomaly labels |
+| Vendor KPI anomaly | Isolation Forest | — | Not evaluated | Saved model artifact or evaluation result missing |
+| RAG retrieval | TF-IDF + keyword RRF | — | MRR 0.833; Recall@3 1.000 | Wiring check only; 3 synthetic queries |
+
+## Model vs baseline comparison
+
+For MAE, lower is better; for AUC, PR-AUC, and F1, higher is better. Baselines and models use the same split when directly compared.
+
+| Task | Selected model | Baseline | Model result | Comparison |
+|---|---|---|---|---|
+| Late delivery | random_forest | vendor history ROC-AUC 0.787; PR-AUC 0.255 | ROC-AUC 0.807; PR-AUC 0.307 | AUC Δ 0.020 |
+| Late delivery | random_forest | prevalence-only PR-AUC 0.118 | PR-AUC 0.307 | Above prevalence baseline |
+| Delivery duration | random_forest | median baseline MAE 81.188 days | MAE 81.223 days; Δ 0.036 days | Does not beat on test; validation beats median |
+| Monthly late rate | extra_trees | naive MAE 0.087; mean MAE 0.064 | model MAE 0.068 | beats naive: yes; beats mean: no |
+| Monthly volume | extra_trees | naive MAE 947280.227; mean MAE 1205206.061 | model MAE 994005.190 | beats naive: no; beats mean: yes |
+| Inventory stockout proxy | random_forest | validation prevalence PR-AUC 0.338 | validation PR-AUC 0.652; test PR-AUC 0.705 vs test prevalence 0.379 | test AP Δ 0.326; label is derived and source unverified |
+| Vendor segmentation | K-Means | No labeled baseline | silhouette only | N/A: descriptive clusters, not prediction |
+| Anomaly models | Isolation Forest | No labeled anomaly baseline | flag rates only | N/A: no ground truth labels |
+| RAG retrieval | TF-IDF + keyword RRF | No representative relevance baseline | 3-query sanity check | N/A: not a quality benchmark |
 
 ## Important limitations
 
