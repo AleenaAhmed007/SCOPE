@@ -1,16 +1,6 @@
-# Virtual environments
-.venv/
-venv/
-env/
-ENV/
-
-# Environment / secrets
-.env
-.env.local
-*.pem
-*.key
-
+# ---------------------------------------------------------------
 # Python
+# ---------------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
@@ -35,14 +25,78 @@ wheels/
 .mypy_cache/
 .ruff_cache/
 .coverage
+.coverage.*
 htmlcov/
 .tox/
 .nox/
 
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
 # Jupyter
 .ipynb_checkpoints/
 
-# IDE / OS
+# ---------------------------------------------------------------
+# Node / frontend (React + Vite)
+# ---------------------------------------------------------------
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+.vite/
+*.tsbuildinfo
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+
+# ---------------------------------------------------------------
+# Environment / secrets
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------------------------------------------------------------
+# Data (raw data is restricted; processed data is regenerated)
+# ---------------------------------------------------------------
+data/raw/*.csv
+/*.csv
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# ---------------------------------------------------------------
+# Generated reports / model artifacts (rebuilt by run_all_phases.py)
+# ---------------------------------------------------------------
+reports/figures/*
+!reports/figures/.gitkeep
+reports/metrics/*
+!reports/metrics/.gitkeep
+reports/models/*
+!reports/models/.gitkeep
+reports/investigations/*.json
+
+# Local databases (SQLite fallback for the evidence ledger)
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Logs
+*.log
+logs/
+
+# ---------------------------------------------------------------
+# IDE / OS / tools
+# ---------------------------------------------------------------
 .idea/
 .vscode/
 *.swp
@@ -50,51 +104,5 @@ htmlcov/
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Data artifacts (keep raw tracked only if explicitly allowed; prefer LFS or local)
-data/interim/*
-!data/interim/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-# Large raw CSV — do not push restricted/sensitive data
-data/raw/*.csv
-
-# Reports / model artifacts
-reports/figures/*
-!reports/figures/.gitkeep
-reports/metrics/*
-!reports/metrics/.gitkeep
-reports/models/*
-!reports/models/.gitkeep
-
-# Logs
-*.log
-logs/
-
-# SQLite / local DBs
-*.db
-*.sqlite
-*.sqlite3
-
-
-
-# Python cache
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
-# Virtual environments
-.venv/
-venv/
-env/
-
-# Environment variables / secrets
-.env
-.env.*
-!.env.example
-
-# Jupyter
-.ipynb_checkpoints/
-
+~$*
+.claude/settings.local.json
