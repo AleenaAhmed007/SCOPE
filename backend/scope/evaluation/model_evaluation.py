@@ -45,6 +45,7 @@ MODEL_ARTIFACTS = {
     "vendor_segmentation": "vendor_segmentation",
     "anomaly_unusual_profile": "anomaly_unusual_profile",
     "anomaly_retrospective": "anomaly_retrospective",
+    "anomaly_vendor_kpi": "anomaly_vendor_kpi",
 }
 
 
@@ -159,6 +160,25 @@ def _evaluate(name: str) -> dict[str, Any]:
                    "silhouette": float(silhouette_score(scaled, labels)) if len(set(labels)) > 1 and len(labels) > len(set(labels)) else None,
                    "inertia": float(pipe["kmeans"].inertia_),
                    "caveat": "Silhouette applies only to the modeled subset. Segments describe profiles, not vendor quality."}
+    elif name == "anomaly_vendor_kpi":
+        scored = pd.read_parquet(paths["processed"] / "anomaly_scores_vendor_kpi.parquet")
+        test = scored[scored["split"] == "test"]
+        flagged = test[test["is_anomaly"] == 1]
+        unflagged = test[test["is_anomaly"] == 0]
+        metrics = {
+            "label": bundle.get("label"),
+            "n_test_periods": len(test),
+            "n_unusual": int(test["is_anomaly"].sum()),
+            "anomaly_rate": float(test["is_anomaly"].mean()) if len(test) else None,
+            "mean_late_rate_flagged": float(flagged["late_rate"].mean()) if len(flagged) else None,
+            "mean_late_rate_unflagged": float(unflagged["late_rate"].mean()) if len(unflagged) else None,
+            "n_deteriorating": int(test["is_deteriorating"].sum()) if "is_deteriorating" in test else None,
+            "disruption_signal_rate": float(test["disruption_signal"].mean())
+            if "disruption_signal" in test and len(test)
+            else None,
+            "injected_disruption_check": (bundle.get("metrics") or {}).get("injected_disruption_check"),
+            "note": "Unsupervised supplier-period flags; detection rate comes from labelled synthetic injections.",
+        }
     else:
         suffix = "unusual_profile" if name.endswith("unusual_profile") else "retrospective"
         scores_path = paths["processed"] / f"anomaly_scores_{suffix}.parquet"

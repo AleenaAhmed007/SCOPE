@@ -1,11 +1,13 @@
 # Model hyperparameters and experiment defaults (Phase 0 placeholders)
 random_seed: 42
 
+# Values below document what the training code uses.
 classification:
   algorithm: xgboost
+  baseline: logistic_regression   # proposal baseline; random_forest also compared
   params:
     n_estimators: 200
-    max_depth: 6
+    max_depth: 5
     learning_rate: 0.05
     subsample: 0.8
     colsample_bytree: 0.8
@@ -13,6 +15,7 @@ classification:
 
 regression:
   algorithm: xgboost
+  objective: reg:absoluteerror    # selection metric is MAE
   params:
     n_estimators: 200
     max_depth: 6
@@ -21,9 +24,11 @@ regression:
     colsample_bytree: 0.8
 
 forecasting:
-  algorithm: null
-  horizon: null
-  frequency: null
+  candidates: [naive_lag1, mean_baseline, persistence_linear, gradient_boosting, random_forest, extra_trees, arima]
+  arima_order_selection: aic       # (p,d,q) in {0..2}x{0,1}x{0,1}, optional seasonal AR(12)
+  horizon: 1                       # rolling one-step-ahead
+  frequency: monthly
+  per_product_group: true
 
 clustering:
   algorithm: kmeans
@@ -33,6 +38,7 @@ clustering:
 
 anomaly:
   algorithm: isolation_forest
+  primary: vendor_kpi              # supplier KPIs per vendor-quarter
   params:
     contamination: 0.05
     random_state: 42

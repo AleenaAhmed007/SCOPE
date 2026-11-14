@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-10T13:09:53.628475+00:00`
+Generated: `2026-11-14T06:24:47.516520+00:00`
 
 ## System summary
 
@@ -20,22 +20,22 @@ SCOPE integrates:
 ## Primary ML result — late delivery
 
 - Best model: **random_forest**
-- Test recall: **0.825136612021858**
-- Test precision: **0.29206963249516443**
-- Test F1: **0.43142857142857144**
-- Test ROC-AUC: **0.8071042248791778**
-- Test PR-AUC: **0.30691550525426403**
+- Test recall: **0.8579234972677595**
+- Test precision: **0.2828828828828829**
+- Test F1: **0.4254742547425474**
+- Test ROC-AUC: **0.8030808159545252**
+- Test PR-AUC: **0.2961392230840407**
 - Test positive prevalence: **0.11806451612903225**
 - Positive prevalence by split: **{'train': 0.0988098533075007, 'val': 0.1866925064599483, 'test': 0.11806451612903225}**
 - Post-2010 training sensitivity test ROC-AUC: **0.8132582616794785**
 - Vendor-history-only baseline ROC-AUC: **0.7866693849161142**
-- Rolling-origin ROC-AUC: **0.6208423335259511 ± 0.11603728981764848**
+- Rolling-origin ROC-AUC: **0.6151698311758964 ± 0.1220933722288888**
 
 ## Supporting results
 
-- Duration best model: **random_forest**
+- Duration best model: **dummy_median**
 - Duration median baseline validation MAE: **86.74802110817942**
-- Duration test MAE / R²: **81.22336275142703 / -0.12444560390728854**
+- Duration test MAE / R²: **81.18778280542986 / -0.11067902540114005**
 - Forecasting frequency: **monthly**; results include naive and mean baselines.
 - Monthly late-rate model MAE: **0.06815115697827147**; beats naive: **True**, beats mean: **False**.
 - Monthly volume model MAE: **994005.1897767073**; beats naive: **False**, beats mean: **True**.
@@ -43,8 +43,8 @@ SCOPE integrates:
 - Inventory rule agreement on test rows: **1.0** (consistency check, not predictive accuracy).
 - RAG retrieval wiring sanity MRR: **0.8333333333333334** over 3 hand-authored synthetic queries; this is not a retrieval-quality claim.
 - Vendor segmentation: **k=4, silhouette=0.26827670925046854**, with small-history and profile-outlier vendors separated.
-- Unusual shipment profile flags: **181 / 1550** test shipments; flagged late-rate diagnostic **0.20441988950276244** (descriptive only).
-- SHAP status: **fallback_native_importance**
+- Unusual shipment profile flags: **89 / 1550** test shipments; flagged late-rate diagnostic **0.0898876404494382** (descriptive only).
+- SHAP status: **ok**
 
 ## Important limitations
 

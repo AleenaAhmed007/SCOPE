@@ -5,7 +5,12 @@ from __future__ import annotations
 from typing import Any
 
 import joblib
-import matplotlib.pyplot as plt
+import matplotlib
+
+# Headless backend: the default Tk backend failed ("Can't find a usable
+# init.tcl") and silently forced the native-importance fallback.
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np
 import pandas as pd
 
@@ -23,7 +28,8 @@ def run_shap_explainability(max_samples: int = 200) -> dict[str, Any]:
     features = bundle["features"]
 
     df = load_shipments()
-    test = df[df["split"] == "test"].dropna(subset=["is_late"]).head(max_samples)
+    test_all = df[df["split"] == "test"].dropna(subset=["is_late"])
+    test = test_all.sample(n=min(max_samples, len(test_all)), random_state=42)
     X = test[features]
 
     pre = pipe.named_steps["pre"]
@@ -39,8 +45,18 @@ def run_shap_explainability(max_samples: int = 200) -> dict[str, Any]:
     try:
         import shap
 
-        # TreeExplainer works with xgboost/rf
-        explainer = shap.TreeExplainer(model)
+        if hasattr(model, "coef_"):
+            # Linear model (logistic regression baseline): background = train sample.
+            train = df[df["split"] == "train"].dropna(subset=["is_late"])
+            background = pre.transform(
+                train[features].sample(n=min(500, len(train)), random_state=42)
+            )
+            explainer = shap.LinearExplainer(model, background)
+            explainer_name = "LinearExplainer (log-odds)"
+        else:
+            # TreeExplainer works with xgboost/rf
+            explainer = shap.TreeExplainer(model)
+            explainer_name = "TreeExplainer"
         shap_values = explainer.shap_values(Xt)
         if isinstance(shap_values, list):
             shap_values = shap_values[1] if len(shap_values) > 1 else shap_values[0]
@@ -91,6 +107,8 @@ def run_shap_explainability(max_samples: int = 200) -> dict[str, Any]:
 
         result = {
             "status": "ok",
+            "model_name": bundle.get("model_name"),
+            "explainer": explainer_name,
             "n_samples": len(test),
             "summary_plot": str(summary_path),
             "importance_path": str(importance_path),
@@ -100,15 +118,17 @@ def run_shap_explainability(max_samples: int = 200) -> dict[str, Any]:
     except Exception as exc:
         # Fallback: model feature importances if SHAP unavailable
         logger.warning("SHAP failed (%s); falling back to native importances", exc)
-        if hasattr(model, "feature_importances_"):
+        native = getattr(model, "feature_importances_", None)
+        if native is None and hasattr(model, "coef_"):
+            native = np.abs(np.ravel(model.coef_))
+        if native is not None:
             imp = (
-                pd.DataFrame(
-                    {"feature": feat_names, "importance": model.feature_importances_}
-                )
+                pd.DataFrame({"feature": feat_names, "importance": native})
                 .sort_values("importance", ascending=False)
                 .head(30)
             )
-            save_json(paths["metrics"] / "shap_feature_importance.json", imp.to_dict(orient="records"))
+            # Not SHAP values -- keep them out of the SHAP importance file.
+            save_json(paths["metrics"] / "native_feature_importance.json", imp.to_dict(orient="records"))
             result = {
                 "status": "fallback_native_importance",
                 "error": str(exc),

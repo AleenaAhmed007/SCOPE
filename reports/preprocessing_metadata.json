@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T13:11:01.706252+00:00",
+  "generated_at": "2026-11-14T06:19:19.772729+00:00",
   "column_mapping": {
     "ID": "ID",
     "Project Code": "Project_Code",
@@ -147,11 +147,11 @@
     "training_recommendation": "Do not train a stockout classifier: the flag exactly matches Opening_Stock - Line_Item_Quantity < 0 in this augmented dataset. Keep it as a rule consistency check pending source-system provenance."
   },
   "outputs": {
-    "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.parquet",
-    "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.parquet",
-    "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.parquet",
-    "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.parquet",
-    "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.parquet",
-    "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.parquet"
+    "interim": "D:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.parquet",
+    "shipments": "D:\\SCOPE\\SCOPE\\data\\processed\\shipments.parquet",
+    "vendor_features": "D:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.parquet",
+    "delay_timeseries": "D:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.parquet",
+    "volume_timeseries": "D:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.parquet",
+    "inventory_experiment": "D:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.parquet"
   }
 }

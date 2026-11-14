@@ -50,11 +50,21 @@ def train_delivery_duration() -> dict[str, Any]:
     val = work[work["split"] == "val"]
     test = work[work["split"] == "test"]
 
-    pre = build_preprocessor(num, cat)
+    # Models are selected on validation MAE, so the boosted models optimise an
+    # absolute-error loss; the right-skewed target otherwise pulls squared-error
+    # fits toward rare very long deliveries.
     models = {
         "dummy_median": DummyRegressor(strategy="median"),
-        "gradient_boosting": GradientBoostingRegressor(random_state=42),
+        "gradient_boosting": GradientBoostingRegressor(
+            loss="absolute_error",
+            n_estimators=300,
+            max_depth=3,
+            learning_rate=0.05,
+            subsample=0.8,
+            random_state=42,
+        ),
         "xgboost": XGBRegressor(
+            objective="reg:absoluteerror",
             n_estimators=250,
             max_depth=5,
             learning_rate=0.05,
@@ -93,7 +103,7 @@ def train_delivery_duration() -> dict[str, Any]:
 
     best_name, best_mae, best_pipe = None, float("inf"), None
     for name, reg in models.items():
-        pipe = Pipeline([("pre", pre), ("model", reg)])
+        pipe = Pipeline([("pre", build_preprocessor(num, cat)), ("model", reg)])
         pipe.fit(train[features], train["delivery_duration_days"])
         split_metrics = {}
         for split_name, part in [("val", val), ("test", test)]:
@@ -111,9 +121,17 @@ def train_delivery_duration() -> dict[str, Any]:
         baseline_val_mae is not None and best_mae < baseline_val_mae - 1e-9
     )
 
+    # If no learned model beats the median on validation, the saved "model" is
+    # the median itself. Say so explicitly so consumers never present it as an
+    # order-specific ML estimate (walk-forward checks confirmed no signal).
+    prediction_basis = (
+        "historical_median_baseline" if best_name == "dummy_median" else "ml_model"
+    )
+    results["prediction_basis"] = prediction_basis
     bundle = {
         "pipeline": best_pipe,
         "model_name": best_name,
+        "prediction_basis": prediction_basis,
         "features": features,
         "categorical": cat,
         "numeric": num,

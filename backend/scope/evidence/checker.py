@@ -13,16 +13,59 @@ from scope.db.session import get_session, init_db
 from scope.evidence.ledger import list_evidence, update_validation
 
 
+_NUMBER = re.compile(r"(?<![\w.])-?\d+(?:\.\d+)?(?![\w.]*\d)")
+
+
+def _payload_numbers(value: Any) -> list[float]:
+    """All numeric values in a (nested) payload, including numeric strings."""
+    if isinstance(value, bool):
+        return [float(value)]
+    if isinstance(value, (int, float)):
+        return [float(value)]
+    if isinstance(value, dict):
+        return [n for v in value.values() for n in _payload_numbers(v)]
+    if isinstance(value, (list, tuple, set)):
+        return [n for v in value for n in _payload_numbers(v)]
+    if isinstance(value, str):
+        out = []
+        for token in _NUMBER.findall(value):
+            try:
+                out.append(float(token))
+            except ValueError:
+                pass
+        return out
+    try:  # numpy scalars
+        return [float(value)]
+    except (TypeError, ValueError):
+        return []
+
+
 def validate_numeric_claim(claim: str, payload: dict[str, Any]) -> tuple[bool, str]:
-    """Check that numbers mentioned in the claim appear in payload (loose validation)."""
-    numbers = re.findall(r"-?\d+\.?\d*", claim)
-    if not numbers:
+    """Check every number in the claim against the payload's numeric values.
+
+    A claimed number is supported when some payload value rounds to it at the
+    precision the claim states (``0.005`` matches ``0.004736``; ``0.5`` does
+    not match ``0.55``). The previous substring check rejected correctly
+    rounded values and accepted any digit sequence found anywhere.
+    """
+    tokens = _NUMBER.findall(claim)
+    if not tokens:
         return True, "No numeric claims to verify"
-    payload_str = str(payload)
-    missing = [n for n in numbers if n not in payload_str]
+    values = _payload_numbers(payload)
+    missing = []
+    for token in tokens:
+        claimed = float(token)
+        decimals = len(token.split(".")[1]) if "." in token else 0
+        half_unit = 0.5 * 10 ** (-decimals)
+        supported = any(
+            abs(v - claimed) < half_unit or f"{v:.{decimals}f}" == f"{claimed:.{decimals}f}"
+            for v in values
+        )
+        if not supported:
+            missing.append(token)
     if missing:
-        return False, f"Numeric values not found in payload: {missing}"
-    return True, "Numeric values found in evidence payload"
+        return False, f"Numeric values not supported by payload: {missing}"
+    return True, "All numeric values match the evidence payload (at stated precision)"
 
 
 def validate_citation(evidence: dict[str, Any]) -> tuple[bool, str]:

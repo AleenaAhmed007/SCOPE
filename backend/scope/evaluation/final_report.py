@@ -48,6 +48,7 @@ def build_final_evaluation() -> dict[str, Any]:
         "inventory": _load(metrics / "inventory_experiment.json"),
         "shap": _load(metrics / "shap_explainability.json"),
         "rag_retrieval": _load(metrics / "rag_retrieval_evaluation.json"),
+        "walk_forward_backtest": _load(metrics / "walk_forward_backtest.json"),
         "model_evaluations": {
             name: _load(metrics / f"evaluation_{name}.json")
             for name in (
@@ -59,6 +60,7 @@ def build_final_evaluation() -> dict[str, Any]:
                 "vendor_segmentation",
                 "anomaly_unusual_profile",
                 "anomaly_retrospective",
+                "anomaly_vendor_kpi",
             )
         },
         "preprocessing": _load(root / "reports" / "preprocessing_metadata.json"),

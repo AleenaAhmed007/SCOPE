@@ -191,6 +191,7 @@ def predict_duration(req: LateDeliveryRequest) -> dict[str, Any]:
         "order_id": req.order_id,
         "predicted_duration_days": pred,
         "model": bundle.get("model_name"),
+        "prediction_basis": bundle.get("prediction_basis", "ml_model"),
         "low_confidence": low_confidence,
     }
 

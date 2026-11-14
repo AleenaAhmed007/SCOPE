@@ -1,4 +1,9 @@
-"""Phase 03 — Late delivery classification (XGBoost + Random Forest)."""
+"""Phase 03 — Late delivery classification.
+
+Per the proposal: XGBoost compared against a Logistic Regression baseline.
+Random Forest is kept as an additional tree-ensemble comparison. The model
+with the best validation F1 is saved; the threshold is tuned on validation only.
+"""
 
 from __future__ import annotations
 
@@ -8,6 +13,7 @@ import numpy as np
 import pandas as pd
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_curve
 from sklearn.model_selection import TimeSeriesSplit, cross_validate
 from sklearn.metrics import (
@@ -26,7 +32,11 @@ from xgboost import XGBClassifier
 from scope.logging_config import setup_logging
 from scope.db.experiments import log_experiment
 from scope.models.common import (
+    CalibratedClassifier,
     build_preprocessor,
+    calibration_report,
+    f1_optimal_threshold,
+    fit_platt,
     load_shipments,
     project_paths,
     save_json,
@@ -94,7 +104,6 @@ def train_late_delivery() -> dict[str, Any]:
     val = work[work["split"] == "val"].sort_values("Scheduled_Delivery_Date_Parsed")
     test = work[work["split"] == "test"].sort_values("Scheduled_Delivery_Date_Parsed")
 
-    pre = build_preprocessor(num, cat)
     # scale_pos_weight for imbalance
     pos = (train["is_late"] == 1).sum()
     neg = (train["is_late"] == 0).sum()
@@ -120,6 +129,18 @@ def train_late_delivery() -> dict[str, Any]:
         random_state=42,
         n_jobs=2,
     )
+    logreg = LogisticRegression(
+        C=1.0,
+        class_weight="balanced",
+        max_iter=2000,
+        solver="lbfgs",
+    )
+    # Each candidate gets its own preprocessor; linear model gets log+scaling.
+    candidates = [
+        ("xgboost", xgb, build_preprocessor(num, cat)),
+        ("logistic_regression", logreg, build_preprocessor(num, cat, scale_numeric=True)),
+        ("random_forest", rf, build_preprocessor(num, cat)),
+    ]
 
     results: dict[str, Any] = {
         "target": "is_late",
@@ -138,6 +159,7 @@ def train_late_delivery() -> dict[str, Any]:
             for split_name, part in (("train", train), ("val", val), ("test", test))
         },
         "models": {},
+        "proposal_comparison": "xgboost vs logistic_regression (baseline); random_forest is an extra comparison",
     }
 
     train_prevalence = float(train["is_late"].mean())
@@ -163,7 +185,7 @@ def train_late_delivery() -> dict[str, Any]:
     best_pipe = None
     best_threshold = 0.5
 
-    for name, clf in [("xgboost", xgb), ("random_forest", rf)]:
+    for name, clf, pre in candidates:
         pipe = Pipeline([("pre", pre), ("model", clf)])
         pipe.fit(train[features], train["is_late"])
         val_proba = pipe.predict_proba(val[features])[:, 1] if len(val) else np.array([])
@@ -190,6 +212,20 @@ def train_late_delivery() -> dict[str, Any]:
             best_name = name
             best_pipe = pipe
             best_threshold = float(threshold)
+
+    xgb_test = results["models"].get("xgboost", {}).get("test", {})
+    lr_test = results["models"].get("logistic_regression", {}).get("test", {})
+    if xgb_test and lr_test:
+        results["xgboost_vs_logistic_baseline_test"] = {
+            metric: {
+                "xgboost": xgb_test.get(metric),
+                "logistic_regression": lr_test.get(metric),
+                "gain": (xgb_test[metric] - lr_test[metric])
+                if xgb_test.get(metric) is not None and lr_test.get(metric) is not None
+                else None,
+            }
+            for metric in ("precision", "recall", "f1", "roc_auc", "pr_auc")
+        }
 
     # Rolling-origin diagnostic includes the full development period, including
     # validation dates, so it reflects the drift the model must face later.
@@ -226,14 +262,45 @@ def train_late_delivery() -> dict[str, Any]:
             ),
             "threshold_source": "full-training validation split; not retuned on test",
         }
-    # Keep the train-only fitted estimator: the validation threshold was
-    # calibrated on its probabilities, so refitting would change that scale.
+    # Probability calibration (Platt) on the validation split. Class weighting
+    # made raw scores ~2.5x the real late rate, so they were not usable as
+    # probabilities. Calibration is monotonic: ranking metrics are unchanged.
+    # The train-only fitted estimator is kept; the calibrator maps its scale.
+    model = best_pipe
+    if len(val) and val["is_late"].nunique() > 1:
+        raw_val = best_pipe.predict_proba(val[features])[:, 1]
+        a, b = fit_platt(raw_val, val["is_late"].to_numpy())
+        model = CalibratedClassifier(best_pipe, a, b, fitted_on="validation split")
+        cal_val = model.calibrate(raw_val)
+        best_threshold = f1_optimal_threshold(val["is_late"].to_numpy(), cal_val)
+        results["calibration"] = {
+            "method": "platt_on_validation",
+            "a": a,
+            "b": b,
+            "validation_raw": calibration_report(val["is_late"], raw_val),
+            "validation_calibrated": calibration_report(val["is_late"], cal_val),
+        }
+        if len(test):
+            raw_test = best_pipe.predict_proba(test[features])[:, 1]
+            results["calibration"]["test_raw"] = calibration_report(test["is_late"], raw_test)
+            results["calibration"]["test_calibrated"] = calibration_report(
+                test["is_late"], model.calibrate(raw_test)
+            )
+        results["calibration"]["note"] = (
+            "Validation late rate differs from test (prior shift); use "
+            "recalibrate_late_model() on recent delivered outcomes to refresh "
+            "calibration and threshold as conditions drift."
+        )
+
     if len(test):
-        test_proba = best_pipe.predict_proba(test[features])[:, 1]
+        test_proba = model.predict_proba(test[features])[:, 1]
         results["models"][best_name]["test"] = _metrics(
             test["is_late"], (test_proba >= best_threshold).astype(int), test_proba
         )
         results["models"][best_name]["decision_threshold"] = best_threshold
+        results["models"][best_name]["probabilities"] = (
+            "calibrated" if model is not best_pipe else "raw"
+        )
         results["class_balance_test"] = {
             "positive_rate": float(test["is_late"].mean()),
             "n": len(test),
@@ -244,8 +311,9 @@ def train_late_delivery() -> dict[str, Any]:
         )
 
     bundle = {
-        "pipeline": best_pipe,
+        "pipeline": model,
         "model_name": best_name,
+        "calibrated": model is not best_pipe,
         "features": features,
         "categorical": cat,
         "numeric": num,
@@ -271,6 +339,46 @@ def train_late_delivery() -> dict[str, Any]:
         logger.warning("Could not persist experiment metadata: %s", exc)
     logger.info("Late delivery model saved to %s (best=%s val_f1=%.3f)", out, best_name, best_f1)
     return results
+
+
+def recalibrate_late_model(
+    recent: pd.DataFrame | None = None, window_days: int = 365
+) -> dict[str, Any]:
+    """Refresh calibration + decision threshold on recent delivered outcomes.
+
+    Drift fix for operations: the base model is unchanged; only the probability
+    mapping and threshold are refit on the most recent ``window_days`` of
+    shipments whose outcome is known. Do not run this on the held-out test
+    period when reporting test metrics.
+    """
+    from scope.models.common import project_paths as _paths
+    import joblib
+
+    path = _paths()["models"] / "late_delivery_classifier" / "model.joblib"
+    bundle = joblib.load(path)
+    model = bundle["pipeline"]
+    base = getattr(model, "base_pipeline", model)
+    if recent is None:
+        df = load_shipments()
+        known = df[df["is_late"].notna() & df["Delivered_To_Client_Date_Parsed"].notna()]
+        cutoff = known["Delivered_To_Client_Date_Parsed"].max() - pd.Timedelta(days=window_days)
+        recent = known[known["Scheduled_Delivery_Date_Parsed"] >= cutoff]
+    y = recent["is_late"].astype(int).to_numpy()
+    if len(recent) < 200 or len(np.unique(y)) < 2:
+        raise ValueError(f"Not enough recent labelled outcomes to recalibrate ({len(recent)} rows).")
+    raw = base.predict_proba(recent[bundle["features"]])[:, 1]
+    a, b = fit_platt(raw, y)
+    new_model = CalibratedClassifier(base, a, b, fitted_on=f"recent {window_days} days")
+    threshold = f1_optimal_threshold(y, new_model.calibrate(raw))
+    bundle.update({"pipeline": new_model, "threshold": threshold, "calibrated": True})
+    joblib.dump(bundle, path)
+    info = {
+        "n_rows": len(recent),
+        "threshold": threshold,
+        "calibration": calibration_report(y, new_model.calibrate(raw)),
+    }
+    logger.info("Late model recalibrated on %d recent rows (threshold=%.3f)", len(recent), threshold)
+    return info
 
 
 if __name__ == "__main__":

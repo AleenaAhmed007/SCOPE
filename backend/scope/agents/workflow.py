@@ -92,6 +92,7 @@ def data_analyst(state: InvestigationState) -> InvestigationState:
         pred = float(dur_bundle["pipeline"].predict(row[feats])[0])
         findings["predicted_duration_days"] = pred
         findings["duration_model"] = dur_bundle.get("model_name")
+        findings["duration_basis"] = dur_bundle.get("prediction_basis", "ml_model")
         findings["duration_low_confidence"] = not bool(
             (dur_bundle.get("metrics") or {}).get("selected_model_beats_median_baseline_on_validation", False)
         )

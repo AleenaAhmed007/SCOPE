@@ -37,6 +37,7 @@ def main() -> None:
         ("10_evidence_init", "scope.evidence.ledger", "init_db"),
         ("11_sample_investigation", "scope.agents.workflow", "run_investigation"),
         ("12_model_evaluation", "scope.evaluation.model_evaluation", "evaluate_models"),
+        ("12b_walk_forward_backtest", "scope.evaluation.backtest", "run_backtests"),
         ("13_evaluation", "scope.evaluation.final_report", "build_final_evaluation"),
     ]
 
