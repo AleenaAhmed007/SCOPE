@@ -13,4 +13,4 @@ These files are **synthetic** development fixtures, not real supplier contracts 
 | SYNTHETIC_cold_chain_policy.md | policy |
 | SYNTHETIC_quality_policy.md | compliance |
 
-Only this directory (plus `uploads/`) is indexed as document evidence. Project reports and documentation are excluded to avoid circular citations.
+This directory contains synthetic fixtures. Official-source extracts live in `official/`; user uploads live in `uploads/`. Project reports and documentation are excluded to avoid circular citations.

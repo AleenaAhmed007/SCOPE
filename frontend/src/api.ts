@@ -32,6 +32,11 @@ export const getVendorSegments = () =>
   api.get("/api/v1/vendors/segments").then((r) => r.data);
 export const ragQuery = (query: string) =>
   api.post("/api/v1/rag/query", { query }).then((r) => r.data);
+export const uploadDocument = (file: File) => {
+  const body = new FormData();
+  body.append("file", file);
+  return api.post("/api/v1/rag/upload", body).then((r) => r.data);
+};
 export const runInvestigation = (query: string, order_id?: number) =>
   api.post("/api/v1/investigations/run", { query, order_id }).then((r) => r.data);
 export const getEvidence = () => api.get("/api/v1/evidence").then((r) => r.data);

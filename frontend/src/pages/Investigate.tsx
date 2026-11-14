@@ -312,6 +312,29 @@ export default function Investigate() {
                 <p className="mt-2 text-xs text-muted">No document claims were produced for verification.</p>
               )}
             </div>
+            {(result.revision_history?.length > 0 || result.excluded_claims?.length > 0) && (
+              <div className="mt-5 border-t border-white/10 pt-4">
+                <p className="panel-title">Checker revision</p>
+                {result.revision_history?.map((revision: any, index: number) => (
+                  <p key={index} className="mt-2 text-xs text-muted">
+                    Attempt {revision.attempt}: {revision.action} {revision.removed_claims} removed, {revision.remaining_claims} retained.
+                  </p>
+                ))}
+                {result.excluded_claims?.length > 0 && (
+                  <ul className="mt-3 space-y-2">
+                    {result.excluded_claims.map((item: any, index: number) => (
+                      <li key={`${item.evidence_id}-${index}`} className="rounded-xl border border-warn/20 bg-warn/5 p-3">
+                        <div className="flex items-start justify-between gap-3">
+                          <p className="text-sm text-ink">{item.claim}</p>
+                          <Badge tone="warn">excluded · {item.verdict?.status ?? "needs review"}</Badge>
+                        </div>
+                        <p className="mt-1 text-xs text-muted">{(item.verdict?.notes ?? []).join(" ")}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </motion.div>
 
           <motion.div

@@ -24,29 +24,65 @@ class InvestigationState(TypedDict, total=False):
     query: str
     order_id: int | None
     plan: list[str]
+    needs_data: bool
+    needs_documents: bool
     ml_findings: dict[str, Any]
     document_findings: dict[str, Any]
     evidence_ids: list[str]
+    active_evidence_ids: list[str]
     claim_evidence_ids: list[str]
+    excluded_claims: list[dict[str, Any]]
+    revision_history: list[dict[str, Any]]
+    revision_count: int
     checker_result: dict[str, Any]
     report: str
     status: str
 
 
 def planner(state: InvestigationState) -> InvestigationState:
-    order_id = state.get("order_id")
-    plan = [
-        "Resolve order/shipment context",
-        "Run late-delivery prediction",
-        "Estimate delivery duration",
-        "Check unusual shipment profile score",
-        "Retrieve policy/document evidence",
-        "Write evidence-grounded report",
-        "Run Checker validation",
-    ]
-    if order_id is None:
-        plan.insert(0, "Infer order ID from query if present")
-    return {**state, "plan": plan, "status": "planned"}
+    import re
+
+    query = state.get("query", "").lower()
+    has_order_id = state.get("order_id") is not None or bool(re.search(r"\b(?:order|shipment)\s*#?\s*\d+\b", query))
+    document_terms = ("policy", "policies", "contract", "clause", "agreement", "sla", "document", "terms")
+    analytic_terms = ("predict", "prediction", "risk", "late", "delay", "duration", "forecast", "anomaly", "shipment")
+    wants_documents = any(term in query for term in document_terms)
+    wants_analysis = has_order_id or any(term in query for term in analytic_terms)
+    # Route a document-only question to retrieval; otherwise run data analysis,
+    # and add document research when the question asks for policy/contract support.
+    needs_data = wants_analysis or not wants_documents
+    needs_documents = wants_documents or not needs_data
+
+    plan: list[str] = []
+    if needs_data:
+        plan.extend(["Resolve shipment context", "Run relevant shipment risk models"])
+    if needs_documents:
+        plan.append("Retrieve policy/document evidence")
+    plan.extend(["Record evidence", "Run claim Checker"])
+    return {
+        **state,
+        "needs_data": needs_data,
+        "needs_documents": needs_documents,
+        "plan": plan,
+        "revision_count": 0,
+        "revision_history": [],
+        "excluded_claims": [],
+        "status": "planned",
+    }
+
+
+def route_after_planner(state: InvestigationState) -> str:
+    return "data" if state.get("needs_data", True) else "documents"
+
+
+def route_after_data(state: InvestigationState) -> str:
+    return "documents" if state.get("needs_documents", True) else "evidence"
+
+
+def route_after_checker(state: InvestigationState) -> str:
+    if state.get("status") == "needs_review" and state.get("revision_count", 0) < 1:
+        return "revise"
+    return "report"
 
 
 def _load_bundle(name: str):
@@ -113,10 +149,10 @@ def data_analyst(state: InvestigationState) -> InvestigationState:
 def document_researcher(state: InvestigationState) -> InvestigationState:
     query = state.get("query") or "late delivery vendor escalation policy"
     ml = state.get("ml_findings") or {}
-    enriched = (
-        f"{query}. Vendor {ml.get('vendor')} country {ml.get('country')} "
-        f"shipment mode {ml.get('shipment_mode')} late risk"
+    context = " ".join(
+        str(ml[key]) for key in ("vendor", "country", "shipment_mode") if ml.get(key)
     )
+    enriched = f"{query}. {context}".strip()
     docs = answer_with_citations(enriched, top_k=4)
     return {**state, "document_findings": docs, "status": "docs_complete"}
 
@@ -173,6 +209,7 @@ def evidence_writer(state: InvestigationState) -> InvestigationState:
     return {
         **state,
         "evidence_ids": eids,
+        "active_evidence_ids": list(eids),
         "claim_evidence_ids": claim_eids,
         "status": "evidence_recorded",
     }
@@ -209,9 +246,11 @@ def report_writer(state: InvestigationState) -> InvestigationState:
         "evidence_ids": state.get("evidence_ids"),
         "checker_result": state.get("checker_result"),
         "validation_status": state.get("status"),
+        "excluded_claims": state.get("excluded_claims", []),
+        "revision_history": state.get("revision_history", []),
         "assumptions": [
             "ML outputs are probabilistic estimates, not certain outcomes.",
-            "Synthetic documents are non-authoritative development fixtures.",
+            "Synthetic documents are non-authoritative; official extracts apply only within their stated jurisdiction.",
             "Inventory-augmented fields are not treated as system-of-record here.",
         ],
     }
@@ -224,7 +263,7 @@ def report_writer(state: InvestigationState) -> InvestigationState:
 
 
 def checker_node(state: InvestigationState) -> InvestigationState:
-    evidence_ids = state.get("evidence_ids", [])
+    evidence_ids = state.get("active_evidence_ids", state.get("evidence_ids", []))
     result = run_checker(evidence_ids)
     docs = state.get("document_findings") or {}
     claim_verification = verify_claims(docs.get("claims") or [], docs.get("retrieved") or [])
@@ -253,16 +292,67 @@ def checker_node(state: InvestigationState) -> InvestigationState:
     return {**state, "checker_result": result, "status": status}
 
 
+def revise_after_checker(state: InvestigationState) -> InvestigationState:
+    """Remove failed document claims, retain an audit trail, then recheck once."""
+    docs = dict(state.get("document_findings") or {})
+    claims = list(docs.get("claims") or [])
+    verdicts = (state.get("checker_result") or {}).get("claim_verification", {}).get("verdicts", [])
+    claim_ids = state.get("claim_evidence_ids", [])
+    keep: list[dict[str, Any]] = []
+    excluded: list[dict[str, Any]] = list(state.get("excluded_claims", []))
+    kept_ids: list[str] = []
+    excluded_ids: set[str] = set()
+    for index, claim in enumerate(claims):
+        verdict = verdicts[index] if index < len(verdicts) else {"ok": False, "status": "missing_verdict", "notes": ["No Checker verdict was returned."]}
+        evidence_id = claim_ids[index] if index < len(claim_ids) else None
+        if verdict.get("ok"):
+            keep.append(claim)
+            if evidence_id:
+                kept_ids.append(evidence_id)
+        else:
+            excluded.append({"claim": claim.get("text", ""), "verdict": verdict, "evidence_id": evidence_id})
+            if evidence_id:
+                excluded_ids.add(evidence_id)
+
+    docs["claims"] = keep
+    docs["grounded"] = bool(keep)
+    docs["answer"] = "\n".join(
+        f"- {claim.get('text', '')} {''.join(f'[{i}]' for i in claim.get('citation_indices', []))}".rstrip()
+        for claim in keep
+    ) or "Insufficient grounded evidence was found in the document index."
+    evidence_ids = state.get("evidence_ids", [])
+    active_ids = [eid for eid in evidence_ids if eid not in excluded_ids]
+    history = list(state.get("revision_history", []))
+    history.append({
+        "attempt": state.get("revision_count", 0) + 1,
+        "action": "Removed claims rejected by the Checker; preserved them as needs_review evidence.",
+        "removed_claims": len(excluded_ids),
+        "remaining_claims": len(keep),
+    })
+    return {
+        **state,
+        "document_findings": docs,
+        "active_evidence_ids": active_ids,
+        "claim_evidence_ids": kept_ids,
+        "excluded_claims": excluded,
+        "revision_history": history,
+        "revision_count": state.get("revision_count", 0) + 1,
+        "status": "revised",
+    }
+
+
 def _run_deterministic(state: InvestigationState) -> InvestigationState:
-    for fn in [
-        planner,
-        data_analyst,
-        document_researcher,
-        evidence_writer,
-        checker_node,
-        report_writer,
-    ]:
-        state = fn(state)
+    state = planner(state)
+    if state.get("needs_data"):
+        state = data_analyst(state)
+    if state.get("needs_documents"):
+        state = document_researcher(state)
+    state = evidence_writer(state)
+    state = checker_node(state)
+    if route_after_checker(state) == "revise":
+        state = revise_after_checker(state)
+        state = checker_node(state)
+    state = report_writer(state)
     return state
 
 
@@ -279,10 +369,16 @@ def run_investigation(query: str, order_id: int | None = None) -> InvestigationS
             query: str
             order_id: int | None
             plan: list[str]
+            needs_data: bool
+            needs_documents: bool
             ml_findings: dict[str, Any]
             document_findings: dict[str, Any]
             evidence_ids: list[str]
+            active_evidence_ids: list[str]
             claim_evidence_ids: list[str]
+            excluded_claims: list[dict[str, Any]]
+            revision_history: list[dict[str, Any]]
+            revision_count: int
             checker_result: dict[str, Any]
             report: str
             status: str
@@ -295,15 +391,29 @@ def run_investigation(query: str, order_id: int | None = None) -> InvestigationS
         graph.add_node("report_writer", report_writer)
         graph.add_node("checker", checker_node)
         graph.add_edge(START, "planner")
-        graph.add_edge("planner", "data_analyst")
-        graph.add_edge("data_analyst", "document_researcher")
+        graph.add_conditional_edges(
+            "planner",
+            route_after_planner,
+            {"data": "data_analyst", "documents": "document_researcher"},
+        )
+        graph.add_conditional_edges(
+            "data_analyst",
+            route_after_data,
+            {"documents": "document_researcher", "evidence": "evidence_writer"},
+        )
         graph.add_edge("document_researcher", "evidence_writer")
         graph.add_edge("evidence_writer", "checker")
-        graph.add_edge("checker", "report_writer")
+        graph.add_conditional_edges(
+            "checker",
+            route_after_checker,
+            {"revise": "claim_revision", "report": "report_writer"},
+        )
+        graph.add_node("claim_revision", revise_after_checker)
+        graph.add_edge("claim_revision", "checker")
         graph.add_edge("report_writer", END)
         app = graph.compile()
         final = app.invoke(state)
-        if not final.get("ml_findings"):
+        if not final.get("ml_findings") and not final.get("document_findings"):
             raise RuntimeError("LangGraph returned incomplete state")
         logger.info("LangGraph investigation complete: %s", final.get("status"))
         return final  # type: ignore[return-value]

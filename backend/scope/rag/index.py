@@ -1,6 +1,7 @@
 """RAG index: corpus collection, chunking, dense + BM25 indexing, evaluation.
 
-Only ``data/documents/`` is indexed (synthetic fixtures plus user uploads).
+``data/documents/`` contains the indexed synthetic fixtures, official extracts,
+and user uploads.
 Project reports and documentation are deliberately **excluded** — indexing them
 let an investigation cite the project's own output as evidence, which is
 circular and was flagged in the completeness audit.
@@ -27,6 +28,7 @@ from scope.rag.chunking import chunk_markdown, is_synthetic
 from scope.rag.documents import (
     SYNTHETIC_SUBDIR,
     UPLOAD_SUBDIR,
+    OFFICIAL_SUBDIR,
     ensure_synthetic_docs,
     infer_document_type,
     synthetic_doc_dir,
@@ -78,10 +80,11 @@ def index_dir() -> Path:
 
 
 def corpus_files() -> list[Path]:
-    """Document files eligible to become evidence (synthetic fixtures + uploads)."""
+    """Document files eligible to become evidence (fixtures, official, uploads)."""
     ensure_synthetic_docs()
     files: list[Path] = []
-    for directory in (synthetic_doc_dir(), upload_doc_dir()):
+    root = get_project_root() / "data" / "documents"
+    for directory in (synthetic_doc_dir(), root / OFFICIAL_SUBDIR, upload_doc_dir()):
         if not directory.exists():
             continue
         for path in sorted(directory.iterdir()):
@@ -154,7 +157,11 @@ def build_rag_index() -> dict[str, Any]:
         "n_sections": len(sections),
         "corpus": sorted({c["file_name"] for c in chunks}),
         "document_types": sorted({c["document_type"] for c in chunks}),
-        "indexed_dirs": [f"data/documents/{SYNTHETIC_SUBDIR}", f"data/documents/{UPLOAD_SUBDIR}"],
+        "indexed_dirs": [
+            f"data/documents/{SYNTHETIC_SUBDIR}",
+            f"data/documents/{OFFICIAL_SUBDIR}",
+            f"data/documents/{UPLOAD_SUBDIR}",
+        ],
         "retrieval_stack": {
             "dense": "BAAI/bge-small-en-v1.5" if dense_vectors is not None else None,
             "dense_dim": int(dense_vectors.shape[1]) if dense_vectors is not None else None,
@@ -164,7 +171,7 @@ def build_rag_index() -> dict[str, Any]:
         },
         "neural": availability,
         "synthetic_corpus": all(c["synthetic"] for c in chunks) if chunks else True,
-        "note": "Synthetic fixtures only; project reports and docs are excluded from evidence.",
+        "note": "Synthetic fixtures, source-attributed official extracts, and user uploads; project reports and docs are excluded.",
         "artifact_dir": str(out_dir),
     }
 
@@ -253,7 +260,7 @@ def document_coverage() -> dict[str, Any]:
         "n_documents": len({c["document_id"] for c in chunks}),
         "document_types": sorted({c["document_type"] for c in chunks}),
         "all_synthetic": all(c["synthetic"] for c in chunks) if chunks else True,
-        "note": "Synthetic fixtures are non-authoritative and cannot be cited as official policy.",
+        "note": "Synthetic fixtures are non-authoritative; official-source extracts are jurisdiction-specific and should be checked against the source.",
     }
 
 

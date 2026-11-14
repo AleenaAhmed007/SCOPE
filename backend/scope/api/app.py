@@ -7,6 +7,8 @@ from typing import Any
 
 import joblib
 import pandas as pd
+import re
+import uuid
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -17,6 +19,7 @@ from scope.db.session import init_db, resolve_database_url
 from scope.evidence.ledger import list_evidence
 from scope.models.common import load_shipments, project_paths
 from scope.rag.index import answer_with_citations, build_rag_index
+from scope.rag.pdf import extract_pdf_markdown
 
 app = FastAPI(title="SCOPE API", version="0.1.0")
 app.add_middleware(
@@ -256,19 +259,48 @@ async def rag_upload(file: UploadFile = File(...)) -> dict[str, Any]:
     root = get_project_root()
     dest_dir = root / "data" / "documents" / "uploads"
     dest_dir.mkdir(parents=True, exist_ok=True)
-    dest = dest_dir / file.filename
-    content = await file.read()
-    dest.write_bytes(content)
-    # Reindex including uploads (build_rag_index currently uses synthetic+docs; append upload text)
-    text = content.decode("utf-8", errors="ignore")
-    note = dest.with_suffix(dest.suffix + ".md") if dest.suffix.lower() != ".md" else dest
-    if dest.suffix.lower() != ".md":
-        note.write_text(
-            f"# Uploaded document\n\nSource file: {file.filename}\n\n{text[:20000]}",
-            encoding="utf-8",
-        )
+    original_name = (file.filename or "").replace("\\", "/").split("/")[-1]
+    if not original_name:
+        raise HTTPException(400, "A filename is required.")
+    suffix = Path(original_name).suffix.lower()
+    if suffix not in {".pdf", ".md", ".markdown", ".txt"}:
+        raise HTTPException(415, "Supported upload types are PDF, Markdown, and plain text.")
+    content = await file.read(30 * 1024 * 1024 + 1)
+    if len(content) > 30 * 1024 * 1024:
+        raise HTTPException(413, "File exceeds the 30 MB upload limit.")
+    if not content:
+        raise HTTPException(400, "The uploaded file is empty.")
+
+    stem = re.sub(r"[^A-Za-z0-9._-]+", "_", Path(original_name).stem).strip("._-") or "document"
+    safe_name = f"{stem}_{uuid.uuid4().hex[:8]}"
+    original_dir = dest_dir / "_originals"
+    original_dir.mkdir(exist_ok=True)
+    extracted = dest_dir / f"{safe_name}.md"
+    if suffix == ".pdf":
+        try:
+            markdown, page_count = extract_pdf_markdown(content, original_name)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+    else:
+        try:
+            text = content.decode("utf-8-sig").strip()
+        except UnicodeDecodeError as exc:
+            raise HTTPException(422, "Text uploads must use UTF-8 encoding.") from exc
+        if not text:
+            raise HTTPException(422, "The uploaded document contains no text.")
+        page_count = None
+        markdown = f"# Uploaded document: {original_name}\n\n{text[:1_000_000]}\n"
+    (original_dir / f"{safe_name}{suffix}").write_bytes(content)
+    extracted.write_text(markdown, encoding="utf-8")
     meta = build_rag_index()
-    return {"saved": str(dest), "reindex": meta}
+    return {
+        "saved_name": original_name,
+        "indexed_name": extracted.name,
+        "pages": page_count,
+        "indexed_documents": meta["n_documents"],
+        "indexed_chunks": meta["n_chunks"],
+        "reindex": meta,
+    }
 
 
 @app.post("/api/v1/investigations/run")
@@ -278,6 +310,8 @@ def investigations_run(body: InvestigationRequest) -> dict[str, Any]:
         "status": result.get("status"),
         "order_id": result.get("order_id"),
         "plan": result.get("plan"),
+        "revision_history": result.get("revision_history", []),
+        "excluded_claims": result.get("excluded_claims", []),
         "ml_findings": result.get("ml_findings"),
         "document_findings": {
             "answer": (result.get("document_findings") or {}).get("answer"),

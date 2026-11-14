@@ -23,6 +23,7 @@ sqlalchemy>=2.0.0,<3.0.0
 shap>=0.44.0,<0.60.0  # 0.50+ needed for Python 3.14 wheels
 langgraph>=0.2.0,<1.0.0
 python-multipart>=0.0.9,<1.0.0
+pypdf>=7.0.0,<8.0.0
 
 psycopg[binary]>=3.1.0,<4.0.0
 

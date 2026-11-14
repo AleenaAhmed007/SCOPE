@@ -1,11 +1,11 @@
-"""Document corpus for RAG: clearly-labelled synthetic contracts, SLAs and policies.
+"""Synthetic RAG fixtures and helpers for the evidence corpus.
 
-Every file written here is a **synthetic development fixture**, never a real
-supplier contract or official policy. The corpus is deliberately small but
+This module defines synthetic development fixtures, not real supplier
+contracts or official policies. The corpus is deliberately small but
 structured: each document declares its type, authority and issuing function,
 and is divided into sections so retrieval can cite `document § section`.
 
-Only this directory is indexed as evidence. The project's own reports and
+Official extracts and uploads live in sibling directories. The project's own reports and
 documentation are deliberately excluded — citing them would be circular.
 """
 
@@ -18,6 +18,7 @@ from scope.config.loader import get_project_root
 
 DOCUMENT_DIR = Path("data") / "documents"
 SYNTHETIC_SUBDIR = "synthetic"
+OFFICIAL_SUBDIR = "official"
 UPLOAD_SUBDIR = "uploads"
 
 _HEADER = "# SYNTHETIC DOCUMENT — Not an official contract, SLA or policy\n\n"
@@ -276,6 +277,7 @@ def ensure_synthetic_docs() -> Path:
     """
     doc_dir = synthetic_doc_dir()
     doc_dir.mkdir(parents=True, exist_ok=True)
+    (get_project_root() / DOCUMENT_DIR / OFFICIAL_SUBDIR).mkdir(parents=True, exist_ok=True)
     upload_doc_dir().mkdir(parents=True, exist_ok=True)
 
     (doc_dir / "README.md").write_text(
@@ -285,8 +287,9 @@ def ensure_synthetic_docs() -> Path:
         "and claim verification can be exercised end to end.\n\n"
         "| File | Type |\n|---|---|\n"
         + "\n".join(f"| {d.file_name} | {d.doc_type} |" for d in SYNTHETIC_DOCUMENTS)
-        + "\n\nOnly this directory (plus `uploads/`) is indexed as document "
-        "evidence. Project reports and documentation are excluded to avoid "
+        + "\n\nThis directory contains synthetic fixtures. Official-source "
+        "extracts live in `official/`; user uploads live in `uploads/`. Project "
+        "reports and documentation are excluded to avoid "
         "circular citations.\n",
         encoding="utf-8",
     )

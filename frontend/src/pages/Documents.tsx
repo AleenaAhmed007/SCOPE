@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpenText, FileText, Info, Search } from "lucide-react";
-import { ragQuery } from "../api";
+import { BookOpenText, FileText, Info, Search, Upload } from "lucide-react";
+import { ragQuery, uploadDocument } from "../api";
 import GroundedAnswer from "../components/GroundedAnswer";
 import { Badge, EmptyState, ErrorState, PageHeader, Panel, Skeleton, Spinner } from "../components/ui";
 
@@ -15,6 +15,10 @@ export default function Documents() {
   const [query, setQuery] = useState("vendor late delivery escalation policy");
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [uploadError, setUploadError] = useState("");
   const [error, setError] = useState("");
 
   async function ask(q = query) {
@@ -26,6 +30,24 @@ export default function Documents() {
       setError(e.message || "Retrieval failed");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function upload() {
+    if (!file) return;
+    setUploading(true);
+    setUploadError("");
+    setUploadMessage("");
+    try {
+      const response = await uploadDocument(file);
+      const pageText = response.pages ? `, ${response.pages} PDF pages extracted` : "";
+      setUploadMessage(`${response.saved_name} indexed${pageText}. ${response.indexed_chunks} chunks are now searchable.`);
+      setFile(null);
+      setResult(null);
+    } catch (e: any) {
+      setUploadError(e.message || "Document upload failed");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -42,8 +64,30 @@ export default function Documents() {
 
       <div className="mb-4 flex items-start gap-3 rounded-xl border border-warn/20 bg-warn/[0.06] px-4 py-3 text-sm text-warn">
         <Info size={16} className="mt-0.5 shrink-0" />
-        Synthetic development documents are labelled and must not be treated as real contracts.
+        Synthetic fixtures are labelled. Official-source extracts have a stated jurisdiction; verify they apply before relying on them.
       </div>
+
+      <Panel className="mb-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="panel-title">Add a document</p>
+            <p className="mt-1 text-xs text-muted">PDF, Markdown or UTF-8 text, up to 30 MB. Scanned PDFs need OCR first.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <input
+              type="file"
+              accept=".pdf,.md,.markdown,.txt,application/pdf,text/markdown,text/plain"
+              onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+              className="max-w-full text-xs text-muted file:mr-3 file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-xs file:text-ink"
+            />
+            <button onClick={upload} disabled={!file || uploading} className="btn-primary">
+              {uploading ? <Spinner label="Extracting & indexing…" /> : <><Upload size={15} /> Upload & index</>}
+            </button>
+          </div>
+        </div>
+        {uploadMessage && <p className="mt-3 text-sm text-ok">{uploadMessage}</p>}
+        {uploadError && <div className="mt-3"><ErrorState message={uploadError} /></div>}
+      </Panel>
 
       <Panel>
         <div className="relative">
