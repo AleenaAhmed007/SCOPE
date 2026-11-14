@@ -1,6 +1,9 @@
 from __future__ import annotations
 
-from scope.evaluation.checker_claim_evaluation import evaluate_claim_checker
+from scope.evaluation.checker_claim_evaluation import (
+    evaluate_claim_checker,
+    evaluate_corpus_claim_checker,
+)
 from scope.evidence.claims import verify_claim
 from scope.rag.answer import Claim, GroundedAnswer
 from scope.agents import workflow
@@ -19,6 +22,15 @@ def test_claim_checker_negative_path_evaluation() -> None:
         "unknown_citation",
         "wrong_number",
     }
+
+
+def test_corpus_checker_evaluation_uses_real_indexed_document_passages() -> None:
+    result = evaluate_corpus_claim_checker()
+    assert result["n_source_claims"] > 50
+    assert result["n_cases"] > 100
+    assert "SYNTHETIC_shipping_sla.md" in result["source_documents"]
+    assert result["by_category"]["corpus_wrong_number"]["cases"] > 0
+    assert result["by_category"]["corpus_unknown_citation"]["correct"] == result["n_source_claims"]
 
 
 def test_answer_displays_only_supported_claims_and_exposes_verdicts() -> None:

@@ -119,9 +119,9 @@ const layers = [
     accent: "text-violet-soft",
     items: [
       "Contracts & policies chunked with supplier metadata",
-      "Dense vector search + BM25 keyword search",
-      "Reciprocal Rank Fusion merge",
-      "Cross-encoder reranking",
+      "BM25 retrieval with dense vectors when available",
+      "Reciprocal Rank Fusion over active retrievers",
+      "Cross-encoder reranking when available",
       "Clauses linked to suppliers flagged by Layer A",
     ],
   },

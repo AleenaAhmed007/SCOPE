@@ -233,10 +233,14 @@ def answer_with_citations(
             "retrieved": [],
             "grounded": False,
             "generator": "none",
+            "retrieval_mode": "none",
+            "retrieval_components": [],
             "note": "No passage passed the retrieval threshold.",
         }
     answer: GroundedAnswer = build_answer(query, hits)
     payload = answer.to_dict()
+    payload["retrieval_mode"] = hits[0].get("retrieval", "unknown")
+    payload["retrieval_components"] = hits[0].get("retrieval_components", [])
     payload["coverage"] = document_coverage()
     return payload
 

@@ -100,6 +100,12 @@ export default function Documents() {
           >
             <div className="panel">
               <p className="panel-title">Grounded answer</p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <Badge tone="cyan">{result.retrieval_mode || "retrieval mode unknown"}</Badge>
+                <span className="text-xs text-muted">
+                  Active: {(result.retrieval_components || []).join(" + ") || "no retriever"}
+                </span>
+              </div>
               <div className="mt-4">
                 <GroundedAnswer answer={result.answer} />
               </div>
@@ -144,7 +150,7 @@ export default function Documents() {
             <EmptyState
               icon={<BookOpenText size={22} />}
               title="Ask the document corpus"
-              text="Dense + BM25 retrieval, fused and reranked, returns the passages behind every answer."
+              text="Each answer reports which retrieval components were active for that query."
             />
           </Panel>
         )}

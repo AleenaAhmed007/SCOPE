@@ -69,17 +69,20 @@ def search(
     rank_lists: list[list[int]] = []
     dense_scores = np.zeros(len(chunks), dtype=float)
     lexical_scores = np.zeros(len(chunks), dtype=float)
+    components: list[str] = []
 
     vector = encode_query(query) if dense_vectors is not None else None
     if vector is not None and dense_vectors is not None:
         dense_scores = np.asarray(dense_vectors @ vector, dtype=float)
         order = [i for i in ranked_indices(dense_scores) if i in set(candidates)]
         rank_lists.append(order[:DENSE_CANDIDATES])
+        components.append("dense")
 
     if bm25 is not None:
         lexical_scores = np.asarray(bm25.scores(query), dtype=float)
         order = [i for i in ranked_indices(lexical_scores) if i in set(candidates)]
         rank_lists.append(order[:LEXICAL_CANDIDATES])
+        components.append("bm25")
 
     if not rank_lists:  # no retriever available at all
         return []
@@ -97,6 +100,7 @@ def search(
             candidates_top = sorted(
                 candidates_top, key=lambda item: rerank_scores.get(item[0], float("-inf")), reverse=True
             )
+            components.append("cross_encoder_rerank")
 
     mode = "hybrid_rrf+rerank" if rerank_scores else ("hybrid_rrf" if len(rank_lists) > 1 else "single_retriever")
 
@@ -112,6 +116,7 @@ def search(
         )
         chunk["rank"] = rank
         chunk["retrieval"] = mode
+        chunk["retrieval_components"] = components
         results.append(chunk)
     return results
 

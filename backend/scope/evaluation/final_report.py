@@ -45,6 +45,21 @@ def _fmt(value: Any, digits: int = 3) -> str:
     return str(value).replace("|", "\\|").replace("\n", " ")
 
 
+def _rag_components(metadata: dict[str, Any] | None) -> list[str]:
+    """Describe components available in the freshly built runtime index."""
+    metadata = metadata or {}
+    stack = metadata.get("retrieval_stack") or {}
+    neural = metadata.get("neural") or {}
+    components: list[str] = []
+    if neural.get("dense_available") and stack.get("dense"):
+        components.append("dense embeddings")
+    if stack.get("lexical"):
+        components.append("Okapi BM25")
+    if neural.get("reranker_available") and stack.get("reranker"):
+        components.append("cross-encoder reranking")
+    return components or ["lexical fallback"]
+
+
 def _evaluation_table_rows(payload: dict[str, Any], best_late: str | None) -> list[str]:
     rows: list[str] = []
     late = payload.get("late_delivery") or {}
@@ -114,7 +129,8 @@ def _evaluation_table_rows(payload: dict[str, Any], best_late: str | None) -> li
         evaluation = (payload.get("model_evaluations") or {}).get(key) or {}
         test = evaluation.get("test") or {}
         if test:
-            result = f"{_fmt(test.get('n_unusual'), 0)} flags / {_fmt(test.get('n_test'), 0)} ({_fmt(test.get('anomaly_rate') * 100 if test.get('anomaly_rate') is not None else None, 1)}%)"
+            n_test = test.get("n_test", test.get("n_test_periods"))
+            result = f"{_fmt(test.get('n_unusual'), 0)} flags / {_fmt(n_test, 0)} ({_fmt(test.get('anomaly_rate') * 100 if test.get('anomaly_rate') is not None else None, 1)}%)"
             note = "Unsupervised; no ground-truth anomaly labels"
         else:
             result = "Not evaluated"
@@ -123,9 +139,20 @@ def _evaluation_table_rows(payload: dict[str, Any], best_late: str | None) -> li
 
     rag = payload.get("rag_retrieval") or {}
     if rag:
+        primary = rag.get("primary") or {}
+        recall = primary.get("section_recall_at_k") or rag.get("recall_at_k") or {}
         rows.append(
-            f"| RAG retrieval | TF-IDF + keyword RRF | N/A | MRR {_fmt(rag.get('mrr'))}; Recall@3 {_fmt((rag.get('recall_at_k') or {}).get('3'))} | "
+            f"| RAG retrieval | {' + '.join(_rag_components(payload.get('rag_index')))} | N/A | "
+            f"MRR {_fmt(primary.get('mrr', rag.get('mrr')))}; Recall@3 {_fmt(recall.get('3'))} | "
             f"Wiring check only; {rag.get('n_queries')} synthetic queries |"
+        )
+
+    checker_eval = (payload.get("claim_checker_evaluation") or {}).get("corpus_grounded") or {}
+    if checker_eval:
+        rows.append(
+            f"| Claim checker | verify_claims | {checker_eval.get('n_source_claims')} extracted corpus claims + "
+            f"{checker_eval.get('n_unsupported')} controlled corruptions | detection {_fmt(checker_eval.get('detection_rate'))}; "
+            f"false-positive rate {_fmt(checker_eval.get('false_positive_rate'))} | Synthetic corpus and controlled corruption evaluation |"
         )
     return rows
 
@@ -188,7 +215,8 @@ def _baseline_table_rows(payload: dict[str, Any], best_late: str | None) -> list
     rows.extend([
         "| Vendor segmentation | K-Means | No labeled baseline | silhouette only | N/A: descriptive clusters, not prediction |",
         "| Anomaly models | Isolation Forest | No labeled anomaly baseline | flag rates only | N/A: no ground truth labels |",
-        "| RAG retrieval | TF-IDF + keyword RRF | No representative relevance baseline | 3-query sanity check | N/A: not a quality benchmark |",
+        f"| RAG retrieval | {' + '.join(_rag_components(payload.get('rag_index')))} | No representative relevance baseline | "
+        f"{(payload.get('rag_retrieval') or {}).get('n_queries', 'N/A')}-query synthetic benchmark | N/A: not a quality benchmark |",
     ])
     return rows
 
@@ -206,6 +234,8 @@ def build_final_evaluation() -> dict[str, Any]:
         "inventory": _load(metrics / "inventory_experiment.json"),
         "shap": _load(metrics / "shap_explainability.json"),
         "rag_retrieval": _load(metrics / "rag_retrieval_evaluation.json"),
+        "rag_index": _load(root / "reports" / "models" / "rag_index" / "metadata.json"),
+        "claim_checker_evaluation": _load(metrics / "checker_claim_evaluation.json"),
         "walk_forward_backtest": _load(metrics / "walk_forward_backtest.json"),
         "model_evaluations": {
             name: _load(metrics / f"evaluation_{name}.json")
@@ -241,6 +271,7 @@ def build_final_evaluation() -> dict[str, Any]:
     inventory_validation = ((inventory.get("models") or {}).get(inventory_best) or {}).get("validation") or {}
     inventory_baseline = inventory.get("validation_baseline") or {}
     rag_retrieval = payload.get("rag_retrieval") or {}
+    checker_eval = (payload.get("claim_checker_evaluation") or {}).get("corpus_grounded") or {}
     vendor_baseline = ((late.get("baselines") or {}).get("vendor_history_only") or {}).get("test") or {}
     forecast_evaluations = payload.get("model_evaluations") or {}
     monthly_late = (forecast_evaluations.get("forecast_late_rate") or {}).get("test") or {}
@@ -293,7 +324,9 @@ SCOPE integrates:
 - Monthly volume model MAE: **{monthly_volume.get('mae')}**; beats naive: **{monthly_volume.get('beats_naive_lag1')}**, beats mean: **{monthly_volume.get('beats_development_mean')}**.
 - Inventory proxy model: **{inventory_best}**; validation PR-AUC **{inventory_validation.get('pr_auc')}** vs prevalence baseline **{inventory_baseline.get('pr_auc')}**; test ROC-AUC / PR-AUC: **{inventory_test.get('roc_auc')} / {inventory_test.get('pr_auc')}**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
 - Inventory rule agreement on test rows: **{inventory_test.get('target_rule_agreement')}** (consistency check, not model accuracy).
-- RAG retrieval wiring sanity MRR: **{rag_retrieval.get('mrr')}** over {rag_retrieval.get('n_queries')} hand-authored synthetic queries; this is not a retrieval-quality claim.
+- RAG retrieval wiring sanity MRR: **{(rag_retrieval.get('primary') or {}).get('mrr', rag_retrieval.get('mrr'))}** over {rag_retrieval.get('n_queries')} hand-authored synthetic queries; this is not a retrieval-quality claim.
+- RAG runtime components: **{' + '.join(_rag_components(payload.get('rag_index')))}**; check per-query mode in the API response because optional components may be unavailable in another environment.
+- Claim Checker corpus-corruption evaluation: **{checker_eval.get('detection_rate')} detection rate; {checker_eval.get('false_positive_rate')} false-positive rate** over {checker_eval.get('n_cases')} cases ({checker_eval.get('n_source_claims')} extractive claims from the current corpus). This is a controlled synthetic-corpus evaluation, not a free-form semantic-accuracy estimate.
 - Vendor segmentation: **k={segmentation.get('kmeans_k')}, silhouette={segmentation.get('silhouette')}**, with small-history and profile-outlier vendors separated.
 - Unusual shipment profile flags: **{unusual_profile.get('n_unusual')} / {unusual_profile.get('n_test')}** test shipments; flagged late-rate diagnostic **{(unusual_profile.get('late_rate_diagnostic') or {}).get('flagged')}** (descriptive only).
 - SHAP status: **{shap.get('status')}**
@@ -320,8 +353,8 @@ For MAE, lower is better; for AUC, PR-AUC, and F1, higher is better. Baselines a
 2. Synthetic RAG documents are **not official contracts/policies**.
 3. Anomaly scores describe unusual shipment profiles and are not delay predictors; retrospective analysis is forensic only.
 4. PostgreSQL is required. Start it with `docker compose up -d postgres` and set `SCOPE_DATABASE_URL=postgresql+psycopg://scope:scope@127.0.0.1:5432/scope`. The application fails startup if PostgreSQL is unavailable; it does not switch database backends.
-5. RAG uses hybrid TF-IDF + keyword RRF (upgradeable to dense embeddings + FAISS/pgvector).
-6. RAG retrieval sanity queries are synthetic and too small to estimate production relevance.
+5. RAG uses the active components recorded in `reports/models/rag_index/metadata.json`; dense embeddings and cross-encoder reranking are optional runtime capabilities, with BM25 as the lexical retriever.
+6. RAG retrieval queries use a small synthetic corpus and are too limited to estimate production relevance.
 7. Anomaly scores are investigative signals, not fraud probabilities or labeled accuracy.
 8. Delivery-duration predictions should be treated as low-confidence unless the selected model beats the median baseline on validation data.
 9. Late-delivery prevalence changes across train, validation, and test; rolling-origin CV shows substantial temporal variation.

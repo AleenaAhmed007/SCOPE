@@ -120,10 +120,20 @@ def verify_claim(
             notes=[f"Cited passage(s) not in the retrieved set: {unknown}"],
         )
 
-    combined = "\n".join(passages[chunk_id] for chunk_id in resolved)
+    supporting_sentences = [
+        sentence.strip()
+        for chunk_id in resolved
+        for sentence in re.split(r"(?<=[.!?])\s+|\n+", passages[chunk_id])
+        if sentence.strip()
+    ]
+    if not supporting_sentences:
+        supporting_sentences = [passages[chunk_id] for chunk_id in resolved]
+    best_passage = max(supporting_sentences, key=lambda text: f1_overlap(claim, text))
     support = max(f1_overlap(claim, passages[chunk_id]) for chunk_id in resolved)
 
-    numeric_ok, numeric_note = validate_numeric_claim(claim, {"passage": combined})
+    # Ground numbers in the most textually relevant sentence, not anywhere in
+    # a long chunk where an unrelated number could accidentally match.
+    numeric_ok, numeric_note = validate_numeric_claim(claim, {"passage": best_passage})
     notes: list[str] = []
     if not numeric_ok:
         notes.append(numeric_note)
