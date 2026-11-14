@@ -1,6 +1,6 @@
 {
   "title": "SCOPE Investigation Report",
-  "generated_at": "2026-11-14T10:49:12.384165+00:00",
+  "generated_at": "2026-11-14T11:55:33.208132+00:00",
   "query": "Investigate potential disruption and late delivery risk",
   "plan": [
     "Resolve order/shipment context",
@@ -13,9 +13,9 @@
   ],
   "order_id": 1,
   "predictions": {
-    "late_probability": 0.07361995992482771,
+    "late_probability": 0.07361995992482769,
     "late_prediction": 0,
-    "predicted_duration_days": 89.14351895917873,
+    "predicted_duration_days": 89.14351895917875,
     "unusual_shipment_profile": {
       "score": -0.10342416120539732,
       "is_anomaly": 0,
@@ -64,11 +64,11 @@
     }
   ],
   "evidence_ids": [
-    "246ad37f-a110-4d43-9a56-def3f4583546",
-    "0d14e0dd-5916-4a5d-80d8-853b9ebf1048",
-    "688a731c-05b8-459d-a1b0-cecaf66f76cf",
-    "15394275-1bf0-456c-8fb4-a6212e7921c3",
-    "1fa6f28a-8b35-4fdf-ad54-a41709656e4a"
+    "38a2e0d4-6ba0-4917-b78b-4c59479be7d0",
+    "35dce96a-ec6c-425b-a87a-9567f8abdc6d",
+    "b1a9414d-40c4-4159-b9d6-338bbaba16c5",
+    "c34f59ef-548e-4f45-a591-75a1564fd6ce",
+    "e70b8c74-5fbc-4ffb-868b-e0f1da0b64c5"
   ],
   "assumptions": [
     "ML outputs are probabilistic estimates, not certain outcomes.",

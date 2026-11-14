@@ -1,3 +1,16 @@
 # Synthetic documents
 
-These files are **synthetic** development fixtures, not real supplier contracts or official policies.
+These files are **synthetic** development fixtures, not real supplier contracts or official policies. They exist so RAG retrieval, citations and claim verification can be exercised end to end.
+
+| File | Type |
+|---|---|
+| SYNTHETIC_shipping_sla.md | sla |
+| SYNTHETIC_procurement_policy.md | policy |
+| SYNTHETIC_vendor_compliance.md | compliance |
+| SYNTHETIC_supplier_agreement.md | contract |
+| SYNTHETIC_inventory_policy.md | policy |
+| SYNTHETIC_escalation_matrix.md | policy |
+| SYNTHETIC_cold_chain_policy.md | policy |
+| SYNTHETIC_quality_policy.md | compliance |
+
+Only this directory (plus `uploads/`) is indexed as document evidence. Project reports and documentation are excluded to avoid circular citations.
