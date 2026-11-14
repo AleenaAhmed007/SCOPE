@@ -84,7 +84,7 @@ reports/models/*
 !reports/models/.gitkeep
 reports/investigations/*.json
 
-# Local databases (SQLite fallback for the evidence ledger)
+# Local database artifacts (the application itself requires PostgreSQL)
 *.db
 *.sqlite
 *.sqlite3

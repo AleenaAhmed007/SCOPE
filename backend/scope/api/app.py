@@ -70,7 +70,7 @@ def system_status() -> dict[str, Any]:
         "project_root": str(root),
         "models_available": model_names,
         "database_url_scheme": resolve_database_url().split("://", 1)[0],
-        "database_note": "Prefer Postgres via docker compose; SQLite only if Postgres unreachable",
+        "database_note": "PostgreSQL only; startup fails if the configured server is unavailable",
     }
 
 

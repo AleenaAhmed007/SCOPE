@@ -1,6 +1,6 @@
 {
   "title": "SCOPE Investigation Report",
-  "generated_at": "2026-11-14T07:26:18.406473+00:00",
+  "generated_at": "2026-11-14T09:00:47.748689+00:00",
   "query": "Investigate potential disruption and late delivery risk",
   "plan": [
     "Resolve order/shipment context",
@@ -13,12 +13,12 @@
   ],
   "order_id": 1,
   "predictions": {
-    "late_probability": 0.00473615897963668,
+    "late_probability": 0.07361995992482771,
     "late_prediction": 0,
-    "predicted_duration_days": 105.0,
+    "predicted_duration_days": 89.14351895917873,
     "unusual_shipment_profile": {
-      "score": 0.006075822256285113,
-      "is_anomaly": 1,
+      "score": -0.10342416120539732,
+      "is_anomaly": 0,
       "label": "unusual_shipment_profile"
     }
   },
@@ -51,7 +51,7 @@
       "file_name": "eda_report.md",
       "page": 1,
       "source": "reports\\eda_report.md",
-      "score": 0.46622590050070534,
+      "score": 0.4662391818718274,
       "synthetic": false
     },
     {
@@ -64,11 +64,11 @@
     }
   ],
   "evidence_ids": [
-    "ed929ea6-2f49-42dd-a547-80febc1b7f3d",
-    "de204b7f-140f-4b5c-915e-68d8476b1b77",
-    "92c6d2a8-4aee-4d03-a63b-f15e75e5170d",
-    "12ca9698-a720-4535-829f-1a456ce96160",
-    "9e849a15-eba0-4f23-ae3b-4e6d410b74c1"
+    "6e231dfa-2dea-4c37-a6b2-1c9db747ce18",
+    "c34e0492-2fe1-407a-b167-a582a4c57bfe",
+    "3898a377-9b5a-4283-a37e-9929b65516cd",
+    "b41e9c67-b67b-4485-a6bd-09b0938497d6",
+    "d3543573-e0f5-4492-9d1c-c059936dc16f"
   ],
   "assumptions": [
     "ML outputs are probabilistic estimates, not certain outcomes.",

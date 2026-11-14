@@ -1,4 +1,4 @@
-"""Database engine and schema helpers (PostgreSQL preferred)."""
+"""PostgreSQL engine and schema helpers."""
 
 from scope.db.session import get_engine, get_session, init_db
 

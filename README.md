@@ -157,12 +157,16 @@ The full phase runner now refreshes all model evaluation reports before building
 the final defence report. It exits with a nonzero status if any phase fails;
 see `reports/phase_run_summary.json` for the phase-by-phase details.
 
-### PostgreSQL (preferred)
+### PostgreSQL (required)
 
 ```bash
 docker compose up -d postgres
-$env:SCOPE_DATABASE_URL='postgresql+psycopg://scope:scope@127.0.0.1:5432/scope'
+Copy-Item .env.example .env
 ```
+
+The example `.env` configures `SCOPE_DATABASE_URL` for synchronous psycopg. The
+API loads the root `.env`, requires PostgreSQL at startup, and does not fall back
+to SQLite. `DATABASE_URL` is also accepted for compatibility.
 
 ### Start API + frontend
 

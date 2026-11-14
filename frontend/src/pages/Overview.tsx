@@ -169,7 +169,7 @@ const team = [
   ["Amna Naveed", "2024-DS-42"],
   ["Zartashia Naz", "2024-DS-13"],
   ["Seerat Fatima", "2024-DS-32"],
-  ["Aleena Ahmad", "2024-DS-09"],
+  ["Aleena Ahmed", "2024-DS-09"],
 ];
 
 function AgentFlow() {

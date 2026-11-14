@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-14T07:18:57.965405+00:00`
+Generated: `2026-11-14T09:08:38.992718+00:00`
 
 ## System summary
 
@@ -51,7 +51,7 @@ SCOPE integrates:
 1. Inventory fields are **unverified augmented data**. The proxy classifier does not use the two fields that define its label; its scores are not operationally validated, and rule agreement is only a consistency check.
 2. Synthetic RAG documents are **not official contracts/policies**.
 3. Anomaly scores describe unusual shipment profiles and are not delay predictors; retrospective analysis is forensic only.
-4. Prefer PostgreSQL via `docker compose up -d postgres` and `SCOPE_DATABASE_URL=postgresql+psycopg://scope:scope@127.0.0.1:5432/scope`. SQLite is only an automatic fallback when Postgres is down — do not claim Postgres compliance while on SQLite.
+4. PostgreSQL is required. Start it with `docker compose up -d postgres` and set `SCOPE_DATABASE_URL=postgresql+psycopg://scope:scope@127.0.0.1:5432/scope`. The application fails startup if PostgreSQL is unavailable; it does not switch database backends.
 5. RAG uses hybrid TF-IDF + keyword RRF (upgradeable to dense embeddings + FAISS/pgvector).
 6. RAG retrieval sanity queries are synthetic and too small to estimate production relevance.
 7. Anomaly scores are investigative signals, not fraud probabilities or labeled accuracy.

@@ -43,14 +43,17 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### 3.2 PostgreSQL (recommended)
+### 3.2 PostgreSQL (required)
 
 ```powershell
 docker compose up -d postgres
-$env:SCOPE_DATABASE_URL = "postgresql+psycopg://scope:scope@127.0.0.1:5432/scope"
+Copy-Item .env.example .env
 ```
 
-If Docker is not available, the app can fall back to a local SQLite file. Prefer Postgres when possible.
+The project-root `.env` is loaded automatically and uses synchronous `psycopg`.
+PostgreSQL is required. If Docker is unavailable, change `SCOPE_DATABASE_URL`
+in `.env` to point to another PostgreSQL server. The application does not fall
+back to SQLite.
 
 ### 3.3 (Optional) Rebuild processed data + models
 

@@ -32,7 +32,7 @@ A proper repository structure helps:
 - Streamlit
 - LangGraph
 - FAISS or Chroma
-- SQLite
+- PostgreSQL (psycopg 3)
 
 Install additional libraries only when required by a specific phase.
 
