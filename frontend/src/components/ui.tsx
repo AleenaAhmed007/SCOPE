@@ -190,6 +190,7 @@ export function Skeleton({ className = "" }: { className?: string }) {
 }
 
 export function ErrorState({ message }: { message: string }) {
+  const offline = /network error|timeout|ECONN|Failed to fetch/i.test(message);
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
@@ -200,10 +201,19 @@ export function ErrorState({ message }: { message: string }) {
         <AlertTriangle size={18} />
       </span>
       <div>
-        <p className="font-semibold">Couldn’t reach the SCOPE API</p>
-        <p className="mt-1 text-sm text-muted">
-          {message}. Make sure FastAPI is running on <code className="font-mono text-cyan">:8000</code>.
-        </p>
+        {offline ? (
+          <>
+            <p className="font-semibold">Couldn’t reach the SCOPE API</p>
+            <p className="mt-1 text-sm text-muted">
+              {message}. Make sure FastAPI is running on <code className="font-mono text-cyan">:8000</code>.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="font-semibold">Request failed</p>
+            <p className="mt-1 text-sm text-muted">{message}</p>
+          </>
+        )}
       </div>
     </motion.div>
   );

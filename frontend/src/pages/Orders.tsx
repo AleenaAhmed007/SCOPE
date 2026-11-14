@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
-import { getAnomaly, getOrder, getOrders, predictDuration, predictInventoryStockout, predictLate } from "../api";
-=======
 import { AnimatePresence, motion } from "framer-motion";
-import { Activity, ChevronDown, Clock, Play, Search, TriangleAlert } from "lucide-react";
-import { getAnomaly, getOrder, getOrders, predictDuration, predictLate } from "../api";
+import { Activity, Boxes, ChevronDown, Clock, Play, Search, TriangleAlert } from "lucide-react";
+import { getAnomaly, getOrder, getOrders, predictDuration, predictInventoryStockout, predictLate } from "../api";
 import { Badge, ErrorState, PageHeader, Panel, Skeleton, Spinner } from "../components/ui";
 
 function Gauge({ value }: { value: number }) {
@@ -29,7 +26,6 @@ function Gauge({ value }: { value: number }) {
     </svg>
   );
 }
->>>>>>> 3d092354f2b8888a9bcc4eccb75085fb4140ab50
 
 export default function Orders() {
   const [orders, setOrders] = useState<any[] | null>(null);
@@ -50,36 +46,32 @@ export default function Orders() {
       });
   }, []);
 
-<<<<<<< HEAD
-  async function investigate() {
-    const [order, late, duration, anomaly, inventory] = await Promise.all([
-      getOrder(orderId),
-      predictLate(orderId),
-      predictDuration(orderId),
-      getAnomaly(orderId).catch(() => null),
-      predictInventoryStockout(orderId),
-    ]);
-    setDetail(order);
-    setPred({ late, duration, anomaly, inventory });
-=======
   async function investigate(id = orderId) {
     setLoading(true);
     setError("");
     try {
-      const [order, late, duration, anomaly] = await Promise.all([
+      const [order, late, duration, anomaly, inventory] = await Promise.all([
         getOrder(id),
         predictLate(id),
         predictDuration(id),
         getAnomaly(id).catch(() => null),
+        // Experimental model: a missing artifact (404) shouldn't break the other predictions.
+        predictInventoryStockout(id).catch((e) => ({
+          unavailable: true,
+          reason: e?.response?.data?.detail ?? e.message,
+        })),
       ]);
       setDetail(order);
-      setPred({ late, duration, anomaly });
+      setPred({ late, duration, anomaly, inventory });
     } catch (e: any) {
-      setError(e.message || "Prediction failed");
+      setError(
+        e?.response?.status === 404 && /order not found/i.test(e.message)
+          ? `Order ${id} was not found. Order IDs are not consecutive — pick one from the table below.`
+          : e.message || "Prediction failed"
+      );
     } finally {
       setLoading(false);
     }
->>>>>>> 3d092354f2b8888a9bcc4eccb75085fb4140ab50
   }
 
   const rows = (orders || []).filter((o) =>
@@ -91,7 +83,7 @@ export default function Orders() {
       <PageHeader
         eyebrow="Layer A · Machine learning"
         title="Order Investigation"
-        description="Run the full prediction suite — late-delivery probability, duration estimate and unusual-profile score — for any order."
+        description="Run the full prediction suite — late-delivery probability, duration estimate, unusual-profile score and inventory stockout risk — for any order."
       />
 
       <Panel className="flex flex-wrap items-end gap-3">
@@ -108,41 +100,11 @@ export default function Orders() {
         <button onClick={() => investigate()} disabled={loading} className="btn-primary">
           {loading ? <Spinner label="Running models…" /> : (<><Play size={15} /> Run prediction suite</>)}
         </button>
-<<<<<<< HEAD
-      </div>
-      {pred && (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <div className="panel">
-            <h3 className="font-semibold">Late delivery</h3>
-            <p>Prob: {(pred.late.late_probability * 100).toFixed(1)}%</p>
-            <p>Pred: {pred.late.late_prediction ? "Late" : "On-time"}</p>
-          </div>
-          <div className="panel">
-            <h3 className="font-semibold">Duration</h3>
-            <p>{pred.duration.predicted_duration_days.toFixed(1)} days</p>
-            {pred.duration.low_confidence && (
-              <p className="text-sm text-amber-700">Low confidence: validation did not beat the median baseline.</p>
-            )}
-          </div>
-          <div className="panel">
-            <h3 className="font-semibold">Inventory stockout (experimental)</h3>
-            <p>Risk: {(pred.inventory.stockout_probability * 100).toFixed(1)}%</p>
-            <p>Pred: {pred.inventory.stockout_prediction ? "Stockout" : "No stockout"}</p>
-            {pred.inventory.low_confidence && (
-              <p className="text-sm text-amber-700">Low confidence: model did not beat the prevalence baseline.</p>
-            )}
-          </div>
-          <div className="panel">
-            <h3 className="font-semibold">Unusual shipment profile</h3>
-            <p>{pred.anomaly ? `score ${pred.anomaly.anomaly_score?.toFixed?.(3)}` : "n/a"}</p>
-          </div>
-=======
       </Panel>
 
       {error && (
         <div className="mt-4">
           <ErrorState message={error} />
->>>>>>> 3d092354f2b8888a9bcc4eccb75085fb4140ab50
         </div>
       )}
 
@@ -153,7 +115,7 @@ export default function Orders() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-4 grid gap-4 md:grid-cols-3"
+            className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4"
           >
             <div className="panel flex flex-col items-center text-center">
               <div className="flex w-full items-center justify-between">
@@ -203,6 +165,44 @@ export default function Orders() {
                 </>
               ) : (
                 <p className="mt-6 text-muted">n/a</p>
+              )}
+            </div>
+            <div className="panel flex flex-col items-center text-center">
+              <div className="flex w-full items-center justify-between">
+                <p className="panel-title flex items-center gap-2">
+                  Inventory stockout <Badge tone="violet">experimental</Badge>
+                </p>
+                <Boxes size={16} className="text-muted" />
+              </div>
+              {pred.inventory?.unavailable ? (
+                <div className="mt-6 text-sm text-muted">
+                  <p>Model not available.</p>
+                  <p className="mt-1 font-mono text-[11px]">{String(pred.inventory.reason)}</p>
+                </div>
+              ) : (
+                <>
+                  <div className="relative mt-4">
+                    <Gauge value={pred.inventory.stockout_probability} />
+                    <p className="absolute inset-x-0 bottom-0 font-display text-2xl font-semibold">
+                      {(pred.inventory.stockout_probability * 100).toFixed(1)}%
+                    </p>
+                  </div>
+                  <div className="mt-3">
+                    {pred.inventory.stockout_prediction ? (
+                      <Badge tone="risk">Stockout likely</Badge>
+                    ) : (
+                      <Badge tone="ok">Stock sufficient</Badge>
+                    )}
+                  </div>
+                  {pred.inventory.low_confidence && (
+                    <p className="mt-3 rounded-lg bg-warn/10 px-3 py-2 text-xs text-warn">
+                      Low confidence: validation did not beat the prevalence baseline.
+                    </p>
+                  )}
+                  {pred.inventory.model && (
+                    <p className="mt-2 font-mono text-[11px] text-muted">{pred.inventory.model}</p>
+                  )}
+                </>
               )}
             </div>
           </motion.div>

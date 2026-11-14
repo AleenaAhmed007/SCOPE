@@ -106,6 +106,7 @@ const layers = [
       "Late-delivery risk — XGBoost vs. logistic baseline",
       "Demand forecasting — Prophet / ARIMA",
       "Anomaly detection — Isolation Forest on supplier KPIs",
+      "Inventory stockout risk — experimental Random Forest proxy",
       "Supplier segmentation — K-Means",
       "Explainability — SHAP feature attributions",
     ],

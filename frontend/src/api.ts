@@ -4,6 +4,17 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000",
 });
 
+// Surface the backend's own error text (FastAPI `detail`) instead of axios'
+// generic "Request failed with status code 404". Requests that never got a
+// response keep their network message so the UI can tell "offline" apart.
+api.interceptors.response.use(undefined, (error) => {
+  const detail = error?.response?.data?.detail;
+  if (detail) {
+    error.message = typeof detail === "string" ? detail : JSON.stringify(detail);
+  }
+  return Promise.reject(error);
+});
+
 export const getDashboard = () => api.get("/api/v1/dashboard").then((r) => r.data);
 export const getOrders = (limit = 50) =>
   api.get(`/api/v1/orders?limit=${limit}`).then((r) => r.data);
