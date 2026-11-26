@@ -147,11 +147,11 @@
     "training_recommendation": "An experimental proxy classifier can be trained only after excluding Opening_Stock and Line_Item_Quantity, which exactly define the flag. The augmented inventory source remains unverified; retain the rule audit and do not present proxy metrics as operational validation."
   },
   "outputs": {
-    "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.parquet",
-    "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.parquet",
-    "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.parquet",
-    "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.parquet",
-    "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.parquet",
-    "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.parquet"
+    "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.csv",
+    "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.csv",
+    "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.csv",
+    "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.csv",
+    "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.csv",
+    "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.csv"
   }
 }

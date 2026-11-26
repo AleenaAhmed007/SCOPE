@@ -64,16 +64,6 @@ pnpm-debug.log*
 *.key
 
 # ---------------------------------------------------------------
-# Data (raw data is restricted; processed data is regenerated)
-# ---------------------------------------------------------------
-data/raw/*.csv
-/*.csv
-data/interim/*
-!data/interim/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-
-# ---------------------------------------------------------------
 # Generated reports / model artifacts (rebuilt by run_all_phases.py)
 # ---------------------------------------------------------------
 reports/figures/*

@@ -23,6 +23,7 @@ from sklearn.metrics import (
 )
 from sklearn.pipeline import Pipeline
 
+from scope.data.table_io import read_table
 from scope.logging_config import setup_logging
 from scope.models.common import (
     CalibratedClassifier,
@@ -160,10 +161,10 @@ def backtest_forecasts() -> dict[str, Any]:
     paths = project_paths()
     out = {}
     for file, col in (
-        ("delay_timeseries_monthly.parquet", "late_rate"),
-        ("volume_timeseries_monthly.parquet", "total_line_item_quantity"),
+        ("delay_timeseries_monthly.csv", "late_rate"),
+        ("volume_timeseries_monthly.csv", "total_line_item_quantity"),
     ):
-        ts = pd.read_parquet(paths["processed"] / file).dropna(subset=[col]).sort_values("period_start").reset_index(drop=True)
+        ts = read_table(paths["processed"] / file).dropna(subset=[col]).sort_values("period_start").reset_index(drop=True)
         frame = _make_lag_frame(ts[col])
         feats = [c for c in frame.columns if c != "y"]
         errors: dict[str, list[float]] = {}

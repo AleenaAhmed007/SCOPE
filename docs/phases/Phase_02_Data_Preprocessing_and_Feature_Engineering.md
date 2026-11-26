@@ -162,7 +162,7 @@ Describe this as PO-to-client delivery duration, not generic supplier procuremen
 
 Create:
 
-`data/processed/shipments.parquet`
+`data/processed/shipments.csv`
 
 Candidate features:
 - Country.
@@ -192,7 +192,7 @@ Define the prediction moment before approving the feature list.
 
 Create:
 
-`data/processed/vendor_features.parquet`
+`data/processed/vendor_features.csv`
 
 Possible features:
 - Shipment count.
@@ -210,7 +210,7 @@ Do not use vendor name as a numerical feature.
 
 Create:
 
-`data/processed/delay_timeseries.parquet`
+`data/processed/delay_timeseries.csv`
 
 Aggregate by week or month:
 - Shipment count.
@@ -224,7 +224,7 @@ Sort chronologically and handle missing periods consistently.
 
 Create:
 
-`data/processed/volume_timeseries.parquet`
+`data/processed/volume_timeseries.csv`
 
 Aggregate `Line Item Quantity` by week or month.
 
@@ -356,7 +356,7 @@ Keep transformations reproducible.
 - Preprocessing is reproducible.
 - Train-only fitting is enforced.
 - Time-based splits are chronological.
-- Parquet outputs are generated.
+- CSV outputs are generated.
 - Tests pass.
 
 ## 14. Definition of Done
@@ -407,7 +407,7 @@ Treat inventory fields as unverified augmented data.
 
 Do not call Line Item Quantity warehouse demand.
 
-Save processed datasets in Parquet format.
+Save processed datasets in CSV format.
 
 Add tests for every major transformation and leakage rule.
 

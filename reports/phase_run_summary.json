@@ -152,12 +152,12 @@
           "training_recommendation": "An experimental proxy classifier can be trained only after excluding Opening_Stock and Line_Item_Quantity, which exactly define the flag. The augmented inventory source remains unverified; retain the rule audit and do not present proxy metrics as operational validation."
         },
         "outputs": {
-          "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.parquet",
-          "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.parquet",
-          "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.parquet",
-          "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.parquet",
-          "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.parquet",
-          "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.parquet"
+          "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.csv",
+          "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.csv",
+          "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.csv",
+          "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.csv",
+          "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.csv",
+          "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.csv"
         }
       }
     },
@@ -1658,7 +1658,7 @@
             "label": "SYNTHETIC - evaluation only, never written to the scores table"
           },
           "missing_kpi": "defect rate (not present in SCMS data)",
-          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_vendor_kpi.parquet",
+          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_vendor_kpi.csv",
           "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\anomaly_vendor_kpi"
         },
         "unusual_profile": {
@@ -1671,7 +1671,7 @@
             "val": 0.06395348837209303
           },
           "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\anomaly_unusual_profile",
-          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_unusual_profile.parquet"
+          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_unusual_profile.csv"
         },
         "retrospective": {
           "n_scored": 10324,
@@ -1683,7 +1683,7 @@
             "val": 0.060723514211886306
           },
           "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\anomaly_retrospective",
-          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_retrospective.parquet"
+          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_retrospective.csv"
         },
         "contamination": 0.05,
         "label": "unusual_shipment_profile",

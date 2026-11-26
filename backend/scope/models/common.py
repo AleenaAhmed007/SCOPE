@@ -128,8 +128,9 @@ def project_paths() -> dict[str, Path]:
 
 
 def load_shipments() -> pd.DataFrame:
-    path = project_paths()["processed"] / "shipments.parquet"
-    return pd.read_parquet(path)
+    from scope.data.table_io import read_table
+
+    return read_table(project_paths()["processed"] / "shipments.csv")
 
 
 def build_preprocessor(
