@@ -19,6 +19,7 @@ from sklearn.ensemble import ExtraTreesRegressor, GradientBoostingRegressor, Ran
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
+from scope.data.table_io import read_table
 from scope.features.volume_features import build_volume_timeseries
 from scope.logging_config import setup_logging
 from scope.models.common import load_shipments, project_paths, save_json, save_model_bundle
@@ -308,8 +309,8 @@ def _train_by_product_group(min_periods: int = 48, max_zero_share: float = 0.5) 
 
 def train_forecasts() -> dict[str, Any]:
     paths = project_paths()
-    delay = pd.read_parquet(paths["processed"] / "delay_timeseries_monthly.parquet")
-    volume = pd.read_parquet(paths["processed"] / "volume_timeseries_monthly.parquet")
+    delay = read_table(paths["processed"] / "delay_timeseries_monthly.csv")
+    volume = read_table(paths["processed"] / "volume_timeseries_monthly.csv")
 
     suitability = {
         "late_rate_monthly": _suitability(delay, "late_rate", "late_rate_monthly"),

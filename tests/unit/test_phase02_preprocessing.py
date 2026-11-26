@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 
 from scope.data.preprocessing import run_preprocessing
+from scope.data.table_io import read_table
 from scope.features.shipment_features import LEAKAGE_FORBIDDEN, early_warning_feature_columns
 
 
@@ -21,9 +22,11 @@ def test_preprocessing_outputs(tmp_path_factory=None) -> None:
         "volume_timeseries",
         "inventory_experiment",
     ]:
-        assert Path(meta["outputs"][key]).exists()
+        path = Path(meta["outputs"][key])
+        assert path.exists()
+        assert path.suffix == ".csv"
 
-    df = pd.read_parquet(meta["outputs"]["shipments"])
+    df = read_table(meta["outputs"]["shipments"])
     assert "is_late" in df.columns
     assert "delivery_duration_days" in df.columns
     assert "split" in df.columns

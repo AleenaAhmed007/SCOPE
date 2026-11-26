@@ -12,6 +12,7 @@ import pandas as pd
 from scope.config.loader import get_project_root
 from scope.data.cleaning import COLUMN_MAP, normalize_columns
 from scope.data.split import assign_split_labels
+from scope.data.table_io import write_table
 from scope.eda.load import load_raw_dataset
 from scope.features.delay_features import build_delay_timeseries
 from scope.features.inventory_features import build_inventory_experiment_table
@@ -96,27 +97,16 @@ def run_preprocessing(project_root: Path | None = None) -> dict[str, Any]:
 
     inventory_table, inventory_meta = build_inventory_experiment_table(shipments)
 
-    # Persist
-    interim_path = interim_dir / "shipments_normalized.parquet"
-    shipments.to_parquet(interim_path, index=False)
-
-    ship_out = processed_dir / "shipments.parquet"
-    vendor_out = processed_dir / "vendor_features.parquet"
-    vendor_train_out = processed_dir / "vendor_features_train_period.parquet"
-    delay_out = processed_dir / "delay_timeseries.parquet"
-    delay_m_out = processed_dir / "delay_timeseries_monthly.parquet"
-    volume_out = processed_dir / "volume_timeseries.parquet"
-    volume_m_out = processed_dir / "volume_timeseries_monthly.parquet"
-    inventory_out = processed_dir / "inventory_experiment.parquet"
-
-    shipments.to_parquet(ship_out, index=False)
-    vendor_all.to_parquet(vendor_out, index=False)
-    vendor_train.to_parquet(vendor_train_out, index=False)
-    delay_ts.to_parquet(delay_out, index=False)
-    delay_ts_m.to_parquet(delay_m_out, index=False)
-    volume_ts.to_parquet(volume_out, index=False)
-    volume_ts_m.to_parquet(volume_m_out, index=False)
-    inventory_table.to_parquet(inventory_out, index=False)
+    # Persist (CSV — git-friendly, no Parquet dependency)
+    interim_path = write_table(shipments, interim_dir / "shipments_normalized.csv")
+    ship_out = write_table(shipments, processed_dir / "shipments.csv")
+    vendor_out = write_table(vendor_all, processed_dir / "vendor_features.csv")
+    vendor_train_out = write_table(vendor_train, processed_dir / "vendor_features_train_period.csv")
+    delay_out = write_table(delay_ts, processed_dir / "delay_timeseries.csv")
+    delay_m_out = write_table(delay_ts_m, processed_dir / "delay_timeseries_monthly.csv")
+    volume_out = write_table(volume_ts, processed_dir / "volume_timeseries.csv")
+    volume_m_out = write_table(volume_ts_m, processed_dir / "volume_timeseries_monthly.csv")
+    inventory_out = write_table(inventory_table, processed_dir / "inventory_experiment.csv")
 
     split_meta = {
         "method": "chronological_on_Scheduled_Delivery_Date_Parsed",

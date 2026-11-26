@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 
 from scope.agents.workflow import run_investigation
 from scope.config.loader import get_project_root
+from scope.data.table_io import read_table
 from scope.db.session import init_db, resolve_database_url
 from scope.evidence.ledger import list_evidence
 from scope.models.common import load_shipments, project_paths
@@ -82,10 +83,10 @@ def dashboard() -> dict[str, Any]:
     df = load_shipments()
     late = df["is_late"].dropna()
     dur = df["delivery_duration_days"].dropna()
-    anom_path = project_paths()["processed"] / "anomaly_scores_unusual_profile.parquet"
+    anom_path = project_paths()["processed"] / "anomaly_scores_unusual_profile.csv"
     anomaly_count = 0
     if anom_path.exists():
-        anomaly_count = int(pd.read_parquet(anom_path)["is_anomaly"].sum())
+        anomaly_count = int(read_table(anom_path)["is_anomaly"].sum())
     inv_dir = get_project_root() / "reports" / "investigations"
     recent = sorted(inv_dir.glob("*.json"))[-5:] if inv_dir.exists() else []
     return {
@@ -132,24 +133,24 @@ def get_order(order_id: int) -> dict[str, Any]:
 
 @app.get("/api/v1/vendors")
 def list_vendors(limit: int = 100) -> dict[str, Any]:
-    path = project_paths()["processed"] / "vendor_features.parquet"
-    df = pd.read_parquet(path).head(limit)
+    path = project_paths()["processed"] / "vendor_features.csv"
+    df = read_table(path).head(limit)
     return {"items": df.to_dict(orient="records")}
 
 
 @app.get("/api/v1/vendors/segments")
 def vendor_segments() -> dict[str, Any]:
-    path = project_paths()["processed"] / "vendor_segments.parquet"
+    path = project_paths()["processed"] / "vendor_segments.csv"
     if not path.exists():
         raise HTTPException(404, "Vendor segments not trained yet")
-    df = pd.read_parquet(path)
+    df = read_table(path)
     return {"items": df.to_dict(orient="records")}
 
 
 @app.get("/api/v1/vendors/{vendor_name}")
 def get_vendor(vendor_name: str) -> dict[str, Any]:
-    path = project_paths()["processed"] / "vendor_features.parquet"
-    df = pd.read_parquet(path)
+    path = project_paths()["processed"] / "vendor_features.csv"
+    df = read_table(path)
     row = df[df["Vendor"] == vendor_name]
     if row.empty:
         raise HTTPException(404, "Vendor not found")
@@ -224,10 +225,10 @@ def predict_inventory_stockout(req: LateDeliveryRequest) -> dict[str, Any]:
 
 @app.get("/api/v1/predictions/anomaly/{order_id}")
 def get_anomaly(order_id: int) -> dict[str, Any]:
-    path = project_paths()["processed"] / "anomaly_scores_unusual_profile.parquet"
+    path = project_paths()["processed"] / "anomaly_scores_unusual_profile.csv"
     if not path.exists():
         raise HTTPException(404, "Anomaly scores missing")
-    df = pd.read_parquet(path)
+    df = read_table(path)
     row = df[df["ID"] == order_id]
     if row.empty:
         raise HTTPException(404, "Order not found")

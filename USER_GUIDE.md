@@ -57,7 +57,7 @@ back to SQLite.
 
 ### 3.3 (Optional) Rebuild processed data + models
 
-Trained models and processed Parquet files are already included. Only re-run if you want a fresh train:
+Trained models and processed CSV files are already included. Only re-run if you want a fresh train:
 
 ```powershell
 python -m scope.data.preprocessing
@@ -116,7 +116,7 @@ npm run dev
 |------|----------|
 | `backend/scope/` | Python package (EDA, ML, RAG, agents, API, evidence, DB) |
 | `data/raw/` | Original dataset `SCMS_with_inventory.csv` + provenance |
-| `data/processed/` | Feature tables / Parquet outputs |
+| `data/processed/` | Feature tables / CSV outputs |
 | `data/interim/` | Normalized interim data |
 | `data/documents/` | Synthetic RAG documents (clearly labeled) |
 | `reports/models/` | Trained model artifacts (`.joblib`) |

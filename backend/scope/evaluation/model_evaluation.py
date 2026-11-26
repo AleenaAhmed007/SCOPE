@@ -32,6 +32,7 @@ from sklearn.metrics import (
     silhouette_score,
 )
 
+from scope.data.table_io import read_table
 from scope.models.common import project_paths, save_json
 from scope.models.forecasting.train_forecast import _forecast_splits
 
@@ -57,7 +58,7 @@ def _bundle(name: str) -> dict[str, Any]:
 
 
 def _classification(bundle: dict[str, Any], target: str, inventory: bool = False) -> dict[str, Any]:
-    df = pd.read_parquet(project_paths()["processed"] / "shipments.parquet")
+    df = read_table(project_paths()["processed"] / "shipments.csv")
     if inventory:
         df["below_reorder"] = (df["Inventory_Opening_Stock"] < df["Inventory_Reorder_Level"]).astype(int)
     test = df[(df["split"] == "test") & df[target].notna()].copy()
@@ -87,7 +88,7 @@ def _evaluate(name: str) -> dict[str, Any]:
     paths = project_paths()
     bundle = _bundle(name)
     if name == "inventory":
-        df = pd.read_parquet(paths["processed"] / "shipments.parquet")
+        df = read_table(paths["processed"] / "shipments.csv")
         work = df[(df["split"] == "test") & df["Inventory_Stockout_Flag"].notna()].copy()
         y = work["Inventory_Stockout_Flag"].astype(int)
         rule = (work["Inventory_Opening_Stock"] - work["Line_Item_Quantity"] < 0).astype(int)
@@ -101,7 +102,7 @@ def _evaluate(name: str) -> dict[str, Any]:
     elif name == "late_delivery":
         metrics = _classification(bundle, "is_late")
     elif name == "duration":
-        df = pd.read_parquet(paths["processed"] / "shipments.parquet")
+        df = read_table(paths["processed"] / "shipments.csv")
         eligible = df[df["delivery_duration_days"].notna() & df["split"].isin(["train", "val", "test"])]
         cap = eligible.loc[eligible["split"] == "train", "delivery_duration_days"].quantile(0.99)
         test = eligible[(eligible["split"] == "test") & (eligible["delivery_duration_days"] <= cap)]
@@ -113,8 +114,8 @@ def _evaluate(name: str) -> dict[str, Any]:
                    "mean_actual": float(y.mean()), "mean_pred": float(np.mean(pred))}
     elif name.startswith("forecast_"):
         col = "late_rate" if name == "forecast_late_rate" else "total_line_item_quantity"
-        file = "delay_timeseries_monthly.parquet" if col == "late_rate" else "volume_timeseries_monthly.parquet"
-        ts = pd.read_parquet(paths["processed"] / file)
+        file = "delay_timeseries_monthly.csv" if col == "late_rate" else "volume_timeseries_monthly.csv"
+        ts = read_table(paths["processed"] / file)
         _, _, test = _forecast_splits(ts, col)
         pred = bundle["pipeline"].predict(test[bundle["features"]])
         lower, upper = bundle.get("prediction_bounds", [None, None])
@@ -137,7 +138,7 @@ def _evaluate(name: str) -> dict[str, Any]:
                    "selection_note": "Model selected using validation data; test baseline comparisons are final holdout diagnostics.",
                    "actual": test["y"].tolist(), "predicted": pred.tolist()}
     elif name == "vendor_segmentation":
-        vendors = pd.read_parquet(paths["processed"] / "vendor_features.parquet")
+        vendors = read_table(paths["processed"] / "vendor_features.csv")
         features = bundle["features"]
         vendors = vendors.dropna(subset=["late_rate"]).copy()
         for col in features:
@@ -160,7 +161,7 @@ def _evaluate(name: str) -> dict[str, Any]:
                    "inertia": float(pipe["kmeans"].inertia_),
                    "caveat": "Silhouette applies only to the modeled subset. Segments describe profiles, not vendor quality."}
     elif name == "anomaly_vendor_kpi":
-        scored = pd.read_parquet(paths["processed"] / "anomaly_scores_vendor_kpi.parquet")
+        scored = read_table(paths["processed"] / "anomaly_scores_vendor_kpi.csv")
         test = scored[scored["split"] == "test"]
         flagged = test[test["is_anomaly"] == 1]
         unflagged = test[test["is_anomaly"] == 0]
@@ -180,8 +181,8 @@ def _evaluate(name: str) -> dict[str, Any]:
         }
     else:
         suffix = "unusual_profile" if name.endswith("unusual_profile") else "retrospective"
-        scores_path = paths["processed"] / f"anomaly_scores_{suffix}.parquet"
-        scored = pd.read_parquet(scores_path)
+        scores_path = paths["processed"] / f"anomaly_scores_{suffix}.csv"
+        scored = read_table(scores_path)
         test = scored[scored["split"] == "test"]
         metrics = {"label": "unusual_shipment_profile", "n_test": len(test), "n_unusual": int(test["is_anomaly"].sum()),
                    "anomaly_rate": float(test["is_anomaly"].mean()) if len(test) else None,
@@ -189,7 +190,7 @@ def _evaluate(name: str) -> dict[str, Any]:
                    "note": "Unsupervised unusual-profile flags, not delay predictions. There are no ground-truth anomaly labels.",
                    "source_scores": str(scores_path)}
         if name.endswith("unusual_profile"):
-            late_labels = pd.read_parquet(paths["processed"] / "shipments.parquet")[["ID", "is_late"]]
+            late_labels = read_table(paths["processed"] / "shipments.csv")[["ID", "is_late"]]
             diagnostic = test.merge(late_labels, on="ID", how="left").dropna(subset=["is_late"])
             flagged = diagnostic[diagnostic["is_anomaly"] == 1]
             unflagged = diagnostic[diagnostic["is_anomaly"] == 0]

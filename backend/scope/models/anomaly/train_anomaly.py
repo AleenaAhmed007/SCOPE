@@ -27,6 +27,7 @@ from sklearn.pipeline import Pipeline
 
 from scipy.stats import binom
 
+from scope.data.table_io import write_table
 from scope.logging_config import setup_logging
 from scope.models.classification.train_late import NUM
 from scope.models.common import (
@@ -105,8 +106,7 @@ def _fit_anomaly(df: pd.DataFrame, features: list[str], name: str) -> dict[str, 
     df_out["is_anomaly"] = (preds == -1).astype(int)
     df_out["signal_type"] = "unusual_shipment_profile"
     paths = project_paths()
-    out_path = paths["processed"] / f"anomaly_scores_{name}.parquet"
-    df_out.to_parquet(out_path, index=False)
+    out_path = write_table(df_out, paths["processed"] / f"anomaly_scores_{name}.csv")
     bundle = {
         "pipeline": pipe,
         "features": features,
@@ -234,8 +234,7 @@ def train_vendor_kpi_anomaly() -> dict[str, Any]:
     }
 
     scored = _score(pipe, kpis, reference)
-    out_path = project_paths()["processed"] / "anomaly_scores_vendor_kpi.parquet"
-    scored.to_parquet(out_path, index=False)
+    out_path = write_table(scored, project_paths()["processed"] / "anomaly_scores_vendor_kpi.csv")
 
     # Ground truth on unseen (val+test) periods: false alarms on clean data and
     # detection rate on injected disruptions of increasing severity.

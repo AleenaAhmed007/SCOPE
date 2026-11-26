@@ -10,6 +10,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import RobustScaler
 
+from scope.data.table_io import read_table, write_table
 from scope.logging_config import setup_logging
 from scope.models.common import project_paths, save_json, save_model_bundle
 
@@ -18,7 +19,7 @@ logger = setup_logging()
 
 def train_vendor_segmentation(k_min: int = 2, k_max: int = 8) -> dict[str, Any]:
     paths = project_paths()
-    vendors = pd.read_parquet(paths["processed"] / "vendor_features.parquet")
+    vendors = read_table(paths["processed"] / "vendor_features.csv")
     feature_cols = [
         "shipment_count",
         "late_rate",
@@ -109,8 +110,9 @@ def train_vendor_segmentation(k_min: int = 2, k_max: int = 8) -> dict[str, Any]:
         .reset_index()
         .to_dict(orient="records")
     )
-    work[["Vendor", "segment"] + feature_cols].to_parquet(
-        paths["processed"] / "vendor_segments.parquet", index=False
+    write_table(
+        work[["Vendor", "segment"] + feature_cols],
+        paths["processed"] / "vendor_segments.csv",
     )
 
     results = {

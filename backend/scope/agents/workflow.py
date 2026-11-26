@@ -10,6 +10,7 @@ import joblib
 import pandas as pd
 
 from scope.config.loader import get_project_root
+from scope.data.table_io import read_table
 from scope.evidence.claims import verify_claims
 from scope.evidence.checker import run_checker
 from scope.evidence.ledger import add_evidence, update_validation
@@ -115,7 +116,7 @@ def data_analyst(state: InvestigationState) -> InvestigationState:
 
     late_bundle = _load_bundle("late_delivery_classifier")
     dur_bundle = _load_bundle("delivery_duration_regressor")
-    anom_path = project_paths()["processed"] / "anomaly_scores_unusual_profile.parquet"
+    anom_path = project_paths()["processed"] / "anomaly_scores_unusual_profile.csv"
 
     if late_bundle:
         feats = late_bundle["features"]
@@ -136,7 +137,7 @@ def data_analyst(state: InvestigationState) -> InvestigationState:
         )
 
     if anom_path.exists():
-        anom = pd.read_parquet(anom_path)
+        anom = read_table(anom_path)
         arow = anom[anom["ID"] == order_id]
         if not arow.empty:
             findings["anomaly_score"] = float(arow.iloc[0]["anomaly_score"])

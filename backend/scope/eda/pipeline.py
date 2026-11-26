@@ -26,6 +26,7 @@ from scope.eda.late_delivery import (
     late_rate_by,
     vendor_performance,
 )
+from scope.data.table_io import write_table
 from scope.eda.load import load_raw_dataset
 from scope.eda.overview import (
     categorical_profile,
@@ -293,15 +294,7 @@ def run_phase01_eda(project_root: Path | None = None) -> dict[str, Any]:
     (reports_dir / "data_audit.md").write_text(audit_md, encoding="utf-8")
 
     # Persist interim enriched frame for notebook reuse (not raw overwrite)
-    interim_path = root / "data" / "interim" / "scms_phase01_enriched.parquet"
-    try:
-        df.to_parquet(interim_path, index=False)
-    except Exception:
-        # Fallback if pyarrow missing
-        csv_fallback = root / "data" / "interim" / "scms_phase01_enriched.csv"
-        df.to_csv(csv_fallback, index=False)
-        interim_path = csv_fallback
-        logger.warning("Parquet unavailable; wrote CSV interim to %s", csv_fallback)
+    interim_path = write_table(df, root / "data" / "interim" / "scms_phase01_enriched.csv")
 
     result = {
         "n_rows": overview["n_rows"],
