@@ -284,8 +284,8 @@ def _train_weekly_lstm_block(
     delay_w: pd.DataFrame,
     volume_w: pd.DataFrame,
 ) -> dict[str, Any]:
-    """Train weekly classical baselines + LSTM; report whether LSTM wins validation."""
-    from scope.models.forecasting.lstm import evaluate_lstm_weekly, torch_available
+    """Train weekly classical baselines + neural technique sweep."""
+    from scope.models.forecasting.lstm import sweep_weekly_models, torch_available
 
     # Seasonal period 4 ≈ month-in-weeks; full 52-week SARIMA is too heavy for
     # the rolling-origin selection loop on ~500 weeks.
@@ -310,67 +310,62 @@ def _train_weekly_lstm_block(
         ),
     }
 
-    lstm_block: dict[str, Any] = {
-        "torch_available": torch_available(),
-        "lookback_weeks": 12,
-    }
+    lstm_block: dict[str, Any] = {"torch_available": torch_available()}
     if not torch_available():
         lstm_block.update({"trained": False, "reason": "torch_not_installed"})
         return {"classical": classical, "lstm": lstm_block}
 
-    delay_ordered = delay_w.dropna(subset=["late_rate"]).sort_values("period_start")
-    vol_ordered = volume_w.dropna(subset=["total_line_item_quantity"]).sort_values("period_start")
-    late_w = delay_ordered["shipment_count"].to_numpy(dtype=float) if "shipment_count" in delay_ordered else None
-
-    try:
-        lstm_late = evaluate_lstm_weekly(
-            delay_ordered["late_rate"].to_numpy(),
-            weights=late_w,
-            lookback=12,
-        )
-    except Exception as exc:  # noqa: BLE001
-        lstm_late = {"trained": False, "error": str(exc)}
-    try:
-        lstm_vol = evaluate_lstm_weekly(
-            vol_ordered["total_line_item_quantity"].to_numpy(),
-            weights=None,
-            lookback=12,
-        )
-    except Exception as exc:  # noqa: BLE001
-        lstm_vol = {"trained": False, "error": str(exc)}
-
-    def _verdict(classical_metrics: dict[str, Any], lstm_metrics: dict[str, Any]) -> dict[str, Any]:
-        if not lstm_metrics.get("trained"):
-            return {"deploy_lstm": False, "reason": lstm_metrics.get("reason") or lstm_metrics.get("error")}
-        classical_val = classical_metrics.get("validation_selected_mae")
-        # Classical validation_mae dict — use selected model's val score; LSTM uses holdout val MAE.
-        lstm_val = lstm_metrics.get("validation_mae")
-        deploy = (
-            lstm_val is not None
-            and classical_val is not None
-            and lstm_val < classical_val * 0.98  # need clear (>=2%) validation win
-        )
-        return {
-            "deploy_lstm": bool(deploy),
-            "classical_validation_mae": classical_val,
-            "lstm_validation_mae": lstm_val,
-            "classical_selected_model": classical_metrics.get("selected_model"),
-            "classical_test_mae": classical_metrics.get("mae"),
-            "lstm_test_mae": lstm_metrics.get("test_mae"),
-            "reason": (
-                "LSTM beats selected classical model by >=2% on validation"
-                if deploy
-                else "LSTM does not clearly beat classical validation MAE; keep classical"
-            ),
+    sweep = sweep_weekly_models(
+        delay_w,
+        volume_w,
+        classical_val_mae={
+            "late_rate": float(classical["late_rate_weekly"]["validation_selected_mae"]),
+            "volume": float(classical["volume_weekly"]["validation_selected_mae"]),
+        },
+        classical_test_mae={
+            "late_rate": float(classical["late_rate_weekly"]["mae"]),
+            "volume": float(classical["volume_weekly"]["mae"]),
+        },
+    )
+    late_v = sweep.get("late_rate_verdict", {})
+    vol_v = sweep.get("volume_verdict", {})
+    # Compact verdict + best config for reporting / deploy decision
+    lstm_block.update(
+        {
+            "trained": bool(sweep.get("trained")),
+            "techniques": sweep.get("techniques"),
+            "n_configs": sweep.get("n_configs"),
+            "late_rate": late_v.get("best"),
+            "volume": vol_v.get("best"),
+            "late_rate_verdict": {
+                "deploy_lstm": late_v.get("deploy_lstm"),
+                "classical_validation_mae": late_v.get("classical_validation_mae"),
+                "lstm_validation_mae": (late_v.get("best") or {}).get("validation_mae"),
+                "classical_selected_model": classical["late_rate_weekly"].get("selected_model"),
+                "classical_test_mae": classical["late_rate_weekly"].get("mae"),
+                "lstm_test_mae": (late_v.get("best") or {}).get("test_mae"),
+                "best_config": (late_v.get("best") or {}).get("config"),
+                "ranking_top5": (late_v.get("ranking") or [])[:5],
+                "reason": late_v.get("reason"),
+            },
+            "volume_verdict": {
+                "deploy_lstm": vol_v.get("deploy_lstm"),
+                "classical_validation_mae": vol_v.get("classical_validation_mae"),
+                "lstm_validation_mae": (vol_v.get("best") or {}).get("validation_mae"),
+                "classical_selected_model": classical["volume_weekly"].get("selected_model"),
+                "classical_test_mae": classical["volume_weekly"].get("mae"),
+                "lstm_test_mae": (vol_v.get("best") or {}).get("test_mae"),
+                "best_config": (vol_v.get("best") or {}).get("config"),
+                "ranking_top5": (vol_v.get("ranking") or [])[:5],
+                "reason": vol_v.get("reason"),
+            },
+            "full_sweep": {
+                "late_rate_ranking": late_v.get("ranking"),
+                "volume_ranking": vol_v.get("ranking"),
+            },
         }
-
-    lstm_block["late_rate"] = lstm_late
-    lstm_block["volume"] = lstm_vol
-    lstm_block["late_rate_verdict"] = _verdict(classical["late_rate_weekly"], lstm_late)
-    lstm_block["volume_verdict"] = _verdict(classical["volume_weekly"], lstm_vol)
-    lstm_block["trained"] = bool(lstm_late.get("trained") or lstm_vol.get("trained"))
+    )
     return {"classical": classical, "lstm": lstm_block}
-
 def _baseline_naive(ts: pd.DataFrame, value_col: str) -> dict[str, Any]:
     _, _, test = _forecast_splits(ts, value_col)
     if len(test) < 1:
