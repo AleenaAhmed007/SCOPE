@@ -25,9 +25,14 @@ regression:
 
 forecasting:
   candidates: [naive_lag1, mean_baseline, persistence_linear, gradient_boosting, random_forest, extra_trees, arima]
-  arima_order_selection: aic       # (p,d,q) in {0..2}x{0,1}x{0,1}, optional seasonal AR(12)
+  arima_order_selection: aic       # (p,d,q) in {0..2}x{0,1}x{0,1}, optional seasonal AR
   horizon: 1                       # rolling one-step-ahead
-  frequency: monthly
+  frequency: monthly               # primary deployed path
+  weekly_lstm_trial: true          # evaluate LSTM on weekly series vs classical
+  lstm:
+    lookback_weeks: 12
+    hidden: 32
+    deploy_rule: validation_mae_beats_classical_by_2pct
   per_product_group: true
 
 clustering:
