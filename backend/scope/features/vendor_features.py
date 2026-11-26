@@ -68,10 +68,11 @@ def attach_train_only_vendor_stats(
         if history.empty:
             continue
 
-        # Search the outcome-known prefix for each prediction timestamp.
+        # Expanding stats over outcome-known history (avoids O(n²) per-row slices).
         delivered_ns = history[delivered_col].astype("int64").to_numpy()
-        late_values = history["is_late"].astype(float).to_numpy()
-        delays = history["delay_days"].astype(float).to_numpy()
+        exp_late = history["is_late"].astype(float).expanding().mean().to_numpy()
+        exp_med_delay = history["delay_days"].astype(float).expanding().median().to_numpy()
+
         schedule = group[schedule_col]
         valid_schedule = schedule.notna()
         positions = np.searchsorted(
@@ -79,12 +80,11 @@ def attach_train_only_vendor_stats(
             schedule.loc[valid_schedule].astype("int64").to_numpy(),
             side="left",
         )
-        for row_index, n_prior in zip(schedule.loc[valid_schedule].index, positions):
-            if n_prior == 0:
-                continue
-            result.at[row_index, "vendor_hist_late_rate"] = float(late_values[:n_prior].mean())
-            prior_delays = delays[:n_prior]
-            prior_delays = prior_delays[np.isfinite(prior_delays)]
-            if len(prior_delays):
-                result.at[row_index, "vendor_hist_median_delay"] = float(np.median(prior_delays))
+        row_index = schedule.loc[valid_schedule].index.to_numpy()
+        usable = positions > 0
+        if not usable.any():
+            continue
+        prior_pos = positions[usable] - 1
+        result.loc[row_index[usable], "vendor_hist_late_rate"] = exp_late[prior_pos]
+        result.loc[row_index[usable], "vendor_hist_median_delay"] = exp_med_delay[prior_pos]
     return result

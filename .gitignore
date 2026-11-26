@@ -80,6 +80,13 @@ reports/investigations/*.json
 *.sqlite3
 *.db-journal
 
+# Large original DataCo dump (re-download from Mendeley; adapt via scripts/adapt_dataco.py)
+data/raw/DataCoSupplyChainDataset.csv
+
+# Regenerable interim/processed tables (can be huge on DataCo; rebuild via run_all_phases)
+data/interim/*.csv
+data/processed/*.csv
+
 # Logs
 *.log
 logs/

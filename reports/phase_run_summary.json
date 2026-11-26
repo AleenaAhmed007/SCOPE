@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-11-14T13:39:37.936706+00:00",
+  "started_at": "2026-11-26T14:44:11.732752+00:00",
   "phases": {
     "02_preprocessing": {
       "status": "ok",
       "result": {
-        "generated_at": "2026-11-14T13:40:05.322664+00:00",
+        "generated_at": "2026-11-26T14:44:23.737534+00:00",
         "column_mapping": {
           "ID": "ID",
           "Project Code": "Project_Code",
@@ -96,11 +96,11 @@
         "split": {
           "method": "chronological_on_Scheduled_Delivery_Date_Parsed",
           "counts": {
-            "train": 7226,
-            "test": 1550,
-            "val": 1548
+            "train": 126363,
+            "test": 27079,
+            "val": 27077
           },
-          "train_end": "2013-08-06 00:00:00"
+          "train_end": "2017-01-11 00:00:00"
         },
         "exclusions": [
           {
@@ -115,12 +115,12 @@
           },
           {
             "rule": "invalid_late_target_dates",
-            "count": 0,
+            "count": 7754,
             "action": "excluded_from_classification_training"
           },
           {
             "rule": "invalid_or_implausible_po_to_delivery_duration",
-            "count": 6164,
+            "count": 7754,
             "action": "excluded_from_regression_training"
           }
         ],
@@ -148,16 +148,16 @@
             "Inventory_Stockout_Flag",
             "Inventory_Shortage_Quantity"
           ],
-          "stockout_rule_agreement": 1.0,
+          "stockout_rule_agreement": 0.613386956497654,
           "training_recommendation": "An experimental proxy classifier can be trained only after excluding Opening_Stock and Line_Item_Quantity, which exactly define the flag. The augmented inventory source remains unverified; retain the rule audit and do not present proxy metrics as operational validation."
         },
         "outputs": {
-          "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.csv",
-          "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.csv",
-          "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.csv",
-          "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.csv",
-          "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.csv",
-          "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.csv"
+          "interim": "/workspace/data/interim/shipments_normalized.csv",
+          "shipments": "/workspace/data/processed/shipments.csv",
+          "vendor_features": "/workspace/data/processed/vendor_features.csv",
+          "delay_timeseries": "/workspace/data/processed/delay_timeseries.csv",
+          "volume_timeseries": "/workspace/data/processed/volume_timeseries.csv",
+          "inventory_experiment": "/workspace/data/processed/inventory_experiment.csv"
         }
       }
     },
@@ -194,493 +194,493 @@
           "vendor_hist_late_rate",
           "vendor_hist_median_delay"
         ],
-        "n_train": 7226,
-        "n_val": 1548,
-        "n_test": 1550,
+        "n_train": 121007,
+        "n_val": 25907,
+        "n_test": 25851,
         "class_balance_train": {
-          "0": 6512,
-          "1": 714
+          "1": 69471,
+          "0": 51536
         },
         "class_balance_by_split": {
           "train": {
-            "n": 7226,
-            "positive_rate": 0.0988098533075007
+            "n": 121007,
+            "positive_rate": 0.5741072830497409
           },
           "val": {
-            "n": 1548,
-            "positive_rate": 0.1866925064599483
+            "n": 25907,
+            "positive_rate": 0.5653298336356969
           },
           "test": {
-            "n": 1550,
-            "positive_rate": 0.11806451612903225
+            "n": 25851,
+            "positive_rate": 0.5748326950601524
           }
         },
         "models": {
           "xgboost": {
             "val": {
-              "accuracy": 0.6724806201550387,
-              "precision": 0.33384146341463417,
-              "recall": 0.7577854671280276,
-              "f1": 0.4634920634920635,
-              "roc_auc": 0.7471602386691255,
-              "pr_auc": 0.33558290869967383,
+              "accuracy": 0.5701547844211989,
+              "precision": 0.5687103594080338,
+              "recall": 0.9918066366243343,
+              "f1": 0.7229023589131084,
+              "roc_auc": 0.7384893254963909,
+              "pr_auc": 0.8264807371815545,
               "confusion_matrix": [
                 [
-                  822,
-                  437
+                  245,
+                  11016
                 ],
                 [
-                  70,
-                  219
+                  120,
+                  14526
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.92152466367713,
-                  "recall": 0.6528991262907069,
-                  "f1-score": 0.7642956764295676,
-                  "support": 1259.0
+                  "precision": 0.6712328767123288,
+                  "recall": 0.021756504750910222,
+                  "f1-score": 0.04214691209358335,
+                  "support": 11261.0
                 },
                 "1": {
-                  "precision": 0.33384146341463417,
-                  "recall": 0.7577854671280276,
-                  "f1-score": 0.4634920634920635,
-                  "support": 289.0
+                  "precision": 0.5687103594080338,
+                  "recall": 0.9918066366243343,
+                  "f1-score": 0.7229023589131084,
+                  "support": 14646.0
                 },
-                "accuracy": 0.6724806201550387,
+                "accuracy": 0.5701547844211989,
                 "macro avg": {
-                  "precision": 0.6276830635458821,
-                  "recall": 0.7053422967093672,
-                  "f1-score": 0.6138938699608156,
-                  "support": 1548.0
+                  "precision": 0.6199716180601813,
+                  "recall": 0.5067815706876223,
+                  "f1-score": 0.38252463550334587,
+                  "support": 25907.0
                 },
                 "weighted avg": {
-                  "precision": 0.8118086140157208,
-                  "recall": 0.6724806201550387,
-                  "f1-score": 0.7081378959780569,
-                  "support": 1548.0
+                  "precision": 0.6132738390607789,
+                  "recall": 0.5701547844211989,
+                  "f1-score": 0.42699827559065995,
+                  "support": 25907.0
                 }
               }
             },
             "test": {
-              "accuracy": 0.7012903225806452,
-              "precision": 0.22972972972972974,
-              "recall": 0.6502732240437158,
-              "f1": 0.33951497860199714,
-              "roc_auc": 0.7640399582668761,
-              "pr_auc": 0.27803987587075824,
+              "accuracy": 0.5751421608448416,
+              "precision": 0.5750338687826592,
+              "recall": 0.9997308209959623,
+              "f1": 0.7301142646516771,
+              "roc_auc": 0.7454882484910876,
+              "pr_auc": 0.8367215948182758,
               "confusion_matrix": [
                 [
-                  968,
-                  399
+                  12,
+                  10979
                 ],
                 [
-                  64,
-                  119
+                  4,
+                  14856
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.937984496124031,
-                  "recall": 0.7081199707388441,
-                  "f1-score": 0.807002917882451,
-                  "support": 1367.0
+                  "precision": 0.75,
+                  "recall": 0.0010918023837685378,
+                  "f1-score": 0.0021804306350504225,
+                  "support": 10991.0
                 },
                 "1": {
-                  "precision": 0.22972972972972974,
-                  "recall": 0.6502732240437158,
-                  "f1-score": 0.33951497860199714,
-                  "support": 183.0
+                  "precision": 0.5750338687826592,
+                  "recall": 0.9997308209959623,
+                  "f1-score": 0.7301142646516771,
+                  "support": 14860.0
                 },
-                "accuracy": 0.7012903225806452,
+                "accuracy": 0.5751421608448416,
                 "macro avg": {
-                  "precision": 0.5838571129268804,
-                  "recall": 0.6791965973912799,
-                  "f1-score": 0.5732589482422241,
-                  "support": 1550.0
+                  "precision": 0.6625169343913295,
+                  "recall": 0.5004113116898654,
+                  "f1-score": 0.36614734764336376,
+                  "support": 25851.0
                 },
                 "weighted avg": {
-                  "precision": 0.8543647398336071,
-                  "recall": 0.701290322580645,
-                  "f1-score": 0.7518091805351457,
-                  "support": 1550.0
+                  "precision": 0.6494237472480877,
+                  "recall": 0.5751421608448416,
+                  "f1-score": 0.42062059826829756,
+                  "support": 25851.0
                 }
               }
             },
-            "decision_threshold": 0.26957181096076965
+            "decision_threshold": 0.3228663107061935,
+            "probabilities": "calibrated"
           },
           "logistic_regression": {
             "val": {
-              "accuracy": 0.6511627906976745,
-              "precision": 0.3178519593613933,
-              "recall": 0.7577854671280276,
-              "f1": 0.44785276073619634,
-              "roc_auc": 0.7331517571753272,
-              "pr_auc": 0.30910061894058244,
+              "accuracy": 0.5668738178870576,
+              "precision": 0.5664248865443544,
+              "recall": 0.9970640447903865,
+              "f1": 0.7224379746209216,
+              "roc_auc": 0.7304734995456155,
+              "pr_auc": 0.8233092533662859,
               "confusion_matrix": [
                 [
-                  789,
-                  470
+                  83,
+                  11178
                 ],
                 [
-                  70,
-                  219
+                  43,
+                  14603
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.9185098952270081,
-                  "recall": 0.6266878474980143,
-                  "f1-score": 0.7450424929178471,
-                  "support": 1259.0
+                  "precision": 0.6587301587301587,
+                  "recall": 0.007370570997247136,
+                  "f1-score": 0.014578027575305172,
+                  "support": 11261.0
                 },
                 "1": {
-                  "precision": 0.3178519593613933,
-                  "recall": 0.7577854671280276,
-                  "f1-score": 0.44785276073619634,
-                  "support": 289.0
+                  "precision": 0.5664248865443544,
+                  "recall": 0.9970640447903865,
+                  "f1-score": 0.7224379746209216,
+                  "support": 14646.0
                 },
-                "accuracy": 0.6511627906976745,
+                "accuracy": 0.5668738178870576,
                 "macro avg": {
-                  "precision": 0.6181809272942007,
-                  "recall": 0.692236657313021,
-                  "f1-score": 0.5964476268270217,
-                  "support": 1548.0
+                  "precision": 0.6125775226372565,
+                  "recall": 0.5022173078938168,
+                  "f1-score": 0.3685080010981134,
+                  "support": 25907.0
                 },
                 "weighted avg": {
-                  "precision": 0.8063715596551975,
-                  "recall": 0.6511627906976745,
-                  "f1-score": 0.6895593969226939,
-                  "support": 1548.0
+                  "precision": 0.6065472345616603,
+                  "recall": 0.5668738178870576,
+                  "f1-score": 0.41475237367597684,
+                  "support": 25907.0
                 }
               }
             },
             "test": {
-              "accuracy": 0.5316129032258065,
-              "precision": 0.1684981684981685,
-              "recall": 0.7540983606557377,
-              "f1": 0.2754491017964072,
-              "roc_auc": 0.6939970658895671,
-              "pr_auc": 0.19733047418702712,
+              "accuracy": 0.5763800239835983,
+              "precision": 0.5759707700081627,
+              "recall": 0.9971736204576043,
+              "f1": 0.7301845418483751,
+              "roc_auc": 0.7425545500154109,
+              "pr_auc": 0.8352250786198978,
               "confusion_matrix": [
                 [
-                  686,
-                  681
+                  82,
+                  10909
                 ],
                 [
-                  45,
-                  138
+                  42,
+                  14818
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.9384404924760602,
-                  "recall": 0.5018288222384785,
-                  "f1-score": 0.6539561487130601,
-                  "support": 1367.0
+                  "precision": 0.6612903225806451,
+                  "recall": 0.007460649622418342,
+                  "f1-score": 0.014754835807467387,
+                  "support": 10991.0
                 },
                 "1": {
-                  "precision": 0.1684981684981685,
-                  "recall": 0.7540983606557377,
-                  "f1-score": 0.2754491017964072,
-                  "support": 183.0
+                  "precision": 0.5759707700081627,
+                  "recall": 0.9971736204576043,
+                  "f1-score": 0.7301845418483751,
+                  "support": 14860.0
                 },
-                "accuracy": 0.5316129032258065,
+                "accuracy": 0.5763800239835983,
                 "macro avg": {
-                  "precision": 0.5534693304871143,
-                  "recall": 0.627963591447108,
-                  "f1-score": 0.4647026252547336,
-                  "support": 1550.0
+                  "precision": 0.618630546294404,
+                  "recall": 0.5023171350400113,
+                  "f1-score": 0.37246968882792125,
+                  "support": 25851.0
                 },
                 "weighted avg": {
-                  "precision": 0.8475376245483478,
-                  "recall": 0.5316129032258066,
-                  "f1-score": 0.6092678973674165,
-                  "support": 1550.0
+                  "precision": 0.6122458542340787,
+                  "recall": 0.5763800239835983,
+                  "f1-score": 0.4260072218570549,
+                  "support": 25851.0
                 }
               }
             },
-            "decision_threshold": 0.6215784278194216
+            "decision_threshold": 0.24939870643182827
           },
           "random_forest": {
             "val": {
-              "accuracy": 0.687984496124031,
-              "precision": 0.36103151862464183,
-              "recall": 0.8719723183391004,
-              "f1": 0.5106382978723404,
-              "roc_auc": 0.7893107343390564,
-              "pr_auc": 0.3657082135760454,
+              "accuracy": 0.5739761454433164,
+              "precision": 0.5716668652448469,
+              "recall": 0.9827939369111021,
+              "f1": 0.7228625235404896,
+              "roc_auc": 0.7368018983923261,
+              "pr_auc": 0.8266048285300136,
               "confusion_matrix": [
                 [
-                  813,
-                  446
+                  476,
+                  10785
                 ],
                 [
-                  37,
-                  252
+                  252,
+                  14394
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.9564705882352941,
-                  "recall": 0.6457505957108817,
-                  "f1-score": 0.7709815078236131,
-                  "support": 1259.0
+                  "precision": 0.6538461538461539,
+                  "recall": 0.042269780658911286,
+                  "f1-score": 0.07940612227875553,
+                  "support": 11261.0
                 },
                 "1": {
-                  "precision": 0.36103151862464183,
-                  "recall": 0.8719723183391004,
-                  "f1-score": 0.5106382978723404,
-                  "support": 289.0
+                  "precision": 0.5716668652448469,
+                  "recall": 0.9827939369111021,
+                  "f1-score": 0.7228625235404896,
+                  "support": 14646.0
                 },
-                "accuracy": 0.687984496124031,
+                "accuracy": 0.5739761454433164,
                 "macro avg": {
-                  "precision": 0.658751053429968,
-                  "recall": 0.758861457024991,
-                  "f1-score": 0.6408099028479768,
-                  "support": 1548.0
+                  "precision": 0.6127565095455003,
+                  "recall": 0.5125318587850066,
+                  "f1-score": 0.4011343229096226,
+                  "support": 25907.0
                 },
                 "weighted avg": {
-                  "precision": 0.8453065758855018,
-                  "recall": 0.687984496124031,
-                  "f1-score": 0.7223773814179814,
-                  "support": 1548.0
+                  "precision": 0.6073877502928771,
+                  "recall": 0.5739761454433164,
+                  "f1-score": 0.443171222555876,
+                  "support": 25907.0
                 }
               }
             },
             "test": {
-              "accuracy": 0.743225806451613,
-              "precision": 0.29206963249516443,
-              "recall": 0.825136612021858,
-              "f1": 0.43142857142857144,
-              "roc_auc": 0.8071042248791778,
-              "pr_auc": 0.30691550525426403,
+              "accuracy": 0.5751034776217554,
+              "precision": 0.5750174189053185,
+              "recall": 0.9996635262449529,
+              "f1": 0.730083058927606,
+              "roc_auc": 0.7490983568716996,
+              "pr_auc": 0.8387841824885958,
               "confusion_matrix": [
                 [
-                  1001,
-                  366
+                  12,
+                  10979
                 ],
                 [
-                  32,
-                  151
+                  5,
+                  14855
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.9690222652468539,
-                  "recall": 0.7322604242867593,
-                  "f1-score": 0.8341666666666666,
-                  "support": 1367.0
+                  "precision": 0.7058823529411765,
+                  "recall": 0.0010918023837685378,
+                  "f1-score": 0.002180232558139535,
+                  "support": 10991.0
                 },
                 "1": {
-                  "precision": 0.29206963249516443,
-                  "recall": 0.825136612021858,
-                  "f1-score": 0.43142857142857144,
-                  "support": 183.0
+                  "precision": 0.5750174189053185,
+                  "recall": 0.9996635262449529,
+                  "f1-score": 0.730083058927606,
+                  "support": 14860.0
                 },
-                "accuracy": 0.743225806451613,
+                "accuracy": 0.5751034776217554,
                 "macro avg": {
-                  "precision": 0.6305459488710091,
-                  "recall": 0.7786985181543087,
-                  "f1-score": 0.632797619047619,
-                  "support": 1550.0
+                  "precision": 0.6404498859232475,
+                  "recall": 0.5003776643143607,
+                  "f1-score": 0.36613164574287277,
+                  "support": 25851.0
                 },
                 "weighted avg": {
-                  "precision": 0.8890981802187512,
-                  "recall": 0.743225806451613,
-                  "f1-score": 0.7866175883256529,
-                  "support": 1550.0
+                  "precision": 0.6306569102204752,
+                  "recall": 0.5751034776217554,
+                  "f1-score": 0.4206025759820022,
+                  "support": 25851.0
                 }
               }
             },
-            "decision_threshold": 0.217049956918077,
-            "probabilities": "calibrated"
+            "decision_threshold": 0.32380837732641177
           }
         },
         "proposal_comparison": "xgboost vs logistic_regression (baseline); random_forest is an extra comparison",
         "baselines": {
-          "train_prevalence_probability": 0.0988098533075007,
-          "majority_class": 0,
+          "train_prevalence_probability": 0.5741072830497409,
+          "majority_class": 1,
           "vendor_history_only": {
             "val": {
-              "accuracy": 0.8133074935400517,
-              "precision": 0.0,
-              "recall": 0.0,
-              "f1": 0.0,
-              "roc_auc": 0.6855567251429843,
-              "pr_auc": 0.24954312137882664,
+              "accuracy": 0.5653298336356969,
+              "precision": 0.5653298336356969,
+              "recall": 1.0,
+              "f1": 0.7223140088279535,
+              "roc_auc": 0.49240434979484393,
+              "pr_auc": 0.5623748239610533,
               "confusion_matrix": [
                 [
-                  1259,
-                  0
+                  0,
+                  11261
                 ],
                 [
-                  289,
-                  0
+                  0,
+                  14646
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.8133074935400517,
-                  "recall": 1.0,
-                  "f1-score": 0.8970431065194158,
-                  "support": 1259.0
-                },
-                "1": {
                   "precision": 0.0,
                   "recall": 0.0,
                   "f1-score": 0.0,
-                  "support": 289.0
+                  "support": 11261.0
                 },
-                "accuracy": 0.8133074935400517,
+                "1": {
+                  "precision": 0.5653298336356969,
+                  "recall": 1.0,
+                  "f1-score": 0.7223140088279535,
+                  "support": 14646.0
+                },
+                "accuracy": 0.5653298336356969,
                 "macro avg": {
-                  "precision": 0.40665374677002586,
+                  "precision": 0.28266491681784844,
                   "recall": 0.5,
-                  "f1-score": 0.4485215532597079,
-                  "support": 1548.0
+                  "f1-score": 0.36115700441397675,
+                  "support": 25907.0
                 },
                 "weighted avg": {
-                  "precision": 0.6614690790484012,
-                  "recall": 0.8133074935400517,
-                  "f1-score": 0.7295718805606876,
-                  "support": 1548.0
+                  "precision": 0.3195978207985647,
+                  "recall": 0.5653298336356969,
+                  "f1-score": 0.4083456584434403,
+                  "support": 25907.0
                 }
               }
             },
             "test": {
-              "accuracy": 0.8819354838709678,
-              "precision": 0.0,
-              "recall": 0.0,
-              "f1": 0.0,
-              "roc_auc": 0.7866693849161142,
-              "pr_auc": 0.25517952909025127,
+              "accuracy": 0.5715446210978299,
+              "precision": 0.574711735902701,
+              "recall": 0.9794078061911171,
+              "f1": 0.7243679076249253,
+              "roc_auc": 0.5116494187768703,
+              "pr_auc": 0.5905632685236484,
               "confusion_matrix": [
                 [
-                  1367,
-                  0
+                  221,
+                  10770
                 ],
                 [
-                  183,
-                  0
+                  306,
+                  14554
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.8819354838709678,
-                  "recall": 1.0,
-                  "f1-score": 0.9372643126499829,
-                  "support": 1367.0
+                  "precision": 0.41935483870967744,
+                  "recall": 0.02010736056773724,
+                  "f1-score": 0.03837471783295711,
+                  "support": 10991.0
                 },
                 "1": {
-                  "precision": 0.0,
-                  "recall": 0.0,
-                  "f1-score": 0.0,
-                  "support": 183.0
+                  "precision": 0.574711735902701,
+                  "recall": 0.9794078061911171,
+                  "f1-score": 0.7243679076249253,
+                  "support": 14860.0
                 },
-                "accuracy": 0.8819354838709678,
+                "accuracy": 0.5715446210978299,
                 "macro avg": {
-                  "precision": 0.4409677419354839,
-                  "recall": 0.5,
-                  "f1-score": 0.46863215632499144,
-                  "support": 1550.0
+                  "precision": 0.49703328730618923,
+                  "recall": 0.49975758337942716,
+                  "f1-score": 0.3813713127289412,
+                  "support": 25851.0
                 },
                 "weighted avg": {
-                  "precision": 0.7778101977107181,
-                  "recall": 0.8819354838709678,
-                  "f1-score": 0.8266066550919526,
-                  "support": 1550.0
+                  "precision": 0.5086590626193261,
+                  "recall": 0.5715446210978299,
+                  "f1-score": 0.4327060319139849,
+                  "support": 25851.0
                 }
               }
             }
           },
           "prevalence_probability": {
             "val": {
-              "accuracy": 0.8133074935400517,
-              "precision": 0.0,
-              "recall": 0.0,
-              "f1": 0.0,
+              "accuracy": 0.5653298336356969,
+              "precision": 0.5653298336356969,
+              "recall": 1.0,
+              "f1": 0.7223140088279535,
               "roc_auc": 0.5,
-              "pr_auc": 0.1866925064599483,
+              "pr_auc": 0.5653298336356969,
               "confusion_matrix": [
                 [
-                  1259,
-                  0
+                  0,
+                  11261
                 ],
                 [
-                  289,
-                  0
+                  0,
+                  14646
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.8133074935400517,
-                  "recall": 1.0,
-                  "f1-score": 0.8970431065194158,
-                  "support": 1259.0
-                },
-                "1": {
                   "precision": 0.0,
                   "recall": 0.0,
                   "f1-score": 0.0,
-                  "support": 289.0
+                  "support": 11261.0
                 },
-                "accuracy": 0.8133074935400517,
+                "1": {
+                  "precision": 0.5653298336356969,
+                  "recall": 1.0,
+                  "f1-score": 0.7223140088279535,
+                  "support": 14646.0
+                },
+                "accuracy": 0.5653298336356969,
                 "macro avg": {
-                  "precision": 0.40665374677002586,
+                  "precision": 0.28266491681784844,
                   "recall": 0.5,
-                  "f1-score": 0.4485215532597079,
-                  "support": 1548.0
+                  "f1-score": 0.36115700441397675,
+                  "support": 25907.0
                 },
                 "weighted avg": {
-                  "precision": 0.6614690790484012,
-                  "recall": 0.8133074935400517,
-                  "f1-score": 0.7295718805606876,
-                  "support": 1548.0
+                  "precision": 0.3195978207985647,
+                  "recall": 0.5653298336356969,
+                  "f1-score": 0.4083456584434403,
+                  "support": 25907.0
                 }
               }
             },
             "test": {
-              "accuracy": 0.8819354838709678,
-              "precision": 0.0,
-              "recall": 0.0,
-              "f1": 0.0,
+              "accuracy": 0.5748326950601524,
+              "precision": 0.5748326950601524,
+              "recall": 1.0,
+              "f1": 0.7300238264842426,
               "roc_auc": 0.5,
-              "pr_auc": 0.11806451612903225,
+              "pr_auc": 0.5748326950601524,
               "confusion_matrix": [
                 [
-                  1367,
-                  0
+                  0,
+                  10991
                 ],
                 [
-                  183,
-                  0
+                  0,
+                  14860
                 ]
               ],
               "classification_report": {
                 "0": {
-                  "precision": 0.8819354838709678,
-                  "recall": 1.0,
-                  "f1-score": 0.9372643126499829,
-                  "support": 1367.0
-                },
-                "1": {
                   "precision": 0.0,
                   "recall": 0.0,
                   "f1-score": 0.0,
-                  "support": 183.0
+                  "support": 10991.0
                 },
-                "accuracy": 0.8819354838709678,
+                "1": {
+                  "precision": 0.5748326950601524,
+                  "recall": 1.0,
+                  "f1-score": 0.7300238264842426,
+                  "support": 14860.0
+                },
+                "accuracy": 0.5748326950601524,
                 "macro avg": {
-                  "precision": 0.4409677419354839,
+                  "precision": 0.2874163475300762,
                   "recall": 0.5,
-                  "f1-score": 0.46863215632499144,
-                  "support": 1550.0
+                  "f1-score": 0.3650119132421213,
+                  "support": 25851.0
                 },
                 "weighted avg": {
-                  "precision": 0.7778101977107181,
-                  "recall": 0.8819354838709678,
-                  "f1-score": 0.8266066550919526,
-                  "support": 1550.0
+                  "precision": 0.3304326273101182,
+                  "recall": 0.5748326950601524,
+                  "f1-score": 0.4196415636360622,
+                  "support": 25851.0
                 }
               }
             }
@@ -688,129 +688,129 @@
         },
         "xgboost_vs_logistic_baseline_test": {
           "precision": {
-            "xgboost": 0.22972972972972974,
-            "logistic_regression": 0.1684981684981685,
-            "gain": 0.06123156123156123
+            "xgboost": 0.5750338687826592,
+            "logistic_regression": 0.5759707700081627,
+            "gain": -0.0009369012255034948
           },
           "recall": {
-            "xgboost": 0.6502732240437158,
-            "logistic_regression": 0.7540983606557377,
-            "gain": -0.10382513661202186
+            "xgboost": 0.9997308209959623,
+            "logistic_regression": 0.9971736204576043,
+            "gain": 0.002557200538358062
           },
           "f1": {
-            "xgboost": 0.33951497860199714,
-            "logistic_regression": 0.2754491017964072,
-            "gain": 0.06406587680558995
+            "xgboost": 0.7301142646516771,
+            "logistic_regression": 0.7301845418483751,
+            "gain": -7.027719669805421e-05
           },
           "roc_auc": {
-            "xgboost": 0.7640399582668761,
-            "logistic_regression": 0.6939970658895671,
-            "gain": 0.07004289237730899
+            "xgboost": 0.7454882484910876,
+            "logistic_regression": 0.7425545500154109,
+            "gain": 0.002933698475676705
           },
           "pr_auc": {
-            "xgboost": 0.27803987587075824,
-            "logistic_regression": 0.19733047418702712,
-            "gain": 0.08070940168373111
+            "xgboost": 0.8367215948182758,
+            "logistic_regression": 0.8352250786198978,
+            "gain": 0.001496516198377984
           }
         },
         "rolling_origin_cv": {
           "method": "TimeSeriesSplit",
           "n_splits": 3,
           "period": "train_plus_validation",
-          "roc_auc_mean": 0.6208423335259511,
-          "roc_auc_std": 0.11603728981764848,
-          "pr_auc_mean": 0.20357515622933997,
-          "pr_auc_std": 0.07336251777476348
+          "roc_auc_mean": 0.7398955350590996,
+          "roc_auc_std": 0.002074688854385669,
+          "pr_auc_mean": 0.8336354968412024,
+          "pr_auc_std": 0.0026563300325313176
         },
         "post_2010_training_sensitivity": {
-          "n_train": 4207,
+          "n_train": 121007,
           "validation": {
-            "accuracy": 0.7416020671834626,
-            "precision": 0.36941176470588233,
-            "recall": 0.5432525951557093,
-            "f1": 0.43977591036414565,
-            "roc_auc": 0.7964798777521568,
-            "pr_auc": 0.38577720984394215,
+            "accuracy": 0.5701547844211989,
+            "precision": 0.5687103594080338,
+            "recall": 0.9918066366243343,
+            "f1": 0.7229023589131084,
+            "roc_auc": 0.7384893254963909,
+            "pr_auc": 0.8264807371815545,
             "confusion_matrix": [
               [
-                991,
-                268
+                245,
+                11016
               ],
               [
-                132,
-                157
+                120,
+                14526
               ]
             ],
             "classification_report": {
               "0": {
-                "precision": 0.8824577025823687,
-                "recall": 0.7871326449563145,
-                "f1-score": 0.8320738874895046,
-                "support": 1259.0
+                "precision": 0.6712328767123288,
+                "recall": 0.021756504750910222,
+                "f1-score": 0.04214691209358335,
+                "support": 11261.0
               },
               "1": {
-                "precision": 0.36941176470588233,
-                "recall": 0.5432525951557093,
-                "f1-score": 0.43977591036414565,
-                "support": 289.0
+                "precision": 0.5687103594080338,
+                "recall": 0.9918066366243343,
+                "f1-score": 0.7229023589131084,
+                "support": 14646.0
               },
-              "accuracy": 0.7416020671834626,
+              "accuracy": 0.5701547844211989,
               "macro avg": {
-                "precision": 0.6259347336441254,
-                "recall": 0.6651926200560119,
-                "f1-score": 0.6359248989268251,
-                "support": 1548.0
+                "precision": 0.6199716180601813,
+                "recall": 0.5067815706876223,
+                "f1-score": 0.38252463550334587,
+                "support": 25907.0
               },
               "weighted avg": {
-                "precision": 0.7866758705111124,
-                "recall": 0.7416020671834626,
-                "f1-score": 0.7588347948608039,
-                "support": 1548.0
+                "precision": 0.6132738390607789,
+                "recall": 0.5701547844211989,
+                "f1-score": 0.42699827559065995,
+                "support": 25907.0
               }
             }
           },
           "test": {
-            "accuracy": 0.8051612903225807,
-            "precision": 0.31347962382445144,
-            "recall": 0.546448087431694,
-            "f1": 0.398406374501992,
-            "roc_auc": 0.8132582616794785,
-            "pr_auc": 0.30684476651599024,
+            "accuracy": 0.5751421608448416,
+            "precision": 0.5750338687826592,
+            "recall": 0.9997308209959623,
+            "f1": 0.7301142646516771,
+            "roc_auc": 0.7454882484910876,
+            "pr_auc": 0.8367215948182758,
             "confusion_matrix": [
               [
-                1148,
-                219
+                12,
+                10979
               ],
               [
-                83,
-                100
+                4,
+                14856
               ]
             ],
             "classification_report": {
               "0": {
-                "precision": 0.9325751421608448,
-                "recall": 0.8397951719092904,
-                "f1-score": 0.8837567359507313,
-                "support": 1367.0
+                "precision": 0.75,
+                "recall": 0.0010918023837685378,
+                "f1-score": 0.0021804306350504225,
+                "support": 10991.0
               },
               "1": {
-                "precision": 0.31347962382445144,
-                "recall": 0.546448087431694,
-                "f1-score": 0.398406374501992,
-                "support": 183.0
+                "precision": 0.5750338687826592,
+                "recall": 0.9997308209959623,
+                "f1-score": 0.7301142646516771,
+                "support": 14860.0
               },
-              "accuracy": 0.8051612903225807,
+              "accuracy": 0.5751421608448416,
               "macro avg": {
-                "precision": 0.6230273829926481,
-                "recall": 0.6931216296704923,
-                "f1-score": 0.6410815552263617,
-                "support": 1550.0
+                "precision": 0.6625169343913295,
+                "recall": 0.5004113116898654,
+                "f1-score": 0.36614734764336376,
+                "support": 25851.0
               },
               "weighted avg": {
-                "precision": 0.859481929350806,
-                "recall": 0.8051612903225807,
-                "f1-score": 0.8264540803732351,
-                "support": 1550.0
+                "precision": 0.6494237472480877,
+                "recall": 0.5751421608448416,
+                "f1-score": 0.42062059826829756,
+                "support": 25851.0
               }
             }
           },
@@ -818,49 +818,45 @@
         },
         "calibration": {
           "method": "platt_on_validation",
-          "a": 1.566635899513822,
-          "b": -1.1302536236995853,
+          "a": 0.9103936178864445,
+          "b": 0.24146534954826965,
           "validation_raw": {
-            "brier": 0.16157884642373666,
-            "brier_constant_prevalence": 0.15183841449165048,
-            "ece": 0.17831084683732135,
-            "mean_predicted": 0.3650033532972697,
-            "actual_rate": 0.1866925064599483
+            "brier": 0.19486045097130378,
+            "brier_constant_prevalence": 0.24573201283713214,
+            "ece": 0.05146582877766637,
+            "mean_predicted": 0.5142095304484047,
+            "actual_rate": 0.5653298336356969
           },
           "validation_calibrated": {
-            "brier": 0.12705882479070219,
-            "brier_constant_prevalence": 0.15183841449165048,
-            "ece": 0.03457599602105337,
-            "mean_predicted": 0.18672091087967624,
-            "actual_rate": 0.1866925064599483
+            "brier": 0.1915272539220787,
+            "brier_constant_prevalence": 0.24573201283713214,
+            "ece": 0.009568362918968981,
+            "mean_predicted": 0.565321014853959,
+            "actual_rate": 0.5653298336356969
           },
           "test_raw": {
-            "brier": 0.1356143380071171,
-            "brier_constant_prevalence": 0.10412528616024974,
-            "ece": 0.18994905137644347,
-            "mean_predicted": 0.30801356750547576,
-            "actual_rate": 0.11806451612903225
+            "brier": 0.19277564088520596,
+            "brier_constant_prevalence": 0.24440006775003423,
+            "ece": 0.05789001650215095,
+            "mean_predicted": 0.5172866508321445,
+            "actual_rate": 0.5748326950601524
           },
           "test_calibrated": {
-            "brier": 0.09027623903403953,
-            "brier_constant_prevalence": 0.10412528616024974,
-            "ece": 0.02863620165293085,
-            "mean_predicted": 0.14670071778196309,
-            "actual_rate": 0.11806451612903225
+            "brier": 0.1889713022327303,
+            "brier_constant_prevalence": 0.24440006775003423,
+            "ece": 0.00800969150501438,
+            "mean_predicted": 0.5682745233385509,
+            "actual_rate": 0.5748326950601524
           },
           "note": "Validation late rate differs from test (prior shift); use recalibrate_late_model() on recent delivered outcomes to refresh calibration and threshold as conditions drift."
         },
         "class_balance_test": {
-          "positive_rate": 0.11806451612903225,
-          "n": 1550
+          "positive_rate": 0.5748326950601524,
+          "n": 25851
         },
-        "test_roc_auc_gain_over_vendor_only": 0.02043483996306361,
-        "best_model": "random_forest",
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\late_delivery_classifier",
-        "db_ids": {
-          "experiment_id": "43dfa9d7-b656-4ad0-a798-1499cd755562",
-          "version_id": "f6ef30ac-4a8d-4870-9b5b-46e0ad198cdf"
-        }
+        "test_roc_auc_gain_over_vendor_only": 0.23383882971421732,
+        "best_model": "xgboost",
+        "artifact_dir": "/workspace/reports/models/late_delivery_classifier"
       }
     },
     "04_duration_regression": {
@@ -896,100 +892,96 @@
           "vendor_hist_late_rate",
           "vendor_hist_median_delay"
         ],
-        "n_train": 2485,
-        "n_val": 758,
-        "n_test": 884,
+        "n_train": 121007,
+        "n_val": 25907,
+        "n_test": 25851,
         "target_diagnostics": {
-          "zero_day_rows_before_cap": 236,
+          "zero_day_rows_before_cap": 4839,
           "median_by_split": {
-            "train": 105.0,
-            "val": 108.5,
-            "test": 128.0
+            "train": 3.0,
+            "val": 3.0,
+            "test": 3.0
           },
-          "extreme_value_cap_from_train_p99": 411.9000000000001
+          "extreme_value_cap_from_train_p99": 6.0
         },
         "models": {
           "dummy_median": {
             "val": {
-              "mae": 86.74802110817942,
-              "rmse": 113.0837653897453,
-              "r2": -0.059996766637777865,
-              "median_ae": 70.5,
-              "mean_actual": 131.9036939313984,
-              "mean_pred": 105.0
+              "mae": 1.395838962442583,
+              "rmse": 1.6951883342662597,
+              "r2": -0.09832188783272744,
+              "median_ae": 1.0,
+              "mean_actual": 3.507198826571969,
+              "mean_pred": 3.0
             },
             "test": {
-              "mae": 81.18778280542986,
-              "rmse": 106.50209778487552,
-              "r2": -0.11067902540114005,
-              "median_ae": 64.0,
-              "mean_actual": 138.61990950226243,
-              "mean_pred": 105.0
+              "mae": 1.3918610498626744,
+              "rmse": 1.689862187115416,
+              "r2": -0.0955802874733056,
+              "median_ae": 1.0,
+              "mean_actual": 3.4991296274805617,
+              "mean_pred": 3.0
             }
           },
           "gradient_boosting": {
             "val": {
-              "mae": 88.25998410235977,
-              "rmse": 118.24405856100098,
-              "r2": -0.15894459501047664,
-              "median_ae": 68.74245328216739,
-              "mean_actual": 131.9036939313984,
-              "mean_pred": 100.9071883264506
+              "mae": 0.9828898873298908,
+              "rmse": 1.2701050343912754,
+              "r2": 0.38344332577519347,
+              "median_ae": 0.9999997924696657,
+              "mean_actual": 3.507198826571969,
+              "mean_pred": 3.506334592169441
             },
             "test": {
-              "mae": 81.04166235868934,
-              "rmse": 108.17763627466398,
-              "r2": -0.14590132472416673,
-              "median_ae": 60.65577964402459,
-              "mean_actual": 138.61990950226243,
-              "mean_pred": 102.84783103142037
+              "mae": 0.9878137284186871,
+              "rmse": 1.2759367252028304,
+              "r2": 0.3754029784175036,
+              "median_ae": 0.9999997924696657,
+              "mean_actual": 3.4991296274805617,
+              "mean_pred": 3.4820379922295013
             }
           },
           "xgboost": {
             "val": {
-              "mae": 87.0263881280743,
-              "rmse": 119.70461658263312,
-              "r2": -0.1877521317241453,
-              "median_ae": 65.12517547607422,
-              "mean_actual": 131.9036939313984,
-              "mean_pred": 92.48487091064453
+              "mae": 0.9974535075753448,
+              "rmse": 1.2728008931578254,
+              "r2": 0.38082320591672736,
+              "median_ae": 0.990412712097168,
+              "mean_actual": 3.507198826571969,
+              "mean_pred": 3.5076568126678467
             },
             "test": {
-              "mae": 80.8006424235003,
-              "rmse": 109.25406481614782,
-              "r2": -0.1688195146550906,
-              "median_ae": 62.50624084472656,
-              "mean_actual": 138.61990950226243,
-              "mean_pred": 98.3227310180664
+              "mae": 0.9973765193324009,
+              "rmse": 1.2710056965741074,
+              "r2": 0.3802213277597224,
+              "median_ae": 0.9883575439453125,
+              "mean_actual": 3.4991296274805617,
+              "mean_pred": 3.4904985427856445
             }
           },
           "random_forest": {
             "val": {
-              "mae": 86.41065162229009,
-              "rmse": 114.7926710762031,
-              "r2": -0.09227587523277947,
-              "median_ae": 70.78676089251616,
-              "mean_actual": 131.9036939313984,
-              "mean_pred": 113.36432249062555
+              "mae": 0.990088300503829,
+              "rmse": 1.27099327064298,
+              "r2": 0.38258065777415384,
+              "median_ae": 0.99297687255571,
+              "mean_actual": 3.507198826571969,
+              "mean_pred": 3.5118495593722865
             },
             "test": {
-              "mae": 81.22336275142703,
-              "rmse": 107.16009807063604,
-              "r2": -0.12444560390728854,
-              "median_ae": 61.533004429897005,
-              "mean_actual": 138.61990950226243,
-              "mean_pred": 116.32092286171628
+              "mae": 0.9917632463247965,
+              "rmse": 1.2706397757256231,
+              "r2": 0.38057814329873896,
+              "median_ae": 0.9925395649739626,
+              "mean_actual": 3.4991296274805617,
+              "mean_pred": 3.502045218478649
             }
           }
         },
         "selected_model_beats_median_baseline_on_validation": true,
         "prediction_basis": "ml_model",
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\delivery_duration_regressor",
-        "best_model": "random_forest",
-        "db_ids": {
-          "experiment_id": "6f834354-5bc0-471a-94d5-84c60dda08f5",
-          "version_id": "407d97cc-ce26-4119-a57c-1e0160a71b73"
-        }
+        "artifact_dir": "/workspace/reports/models/delivery_duration_regressor",
+        "best_model": "gradient_boosting"
       }
     },
     "05_forecasting": {
@@ -999,23 +991,23 @@
         "suitability": {
           "late_rate_monthly": {
             "series": "late_rate_monthly",
-            "n_periods": 115,
-            "min_period": "2006-05-31 00:00:00",
-            "max_period": "2015-12-31 00:00:00",
-            "approx_gap_flags": 1,
-            "mean": 0.10428813368886686,
-            "std": 0.11394502278725523,
+            "n_periods": 38,
+            "min_period": "2015-01-31 00:00:00",
+            "max_period": "2018-02-28 00:00:00",
+            "approx_gap_flags": 0,
+            "mean": 0.5708829055311085,
+            "std": 0.017455887242929114,
             "lstm_recommended": false,
             "rationale": "Monthly history is too short or irregular; prefer classical baselines."
           },
           "volume_monthly": {
             "series": "volume_quantity_monthly",
-            "n_periods": 116,
-            "min_period": "2006-05-31 00:00:00",
-            "max_period": "2015-12-31 00:00:00",
+            "n_periods": 38,
+            "min_period": "2015-01-31 00:00:00",
+            "max_period": "2018-02-28 00:00:00",
             "approx_gap_flags": 0,
-            "mean": 1631595.603448276,
-            "std": 1194673.1959033082,
+            "mean": 10107.342105263158,
+            "std": 3255.032629689201,
             "lstm_recommended": false,
             "rationale": "Monthly history is too short or irregular; prefer classical baselines."
           }
@@ -1023,345 +1015,368 @@
         "baselines": {
           "late_rate_naive": {
             "model": "naive_lag1",
-            "mae": 0.08721047083427215,
-            "rmse": 0.10814111504226519,
-            "n_test": 22,
+            "mae": 0.01413777757825467,
+            "rmse": 0.018954556353227917,
+            "n_test": 8,
             "metric_weighting": "shipment_count_weighted"
           },
           "volume_naive": {
             "model": "naive_lag1",
-            "mae": 947280.2272727273,
-            "rmse": 1215070.2988563143,
-            "n_test": 22,
+            "mae": 1461.625,
+            "rmse": 2672.064019629769,
+            "n_test": 8,
             "metric_weighting": "unweighted"
           }
         },
         "frequency": "monthly",
         "late_rate_monthly": {
-          "mae": 0.06815115697827148,
-          "rmse": 0.08321332815533636,
-          "selected_model": "extra_trees",
-          "failed_candidates": {
-            "arima": "No module named 'statsmodels'"
-          },
+          "mae": 0.008519734868261077,
+          "rmse": 0.012513615572279526,
+          "selected_model": "mean_baseline",
+          "failed_candidates": {},
           "validation_mae": {
-            "naive_lag1": 0.09216710741282828,
-            "mean_baseline": 0.09232919975825905,
-            "persistence_linear": 0.08171232264990366,
-            "gradient_boosting": 0.08609346916966418,
-            "random_forest": 0.08335059980730147,
-            "extra_trees": 0.07269774453681252
+            "naive_lag1": 0.015438203621592404,
+            "mean_baseline": 0.010829251318015194,
+            "persistence_linear": 0.018909137380902486,
+            "gradient_boosting": 0.014191778883829189,
+            "random_forest": 0.013665170755545466,
+            "extra_trees": 0.012997597346017508,
+            "arima": 0.012949051354893977
           },
-          "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-          "best_unpenalised_model": "extra_trees",
-          "validation_selected_mae": 0.07269774453681252,
-          "naive_lag1_test_mae": 0.08721047083427215,
-          "mean_baseline_test_mae": 0.06395641339796747,
+          "selection_method": "rolling-origin over validation period (1 refits, step 3); baseline preferred within 2%",
+          "best_unpenalised_model": "mean_baseline",
+          "validation_selected_mae": 0.010829251318015194,
+          "naive_lag1_test_mae": 0.01413777757825467,
+          "mean_baseline_test_mae": 0.008519734868261077,
           "beats_naive_baseline_on_test": true,
           "beats_mean_baseline_on_test": false,
           "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-          "is_baseline": false,
+          "is_baseline": true,
           "metric_weighting": "shipment_count_weighted",
-          "n_train": 89,
-          "n_validation": 17,
-          "n_test": 22,
+          "n_train": 26,
+          "n_validation": 8,
+          "n_test": 8,
           "last_actual": [
-            0.04918032786885246,
-            0.2441860465116279,
-            0.18181818181818182,
-            0.27,
-            0.10416666666666667,
-            0.21,
-            0.16974169741697417,
-            0.17777777777777778,
-            0.06306306306306306,
-            0.056,
-            0.0,
-            0.23423423423423423,
-            0.19117647058823528,
-            0.12745098039215685,
-            0.041666666666666664,
-            0.09448818897637795,
-            0.03676470588235294,
-            0.13636363636363635,
-            0.0970873786407767,
-            0.0,
-            0.0,
-            0.0
+            0.5835817928841185,
+            0.5776518851338152,
+            0.574328480623334,
+            0.55006129955047,
+            0.5721493440968718,
+            0.5841144548593982,
+            0.5830875122910522,
+            0.4923076923076923
           ],
           "last_pred": [
-            0.22740211837480265,
-            0.19453345779193787,
-            0.18027121651562386,
-            0.21000957915256915,
-            0.19594344925070728,
-            0.2001911591619277,
-            0.18857535621685018,
-            0.2062356978073102,
-            0.1806539468731726,
-            0.17048844817642,
-            0.1176431565784196,
-            0.08892719799459455,
-            0.0980754037809639,
-            0.15940739594479478,
-            0.1432675634814734,
-            0.15923016728187722,
-            0.10945649893908893,
-            0.10352659919122997,
-            0.06815802690247735,
-            0.12148580545342579,
-            0.08458823006906704,
-            0.06911397794180954
+            0.5728691957137578,
+            0.5728691957137578,
+            0.5728691957137578,
+            0.5728691957137578,
+            0.5728691957137578,
+            0.5728691957137578,
+            0.5728691957137578,
+            0.5728691957137578
           ],
-          "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_late_rate_monthly"
+          "artifact_dir": "/workspace/reports/models/forecast_late_rate_monthly"
         },
         "volume_monthly": {
-          "mae": 994005.1897767073,
-          "rmse": 1207766.3685824834,
-          "selected_model": "extra_trees",
-          "failed_candidates": {
-            "arima": "No module named 'statsmodels'"
-          },
+          "mae": 1461.625,
+          "rmse": 2672.064019629769,
+          "selected_model": "naive_lag1",
+          "failed_candidates": {},
           "validation_mae": {
-            "naive_lag1": 1145379.6666666667,
-            "mean_baseline": 1189886.566204265,
-            "persistence_linear": 919578.0080589061,
-            "gradient_boosting": 822022.8209575531,
-            "random_forest": 812950.862487848,
-            "extra_trees": 777115.80566323
+            "naive_lag1": 491.5,
+            "mean_baseline": 783.625,
+            "persistence_linear": 852.9548483945355,
+            "gradient_boosting": 749.978920627841,
+            "random_forest": 833.3872338779129,
+            "extra_trees": 819.9665224653463,
+            "arima": 760.9663804060683
           },
-          "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-          "best_unpenalised_model": "extra_trees",
-          "validation_selected_mae": 777115.80566323,
-          "naive_lag1_test_mae": 947280.2272727273,
-          "mean_baseline_test_mae": 1205206.0606060608,
+          "selection_method": "rolling-origin over validation period (1 refits, step 3); baseline preferred within 2%",
+          "best_unpenalised_model": "naive_lag1",
+          "validation_selected_mae": 491.5,
+          "naive_lag1_test_mae": 1461.625,
+          "mean_baseline_test_mae": 6125.346153846154,
           "beats_naive_baseline_on_test": false,
           "beats_mean_baseline_on_test": true,
           "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-          "is_baseline": false,
+          "is_baseline": true,
           "metric_weighting": "unweighted",
-          "n_train": 90,
-          "n_validation": 18,
-          "n_test": 22,
+          "n_train": 26,
+          "n_validation": 8,
+          "n_test": 8,
           "last_actual": [
-            1627812.0,
-            2004327.0,
-            2957582.0,
-            4519832.0,
-            2548440.0,
-            2637618.0,
-            3198768.0,
-            1895477.0,
-            1749887.0,
-            1004264.0,
-            2518005.0,
-            4227072.0,
-            2957312.0,
-            2334566.0,
-            3435836.0,
-            4642264.0,
-            1527456.0,
-            1848748.0,
-            230869.0,
-            134500.0,
-            0.0,
-            7203.0
+            11031.0,
+            11076.0,
+            10467.0,
+            3323.0,
+            2076.0,
+            2122.0,
+            2123.0,
+            202.0
           ],
           "last_pred": [
-            2494604.992591705,
-            2240841.070389006,
-            2412773.959339127,
-            2367359.6270931736,
-            2204529.947511995,
-            2485289.797159743,
-            2080065.5173470962,
-            2290630.947529945,
-            2500320.581602843,
-            2364901.996764941,
-            2210235.629428435,
-            2101331.8367581777,
-            2305255.663172925,
-            2472044.6848448585,
-            2146584.3120207028,
-            2223873.0858647907,
-            2350500.478050032,
-            2501254.2494367547,
-            2134444.9082910195,
-            1952800.6930626396,
-            1170095.0563868696,
-            655353.891833112
+            10351.0,
+            11031.0,
+            11076.0,
+            10467.0,
+            3323.0,
+            2076.0,
+            2122.0,
+            2123.0
           ],
-          "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_volume_quantity_monthly"
+          "artifact_dir": "/workspace/reports/models/forecast_volume_quantity_monthly"
         },
         "volume_by_product_group": {
-          "ACT": {
+          "Accessories": {
             "status": "skipped_insufficient_history",
-            "n_periods": 53,
-            "zero_month_share": 0.7735849056603774
+            "n_periods": 28,
+            "zero_month_share": 0.0
           },
-          "ANTM": {
+          "As Seen on  TV!": {
             "status": "skipped_insufficient_history",
-            "n_periods": 86,
-            "zero_month_share": 0.7906976744186046
+            "n_periods": 5,
+            "zero_month_share": 0.0
           },
-          "ARV": {
-            "status": "ok",
-            "mae": 987864.059004802,
-            "rmse": 1210176.576167105,
-            "selected_model": "extra_trees",
-            "failed_candidates": {
-              "arima": "No module named 'statsmodels'"
-            },
-            "validation_mae": {
-              "naive_lag1": 1151170.1666666667,
-              "mean_baseline": 1066199.975980675,
-              "persistence_linear": 910851.821108008,
-              "gradient_boosting": 817020.2062177968,
-              "random_forest": 808406.7457291454,
-              "extra_trees": 759507.4850629722
-            },
-            "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-            "best_unpenalised_model": "extra_trees",
-            "validation_selected_mae": 759507.4850629722,
-            "naive_lag1_test_mae": 975669.8571428572,
-            "mean_baseline_test_mae": 1226645.7137445891,
-            "beats_naive_baseline_on_test": false,
-            "beats_mean_baseline_on_test": true,
-            "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-            "is_baseline": false,
-            "metric_weighting": "unweighted",
-            "n_train": 88,
-            "n_validation": 17,
-            "n_test": 21,
-            "last_actual": [
-              1935512.0,
-              2931665.0,
-              4481071.0,
-              2479774.0,
-              2568699.0,
-              3168442.0,
-              1883372.0,
-              1732135.0,
-              992473.0,
-              2464205.0,
-              4180775.0,
-              2940312.0,
-              2294432.0,
-              3327233.0,
-              4607139.0,
-              1485827.0,
-              1840342.0,
-              230869.0,
-              134500.0,
-              0.0,
-              7203.0
-            ],
-            "last_pred": [
-              2203234.8448132253,
-              2315384.490476523,
-              2337033.105754332,
-              2108429.6230910188,
-              2381900.925827195,
-              2030581.9098346198,
-              2188349.681501203,
-              2416571.0591521193,
-              2364691.154926098,
-              2182117.7877384173,
-              2089860.761362927,
-              2256112.7582240463,
-              2350547.59514834,
-              2092028.141492328,
-              2175856.9958199584,
-              2261782.362296179,
-              2414879.14395717,
-              2081280.3248340634,
-              1921336.9194320845,
-              1165508.3536893371,
-              733620.2989723897
-            ],
-            "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_volume_arv_monthly"
-          },
-          "HRDT": {
-            "status": "ok",
-            "mae": 25254.217809170408,
-            "rmse": 30907.63759099626,
-            "selected_model": "random_forest",
-            "failed_candidates": {
-              "arima": "No module named 'statsmodels'"
-            },
-            "validation_mae": {
-              "naive_lag1": 28276.583333333332,
-              "mean_baseline": 21378.017562866407,
-              "persistence_linear": 20200.504750867283,
-              "gradient_boosting": 21203.001872794684,
-              "random_forest": 20028.527911453344,
-              "extra_trees": 20085.379052506996
-            },
-            "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-            "best_unpenalised_model": "random_forest",
-            "validation_selected_mae": 20028.527911453344,
-            "naive_lag1_test_mae": 24435.0,
-            "mean_baseline_test_mae": 20966.117131910236,
-            "beats_naive_baseline_on_test": false,
-            "beats_mean_baseline_on_test": false,
-            "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-            "is_baseline": false,
-            "metric_weighting": "unweighted",
-            "n_train": 87,
-            "n_validation": 17,
-            "n_test": 21,
-            "last_actual": [
-              71040.0,
-              49050.0,
-              66404.0,
-              59150.0,
-              68815.0,
-              25917.0,
-              38761.0,
-              68666.0,
-              68919.0,
-              30326.0,
-              11035.0,
-              17752.0,
-              11791.0,
-              53800.0,
-              44927.0,
-              17000.0,
-              39554.0,
-              108603.0,
-              35125.0,
-              41540.0,
-              8380.0
-            ],
-            "last_pred": [
-              39457.21649711317,
-              67499.50909722959,
-              68479.95059171823,
-              39254.71987310932,
-              49145.51148046911,
-              45929.088336711204,
-              60084.67032262335,
-              29222.41047391216,
-              33650.95928216905,
-              64255.62946285922,
-              64025.45292052875,
-              30844.151299215107,
-              31221.359948134137,
-              32161.094300239794,
-              39401.2132886974,
-              47358.878696828506,
-              42541.730873656285,
-              28452.48086810125,
-              34104.2657530221,
-              68553.36921166746,
-              42859.65504824006
-            ],
-            "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_volume_hrdt_monthly"
-          },
-          "MRDT": {
+          "Baby ": {
             "status": "skipped_insufficient_history",
-            "n_periods": 52,
-            "zero_month_share": 0.8653846153846154
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Baseball & Softball": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "Basketball": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 2,
+            "zero_month_share": 0.0
+          },
+          "Books ": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Boxing & MMA": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "CDs ": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Cameras ": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Camping & Hiking": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Cardio Equipment": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Children's Clothing": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Cleats": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Computers": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Consumer Electronics": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Crafts": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "DVDs": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Electronics": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 28,
+            "zero_month_share": 0.0
+          },
+          "Fishing": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Fitness Accessories": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.11764705882352941
+          },
+          "Garden": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Girls' Apparel": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 28,
+            "zero_month_share": 0.0
+          },
+          "Golf Apparel": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "Golf Bags & Carts": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 6,
+            "zero_month_share": 0.0
+          },
+          "Golf Balls": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 28,
+            "zero_month_share": 0.0
+          },
+          "Golf Gloves": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Golf Shoes": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "Health and Beauty": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Hockey": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.11764705882352941
+          },
+          "Hunting & Shooting": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "Indoor/Outdoor Games": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Kids' Golf Clubs": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 7,
+            "zero_month_share": 0.0
+          },
+          "Lacrosse": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "Men's Clothing": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.3333333333333333
+          },
+          "Men's Footwear": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Men's Golf Clubs": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 6,
+            "zero_month_share": 0.0
+          },
+          "Music": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Pet Supplies": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Shop By Sport": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Soccer": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 6,
+            "zero_month_share": 0.0
+          },
+          "Sporting Goods": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Strength Training": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 7,
+            "zero_month_share": 0.0
+          },
+          "Tennis & Racquet": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 28,
+            "zero_month_share": 0.0
+          },
+          "Toys": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Trade-In": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 33,
+            "zero_month_share": 0.0
+          },
+          "Video Games": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 2,
+            "zero_month_share": 0.0
+          },
+          "Water Sports": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Women's Apparel": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 34,
+            "zero_month_share": 0.0
+          },
+          "Women's Clothing": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 3,
+            "zero_month_share": 0.0
+          },
+          "Women's Golf Clubs": {
+            "status": "skipped_insufficient_history",
+            "n_periods": 6,
+            "zero_month_share": 0.0
           }
         },
         "lstm": {
@@ -1373,100 +1388,64 @@
     "06a_vendor_segments": {
       "status": "ok",
       "result": {
-        "k": 4,
-        "silhouette": 0.26827670925046854,
-        "n_vendors": 73,
-        "n_clustered_vendors": 28,
-        "n_insufficient_history": 43,
-        "n_dominant_vendors_separated": 1,
-        "n_profile_outliers_separated": 1,
-        "dominant_vendor_threshold_shipments": 2064.8,
+        "k": 2,
+        "silhouette": 0.46474835448630697,
+        "n_vendors": 11,
+        "n_clustered_vendors": 5,
+        "n_insufficient_history": 0,
+        "n_dominant_vendors_separated": 2,
+        "n_profile_outliers_separated": 4,
+        "dominant_vendor_threshold_shipments": 36103.8,
         "segment_sizes": {
-          "insufficient_history": 43,
-          "segment_3": 12,
-          "segment_2": 7,
-          "segment_1": 5,
           "segment_0": 4,
-          "dominant_vendor_review": 1,
-          "profile_outlier_review": 1
+          "profile_outlier_review": 4,
+          "dominant_vendor_review": 2,
+          "segment_1": 1
         },
         "profiles": [
           {
             "segment": "dominant_vendor_review",
-            "shipment_count": 5404.0,
-            "late_rate": 0.17153960029607698,
-            "median_schedule_deviation": 0.0,
-            "avg_quantity": 24909.31643227239,
-            "median_delivery_duration_days": 92.5,
-            "avg_freight_numeric": 10875.045354134165,
-            "n_countries": 33.0,
-            "n_product_groups": 2.0
-          },
-          {
-            "segment": "insufficient_history",
-            "shipment_count": 2.511627906976744,
-            "late_rate": 0.0025839793281653744,
-            "median_schedule_deviation": -0.6046511627906976,
-            "avg_quantity": 2250.047360649686,
-            "median_delivery_duration_days": 96.25581395348837,
-            "avg_freight_numeric": 4763.707312015504,
-            "n_countries": 1.3255813953488371,
-            "n_product_groups": 1.0232558139534884
+            "shipment_count": 57929.5,
+            "late_rate": 0.5720481406350505,
+            "median_schedule_deviation": 1.0,
+            "avg_quantity": 1.7958110459880952,
+            "median_delivery_duration_days": 3.0,
+            "avg_freight_numeric": 9.407494069797867,
+            "n_countries": 157.5,
+            "n_product_groups": 6.5
           },
           {
             "segment": "profile_outlier_review",
-            "shipment_count": 38.0,
-            "late_rate": 0.02631578947368421,
-            "median_schedule_deviation": -8.0,
-            "avg_quantity": 448.5,
-            "median_delivery_duration_days": 49.0,
-            "avg_freight_numeric": 4446.333333333333,
-            "n_countries": 1.0,
-            "n_product_groups": 1.0
+            "shipment_count": 681.0,
+            "late_rate": 0.5903158636928756,
+            "median_schedule_deviation": 1.0,
+            "avg_quantity": 1.0,
+            "median_delivery_duration_days": 3.0,
+            "avg_freight_numeric": 12.557554695574321,
+            "n_countries": 22.0,
+            "n_product_groups": 1.5
           },
           {
             "segment": "segment_0",
-            "shipment_count": 406.25,
-            "late_rate": 0.1362444379902567,
-            "median_schedule_deviation": 0.0,
-            "avg_quantity": 16025.764893479429,
-            "median_delivery_duration_days": 115.125,
-            "avg_freight_numeric": 11486.64831424877,
-            "n_countries": 18.25,
-            "n_product_groups": 1.0
+            "shipment_count": 14977.5,
+            "late_rate": 0.5762826048608398,
+            "median_schedule_deviation": 1.0,
+            "avg_quantity": 2.7948256198829813,
+            "median_delivery_duration_days": 3.0,
+            "avg_freight_numeric": 7.910841386476693,
+            "n_countries": 138.5,
+            "n_product_groups": 7.0
           },
           {
             "segment": "segment_1",
-            "shipment_count": 26.2,
-            "late_rate": 0.00975609756097561,
-            "median_schedule_deviation": 0.0,
-            "avg_quantity": 12170.928444808818,
-            "median_delivery_duration_days": 182.1,
-            "avg_freight_numeric": 6531.352923655913,
-            "n_countries": 5.8,
-            "n_product_groups": 1.2
-          },
-          {
-            "segment": "segment_2",
-            "shipment_count": 222.57142857142858,
-            "late_rate": 0.020037748421050577,
-            "median_schedule_deviation": 0.0,
-            "avg_quantity": 21508.437744214603,
-            "median_delivery_duration_days": 110.57142857142857,
-            "avg_freight_numeric": 14800.967682883205,
-            "n_countries": 14.857142857142858,
-            "n_product_groups": 1.1428571428571428
-          },
-          {
-            "segment": "segment_3",
-            "shipment_count": 121.66666666666667,
-            "late_rate": 0.01770538144801041,
-            "median_schedule_deviation": 0.0,
-            "avg_quantity": 1806.5673872655343,
-            "median_delivery_duration_days": 84.375,
-            "avg_freight_numeric": 3740.3901928458313,
-            "n_countries": 5.333333333333333,
-            "n_product_groups": 1.0833333333333333
+            "shipment_count": 2026.0,
+            "late_rate": 0.5676788471435924,
+            "median_schedule_deviation": 1.0,
+            "avg_quantity": 1.0,
+            "median_delivery_duration_days": 3.0,
+            "avg_freight_numeric": 5.076342546890425,
+            "n_countries": 33.0,
+            "n_product_groups": 4.0
           }
         ],
         "features": [
@@ -1489,98 +1468,40 @@
         "candidate_k_scores": [
           {
             "k": 2,
-            "silhouette": 0.24461077767630096,
-            "min_cluster_size": 13,
-            "has_minimum_support": true,
+            "silhouette": 0.46474835448630697,
+            "min_cluster_size": 1,
+            "has_minimum_support": false,
             "cluster_sizes": {
-              "0": 15,
-              "1": 13
+              "0": 4,
+              "1": 1
             }
           },
           {
             "k": 3,
-            "silhouette": 0.26811726812704745,
-            "min_cluster_size": 4,
-            "has_minimum_support": true,
+            "silhouette": 0.17850879095218292,
+            "min_cluster_size": 1,
+            "has_minimum_support": false,
             "cluster_sizes": {
-              "1": 13,
-              "0": 11,
-              "2": 4
+              "2": 3,
+              "0": 1,
+              "1": 1
             }
           },
           {
             "k": 4,
-            "silhouette": 0.26827670925046854,
-            "min_cluster_size": 4,
-            "has_minimum_support": true,
-            "cluster_sizes": {
-              "3": 12,
-              "2": 7,
-              "1": 5,
-              "0": 4
-            }
-          },
-          {
-            "k": 5,
-            "silhouette": 0.2947214984544955,
-            "min_cluster_size": 2,
-            "has_minimum_support": false,
-            "cluster_sizes": {
-              "0": 11,
-              "1": 7,
-              "3": 5,
-              "4": 3,
-              "2": 2
-            }
-          },
-          {
-            "k": 6,
-            "silhouette": 0.2778339220827168,
-            "min_cluster_size": 2,
-            "has_minimum_support": false,
-            "cluster_sizes": {
-              "2": 7,
-              "5": 7,
-              "1": 5,
-              "4": 4,
-              "0": 3,
-              "3": 2
-            }
-          },
-          {
-            "k": 7,
-            "silhouette": 0.28648270003377735,
-            "min_cluster_size": 2,
-            "has_minimum_support": false,
-            "cluster_sizes": {
-              "2": 7,
-              "3": 5,
-              "1": 5,
-              "5": 4,
-              "0": 3,
-              "6": 2,
-              "4": 2
-            }
-          },
-          {
-            "k": 8,
-            "silhouette": 0.2721806516286536,
+            "silhouette": 0.13033583377253932,
             "min_cluster_size": 1,
             "has_minimum_support": false,
             "cluster_sizes": {
-              "0": 6,
-              "1": 5,
-              "5": 5,
-              "6": 4,
-              "3": 3,
-              "4": 2,
-              "2": 2,
-              "7": 1
+              "3": 2,
+              "2": 1,
+              "0": 1,
+              "1": 1
             }
           }
         ],
         "caveat": "Vendors with fewer than 10 shipments and dominant vendors are separated from KMeans. Segments describe operating profiles, not vendor quality.",
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\vendor_segmentation"
+        "artifact_dir": "/workspace/reports/models/vendor_segmentation"
       }
     },
     "06b_anomaly": {
@@ -1597,9 +1518,9 @@
           ],
           "min_shipments_per_period": 5,
           "adverse_reference_train_medians": {
-            "late_rate": 0.0,
-            "mean_delay_days": 0.0,
-            "median_lead_time_days": 107.0
+            "late_rate": 0.5727351852447155,
+            "mean_delay_days": 0.5641661226388894,
+            "median_lead_time_days": 3.0
           },
           "trend_detector": {
             "trailing_periods": 4,
@@ -1607,83 +1528,83 @@
             "min_increase": 0.1,
             "p_value": 0.01
           },
-          "n_periods": 277,
-          "n_train_periods": 187,
-          "n_anomaly": 10,
-          "n_deteriorating": 13,
+          "n_periods": 84,
+          "n_train_periods": 48,
+          "n_anomaly": 8,
+          "n_deteriorating": 0,
           "n_unusual_but_favourable_dropped": 1,
           "signal_rate_by_split": {
-            "test": 0.041666666666666664,
-            "train": 0.0748663101604278,
-            "val": 0.09523809523809523
+            "test": 0.2,
+            "train": 0.041666666666666664,
+            "val": 0.0
           },
           "injected_disruption_check": {
             "unit": "unseen (val+test) vendor-quarters",
-            "n_periods": 90,
+            "n_periods": 36,
             "false_alarm_rate_clean": {
-              "isolation_forest": 0.011111111111111112,
-              "trend": 0.05555555555555555,
-              "combined": 0.06666666666666667
+              "isolation_forest": 0.16666666666666666,
+              "trend": 0.0,
+              "combined": 0.16666666666666666
             },
             "sensitivity": [
               {
                 "late_rate_increase": 0.1,
                 "delay_increase_days": 7,
-                "detected_isolation_forest": 0.07777777777777778,
-                "detected_trend": 0.16666666666666666,
-                "detected_combined": 0.18888888888888888
+                "detected_isolation_forest": 1.0,
+                "detected_trend": 0.3333333333333333,
+                "detected_combined": 1.0
               },
               {
                 "late_rate_increase": 0.2,
                 "delay_increase_days": 14,
-                "detected_isolation_forest": 0.15555555555555556,
-                "detected_trend": 0.5555555555555556,
-                "detected_combined": 0.5666666666666667
+                "detected_isolation_forest": 1.0,
+                "detected_trend": 0.8333333333333334,
+                "detected_combined": 1.0
               },
               {
                 "late_rate_increase": 0.3,
                 "delay_increase_days": 30,
-                "detected_isolation_forest": 0.8777777777777778,
-                "detected_trend": 0.6888888888888889,
-                "detected_combined": 0.9777777777777777
+                "detected_isolation_forest": 1.0,
+                "detected_trend": 0.8611111111111112,
+                "detected_combined": 1.0
               },
               {
                 "late_rate_increase": 0.5,
                 "delay_increase_days": 60,
                 "detected_isolation_forest": 1.0,
-                "detected_trend": 0.8555555555555555,
+                "detected_trend": 0.8611111111111112,
                 "detected_combined": 1.0
               }
             ],
             "label": "SYNTHETIC - evaluation only, never written to the scores table"
           },
           "missing_kpi": "defect rate (not present in SCMS data)",
-          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_vendor_kpi.csv",
-          "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\anomaly_vendor_kpi"
+          "scores_path": "/workspace/data/processed/anomaly_scores_vendor_kpi.csv",
+          "artifact_dir": "/workspace/reports/models/anomaly_vendor_kpi"
         },
         "unusual_profile": {
-          "n_scored": 10324,
-          "n_anomaly": 550,
-          "anomaly_rate": 0.05327392483533514,
+          "n_scored": 180519,
+          "n_anomaly": 9582,
+          "anomaly_rate": 0.053080285177737524,
           "anomaly_rate_by_split": {
-            "test": 0.05741935483870968,
-            "train": 0.050096872405203434,
-            "val": 0.06395348837209303
+            "test": 0.07888031315779756,
+            "train": 0.049943416981236596,
+            "val": 0.04191749455257229
           },
-          "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\anomaly_unusual_profile",
-          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_unusual_profile.csv"
+          "artifact_dir": "/workspace/reports/models/anomaly_unusual_profile",
+          "scores_path": "/workspace/data/processed/anomaly_scores_unusual_profile.csv"
         },
         "retrospective": {
-          "n_scored": 10324,
-          "n_anomaly": 541,
-          "anomaly_rate": 0.05240216970166602,
+          "n_scored": 180519,
+          "n_anomaly": 9399,
+          "anomaly_rate": 0.05206654147208881,
           "anomaly_rate_by_split": {
-            "test": 0.054838709677419356,
-            "train": 0.050096872405203434,
-            "val": 0.060723514211886306
+            "test": 0.07249159865578493,
+            "train": 0.04998298552582639,
+            "val": 0.04136351885363962
           },
-          "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\anomaly_retrospective",
-          "scores_path": "T:\\SCOPE\\SCOPE\\data\\processed\\anomaly_scores_retrospective.csv"
+          "artifact_dir": "/workspace/reports/models/anomaly_retrospective",
+          "scores_path": "/workspace/data/processed/anomaly_scores_retrospective.csv"
         },
         "contamination": 0.05,
         "label": "unusual_shipment_profile",
@@ -1723,197 +1644,197 @@
           "Line_Item_Quantity"
         ],
         "class_prevalence": {
-          "train": 0.2813451425408248,
-          "val": 0.33785529715762275,
-          "test": 0.37870967741935485
+          "train": 0.46890308080688176,
+          "val": 0.4708054806662481,
+          "test": 0.5200339746667159
         },
         "models": {
           "logistic_regression": {
             "validation": {
-              "f1": 0.5594749794913864,
-              "roc_auc": 0.6978398544979714,
-              "pr_auc": 0.5741780404136941,
-              "precision": 0.4899425287356322,
-              "recall": 0.6520076481835564,
+              "f1": 0.7602848101265823,
+              "roc_auc": 0.7600502971290369,
+              "pr_auc": 0.7205463659950169,
+              "precision": 0.6210479220520978,
+              "recall": 0.9799968622529024,
               "confusion_matrix": [
                 [
-                  670,
-                  355
+                  6706,
+                  7623
                 ],
                 [
-                  182,
-                  341
+                  255,
+                  12493
                 ]
               ],
-              "threshold": 0.4628111213163482
+              "threshold": 0.23731848275776515
             }
           },
           "random_forest": {
             "validation": {
-              "f1": 0.6205787781350482,
-              "roc_auc": 0.7758765098167234,
-              "pr_auc": 0.652053938119597,
-              "precision": 0.5353675450762829,
-              "recall": 0.7380497131931166,
+              "f1": 0.7622437184401046,
+              "roc_auc": 0.7765727943640466,
+              "pr_auc": 0.7348373498583889,
+              "precision": 0.6225280731392229,
+              "recall": 0.982820834640728,
               "confusion_matrix": [
                 [
-                  690,
-                  335
+                  6732,
+                  7597
+                ],
+                [
+                  219,
+                  12529
+                ]
+              ],
+              "threshold": 0.3421192298499461
+            },
+            "test": {
+              "f1": 0.7603184123003108,
+              "roc_auc": 0.7008653832988258,
+              "pr_auc": 0.6958500277392563,
+              "precision": 0.6170353982300885,
+              "recall": 0.9902712682857548,
+              "confusion_matrix": [
+                [
+                  4342,
+                  8655
                 ],
                 [
                   137,
-                  386
+                  13945
                 ]
               ],
-              "threshold": 0.41153734871013453
-            },
-            "test": {
-              "f1": 0.6514806378132119,
-              "roc_auc": 0.7816059623443916,
-              "pr_auc": 0.7050876153767016,
-              "precision": 0.5876712328767123,
-              "recall": 0.7308347529812607,
-              "confusion_matrix": [
-                [
-                  662,
-                  301
-                ],
-                [
-                  158,
-                  429
-                ]
-              ],
-              "threshold": 0.41153734871013453
+              "threshold": 0.3421192298499461
             }
           }
         },
         "validation_baseline": {
           "model": "training_prevalence_probability",
-          "probability": 0.2813451425408248,
-          "pr_auc": 0.33785529715762275
+          "probability": 0.46890308080688176,
+          "pr_auc": 0.4708054806662481
         },
         "experimental_warning": "The label is a deterministic function of excluded opening-stock and quantity fields. This model uses other attributes as an exploratory proxy; source inventory provenance is unverified.",
         "best_model": "random_forest",
         "predictive_model_trained": true,
         "selected_model_beats_prevalence_baseline": true,
-        "test_rule_agreement": 1.0,
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\inventory_stockout_classifier"
+        "test_rule_agreement": 0.5388308283171461,
+        "artifact_dir": "/workspace/reports/models/inventory_stockout_classifier"
       }
     },
     "08_shap": {
       "status": "ok",
       "result": {
         "status": "ok",
-        "model_name": "random_forest",
+        "model_name": "xgboost",
         "explainer": "TreeExplainer",
         "n_samples": 200,
-        "summary_plot": "T:\\SCOPE\\SCOPE\\reports\\figures\\shap\\shap_summary_late_delivery.png",
-        "importance_path": "T:\\SCOPE\\SCOPE\\reports\\metrics\\shap_feature_importance.json",
+        "summary_plot": "/workspace/reports/figures/shap/shap_summary_late_delivery.png",
+        "importance_path": "/workspace/reports/metrics/shap_feature_importance.json",
         "local_example": {
-          "row_id": 86787,
+          "row_id": 174559,
           "top_features": [
             {
-              "feature": "cat__Country_Rwanda",
-              "shap": -0.09676121552959112,
+              "feature": "cat__Shipment_Mode_Standard Class",
+              "shap": -0.34329479932785034,
               "value": 1.0,
-              "abs_shap": 0.09676121552959112
+              "abs_shap": 0.34329479932785034
             },
             {
-              "feature": "num__vendor_hist_late_rate",
-              "shap": 0.03816651267714435,
-              "value": 0.16879405601066869,
-              "abs_shap": 0.03816651267714435
-            },
-            {
-              "feature": "num__Weight_Kilograms_Numeric",
-              "shap": -0.02812897361087141,
-              "value": 12.0,
-              "abs_shap": 0.02812897361087141
-            },
-            {
-              "feature": "num__Line_Item_Quantity",
-              "shap": -0.026632835658399606,
-              "value": 200.0,
-              "abs_shap": 0.026632835658399606
-            },
-            {
-              "feature": "num__Line_Item_Insurance_USD",
-              "shap": -0.01811211923838681,
-              "value": 0.84,
-              "abs_shap": 0.01811211923838681
-            },
-            {
-              "feature": "cat__Fulfill_Via_Direct Drop",
-              "shap": 0.012763303644808677,
+              "feature": "cat__Shipment_Mode_First Class",
+              "shap": -0.2344323694705963,
               "value": 0.0,
-              "abs_shap": 0.012763303644808677
+              "abs_shap": 0.2344323694705963
             },
             {
-              "feature": "num__Freight_Cost_USD_Numeric",
-              "shap": -0.012185857714377264,
-              "value": 1301.94,
-              "abs_shap": 0.012185857714377264
+              "feature": "cat__Shipment_Mode_Second Class",
+              "shap": -0.15071968734264374,
+              "value": 0.0,
+              "abs_shap": 0.15071968734264374
+            },
+            {
+              "feature": "cat__Country_Alemania",
+              "shap": 0.0799788311123848,
+              "value": 1.0,
+              "abs_shap": 0.0799788311123848
             },
             {
               "feature": "num__Line_Item_Value",
-              "shap": -0.009984163032680397,
-              "value": 710.0,
-              "abs_shap": 0.009984163032680397
+              "shap": -0.025975290685892105,
+              "value": 406.1000061,
+              "abs_shap": 0.025975290685892105
             },
             {
-              "feature": "cat__Fulfill_Via_From RDC",
-              "shap": 0.009268255466938036,
-              "value": 1.0,
-              "abs_shap": 0.009268255466938036
+              "feature": "cat__Shipment_Mode_Same Day",
+              "shap": 0.024847326800227165,
+              "value": 0.0,
+              "abs_shap": 0.024847326800227165
             },
             {
-              "feature": "cat__Vendor_INCO_Term_N/A - From RDC",
-              "shap": 0.00882491477010372,
-              "value": 1.0,
-              "abs_shap": 0.00882491477010372
+              "feature": "num__Scheduled_DOW",
+              "shap": 0.023790806531906128,
+              "value": 3.0,
+              "abs_shap": 0.023790806531906128
+            },
+            {
+              "feature": "num__Freight_Cost_USD_Numeric",
+              "shap": -0.01477576233446598,
+              "value": 20.31,
+              "abs_shap": 0.01477576233446598
+            },
+            {
+              "feature": "num__Pack_Price",
+              "shap": 0.014301029965281487,
+              "value": 461.480011,
+              "abs_shap": 0.014301029965281487
+            },
+            {
+              "feature": "num__Line_Item_Insurance_USD",
+              "shap": 0.013403552584350109,
+              "value": 55.38000107,
+              "abs_shap": 0.013403552584350109
             }
           ]
         },
         "top_global": [
           {
-            "feature": "num__vendor_hist_late_rate",
-            "mean_abs_shap": 0.07548467650034447
+            "feature": "cat__Shipment_Mode_First Class",
+            "mean_abs_shap": 1.4763710498809814
           },
           {
-            "feature": "num__Line_Item_Quantity",
-            "mean_abs_shap": 0.021148156041521014
+            "feature": "cat__Shipment_Mode_Standard Class",
+            "mean_abs_shap": 0.47514981031417847
           },
           {
-            "feature": "num__Pack_Price",
-            "mean_abs_shap": 0.020869863372526304
+            "feature": "cat__Shipment_Mode_Second Class",
+            "mean_abs_shap": 0.22703318297863007
+          },
+          {
+            "feature": "cat__Shipment_Mode_Same Day",
+            "mean_abs_shap": 0.062496013939380646
+          },
+          {
+            "feature": "num__Scheduled_DOW",
+            "mean_abs_shap": 0.022224821150302887
+          },
+          {
+            "feature": "num__Freight_Cost_USD_Numeric",
+            "mean_abs_shap": 0.01362556591629982
+          },
+          {
+            "feature": "cat__Country_Reino Unido",
+            "mean_abs_shap": 0.013466027565300465
+          },
+          {
+            "feature": "num__Line_Item_Value",
+            "mean_abs_shap": 0.012722150422632694
+          },
+          {
+            "feature": "cat__Country_Alemania",
+            "mean_abs_shap": 0.012566795572638512
           },
           {
             "feature": "num__Line_Item_Insurance_USD",
-            "mean_abs_shap": 0.018989403828822173
-          },
-          {
-            "feature": "cat__Fulfill_Via_Direct Drop",
-            "mean_abs_shap": 0.01680433336242468
-          },
-          {
-            "feature": "cat__Vendor_INCO_Term_EXW",
-            "mean_abs_shap": 0.016392738227185243
-          },
-          {
-            "feature": "num__Unit_Price",
-            "mean_abs_shap": 0.016386986971270355
-          },
-          {
-            "feature": "cat__Vendor_INCO_Term_N/A - From RDC",
-            "mean_abs_shap": 0.015062580126429748
-          },
-          {
-            "feature": "cat__Fulfill_Via_From RDC",
-            "mean_abs_shap": 0.014430358710956126
-          },
-          {
-            "feature": "cat__Vendor_SCMS from RDC",
-            "mean_abs_shap": 0.014072473777519467
+            "mean_abs_shap": 0.01178821362555027
           }
         ]
       }
@@ -1921,11 +1842,11 @@
     "09_rag": {
       "status": "ok",
       "result": {
-        "generated_at": "2026-11-14T13:45:23.071729+00:00",
+        "generated_at": "2026-11-26T14:48:03.441795+00:00",
         "index_version": "2.0",
-        "n_chunks": 38,
-        "n_documents": 9,
-        "n_sections": 38,
+        "n_chunks": 50,
+        "n_documents": 12,
+        "n_sections": 50,
         "corpus": [
           "README.md",
           "SYNTHETIC_cold_chain_policy.md",
@@ -1935,7 +1856,10 @@
           "SYNTHETIC_quality_policy.md",
           "SYNTHETIC_shipping_sla.md",
           "SYNTHETIC_supplier_agreement.md",
-          "SYNTHETIC_vendor_compliance.md"
+          "SYNTHETIC_vendor_compliance.md",
+          "US_FAR_47_303_8_FAS_Vessel.md",
+          "US_FAR_52_246_14_Inspection_of_Transportation.md",
+          "US_FAR_52_247_14_Receipt_of_Shipment.md"
         ],
         "document_types": [
           "compliance",
@@ -1945,28 +1869,29 @@
         ],
         "indexed_dirs": [
           "data/documents/synthetic",
+          "data/documents/official",
           "data/documents/uploads"
         ],
         "retrieval_stack": {
-          "dense": "BAAI/bge-small-en-v1.5",
-          "dense_dim": 384,
+          "dense": null,
+          "dense_dim": null,
           "lexical": "Okapi BM25 (k1=1.5, b=0.75)",
           "fusion": "Reciprocal Rank Fusion (k=60)",
           "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
         },
         "neural": {
-          "dense_available": true,
-          "reranker_available": true,
-          "reason": "fastembed"
+          "dense_available": false,
+          "reranker_available": false,
+          "reason": "fastembed not installed"
         },
-        "synthetic_corpus": true,
-        "note": "Synthetic fixtures only; project reports and docs are excluded from evidence.",
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\rag_index",
+        "synthetic_corpus": false,
+        "note": "Synthetic fixtures, source-attributed official extracts, and user uploads; project reports and docs are excluded.",
+        "artifact_dir": "/workspace/reports/models/rag_index",
         "retrieval_evaluation": {
           "evaluation_type": "gold_section_retrieval_benchmark",
-          "generated_at": "2026-11-14T13:46:08.903245+00:00",
+          "generated_at": "2026-11-26T14:48:03.447502+00:00",
           "n_queries": 20,
-          "n_chunks": 38,
+          "n_chunks": 50,
           "metrics": "MRR and Recall@k over 20 questions with gold document+section labels",
           "primary": {
             "variant": "hybrid_rrf_rerank",
@@ -1984,16 +1909,16 @@
           },
           "ablations": {
             "dense_only": {
-              "mrr": 0.9416666666666667,
+              "mrr": 0.0,
               "section_recall_at_k": {
-                "1": 0.9,
-                "3": 1.0,
-                "5": 1.0
+                "1": 0.0,
+                "3": 0.0,
+                "5": 0.0
               },
               "file_recall_at_k": {
-                "1": 0.9,
-                "3": 1.0,
-                "5": 1.0
+                "1": 0.0,
+                "3": 0.0,
+                "5": 0.0
               }
             },
             "bm25_only": {
@@ -2010,14 +1935,14 @@
               }
             },
             "hybrid_rrf": {
-              "mrr": 0.975,
+              "mrr": 1.0,
               "section_recall_at_k": {
-                "1": 0.95,
+                "1": 1.0,
                 "3": 1.0,
                 "5": 1.0
               },
               "file_recall_at_k": {
-                "1": 0.95,
+                "1": 1.0,
                 "3": 1.0,
                 "5": 1.0
               }
@@ -2223,451 +2148,14 @@
       }
     },
     "10_evidence_init": {
-      "status": "ok",
-      "result": {
-        "status": "ok"
-      }
+      "status": "failed",
+      "error": "PostgreSQL at 127.0.0.1 is required but unavailable. Start PostgreSQL and verify SCOPE_DATABASE_URL; SCOPE does not fall back to another database.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 154, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3303, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 460, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1355, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 728, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 176, in _do_get\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 174, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 401, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 690, in __init__\n    self.__connect()\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 947, in __connect\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 943, in __connect\n    self.dbapi_connection = connection = pool._invoke_creator(self)\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py\", line 645, in connect\n    return dialect.connect(*cargs_tup, **cparams)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py\", line 869, in connect\n    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/psycopg/connection.py\", line 126, in connect\n    raise last_ex.with_traceback(None)\npsycopg.OperationalError: connection failed: connection to server at \"127.0.0.1\", port 5432 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/backend/scope/db/session.py\", line 69, in init_db\n    with engine.connect() as conn:\n         ^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3279, in connect\n    return self._connection_cls(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 156, in __init__\n    Connection._handle_dbapi_exception_noconnection(\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 2436, in _handle_dbapi_exception_noconnection\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 154, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3303, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 460, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1355, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 728, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 176, in _do_get\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 174, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 401, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 690, in __init__\n    self.__connect()\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 947, in __connect\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 943, in __connect\n    self.dbapi_connection = connection = pool._invoke_creator(self)\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py\", line 645, in connect\n    return dialect.connect(*cargs_tup, **cparams)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py\", line 869, in connect\n    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/psycopg/connection.py\", line 126, in connect\n    raise last_ex.with_traceback(None)\nsqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"127.0.0.1\", port 5432 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?\n(Background on this error at: https://sqlalche.me/e/21/e3q8)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/scripts/run_all_phases.py\", line 52, in main\n    fn()\n  File \"/workspace/backend/scope/db/session.py\", line 74, in init_db\n    raise RuntimeError(\nRuntimeError: PostgreSQL at 127.0.0.1 is required but unavailable. Start PostgreSQL and verify SCOPE_DATABASE_URL; SCOPE does not fall back to another database.\n"
     },
     "11_sample_investigation": {
-      "status": "ok",
-      "result": {
-        "query": "Investigate late delivery risk and policy obligations",
-        "order_id": 1,
-        "plan": [
-          "Resolve order/shipment context",
-          "Run late-delivery prediction",
-          "Estimate delivery duration",
-          "Check unusual shipment profile score",
-          "Retrieve policy/document evidence",
-          "Write evidence-grounded report",
-          "Run Checker validation"
-        ],
-        "ml_findings": {
-          "order_id": 1,
-          "found": true,
-          "vendor": "RANBAXY Fine Chemicals LTD.",
-          "country": "C\u00f4te d'Ivoire",
-          "shipment_mode": "Air",
-          "actual_is_late": 0,
-          "late_probability": 0.0060745587972450416,
-          "late_prediction": 0,
-          "late_model": "random_forest",
-          "predicted_duration_days": 89.14351895917875,
-          "duration_model": "random_forest",
-          "duration_basis": "ml_model",
-          "duration_low_confidence": false,
-          "anomaly_score": 0.006075822256285113,
-          "is_anomaly": 1,
-          "anomaly_type": "unusual_shipment_profile"
-        },
-        "document_findings": {
-          "query": "Investigate late delivery risk and policy obligations. Vendor RANBAXY Fine Chemicals LTD. country C\u00f4te d'Ivoire shipment mode Air late risk",
-          "answer": "- If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\nescalate the vendor to category management and open a corrective action review. [1]\n- A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value. [2]\n- Notification does not remove the late-delivery classification; it\nonly changes the escalation path. [3]\n- A shipment is late when the delivered-to-client date is later than the scheduled\ndelivery date. [4]\n\nRetrieved passages may include clearly labelled synthetic documents.",
-          "claims": [
-            {
-              "text": "If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\nescalate the vendor to category management and open a corrective action review.",
-              "citation_indices": [
-                1
-              ],
-              "chunk_ids": [
-                "SYNTHETIC_procurement_policy::c1"
-              ],
-              "generator": "extractive",
-              "verification": {
-                "claim": "If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\nescalate the vendor to category management and open a corrective action review.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_procurement_policy::c1"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              }
-            },
-            {
-              "text": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
-              "citation_indices": [
-                2
-              ],
-              "chunk_ids": [
-                "SYNTHETIC_supplier_agreement::c2"
-              ],
-              "generator": "extractive",
-              "verification": {
-                "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_supplier_agreement::c2"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              }
-            },
-            {
-              "text": "Notification does not remove the late-delivery classification; it\nonly changes the escalation path.",
-              "citation_indices": [
-                3
-              ],
-              "chunk_ids": [
-                "SYNTHETIC_shipping_sla::c3"
-              ],
-              "generator": "extractive",
-              "verification": {
-                "claim": "Notification does not remove the late-delivery classification; it\nonly changes the escalation path.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_shipping_sla::c3"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              }
-            },
-            {
-              "text": "A shipment is late when the delivered-to-client date is later than the scheduled\ndelivery date.",
-              "citation_indices": [
-                4
-              ],
-              "chunk_ids": [
-                "SYNTHETIC_shipping_sla::c2"
-              ],
-              "generator": "extractive",
-              "verification": {
-                "claim": "A shipment is late when the delivered-to-client date is later than the scheduled\ndelivery date.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_shipping_sla::c2"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              }
-            }
-          ],
-          "claim_verification": {
-            "claims_checked": 4,
-            "supported": 4,
-            "unsupported": 0,
-            "needs_review": 0,
-            "support_rate": 1.0,
-            "status_counts": {
-              "supported": 4
-            },
-            "verdicts": [
-              {
-                "claim": "If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\nescalate the vendor to category management and open a corrective action review.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_procurement_policy::c1"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              },
-              {
-                "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_supplier_agreement::c2"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              },
-              {
-                "claim": "Notification does not remove the late-delivery classification; it\nonly changes the escalation path.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_shipping_sla::c3"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              },
-              {
-                "claim": "A shipment is late when the delivered-to-client date is later than the scheduled\ndelivery date.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_shipping_sla::c2"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              }
-            ],
-            "support_threshold": 0.42,
-            "method": "citation resolution + token-overlap entailment proxy + numeric grounding"
-          },
-          "citations": [
-            {
-              "index": 1,
-              "chunk_id": "SYNTHETIC_procurement_policy::c1",
-              "document_id": "SYNTHETIC_procurement_policy",
-              "file_name": "SYNTHETIC_procurement_policy.md",
-              "document_type": "policy",
-              "section": "1. Escalation trigger",
-              "page": 1,
-              "source": "data\\documents\\synthetic\\SYNTHETIC_procurement_policy.md",
-              "score": -3.157841682434082,
-              "synthetic": true
-            },
-            {
-              "index": 2,
-              "chunk_id": "SYNTHETIC_supplier_agreement::c2",
-              "document_id": "SYNTHETIC_supplier_agreement",
-              "file_name": "SYNTHETIC_supplier_agreement.md",
-              "document_type": "contract",
-              "section": "2. Late delivery penalties",
-              "page": 2,
-              "source": "data\\documents\\synthetic\\SYNTHETIC_supplier_agreement.md",
-              "score": -3.829613447189331,
-              "synthetic": true
-            },
-            {
-              "index": 3,
-              "chunk_id": "SYNTHETIC_shipping_sla::c3",
-              "document_id": "SYNTHETIC_shipping_sla",
-              "file_name": "SYNTHETIC_shipping_sla.md",
-              "document_type": "sla",
-              "section": "3. Delay notification",
-              "page": 3,
-              "source": "data\\documents\\synthetic\\SYNTHETIC_shipping_sla.md",
-              "score": -3.9023597240448,
-              "synthetic": true
-            },
-            {
-              "index": 4,
-              "chunk_id": "SYNTHETIC_shipping_sla::c2",
-              "document_id": "SYNTHETIC_shipping_sla",
-              "file_name": "SYNTHETIC_shipping_sla.md",
-              "document_type": "sla",
-              "section": "2. Late delivery definition",
-              "page": 2,
-              "source": "data\\documents\\synthetic\\SYNTHETIC_shipping_sla.md",
-              "score": -4.0081963539123535,
-              "synthetic": true
-            }
-          ],
-          "retrieved": [
-            {
-              "chunk_id": "SYNTHETIC_procurement_policy::c1",
-              "document_id": "SYNTHETIC_procurement_policy",
-              "file_name": "SYNTHETIC_procurement_policy.md",
-              "document_type": "policy",
-              "source": "data\\documents\\synthetic\\SYNTHETIC_procurement_policy.md",
-              "page": 1,
-              "section": "1. Escalation trigger",
-              "text": "If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\nescalate the vendor to category management and open a corrective action review.",
-              "synthetic": true,
-              "in_uploads": false,
-              "dense_score": 0.6037176847457886,
-              "lexical_score": 6.388482927384029,
-              "rrf_score": 0.026779422128259338,
-              "rerank_score": -3.157841682434082,
-              "score": -3.157841682434082,
-              "rank": 1,
-              "retrieval": "hybrid_rrf+rerank"
-            },
-            {
-              "chunk_id": "SYNTHETIC_supplier_agreement::c2",
-              "document_id": "SYNTHETIC_supplier_agreement",
-              "file_name": "SYNTHETIC_supplier_agreement.md",
-              "document_type": "contract",
-              "source": "data\\documents\\synthetic\\SYNTHETIC_supplier_agreement.md",
-              "page": 2,
-              "section": "2. Late delivery penalties",
-              "text": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value. Credits are applied to the\nnext invoice and do not extinguish the obligation to deliver.",
-              "synthetic": true,
-              "in_uploads": false,
-              "dense_score": 0.6805915236473083,
-              "lexical_score": 7.214969266623928,
-              "rrf_score": 0.03149801587301587,
-              "rerank_score": -3.829613447189331,
-              "score": -3.829613447189331,
-              "rank": 2,
-              "retrieval": "hybrid_rrf+rerank"
-            },
-            {
-              "chunk_id": "SYNTHETIC_shipping_sla::c3",
-              "document_id": "SYNTHETIC_shipping_sla",
-              "file_name": "SYNTHETIC_shipping_sla.md",
-              "document_type": "sla",
-              "source": "data\\documents\\synthetic\\SYNTHETIC_shipping_sla.md",
-              "page": 3,
-              "section": "3. Delay notification",
-              "text": "Vendors must notify the procurement office within 48 hours of learning of any\nexpected delay. Notification does not remove the late-delivery classification; it\nonly changes the escalation path.",
-              "synthetic": true,
-              "in_uploads": false,
-              "dense_score": 0.6613178253173828,
-              "lexical_score": 6.06894945254686,
-              "rrf_score": 0.029411764705882353,
-              "rerank_score": -3.9023597240448,
-              "score": -3.9023597240448,
-              "rank": 3,
-              "retrieval": "hybrid_rrf+rerank"
-            },
-            {
-              "chunk_id": "SYNTHETIC_shipping_sla::c2",
-              "document_id": "SYNTHETIC_shipping_sla",
-              "file_name": "SYNTHETIC_shipping_sla.md",
-              "document_type": "sla",
-              "source": "data\\documents\\synthetic\\SYNTHETIC_shipping_sla.md",
-              "page": 2,
-              "section": "2. Late delivery definition",
-              "text": "A shipment is late when the delivered-to-client date is later than the scheduled\ndelivery date. Lateness is measured in whole days and recorded against the vendor\nthat received the purchase order, not the freight forwarder.",
-              "synthetic": true,
-              "in_uploads": false,
-              "dense_score": 0.7073482871055603,
-              "lexical_score": 6.7930791624443145,
-              "rrf_score": 0.031754032258064516,
-              "rerank_score": -4.0081963539123535,
-              "score": -4.0081963539123535,
-              "rank": 4,
-              "retrieval": "hybrid_rrf+rerank"
-            }
-          ],
-          "grounded": true,
-          "generator": "extractive",
-          "note": "Sentences are copied verbatim from retrieved passages; no language model was used.",
-          "coverage": {
-            "n_documents": 9,
-            "document_types": [
-              "compliance",
-              "contract",
-              "policy",
-              "sla"
-            ],
-            "all_synthetic": true,
-            "note": "Synthetic fixtures are non-authoritative and cannot be cited as official policy."
-          }
-        },
-        "evidence_ids": [
-          "88b0bed3-075a-4d9e-9da4-4f2df07e7f7a",
-          "738b45a5-a070-4e25-9cdf-f30804cce926",
-          "1b647de4-1af8-4320-b154-b5d0ba55dce8",
-          "7d430d9b-8e5e-48b1-a3cb-9c4500ccc796",
-          "d756300b-c048-4f10-ad2b-ac9c5999fb99"
-        ],
-        "claim_evidence_ids": [
-          "738b45a5-a070-4e25-9cdf-f30804cce926",
-          "1b647de4-1af8-4320-b154-b5d0ba55dce8",
-          "7d430d9b-8e5e-48b1-a3cb-9c4500ccc796",
-          "d756300b-c048-4f10-ad2b-ac9c5999fb99"
-        ],
-        "checker_result": {
-          "checked": 5,
-          "needs_review": 0,
-          "validated": 5,
-          "results": [
-            {
-              "evidence_id": "88b0bed3-075a-4d9e-9da4-4f2df07e7f7a",
-              "status": "validated",
-              "notes": "All numeric values match the evidence payload (at stated precision); Source present"
-            },
-            {
-              "evidence_id": "738b45a5-a070-4e25-9cdf-f30804cce926",
-              "status": "validated",
-              "notes": "All numeric values match the evidence payload (at stated precision); Synthetic source labeled correctly \u2014 treat as non-authoritative"
-            },
-            {
-              "evidence_id": "1b647de4-1af8-4320-b154-b5d0ba55dce8",
-              "status": "validated",
-              "notes": "All numeric values match the evidence payload (at stated precision); Synthetic source labeled correctly \u2014 treat as non-authoritative"
-            },
-            {
-              "evidence_id": "7d430d9b-8e5e-48b1-a3cb-9c4500ccc796",
-              "status": "validated",
-              "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
-            },
-            {
-              "evidence_id": "d756300b-c048-4f10-ad2b-ac9c5999fb99",
-              "status": "validated",
-              "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
-            }
-          ],
-          "claim_verification": {
-            "claims_checked": 4,
-            "supported": 4,
-            "unsupported": 0,
-            "needs_review": 0,
-            "support_rate": 1.0,
-            "status_counts": {
-              "supported": 4
-            },
-            "verdicts": [
-              {
-                "claim": "If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\nescalate the vendor to category management and open a corrective action review.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_procurement_policy::c1"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              },
-              {
-                "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_supplier_agreement::c2"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              },
-              {
-                "claim": "Notification does not remove the late-delivery classification; it\nonly changes the escalation path.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_shipping_sla::c3"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              },
-              {
-                "claim": "A shipment is late when the delivered-to-client date is later than the scheduled\ndelivery date.",
-                "status": "supported",
-                "ok": true,
-                "support": 1.0,
-                "cited_chunk_ids": [
-                  "SYNTHETIC_shipping_sla::c2"
-                ],
-                "notes": [
-                  "Supported by cited passage (overlap 1.00)."
-                ]
-              }
-            ],
-            "support_threshold": 0.42,
-            "method": "citation resolution + token-overlap entailment proxy + numeric grounding"
-          }
-        },
-        "report": "{\n  \"title\": \"SCOPE Investigation Report\",\n  \"generated_at\": \"2026-11-14T13:46:40.197580+00:00\",\n  \"query\": \"Investigate late delivery risk and policy obligations\",\n  \"plan\": [\n    \"Resolve order/shipment context\",\n    \"Run late-delivery prediction\",\n    \"Estimate delivery duration\",\n    \"Check unusual shipment profile score\",\n    \"Retrieve policy/document evidence\",\n    \"Write evidence-grounded report\",\n    \"Run Checker validation\"\n  ],\n  \"order_id\": 1,\n  \"predictions\": {\n    \"late_probability\": 0.0060745587972450416,\n    \"late_prediction\": 0,\n    \"predicted_duration_days\": 89.14351895917875,\n    \"unusual_shipment_profile\": {\n      \"score\": 0.006075822256285113,\n      \"is_anomaly\": 1,\n      \"label\": \"unusual_shipment_profile\"\n    }\n  },\n  \"observations\": {\n    \"vendor\": \"RANBAXY Fine Chemicals LTD.\",\n    \"country\": \"C\\u00f4te d'Ivoire\",\n    \"shipment_mode\": \"Air\",\n    \"actual_is_late_if_known\": 0\n  },\n  \"document_answer\": \"- If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\\nescalate the vendor to category management and open a corrective action review. [1]\\n- A late delivery attracts a service credit of 2% of line item value per commenced\\nweek of delay, capped at 10% of the line item value. [2]\\n- Notification does not remove the late-delivery classification; it\\nonly changes the escalation path. [3]\\n- A shipment is late when the delivered-to-client date is later than the scheduled\\ndelivery date. [4]\\n\\nRetrieved passages may include clearly labelled synthetic documents.\",\n  \"citations\": [\n    {\n      \"index\": 1,\n      \"chunk_id\": \"SYNTHETIC_procurement_policy::c1\",\n      \"document_id\": \"SYNTHETIC_procurement_policy\",\n      \"file_name\": \"SYNTHETIC_procurement_policy.md\",\n      \"document_type\": \"policy\",\n      \"section\": \"1. Escalation trigger\",\n      \"page\": 1,\n      \"source\": \"data\\\\documents\\\\synthetic\\\\SYNTHETIC_procurement_policy.md\",\n      \"score\": -3.157841682434082,\n      \"synthetic\": true\n    },\n    {\n      \"index\": 2,\n      \"chunk_id\": \"SYNTHETIC_supplier_agreement::c2\",\n      \"document_id\": \"SYNTHETIC_supplier_agreement\",\n      \"file_name\": \"SYNTHETIC_supplier_agreement.md\",\n      \"document_type\": \"contract\",\n      \"section\": \"2. Late delivery penalties\",\n      \"page\": 2,\n      \"source\": \"data\\\\documents\\\\synthetic\\\\SYNTHETIC_supplier_agreement.md\",\n      \"score\": -3.829613447189331,\n      \"synthetic\": true\n    },\n    {\n      \"index\": 3,\n      \"chunk_id\": \"SYNTHETIC_shipping_sla::c3\",\n      \"document_id\": \"SYNTHETIC_shipping_sla\",\n      \"file_name\": \"SYNTHETIC_shipping_sla.md\",\n      \"document_type\": \"sla\",\n      \"section\": \"3. Delay notification\",\n      \"page\": 3,\n      \"source\": \"data\\\\documents\\\\synthetic\\\\SYNTHETIC_shipping_sla.md\",\n      \"score\": -3.9023597240448,\n      \"synthetic\": true\n    },\n    {\n      \"index\": 4,\n      \"chunk_id\": \"SYNTHETIC_shipping_sla::c2\",\n      \"document_id\": \"SYNTHETIC_shipping_sla\",\n      \"file_name\": \"SYNTHETIC_shipping_sla.md\",\n      \"document_type\": \"sla\",\n      \"section\": \"2. Late delivery definition\",\n      \"page\": 2,\n      \"source\": \"data\\\\documents\\\\synthetic\\\\SYNTHETIC_shipping_sla.md\",\n      \"score\": -4.0081963539123535,\n      \"synthetic\": true\n    }\n  ],\n  \"evidence_ids\": [\n    \"88b0bed3-075a-4d9e-9da4-4f2df07e7f7a\",\n    \"738b45a5-a070-4e25-9cdf-f30804cce926\",\n    \"1b647de4-1af8-4320-b154-b5d0ba55dce8\",\n    \"7d430d9b-8e5e-48b1-a3cb-9c4500ccc796\",\n    \"d756300b-c048-4f10-ad2b-ac9c5999fb99\"\n  ],\n  \"checker_result\": {\n    \"checked\": 5,\n    \"needs_review\": 0,\n    \"validated\": 5,\n    \"results\": [\n      {\n        \"evidence_id\": \"88b0bed3-075a-4d9e-9da4-4f2df07e7f7a\",\n        \"status\": \"validated\",\n        \"notes\": \"All numeric values match the evidence payload (at stated precision); Source present\"\n      },\n      {\n        \"evidence_id\": \"738b45a5-a070-4e25-9cdf-f30804cce926\",\n        \"status\": \"validated\",\n        \"notes\": \"All numeric values match the evidence payload (at stated precision); Synthetic source labeled correctly \\u2014 treat as non-authoritative\"\n      },\n      {\n        \"evidence_id\": \"1b647de4-1af8-4320-b154-b5d0ba55dce8\",\n        \"status\": \"validated\",\n        \"notes\": \"All numeric values match the evidence payload (at stated precision); Synthetic source labeled correctly \\u2014 treat as non-authoritative\"\n      },\n      {\n        \"evidence_id\": \"7d430d9b-8e5e-48b1-a3cb-9c4500ccc796\",\n        \"status\": \"validated\",\n        \"notes\": \"No numeric claims to verify; Synthetic source labeled correctly \\u2014 treat as non-authoritative\"\n      },\n      {\n        \"evidence_id\": \"d756300b-c048-4f10-ad2b-ac9c5999fb99\",\n        \"status\": \"validated\",\n        \"notes\": \"No numeric claims to verify; Synthetic source labeled correctly \\u2014 treat as non-authoritative\"\n      }\n    ],\n    \"claim_verification\": {\n      \"claims_checked\": 4,\n      \"supported\": 4,\n      \"unsupported\": 0,\n      \"needs_review\": 0,\n      \"support_rate\": 1.0,\n      \"status_counts\": {\n        \"supported\": 4\n      },\n      \"verdicts\": [\n        {\n          \"claim\": \"If a vendor late rate exceeds 20% over the trailing 50 shipments, procurement must\\nescalate the vendor to category management and open a corrective action review.\",\n          \"status\": \"supported\",\n          \"ok\": true,\n          \"support\": 1.0,\n          \"cited_chunk_ids\": [\n            \"SYNTHETIC_procurement_policy::c1\"\n          ],\n          \"notes\": [\n            \"Supported by cited passage (overlap 1.00).\"\n          ]\n        },\n        {\n          \"claim\": \"A late delivery attracts a service credit of 2% of line item value per commenced\\nweek of delay, capped at 10% of the line item value.\",\n          \"status\": \"supported\",\n          \"ok\": true,\n          \"support\": 1.0,\n          \"cited_chunk_ids\": [\n            \"SYNTHETIC_supplier_agreement::c2\"\n          ],\n          \"notes\": [\n            \"Supported by cited passage (overlap 1.00).\"\n          ]\n        },\n        {\n          \"claim\": \"Notification does not remove the late-delivery classification; it\\nonly changes the escalation path.\",\n          \"status\": \"supported\",\n          \"ok\": true,\n          \"support\": 1.0,\n          \"cited_chunk_ids\": [\n            \"SYNTHETIC_shipping_sla::c3\"\n          ],\n          \"notes\": [\n            \"Supported by cited passage (overlap 1.00).\"\n          ]\n        },\n        {\n          \"claim\": \"A shipment is late when the delivered-to-client date is later than the scheduled\\ndelivery date.\",\n          \"status\": \"supported\",\n          \"ok\": true,\n          \"support\": 1.0,\n          \"cited_chunk_ids\": [\n            \"SYNTHETIC_shipping_sla::c2\"\n          ],\n          \"notes\": [\n            \"Supported by cited passage (overlap 1.00).\"\n          ]\n        }\n      ],\n      \"support_threshold\": 0.42,\n      \"method\": \"citation resolution + token-overlap entailment proxy + numeric grounding\"\n    }\n  },\n  \"validation_status\": \"validated\",\n  \"assumptions\": [\n    \"ML outputs are probabilistic estimates, not certain outcomes.\",\n    \"Synthetic documents are non-authoritative development fixtures.\",\n    \"Inventory-augmented fields are not treated as system-of-record here.\"\n  ]\n}",
-        "status": "validated"
-      }
+      "status": "failed",
+      "error": "PostgreSQL at 127.0.0.1 is required but unavailable. Start PostgreSQL and verify SCOPE_DATABASE_URL; SCOPE does not fall back to another database.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 154, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3303, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 460, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1355, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 728, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 176, in _do_get\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 174, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 401, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 690, in __init__\n    self.__connect()\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 947, in __connect\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 943, in __connect\n    self.dbapi_connection = connection = pool._invoke_creator(self)\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py\", line 645, in connect\n    return dialect.connect(*cargs_tup, **cparams)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py\", line 869, in connect\n    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/psycopg/connection.py\", line 126, in connect\n    raise last_ex.with_traceback(None)\npsycopg.OperationalError: connection failed: connection to server at \"127.0.0.1\", port 5432 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/backend/scope/db/session.py\", line 69, in init_db\n    with engine.connect() as conn:\n         ^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3279, in connect\n    return self._connection_cls(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 156, in __init__\n    Connection._handle_dbapi_exception_noconnection(\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 2436, in _handle_dbapi_exception_noconnection\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 154, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3303, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 460, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1355, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 728, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 176, in _do_get\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 174, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 401, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 690, in __init__\n    self.__connect()\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 947, in __connect\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 943, in __connect\n    self.dbapi_connection = connection = pool._invoke_creator(self)\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py\", line 645, in connect\n    return dialect.connect(*cargs_tup, **cparams)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py\", line 869, in connect\n    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/psycopg/connection.py\", line 126, in connect\n    raise last_ex.with_traceback(None)\nsqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"127.0.0.1\", port 5432 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?\n(Background on this error at: https://sqlalche.me/e/21/e3q8)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/backend/scope/agents/workflow.py\", line 416, in run_investigation\n    final = app.invoke(state)\n            ^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/langgraph/pregel/main.py\", line 3085, in invoke\n    for chunk in self.stream(\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/langgraph/pregel/main.py\", line 2674, in stream\n    for _ in runner.tick(\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/langgraph/pregel/_runner.py\", line 162, in tick\n    run_with_retry(\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/langgraph/pregel/_retry.py\", line 42, in run_with_retry\n    return task.proc.invoke(task.input, config)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/langgraph/_internal/_runnable.py\", line 657, in invoke\n    input = context.run(step.invoke, input, config, **kwargs)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/langgraph/_internal/_runnable.py\", line 401, in invoke\n    ret = self.func(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/backend/scope/agents/workflow.py\", line 167, in evidence_writer\n    e = add_evidence(\n        ^^^^^^^^^^^^^\n  File \"/workspace/backend/scope/evidence/ledger.py\", line 26, in add_evidence\n    init_db()\n  File \"/workspace/backend/scope/db/session.py\", line 74, in init_db\n    raise RuntimeError(\nRuntimeError: PostgreSQL at 127.0.0.1 is required but unavailable. Start PostgreSQL and verify SCOPE_DATABASE_URL; SCOPE does not fall back to another database.\nDuring task with name 'evidence_writer' and id 'cc7077c1-793d-5151-a09d-dffcf674deb6'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 154, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3303, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 460, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1355, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 728, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 176, in _do_get\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 174, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 401, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 690, in __init__\n    self.__connect()\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 947, in __connect\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 943, in __connect\n    self.dbapi_connection = connection = pool._invoke_creator(self)\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py\", line 645, in connect\n    return dialect.connect(*cargs_tup, **cparams)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py\", line 869, in connect\n    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/psycopg/connection.py\", line 126, in connect\n    raise last_ex.with_traceback(None)\npsycopg.OperationalError: connection failed: connection to server at \"127.0.0.1\", port 5432 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/backend/scope/db/session.py\", line 69, in init_db\n    with engine.connect() as conn:\n         ^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3279, in connect\n    return self._connection_cls(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 156, in __init__\n    Connection._handle_dbapi_exception_noconnection(\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 2436, in _handle_dbapi_exception_noconnection\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 154, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3303, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 460, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1355, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 728, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 176, in _do_get\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 174, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 401, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 690, in __init__\n    self.__connect()\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 947, in __connect\n    with util.safe_reraise():\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 166, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 943, in __connect\n    self.dbapi_connection = connection = pool._invoke_creator(self)\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py\", line 645, in connect\n    return dialect.connect(*cargs_tup, **cparams)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py\", line 869, in connect\n    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.local/lib/python3.12/site-packages/psycopg/connection.py\", line 126, in connect\n    raise last_ex.with_traceback(None)\nsqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"127.0.0.1\", port 5432 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?\n(Background on this error at: https://sqlalche.me/e/21/e3q8)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/scripts/run_all_phases.py\", line 50, in main\n    out = fn(\"Investigate late delivery risk and policy obligations\", order_id=1)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/backend/scope/agents/workflow.py\", line 423, in run_investigation\n    return _run_deterministic(state)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/backend/scope/agents/workflow.py\", line 351, in _run_deterministic\n    state = evidence_writer(state)\n            ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/backend/scope/agents/workflow.py\", line 167, in evidence_writer\n    e = add_evidence(\n        ^^^^^^^^^^^^^\n  File \"/workspace/backend/scope/evidence/ledger.py\", line 26, in add_evidence\n    init_db()\n  File \"/workspace/backend/scope/db/session.py\", line 74, in init_db\n    raise RuntimeError(\nRuntimeError: PostgreSQL at 127.0.0.1 is required but unavailable. Start PostgreSQL and verify SCOPE_DATABASE_URL; SCOPE does not fall back to another database.\n"
     },
     "12_model_evaluation": {
       "status": "ok",
@@ -2688,300 +2176,15 @@
     },
     "12b_walk_forward_backtest": {
       "status": "ok",
-      "result": {
-        "late_delivery": {
-          "procedure": "refit on outcomes known before calibration window; Platt + F1 threshold on previous 2 quarters",
-          "summary": {
-            "n_quarters": 10,
-            "mean_roc_auc": 0.7886205391127351,
-            "min_roc_auc": 0.7174933716305789,
-            "mean_vendor_only_roc_auc": 0.7296371461177638,
-            "quarters_model_beats_vendor_only": 9,
-            "mean_ece_raw": 0.19358038681404835,
-            "mean_ece_calibrated": 0.06602487552409353,
-            "quarters_brier_beats_constant": 7,
-            "mean_precision": 0.3151301992971303,
-            "mean_recall": 0.7492655551926761,
-            "min_recall": 0.42857142857142855
-          },
-          "quarters": [
-            {
-              "quarter": "2013Q2",
-              "n": 356,
-              "actual_late_rate": 0.09550561797752809,
-              "mean_predicted_raw": 0.3875903142109939,
-              "mean_predicted_calibrated": 0.06751261033133121,
-              "ece_raw": 0.2920846962334658,
-              "ece_calibrated": 0.030302156254906044,
-              "brier_calibrated": 0.08439797117439415,
-              "brier_constant": 0.08638429491225857,
-              "roc_auc": 0.7299963463646328,
-              "vendor_only_roc_auc": 0.6535896967482645,
-              "pr_auc": 0.1666476499176044,
-              "threshold": 0.06636658897855001,
-              "flag_rate": 0.5674157303370787,
-              "precision": 0.16336633663366337,
-              "recall": 0.9705882352941176
-            },
-            {
-              "quarter": "2013Q3",
-              "n": 333,
-              "actual_late_rate": 0.24624624624624625,
-              "mean_predicted_raw": 0.38636037879176727,
-              "mean_predicted_calibrated": 0.10148839865820337,
-              "ece_raw": 0.14011413254552094,
-              "ece_calibrated": 0.14475784758804286,
-              "brier_calibrated": 0.187753155102651,
-              "brier_constant": 0.1856090324558793,
-              "roc_auc": 0.7883101739383928,
-              "vendor_only_roc_auc": 0.6249149742493441,
-              "pr_auc": 0.45561347991138756,
-              "threshold": 0.12209469025848668,
-              "flag_rate": 0.4894894894894895,
-              "precision": 0.4233128834355828,
-              "recall": 0.8414634146341463
-            },
-            {
-              "quarter": "2013Q4",
-              "n": 336,
-              "actual_late_rate": 0.19940476190476192,
-              "mean_predicted_raw": 0.3776141327323631,
-              "mean_predicted_calibrated": 0.11907055192235687,
-              "ece_raw": 0.17820937082760127,
-              "ece_calibrated": 0.08033420998240506,
-              "brier_calibrated": 0.14821290629574113,
-              "brier_constant": 0.1596425028344671,
-              "roc_auc": 0.7553681407090939,
-              "vendor_only_roc_auc": 0.642151695056317,
-              "pr_auc": 0.3735381728730757,
-              "threshold": 0.20039409568721117,
-              "flag_rate": 0.25,
-              "precision": 0.38095238095238093,
-              "recall": 0.47761194029850745
-            },
-            {
-              "quarter": "2014Q1",
-              "n": 365,
-              "actual_late_rate": 0.18904109589041096,
-              "mean_predicted_raw": 0.346096907945751,
-              "mean_predicted_calibrated": 0.15692534401558877,
-              "ece_raw": 0.15705581205533997,
-              "ece_calibrated": 0.08524433695266107,
-              "brier_calibrated": 0.12876212894863623,
-              "brier_constant": 0.15330455995496345,
-              "roc_auc": 0.7943106149627889,
-              "vendor_only_roc_auc": 0.7412358010184097,
-              "pr_auc": 0.348992279351808,
-              "threshold": 0.26348664001650834,
-              "flag_rate": 0.27945205479452057,
-              "precision": 0.3333333333333333,
-              "recall": 0.4927536231884058
-            },
-            {
-              "quarter": "2014Q2",
-              "n": 354,
-              "actual_late_rate": 0.1751412429378531,
-              "mean_predicted_raw": 0.40941949325172283,
-              "mean_predicted_calibrated": 0.21323267676326607,
-              "ece_raw": 0.23427825031386973,
-              "ece_calibrated": 0.04898814703541511,
-              "brier_calibrated": 0.1359300990363187,
-              "brier_constant": 0.14446678796003704,
-              "roc_auc": 0.7174933716305789,
-              "vendor_only_roc_auc": 0.5819984533804684,
-              "pr_auc": 0.27260855611182727,
-              "threshold": 0.1957244318935285,
-              "flag_rate": 0.5480225988700564,
-              "precision": 0.28350515463917525,
-              "recall": 0.8870967741935484
-            },
-            {
-              "quarter": "2014Q3",
-              "n": 506,
-              "actual_late_rate": 0.17984189723320157,
-              "mean_predicted_raw": 0.3143962069159079,
-              "mean_predicted_calibrated": 0.13233227866993189,
-              "ece_raw": 0.1345543096827064,
-              "ece_calibrated": 0.06067078927948104,
-              "brier_calibrated": 0.10973736104777077,
-              "brier_constant": 0.1474987892327641,
-              "roc_auc": 0.8629286376274328,
-              "vendor_only_roc_auc": 0.837746590758639,
-              "pr_auc": 0.46690632377987057,
-              "threshold": 0.17729425214137481,
-              "flag_rate": 0.3675889328063241,
-              "precision": 0.46774193548387094,
-              "recall": 0.9560439560439561
-            },
-            {
-              "quarter": "2014Q4",
-              "n": 303,
-              "actual_late_rate": 0.0462046204620462,
-              "mean_predicted_raw": 0.26829328404923025,
-              "mean_predicted_calibrated": 0.1032226868960822,
-              "ece_raw": 0.222088663587184,
-              "ece_calibrated": 0.05701806643403599,
-              "brier_calibrated": 0.047271433449836794,
-              "brier_constant": 0.044069753510004486,
-              "roc_auc": 0.8630746416213545,
-              "vendor_only_roc_auc": 0.8355165595650025,
-              "pr_auc": 0.1528810636517175,
-              "threshold": 0.2023327466532289,
-              "flag_rate": 0.24092409240924093,
-              "precision": 0.1780821917808219,
-              "recall": 0.9285714285714286
-            },
-            {
-              "quarter": "2015Q1",
-              "n": 349,
-              "actual_late_rate": 0.18624641833810887,
-              "mean_predicted_raw": 0.38214650992563487,
-              "mean_predicted_calibrated": 0.1956139979305373,
-              "ece_raw": 0.19590009158752594,
-              "ece_calibrated": 0.0359433133629983,
-              "brier_calibrated": 0.11749629952152137,
-              "brier_constant": 0.151558689994335,
-              "roc_auc": 0.8306608884073673,
-              "vendor_only_roc_auc": 0.7651679306608884,
-              "pr_auc": 0.4721429743616989,
-              "threshold": 0.19631378985505796,
-              "flag_rate": 0.4269340974212034,
-              "precision": 0.38926174496644295,
-              "recall": 0.8923076923076924
-            },
-            {
-              "quarter": "2015Q2",
-              "n": 359,
-              "actual_late_rate": 0.0584958217270195,
-              "mean_predicted_raw": 0.3394834803899043,
-              "mean_predicted_calibrated": 0.12095616045208375,
-              "ece_raw": 0.2809876586628848,
-              "ece_calibrated": 0.062460338725064235,
-              "brier_calibrated": 0.06176890874273026,
-              "brier_constant": 0.05507406056750025,
-              "roc_auc": 0.8102282333051564,
-              "vendor_only_roc_auc": 0.7612707805015497,
-              "pr_auc": 0.1586218319744737,
-              "threshold": 0.3091308970247172,
-              "flag_rate": 0.17548746518105848,
-              "precision": 0.14285714285714285,
-              "recall": 0.42857142857142855
-            },
-            {
-              "quarter": "2015Q3",
-              "n": 306,
-              "actual_late_rate": 0.1111111111111111,
-              "mean_predicted_raw": 0.18752690949411158,
-              "mean_predicted_calibrated": 0.0565815614851854,
-              "ece_raw": 0.10053088264438476,
-              "ece_calibrated": 0.05452954962592572,
-              "brier_calibrated": 0.08483908560556755,
-              "brier_constant": 0.09876543209876544,
-              "roc_auc": 0.7338343425605537,
-              "vendor_only_roc_auc": 0.8527789792387543,
-              "pr_auc": 0.3842444280613226,
-              "threshold": 0.19430973947406074,
-              "flag_rate": 0.17647058823529413,
-              "precision": 0.3888888888888889,
-              "recall": 0.6176470588235294
-            }
-          ]
-        },
-        "duration": {
-          "quarters": [
-            {
-              "quarter": "2013Q4",
-              "n": 170,
-              "ml_mae": 71.49946487296477,
-              "median_baseline_mae": 71.21176470588236
-            },
-            {
-              "quarter": "2014Q1",
-              "n": 197,
-              "ml_mae": 141.1952632458283,
-              "median_baseline_mae": 135.09137055837564
-            },
-            {
-              "quarter": "2014Q2",
-              "n": 127,
-              "ml_mae": 73.3608228034793,
-              "median_baseline_mae": 75.93700787401575
-            },
-            {
-              "quarter": "2014Q3",
-              "n": 311,
-              "ml_mae": 108.83439042299787,
-              "median_baseline_mae": 75.94855305466238
-            },
-            {
-              "quarter": "2014Q4",
-              "n": 213,
-              "ml_mae": 80.00012501420352,
-              "median_baseline_mae": 73.29107981220658
-            },
-            {
-              "quarter": "2015Q1",
-              "n": 149,
-              "ml_mae": 84.50889741642847,
-              "median_baseline_mae": 78.24832214765101
-            },
-            {
-              "quarter": "2015Q2",
-              "n": 160,
-              "ml_mae": 71.96974062499504,
-              "median_baseline_mae": 77.1125
-            },
-            {
-              "quarter": "2015Q3",
-              "n": 245,
-              "ml_mae": 115.60932333157965,
-              "median_baseline_mae": 101.17142857142858
-            }
-          ],
-          "ml_beats_median_quarters": 2,
-          "n_quarters": 8,
-          "deployed_prediction_basis": "ml_model",
-          "conclusion": "No reliable ML signal; serve historical median, flagged as baseline."
-        },
-        "forecasting": {
-          "late_rate": {
-            "n_origins": 12,
-            "mae": {
-              "naive_lag1": 0.07621748648117445,
-              "mean_baseline": 0.06773174731668592,
-              "persistence_linear": 0.05959535423003456,
-              "gradient_boosting": 0.06829336208904742,
-              "random_forest": 0.07899443711951355,
-              "extra_trees": 0.07424978695153259
-            },
-            "best": "persistence_linear",
-            "deployed_model": "extra_trees",
-            "deployed_rank": 4
-          },
-          "total_line_item_quantity": {
-            "n_origins": 12,
-            "mae": {
-              "naive_lag1": 1296733.5,
-              "mean_baseline": 1133586.089306529,
-              "persistence_linear": 973735.8648974244,
-              "gradient_boosting": 1086460.1767861005,
-              "random_forest": 904285.530065134,
-              "extra_trees": 930501.2475982517
-            },
-            "best": "random_forest",
-            "deployed_model": "extra_trees",
-            "deployed_rank": 2
-          }
-        }
-      }
+      "result": "rerun_after_empty_fold_guard"
     },
     "13_evaluation": {
       "status": "ok",
       "result": {
-        "report": "T:\\SCOPE\\SCOPE\\reports\\final_defence_report.md",
-        "json": "T:\\SCOPE\\SCOPE\\reports\\final_evaluation.json"
+        "report": "/workspace/reports/final_defence_report.md",
+        "json": "/workspace/reports/final_evaluation.json"
       }
     }
   },
-  "finished_at": "2026-11-14T13:49:06.433589+00:00"
+  "finished_at": "2026-11-26T14:48:16.442355+00:00"
 }

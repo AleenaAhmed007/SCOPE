@@ -65,7 +65,12 @@ def backtest_late_delivery(df: pd.DataFrame) -> dict[str, Any]:
         fit_rows = _known_before(lab, cal_start)
         cal_rows = _known_before(lab, q_start)
         cal_rows = cal_rows[cal_rows["Scheduled_Delivery_Date_Parsed"] >= cal_start]
-        if len(cal_rows) < 100 or cal_rows["is_late"].nunique() < 2:
+        if (
+            len(fit_rows) < 100
+            or fit_rows["is_late"].nunique() < 2
+            or len(cal_rows) < 100
+            or cal_rows["is_late"].nunique() < 2
+        ):
             continue
         model = clone(base).fit(fit_rows[features], fit_rows["is_late"])
         raw_cal = model.predict_proba(cal_rows[features])[:, 1]

@@ -1,4 +1,5 @@
 # Dataset and path configuration for SCOPE
+# Trial branch: DataCo SMART Supply Chain (Mendeley) adapted to SCMS schema
 project_name: SCOPE
 random_seed: 42
 
@@ -13,6 +14,18 @@ paths:
 
 datasets:
   primary:
+    name: DataCo_adapted_for_SCOPE
+    filename: DataCo_adapted_for_SCOPE.csv
+    relative_path: data/raw/DataCo_adapted_for_SCOPE.csv
+    format: csv
+    encoding: utf-8
+    source: mendeley
+    source_doi: "10.17632/8gx2fvg2k6.5"
+    source_url: "https://data.mendeley.com/datasets/8gx2fvg2k6/5"
+    notes: >
+      Adapted from DataCoSupplyChainDataset.csv via scope.data.dataco_adapter.
+      Inventory_* columns are synthetic trial proxies, not real warehouse data.
+  scms_legacy:
     name: SCMS_with_inventory
     filename: SCMS_with_inventory.csv
     relative_path: data/raw/SCMS_with_inventory.csv

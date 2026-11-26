@@ -54,9 +54,17 @@ def build_shipment_frame(df: pd.DataFrame) -> pd.DataFrame:
     """Build normalized shipment frame with targets and early-warning features."""
     out = df.copy()
 
-    # Numeric coercion for dirty fields
-    w_num, w_flag = coerce_numeric_with_flag(out["Weight_Kilograms"], "Weight")
-    f_num, f_flag = coerce_numeric_with_flag(out["Freight_Cost_USD"], "Freight")
+    # Numeric coercion for dirty fields (tolerant of datasets missing weight/freight)
+    if "Weight_Kilograms" in out.columns:
+        w_num, w_flag = coerce_numeric_with_flag(out["Weight_Kilograms"], "Weight")
+    else:
+        w_num = pd.Series(pd.NA, index=out.index, dtype="Float64")
+        w_flag = pd.Series(0, index=out.index, dtype=int)
+    if "Freight_Cost_USD" in out.columns:
+        f_num, f_flag = coerce_numeric_with_flag(out["Freight_Cost_USD"], "Freight")
+    else:
+        f_num = pd.Series(pd.NA, index=out.index, dtype="Float64")
+        f_flag = pd.Series(0, index=out.index, dtype=int)
     out["Weight_Kilograms_Numeric"] = w_num
     out["Weight_NonNumeric_Flag"] = w_flag
     out["Freight_Cost_USD_Numeric"] = f_num
@@ -71,6 +79,11 @@ def build_shipment_frame(df: pd.DataFrame) -> pd.DataFrame:
         ("PQ_First_Sent_To_Client_Date", "PQ_First_Sent_To_Client_Date_Parsed"),
         ("Inventory_Date", "Inventory_Date_Parsed"),
     ]:
+        if raw_col not in out.columns:
+            out[parsed_col] = pd.NaT
+            out[f"{raw_col}_Is_Placeholder"] = 0
+            out[f"{raw_col}_Parse_OK"] = 0
+            continue
         parsed, is_ph, ok = parse_dates(out[raw_col])
         out[parsed_col] = parsed
         out[f"{raw_col}_Is_Placeholder"] = is_ph.astype(int)

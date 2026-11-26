@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T14:12:18.741374+00:00",
+  "generated_at": "2026-11-26T14:44:23.737534+00:00",
   "column_mapping": {
     "ID": "ID",
     "Project Code": "Project_Code",
@@ -91,11 +91,11 @@
   "split": {
     "method": "chronological_on_Scheduled_Delivery_Date_Parsed",
     "counts": {
-      "train": 7226,
-      "test": 1550,
-      "val": 1548
+      "train": 126363,
+      "test": 27079,
+      "val": 27077
     },
-    "train_end": "2013-08-06 00:00:00"
+    "train_end": "2017-01-11 00:00:00"
   },
   "exclusions": [
     {
@@ -110,12 +110,12 @@
     },
     {
       "rule": "invalid_late_target_dates",
-      "count": 0,
+      "count": 7754,
       "action": "excluded_from_classification_training"
     },
     {
       "rule": "invalid_or_implausible_po_to_delivery_duration",
-      "count": 6164,
+      "count": 7754,
       "action": "excluded_from_regression_training"
     }
   ],
@@ -143,15 +143,15 @@
       "Inventory_Stockout_Flag",
       "Inventory_Shortage_Quantity"
     ],
-    "stockout_rule_agreement": 1.0,
+    "stockout_rule_agreement": 0.613386956497654,
     "training_recommendation": "An experimental proxy classifier can be trained only after excluding Opening_Stock and Line_Item_Quantity, which exactly define the flag. The augmented inventory source remains unverified; retain the rule audit and do not present proxy metrics as operational validation."
   },
   "outputs": {
-    "interim": "T:\\SCOPE\\SCOPE\\data\\interim\\shipments_normalized.csv",
-    "shipments": "T:\\SCOPE\\SCOPE\\data\\processed\\shipments.csv",
-    "vendor_features": "T:\\SCOPE\\SCOPE\\data\\processed\\vendor_features.csv",
-    "delay_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\delay_timeseries.csv",
-    "volume_timeseries": "T:\\SCOPE\\SCOPE\\data\\processed\\volume_timeseries.csv",
-    "inventory_experiment": "T:\\SCOPE\\SCOPE\\data\\processed\\inventory_experiment.csv"
+    "interim": "/workspace/data/interim/shipments_normalized.csv",
+    "shipments": "/workspace/data/processed/shipments.csv",
+    "vendor_features": "/workspace/data/processed/vendor_features.csv",
+    "delay_timeseries": "/workspace/data/processed/delay_timeseries.csv",
+    "volume_timeseries": "/workspace/data/processed/volume_timeseries.csv",
+    "inventory_experiment": "/workspace/data/processed/inventory_experiment.csv"
   }
 }
