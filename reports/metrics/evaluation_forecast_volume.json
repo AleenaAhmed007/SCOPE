@@ -1,0 +1,36 @@
+{
+  "model": "forecast_volume",
+  "artifact": "forecast_volume_quantity_monthly",
+  "evaluated_at": "2026-11-26T16:06:17.017673+00:00",
+  "test": {
+    "frequency": "monthly",
+    "selected_model": "gradient_boosting",
+    "n_test": 4,
+    "mae": 4172.716329125306,
+    "rmse": 5047.914871030775,
+    "metric_weighting": "unweighted",
+    "baselines": {
+      "naive_lag1": {
+        "mae": 3817.5
+      },
+      "development_mean": {
+        "mae": 4048.0
+      }
+    },
+    "beats_naive_lag1": false,
+    "beats_development_mean": false,
+    "selection_note": "Model selected using validation data; test baseline comparisons are final holdout diagnostics.",
+    "actual": [
+      8146.0,
+      10329.0,
+      2214.0,
+      69.0
+    ],
+    "predicted": [
+      8710.428574940936,
+      6715.69224343749,
+      6205.392631110205,
+      8590.736353887576
+    ]
+  }
+}

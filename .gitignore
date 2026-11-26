@@ -70,6 +70,7 @@ reports/figures/*
 !reports/figures/.gitkeep
 reports/metrics/*
 !reports/metrics/.gitkeep
+!reports/metrics/*.json
 reports/models/*
 !reports/models/.gitkeep
 reports/investigations/*.json
@@ -97,3 +98,7 @@ desktop.ini
 ~$*
 .claude/settings.local.json
 contract-nli.zip
+
+# Regenerable interim/processed tables (large on Olist/DataCo trials)
+data/interim/*.csv
+data/processed/*.csv

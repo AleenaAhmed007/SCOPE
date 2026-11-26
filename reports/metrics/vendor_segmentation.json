@@ -1,0 +1,161 @@
+{
+  "k": 2,
+  "silhouette": 0.26252809467650473,
+  "n_vendors": 2958,
+  "n_clustered_vendors": 1222,
+  "n_insufficient_history": 1736,
+  "n_dominant_vendors_separated": 0,
+  "n_profile_outliers_separated": 0,
+  "dominant_vendor_threshold_shipments": 19294.0,
+  "segment_sizes": {
+    "insufficient_history": 1736,
+    "segment_1": 960,
+    "segment_0": 262
+  },
+  "profiles": [
+    {
+      "segment": "insufficient_history",
+      "shipment_count": 3.455069124423963,
+      "late_rate": 0.07323760149220979,
+      "median_schedule_deviation": -12.303283410138249,
+      "avg_quantity": 1.2004434569526736,
+      "median_delivery_duration_days": 10.941820276497696,
+      "avg_freight_numeric": 28.46650889656938,
+      "n_countries": 2.379032258064516,
+      "n_product_groups": 1.3963133640552996
+    },
+    {
+      "segment": "segment_0",
+      "shipment_count": 47.66412213740458,
+      "late_rate": 0.10932466450762822,
+      "median_schedule_deviation": -11.767175572519085,
+      "avg_quantity": 1.3407720810877404,
+      "median_delivery_duration_days": 11.744274809160306,
+      "avg_freight_numeric": 38.955048842254506,
+      "n_countries": 8.683206106870228,
+      "n_product_groups": 2.450381679389313
+    },
+    {
+      "segment": "segment_1",
+      "shipment_count": 81.23333333333333,
+      "late_rate": 0.054058617763669416,
+      "median_schedule_deviation": -12.740625,
+      "avg_quantity": 1.0901350503179024,
+      "median_delivery_duration_days": 9.128645833333334,
+      "avg_freight_numeric": 21.086568787923763,
+      "n_countries": 11.05,
+      "n_product_groups": 3.4072916666666666
+    }
+  ],
+  "features": [
+    "shipment_count",
+    "late_rate",
+    "median_schedule_deviation",
+    "avg_quantity",
+    "median_delivery_duration_days",
+    "avg_freight_numeric",
+    "n_countries",
+    "n_product_groups"
+  ],
+  "log1p_features": [
+    "shipment_count",
+    "avg_quantity",
+    "avg_freight_numeric",
+    "n_countries",
+    "n_product_groups"
+  ],
+  "candidate_k_scores": [
+    {
+      "k": 2,
+      "silhouette": 0.26252809467650473,
+      "min_cluster_size": 262,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "1": 960,
+        "0": 262
+      }
+    },
+    {
+      "k": 3,
+      "silhouette": 0.16696232876927722,
+      "min_cluster_size": 129,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "0": 642,
+        "2": 451,
+        "1": 129
+      }
+    },
+    {
+      "k": 4,
+      "silhouette": 0.18129710036823082,
+      "min_cluster_size": 117,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "1": 506,
+        "0": 393,
+        "3": 206,
+        "2": 117
+      }
+    },
+    {
+      "k": 5,
+      "silhouette": 0.1757922302793793,
+      "min_cluster_size": 108,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "3": 352,
+        "1": 346,
+        "4": 254,
+        "2": 162,
+        "0": 108
+      }
+    },
+    {
+      "k": 6,
+      "silhouette": 0.17932957050621004,
+      "min_cluster_size": 105,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "0": 359,
+        "5": 341,
+        "3": 186,
+        "2": 126,
+        "1": 105,
+        "4": 105
+      }
+    },
+    {
+      "k": 7,
+      "silhouette": 0.16550392691819008,
+      "min_cluster_size": 42,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "2": 309,
+        "3": 243,
+        "0": 238,
+        "1": 197,
+        "4": 100,
+        "5": 93,
+        "6": 42
+      }
+    },
+    {
+      "k": 8,
+      "silhouette": 0.1599229749775863,
+      "min_cluster_size": 38,
+      "has_minimum_support": true,
+      "cluster_sizes": {
+        "1": 251,
+        "7": 224,
+        "2": 203,
+        "3": 179,
+        "6": 175,
+        "0": 84,
+        "4": 68,
+        "5": 38
+      }
+    }
+  ],
+  "caveat": "Vendors with fewer than 10 shipments and dominant vendors are separated from KMeans. Segments describe operating profiles, not vendor quality."
+}

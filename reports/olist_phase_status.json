@@ -1,0 +1,19 @@
+{
+  "dataset": "Olist_adapted_for_SCOPE",
+  "branch": "cursor/olist-pipeline-trial-e3bb",
+  "finished_note": "Forecast + walk-forward fixed for short monthly history; final defence regenerated.",
+  "phases": {
+    "02_preprocessing": {"status": "ok"},
+    "03_late": {"status": "ok", "best_model": "logistic_regression", "test_roc_auc": 0.719},
+    "04_duration": {"status": "ok", "best_model": "gradient_boosting", "test_mae": 4.823},
+    "05_forecast": {"status": "ok", "late_rate_model": "mean_baseline", "volume_model": "gradient_boosting"},
+    "06a_seg": {"status": "ok"},
+    "06b_anom": {"status": "ok"},
+    "07_inv": {"status": "ok", "note": "synthetic inventory proxies"},
+    "08_shap": {"status": "ok"},
+    "09_rag": {"status": "ok"},
+    "12_eval": {"status": "ok"},
+    "12b_walk_forward": {"status": "ok", "late_mean_roc_auc": 0.59, "n_quarters": 5},
+    "13_final_report": {"status": "ok"}
+  }
+}

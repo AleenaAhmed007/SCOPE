@@ -108,15 +108,28 @@ def _make_lag_frame(series: pd.Series, lags: list[int] = [1, 2, 3, 4]) -> pd.Dat
 
 
 def _forecast_splits(ts: pd.DataFrame, value_col: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Use the same monthly lag frame and chronological split for train/eval."""
+    """Use the same monthly lag frame and chronological split for train/eval.
+
+    Floors shrink for short monthly histories (e.g. Olist ~25 months) so that
+    train / validation / test each get a usable slice.
+    """
     ordered = ts.dropna(subset=[value_col]).sort_values("period_start").reset_index(drop=True)
     frame = _make_lag_frame(ordered[value_col])
     if value_col == "late_rate" and "shipment_count" in ordered:
         frame["sample_weight"] = ordered.loc[frame.index, "shipment_count"].astype(float).to_numpy()
-    n_test = max(8, int(len(frame) * 0.2))
+    n = len(frame)
+    if n < 9:
+        raise RuntimeError(f"Insufficient monthly history for forecasting ({n} lag rows)")
+    # Prefer ~20% holdout, but keep at least 3 periods and leave ≥6 for development.
+    n_test = min(max(3, int(n * 0.2)), max(3, n - 6))
+    if n >= 40:
+        n_test = max(8, int(n * 0.2))
     development = frame.iloc[:-n_test]
     test = frame.iloc[-n_test:]
-    n_val = max(8, int(len(development) * 0.2))
+    n_dev = len(development)
+    n_val = min(max(3, int(n_dev * 0.2)), max(3, n_dev - 4))
+    if n_dev >= 40:
+        n_val = max(8, int(n_dev * 0.2))
     train = development.iloc[:-n_val]
     val = development.iloc[-n_val:]
     return train, val, test
@@ -152,18 +165,27 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
     # Rolling-origin selection: refit every candidate on an expanding window
     # and forecast the next block, across the whole validation period. A single
     # validation window picked models that lost to the mean on later data.
-    # The window spans the last 36 development months (not just the ~18-month
-    # validation slice): one short window was too noisy to rank candidates.
-    step = 3
-    first_origin = max(24, min(len(train), len(development) - 36))
+    # On long monthly histories the window spans the last 36 development months;
+    # on short series (Olist-scale) shrink the minimum fit length so origins exist.
+    step = 3 if len(development) >= 18 else 2
+    min_fit = 24 if len(development) >= 48 else max(6, min(12, len(train)))
+    lookback = 36 if len(development) >= 48 else max(len(val), min(12, len(development) - min_fit))
+    first_origin = max(min_fit, min(len(train), len(development) - lookback))
+    first_origin = min(first_origin, max(min_fit, len(development) - step))
     origins = list(range(first_origin, len(development), step))
+    if not origins and len(development) > min_fit:
+        origins = [len(train)]
     errors: dict[str, list[float]] = {name_: [] for name_ in _candidates()}
     weights: list[float] = []
     failed: dict[str, str] = {}
     for start in origins:
         fit_part = development.iloc[:start]
         block = development.iloc[start : start + step]
+        if len(fit_part) < 4 or len(block) < 1:
+            continue
         fit_w = fit_part["sample_weight"] if weighted else None
+        if fit_w is not None and float(np.nansum(np.asarray(fit_w, dtype=float))) <= 0:
+            fit_w = None
         block_w = block["sample_weight"].to_numpy() if weighted else np.ones(len(block))
         weights.extend(block_w.tolist())
         for candidate_name, candidate in _candidates().items():
@@ -176,10 +198,21 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
                 failed[candidate_name] = str(exc)
                 continue
             errors[candidate_name].extend(np.abs(block["y"].to_numpy() - block_pred).tolist())
-    w = np.asarray(weights)
+    w = np.asarray(weights, dtype=float)
+    if (not len(w)) or (not np.isfinite(w).any()) or float(np.nansum(np.nan_to_num(w))) <= 0:
+        w = np.ones(max(len(weights), 1), dtype=float)
     validation_mae = {
-        k: float(np.average(v, weights=w)) for k, v in errors.items() if k not in failed and len(v) == len(w)
+        k: float(np.average(v, weights=w))
+        for k, v in errors.items()
+        if k not in failed and len(v) == len(w) and len(v) > 0
     }
+    if not validation_mae:
+        # Fall back to unweighted mean absolute errors collected so far / baselines only.
+        validation_mae = {
+            k: float(np.mean(v)) for k, v in errors.items() if k not in failed and len(v) > 0
+        }
+    if not validation_mae:
+        raise RuntimeError(f"No forecast candidates produced validation scores for {name}")
     best_name = min(validation_mae, key=validation_mae.get)
     # Prefer a baseline when a complex model is not clearly (>=2%) better.
     selected_name = best_name
@@ -190,14 +223,18 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
     candidates = _candidates()
     model = candidates[selected_name]
     development_weight = development["sample_weight"] if weighted else None
+    if weighted and float(np.nansum(np.asarray(development_weight, dtype=float))) <= 0:
+        development_weight = None
     model.fit(development[feats], development["y"], sample_weight=development_weight)
     pred = bound(model.predict(test[feats]))
     naive_pred = test["lag_1"].to_numpy()
-    development_mean = float(
-        np.average(development["y"], weights=development_weight)
-        if weighted else development["y"].mean()
-    )
+    if development_weight is not None:
+        development_mean = float(np.average(development["y"], weights=development_weight))
+    else:
+        development_mean = float(development["y"].mean())
     mean_pred = np.full(len(test), development_mean)
+    if test_weight is not None and float(np.nansum(np.asarray(test_weight, dtype=float))) <= 0:
+        test_weight = None
     model_mae = float(mean_absolute_error(test["y"], pred, sample_weight=test_weight))
     naive_mae = float(mean_absolute_error(test["y"], naive_pred, sample_weight=test_weight))
     mean_mae = float(mean_absolute_error(test["y"], mean_pred, sample_weight=test_weight))

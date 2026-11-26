@@ -1,0 +1,104 @@
+{
+  "vendor_kpi": {
+    "unit": "vendor x quarter (scheduled delivery date)",
+    "features": [
+      "late_rate",
+      "mean_delay_days",
+      "p90_delay_days",
+      "median_lead_time_days",
+      "log_shipment_count"
+    ],
+    "min_shipments_per_period": 5,
+    "adverse_reference_train_medians": {
+      "late_rate": 0.025,
+      "mean_delay_days": -11.805405405405406,
+      "median_lead_time_days": 10.5
+    },
+    "trend_detector": {
+      "trailing_periods": 4,
+      "min_trailing_shipments": 20,
+      "min_increase": 0.1,
+      "p_value": 0.01
+    },
+    "n_periods": 3682,
+    "n_train_periods": 2190,
+    "n_anomaly": 124,
+    "n_deteriorating": 50,
+    "n_unusual_but_favourable_dropped": 8,
+    "signal_rate_by_split": {
+      "test": 0.009009009009009009,
+      "train": 0.06164383561643835,
+      "val": 0.023776223776223775
+    },
+    "injected_disruption_check": {
+      "unit": "unseen (val+test) vendor-quarters",
+      "n_periods": 1492,
+      "false_alarm_rate_clean": {
+        "isolation_forest": 0.014075067024128687,
+        "trend": 0.004691689008042895,
+        "combined": 0.0160857908847185
+      },
+      "sensitivity": [
+        {
+          "late_rate_increase": 0.1,
+          "delay_increase_days": 7,
+          "detected_isolation_forest": 0.10723860589812333,
+          "detected_trend": 0.06099195710455764,
+          "detected_combined": 0.14142091152815014
+        },
+        {
+          "late_rate_increase": 0.2,
+          "delay_increase_days": 14,
+          "detected_isolation_forest": 0.7553619302949062,
+          "detected_trend": 0.1903485254691689,
+          "detected_combined": 0.7627345844504021
+        },
+        {
+          "late_rate_increase": 0.3,
+          "delay_increase_days": 30,
+          "detected_isolation_forest": 1.0,
+          "detected_trend": 0.31970509383378015,
+          "detected_combined": 1.0
+        },
+        {
+          "late_rate_increase": 0.5,
+          "delay_increase_days": 60,
+          "detected_isolation_forest": 1.0,
+          "detected_trend": 0.43766756032171583,
+          "detected_combined": 1.0
+        }
+      ],
+      "label": "SYNTHETIC - evaluation only, never written to the scores table"
+    },
+    "missing_kpi": "defect rate (not present in SCMS data)",
+    "scores_path": "/workspace/data/processed/anomaly_scores_vendor_kpi.csv",
+    "artifact_dir": "/workspace/reports/models/anomaly_vendor_kpi"
+  },
+  "unusual_profile": {
+    "n_scored": 96470,
+    "n_anomaly": 5057,
+    "anomaly_rate": 0.05242044158805846,
+    "anomaly_rate_by_split": {
+      "test": 0.05479925367977334,
+      "train": 0.05000814464896563,
+      "val": 0.0612992398064962
+    },
+    "artifact_dir": "/workspace/reports/models/anomaly_unusual_profile",
+    "scores_path": "/workspace/data/processed/anomaly_scores_unusual_profile.csv"
+  },
+  "retrospective": {
+    "n_scored": 96470,
+    "n_anomaly": 5022,
+    "anomaly_rate": 0.05205763449777133,
+    "anomaly_rate_by_split": {
+      "test": 0.057010572869877686,
+      "train": 0.05000814464896563,
+      "val": 0.056668970283344854
+    },
+    "artifact_dir": "/workspace/reports/models/anomaly_retrospective",
+    "scores_path": "/workspace/data/processed/anomaly_scores_retrospective.csv"
+  },
+  "contamination": 0.05,
+  "label": "unusual_shipment_profile",
+  "note": "vendor_kpi flags unusual supplier performance periods (proposal model). Shipment-level scores indicate unusual numeric profiles; they are not delay predictors. Retrospective includes outcome data and is forensic only."
+}

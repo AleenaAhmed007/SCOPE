@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-14T13:58:57.187239+00:00`
+Generated: `2026-11-26T16:12:00.723777+00:00`
 
 ## System summary
 
@@ -19,33 +19,33 @@ SCOPE integrates:
 
 ## Primary ML result — late delivery
 
-- Best model: **random_forest**
-- Test recall: **0.825136612021858**
-- Test precision: **0.29206963249516443**
-- Test F1: **0.43142857142857144**
-- Test ROC-AUC: **0.8071042248791778**
-- Test PR-AUC: **0.30691550525426403**
-- Test positive prevalence: **0.11806451612903225**
-- Positive prevalence by split: **{'train': 0.0988098533075007, 'val': 0.1866925064599483, 'test': 0.11806451612903225}**
-- Post-2010 training sensitivity test ROC-AUC: **0.8132582616794785**
-- Vendor-history-only baseline ROC-AUC: **0.7866693849161142**
-- Rolling-origin ROC-AUC: **0.6208423335259511 ± 0.11603728981764848**
+- Best model: **logistic_regression**
+- Test recall: **0.4927536231884058**
+- Test precision: **0.10029498525073746**
+- Test F1: **0.16666666666666666**
+- Test ROC-AUC: **0.7189956806594697**
+- Test PR-AUC: **0.12064140089036052**
+- Test positive prevalence: **0.04291341303296248**
+- Positive prevalence by split: **{'train': 0.0780997793540553, 'val': 0.04416033172080166, 'test': 0.04291341303296248}**
+- Post-2010 training sensitivity test ROC-AUC: **0.7189956806594697**
+- Vendor-history-only baseline ROC-AUC: **0.49107349854956195**
+- Rolling-origin ROC-AUC: **0.6790087033593952 ± 0.06319216944759169**
 
 ## Supporting results
 
-- Duration best model: **random_forest**
-- Duration median baseline validation MAE: **86.74802110817942**
-- Duration test MAE / R²: **81.22336275142703 / -0.12444560390728854**
+- Duration best model: **gradient_boosting**
+- Duration median baseline validation MAE: **5.67002151731797**
+- Duration test MAE / R²: **4.82266881756141 / -0.26887990713021237**
 - Forecasting frequency: **monthly**; results include naive and mean baselines.
-- Monthly late-rate model MAE: **0.06815115697827147**; beats naive: **True**, beats mean: **False**.
-- Monthly volume model MAE: **994005.1897767073**; beats naive: **False**, beats mean: **True**.
-- Inventory proxy model: **random_forest**; validation PR-AUC **0.652053938119597** vs prevalence baseline **0.33785529715762275**; test ROC-AUC / PR-AUC: **0.7816059623443916 / 0.7050876153767016**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
-- Inventory rule agreement on test rows: **1.0** (consistency check, not model accuracy).
+- Monthly late-rate model MAE: **0.039153582660729505**; beats naive: **True**, beats mean: **False**.
+- Monthly volume model MAE: **4172.716329125306**; beats naive: **False**, beats mean: **False**.
+- Inventory proxy model: **random_forest**; validation PR-AUC **0.6041455013585483** vs prevalence baseline **0.5763648928818245**; test ROC-AUC / PR-AUC: **0.5305797791086244 / 0.5921733326486542**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
+- Inventory rule agreement on test rows: **0.4373574735678253** (consistency check, not model accuracy).
 - RAG retrieval wiring sanity MRR: **1.0** over 20 hand-authored synthetic queries; this is not a retrieval-quality claim.
-- RAG runtime components: **dense embeddings + Okapi BM25 + cross-encoder reranking**; check per-query mode in the API response because optional components may be unavailable in another environment.
+- RAG runtime components: **Okapi BM25**; check per-query mode in the API response because optional components may be unavailable in another environment.
 - Claim Checker corpus-corruption evaluation: **1.0 detection rate; 0.0 false-positive rate** over 414 cases (97 extractive claims from the current corpus). This is a controlled synthetic-corpus evaluation, not a free-form semantic-accuracy estimate.
-- Vendor segmentation: **k=4, silhouette=0.26827670925046854**, with small-history and profile-outlier vendors separated.
-- Unusual shipment profile flags: **89 / 1550** test shipments; flagged late-rate diagnostic **0.0898876404494382** (descriptive only).
+- Vendor segmentation: **k=2, silhouette=0.3530388634705743**, with small-history and profile-outlier vendors separated.
+- Unusual shipment profile flags: **793 / 14471** test shipments; flagged late-rate diagnostic **0.05170239596469105** (descriptive only).
 - SHAP status: **ok**
 
 ## Model evaluation table
@@ -54,32 +54,34 @@ Supervised metrics use the held-out test split unless marked as validation. Fore
 
 | Task | Model | Validation result | Test / sample result | Note |
 |---|---|---|---|---|
-| Late delivery | xgboost | val F1 0.463; ROC-AUC 0.747; PR-AUC 0.336 | test F1 0.340; ROC-AUC 0.764; PR-AUC 0.278 | Candidate; threshold 0.270 |
-| Late delivery | logistic_regression | val F1 0.448; ROC-AUC 0.733; PR-AUC 0.309 | test F1 0.275; ROC-AUC 0.694; PR-AUC 0.197 | Candidate; threshold 0.622 |
-| Late delivery | random_forest | val F1 0.511; ROC-AUC 0.789; PR-AUC 0.366 | test F1 0.431; ROC-AUC 0.807; PR-AUC 0.307 | Selected; threshold 0.217 |
-| Delivery duration | dummy_median | val MAE 86.748 days | test MAE 81.188 days; R2 -0.111 | Baseline |
-| Delivery duration | gradient_boosting | val MAE 88.260 days | test MAE 81.042 days; R2 -0.146 | Candidate |
-| Delivery duration | xgboost | val MAE 87.026 days | test MAE 80.801 days; R2 -0.169 | Candidate |
-| Delivery duration | random_forest | val MAE 86.411 days | test MAE 81.223 days; R2 -0.124 | Selected |
-| Monthly late-rate forecast | naive_lag1 | validation MAE 0.092 | test MAE 0.087 | Test baseline; n_test 22; shipment_count_weighted |
-| Monthly late-rate forecast | mean_baseline | validation MAE 0.092 | test MAE 0.064 | Test baseline; n_test 22; shipment_count_weighted |
-| Monthly late-rate forecast | persistence_linear | validation MAE 0.082 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Monthly late-rate forecast | gradient_boosting | validation MAE 0.086 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Monthly late-rate forecast | random_forest | validation MAE 0.083 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Monthly late-rate forecast | extra_trees | validation MAE 0.073 | test MAE 0.068 | Selected; n_test 22; shipment_count_weighted |
-| Monthly volume forecast | naive_lag1 | validation MAE 1145379.667 | test MAE 947280.227 | Test baseline; n_test 22; unweighted |
-| Monthly volume forecast | mean_baseline | validation MAE 1189886.566 | test MAE 1205206.061 | Test baseline; n_test 22; unweighted |
-| Monthly volume forecast | persistence_linear | validation MAE 919578.008 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Monthly volume forecast | gradient_boosting | validation MAE 822022.821 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Monthly volume forecast | random_forest | validation MAE 812950.862 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Monthly volume forecast | extra_trees | validation MAE 777115.806 | test MAE 994005.190 | Selected; n_test 22; unweighted |
-| Inventory stockout proxy | logistic_regression | val PR-AUC 0.574; F1 0.559 | test PR-AUC N/A; ROC-AUC N/A | Validation candidate; experimental, unverified source |
-| Inventory stockout proxy | random_forest | val PR-AUC 0.652; F1 0.621 | test PR-AUC 0.705; ROC-AUC 0.782 | Selected; experimental, unverified source |
-| Vendor segmentation | K-Means (k=4) | silhouette 0.268 | 28 clustered vendors; sizes {'0': 4, '1': 5, '2': 7, '3': 12} | Unsupervised; not a predictive accuracy score |
-| Unusual shipment profile | Isolation Forest | N/A | 89 flags / 1550 (5.7%) | Unsupervised; no ground-truth anomaly labels |
-| Retrospective anomaly | Isolation Forest | N/A | 85 flags / 1550 (5.5%) | Unsupervised; no ground-truth anomaly labels |
-| Vendor KPI anomaly | Isolation Forest | N/A | 1 flags / 48 (2.1%) | Unsupervised; no ground-truth anomaly labels |
-| RAG retrieval | dense embeddings + Okapi BM25 + cross-encoder reranking | N/A | MRR 1.000; Recall@3 1.000 | Wiring check only; 20 synthetic queries |
+| Late delivery | xgboost | val F1 0.209; ROC-AUC 0.736; PR-AUC 0.118 | test F1 0.077; ROC-AUC 0.484; PR-AUC 0.048 | Candidate; threshold 0.578 |
+| Late delivery | logistic_regression | val F1 0.235; ROC-AUC 0.778; PR-AUC 0.142 | test F1 0.167; ROC-AUC 0.719; PR-AUC 0.121 | Selected; threshold 0.107 |
+| Late delivery | random_forest | val F1 0.191; ROC-AUC 0.714; PR-AUC 0.112 | test F1 0.068; ROC-AUC 0.459; PR-AUC 0.041 | Candidate; threshold 0.614 |
+| Delivery duration | dummy_median | val MAE 5.670 days | test MAE 5.001 days; R2 -0.263 | Baseline |
+| Delivery duration | gradient_boosting | val MAE 4.476 days | test MAE 4.823 days; R2 -0.269 | Selected |
+| Delivery duration | xgboost | val MAE 4.590 days | test MAE 5.092 days; R2 -0.436 | Candidate |
+| Delivery duration | random_forest | val MAE 5.160 days | test MAE 6.510 days; R2 -1.350 | Candidate |
+| Monthly late-rate forecast | naive_lag1 | validation MAE 0.059 | test MAE 0.050 | Test baseline; n_test 4; shipment_count_weighted |
+| Monthly late-rate forecast | mean_baseline | validation MAE 0.050 | test MAE 0.039 | Selected; n_test 4; shipment_count_weighted |
+| Monthly late-rate forecast | persistence_linear | validation MAE 0.070 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly late-rate forecast | gradient_boosting | validation MAE 0.070 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly late-rate forecast | random_forest | validation MAE 0.051 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly late-rate forecast | extra_trees | validation MAE 0.050 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly late-rate forecast | arima | validation MAE 0.051 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly volume forecast | naive_lag1 | validation MAE 2232.200 | test MAE 3817.500 | Test baseline; n_test 4; unweighted |
+| Monthly volume forecast | mean_baseline | validation MAE 3082.282 | test MAE 4048.000 | Test baseline; n_test 4; unweighted |
+| Monthly volume forecast | persistence_linear | validation MAE 1697.142 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly volume forecast | gradient_boosting | validation MAE 1581.172 | test MAE 4172.716 | Selected; n_test 4; unweighted |
+| Monthly volume forecast | random_forest | validation MAE 3079.893 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly volume forecast | extra_trees | validation MAE 2487.307 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Monthly volume forecast | arima | validation MAE 1971.861 | not scored on test | Validation candidate; n_test N/A; N/A |
+| Inventory stockout proxy | logistic_regression | val PR-AUC 0.599; F1 0.745 | test PR-AUC N/A; ROC-AUC N/A | Validation candidate; experimental, unverified source |
+| Inventory stockout proxy | random_forest | val PR-AUC 0.604; F1 0.745 | test PR-AUC 0.593; ROC-AUC 0.535 | Selected; experimental, unverified source |
+| Vendor segmentation | K-Means (k=2) | silhouette 0.353 | 18 clustered vendors; sizes {'0': 1, '1': 17} | Unsupervised; not a predictive accuracy score |
+| Unusual shipment profile | Isolation Forest | N/A | 793 flags / 14471 (5.5%) | Unsupervised; no ground-truth anomaly labels |
+| Retrospective anomaly | Isolation Forest | N/A | 825 flags / 14471 (5.7%) | Unsupervised; no ground-truth anomaly labels |
+| Vendor KPI anomaly | Isolation Forest | N/A | 7 flags / 777 (0.9%) | Unsupervised; no ground-truth anomaly labels |
+| RAG retrieval | Okapi BM25 | N/A | MRR 1.000; Recall@3 1.000 | Wiring check only; 20 synthetic queries |
 | Claim checker | verify_claims | 97 extracted corpus claims + 317 controlled corruptions | detection 1.000; false-positive rate 0.000 | Synthetic corpus and controlled corruption evaluation |
 
 ## Model vs baseline comparison
@@ -88,15 +90,15 @@ For MAE, lower is better; for AUC, PR-AUC, and F1, higher is better. Baselines a
 
 | Task | Selected model | Baseline | Model result | Comparison |
 |---|---|---|---|---|
-| Late delivery | random_forest | vendor history ROC-AUC 0.787; PR-AUC 0.255 | ROC-AUC 0.807; PR-AUC 0.307 | AUC delta 0.020 |
-| Late delivery | random_forest | prevalence-only PR-AUC 0.118 | PR-AUC 0.307 | Above prevalence baseline |
-| Delivery duration | random_forest | median baseline MAE 81.188 days | MAE 81.223 days; delta 0.036 days | Does not beat on test; validation beats median |
-| Monthly late rate | extra_trees | naive MAE 0.087; mean MAE 0.064 | model MAE 0.068 | beats naive: yes; beats mean: no |
-| Monthly volume | extra_trees | naive MAE 947280.227; mean MAE 1205206.061 | model MAE 994005.190 | beats naive: no; beats mean: yes |
-| Inventory stockout proxy | random_forest | validation prevalence PR-AUC 0.338 | validation PR-AUC 0.652; test PR-AUC 0.705 vs test prevalence 0.379 | test AP delta 0.326; label is derived and source unverified |
+| Late delivery | logistic_regression | vendor history ROC-AUC 0.491; PR-AUC 0.044 | ROC-AUC 0.719; PR-AUC 0.121 | AUC delta 0.228 |
+| Late delivery | logistic_regression | prevalence-only PR-AUC 0.043 | PR-AUC 0.121 | Above prevalence baseline |
+| Delivery duration | gradient_boosting | median baseline MAE 5.001 days | MAE 4.823 days; delta -0.179 days | Better on test; validation beats median |
+| Monthly late rate | mean_baseline | naive MAE 0.050; mean MAE 0.039 | model MAE 0.039 | beats naive: yes; beats mean: no |
+| Monthly volume | gradient_boosting | naive MAE 3817.500; mean MAE 4048.000 | model MAE 4172.716 | beats naive: no; beats mean: no |
+| Inventory stockout proxy | random_forest | validation prevalence PR-AUC 0.576 | validation PR-AUC 0.604; test PR-AUC 0.592 vs test prevalence 0.582 | test AP delta 0.010; label is derived and source unverified |
 | Vendor segmentation | K-Means | No labeled baseline | silhouette only | N/A: descriptive clusters, not prediction |
 | Anomaly models | Isolation Forest | No labeled anomaly baseline | flag rates only | N/A: no ground truth labels |
-| RAG retrieval | dense embeddings + Okapi BM25 + cross-encoder reranking | No representative relevance baseline | 20-query synthetic benchmark | N/A: not a quality benchmark |
+| RAG retrieval | Okapi BM25 | No representative relevance baseline | 20-query synthetic benchmark | N/A: not a quality benchmark |
 
 ## Important limitations
 

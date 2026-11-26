@@ -1,0 +1,36 @@
+{
+  "model": "forecast_late_rate",
+  "artifact": "forecast_late_rate_monthly",
+  "evaluated_at": "2026-11-26T16:06:17.006474+00:00",
+  "test": {
+    "frequency": "monthly",
+    "selected_model": "mean_baseline",
+    "n_test": 4,
+    "mae": 0.039153582660729505,
+    "rmse": 0.04621293364575734,
+    "metric_weighting": "shipment_count_weighted",
+    "baselines": {
+      "naive_lag1": {
+        "mae": 0.050454801356835
+      },
+      "development_mean": {
+        "mae": 0.039153582660729505
+      }
+    },
+    "beats_naive_lag1": true,
+    "beats_development_mean": false,
+    "selection_note": "Model selected using validation data; test baseline comparisons are final holdout diagnostics.",
+    "actual": [
+      0.0153132902500702,
+      0.0602330900773336,
+      0.0,
+      0.0
+    ],
+    "predicted": [
+      0.07533437732652168,
+      0.07533437732652168,
+      0.07533437732652168,
+      0.07533437732652168
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "late_rate_monthly": {
+    "series": "late_rate_monthly",
+    "n_periods": 25,
+    "min_period": "2016-10-31 00:00:00",
+    "max_period": "2018-10-31 00:00:00",
+    "approx_gap_flags": 0,
+    "mean": 0.0660077914420431,
+    "std": 0.10008350063694478,
+    "lstm_recommended": false,
+    "rationale": "Monthly history is too short or irregular; prefer classical baselines."
+  },
+  "volume_monthly": {
+    "series": "volume_quantity_monthly",
+    "n_periods": 25,
+    "min_period": "2016-10-31 00:00:00",
+    "max_period": "2018-10-31 00:00:00",
+    "approx_gap_flags": 0,
+    "mean": 4407.56,
+    "std": 3282.7532281100066,
+    "lstm_recommended": false,
+    "rationale": "Monthly history is too short or irregular; prefer classical baselines."
+  }
+}

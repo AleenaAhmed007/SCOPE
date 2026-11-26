@@ -1,0 +1,55 @@
+{
+  "model": "inventory",
+  "artifact": "inventory_stockout_classifier",
+  "evaluated_at": "2026-11-26T16:06:16.978350+00:00",
+  "test": {
+    "n_test": 14471,
+    "threshold": 0.375161778692018,
+    "accuracy": 0.6085965033515306,
+    "precision": 0.5980099502487563,
+    "recall": 0.9990501068629779,
+    "f1": 0.7481771296460964,
+    "roc_auc": 0.5305797791086244,
+    "pr_auc": 0.5921733326486542,
+    "confusion_matrix": [
+      [
+        393,
+        5656
+      ],
+      [
+        8,
+        8414
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.9800498753117207,
+        "recall": 0.06496941643246817,
+        "f1-score": 0.12186046511627907,
+        "support": 6049.0
+      },
+      "1": {
+        "precision": 0.5980099502487563,
+        "recall": 0.9990501068629779,
+        "f1-score": 0.7481771296460964,
+        "support": 8422.0
+      },
+      "accuracy": 0.6085965033515306,
+      "macro avg": {
+        "precision": 0.7890299127802385,
+        "recall": 0.5320097616477231,
+        "f1-score": 0.43501879738118776,
+        "support": 14471.0
+      },
+      "weighted avg": {
+        "precision": 0.7577058597716553,
+        "recall": 0.6085965033515306,
+        "f1-score": 0.4863714836132815,
+        "support": 14471.0
+      }
+    },
+    "target_rule": "Inventory_Opening_Stock - Line_Item_Quantity < 0",
+    "target_rule_agreement": 0.4373574735678253,
+    "interpretation": "Experimental ML proxy excludes both deterministic rule operands. The rule agreement is a data consistency check; inventory provenance is unverified."
+  }
+}

@@ -1,4 +1,5 @@
 # Dataset and path configuration for SCOPE
+# Trial branch: Olist Delivery Risk adapted to SCMS schema
 project_name: SCOPE
 random_seed: 42
 
@@ -13,6 +14,17 @@ paths:
 
 datasets:
   primary:
+    name: Olist_adapted_for_SCOPE
+    filename: Olist_adapted_for_SCOPE.csv
+    relative_path: data/raw/Olist_adapted_for_SCOPE.csv
+    format: csv
+    encoding: utf-8
+    source: huggingface
+    source_dataset: samuelalex37/olist-delivery-risk-data
+    notes: >
+      Adapted from olist_analytical.parquet via scope.data.olist_adapter.
+      Inventory_* columns are synthetic trial proxies. Geo key uses Brazilian state.
+  scms_legacy:
     name: SCMS_with_inventory
     filename: SCMS_with_inventory.csv
     relative_path: data/raw/SCMS_with_inventory.csv
@@ -25,7 +37,6 @@ splits:
   test_ratio: 0.15
   stratify: true
 
-# Target placeholders — refined in later phases
 targets:
   late_delivery: null
   delivery_duration: null

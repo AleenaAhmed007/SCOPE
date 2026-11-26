@@ -1,0 +1,502 @@
+{
+  "note": "Volume series is shipment/order quantity proxy, not verified warehouse demand.",
+  "suitability": {
+    "late_rate_monthly": {
+      "series": "late_rate_monthly",
+      "n_periods": 25,
+      "min_period": "2016-10-31 00:00:00",
+      "max_period": "2018-10-31 00:00:00",
+      "approx_gap_flags": 0,
+      "mean": 0.0660077914420431,
+      "std": 0.10008350063694478,
+      "lstm_recommended": false,
+      "rationale": "Monthly history is too short or irregular; prefer classical baselines."
+    },
+    "volume_monthly": {
+      "series": "volume_quantity_monthly",
+      "n_periods": 25,
+      "min_period": "2016-10-31 00:00:00",
+      "max_period": "2018-10-31 00:00:00",
+      "approx_gap_flags": 0,
+      "mean": 4407.56,
+      "std": 3282.7532281100066,
+      "lstm_recommended": false,
+      "rationale": "Monthly history is too short or irregular; prefer classical baselines."
+    }
+  },
+  "baselines": {
+    "late_rate_naive": {
+      "model": "naive_lag1",
+      "mae": 0.050454801356835,
+      "rmse": 0.050864768545180745,
+      "n_test": 4,
+      "metric_weighting": "shipment_count_weighted"
+    },
+    "volume_naive": {
+      "model": "naive_lag1",
+      "mae": 3817.5,
+      "rmse": 4561.0214864655045,
+      "n_test": 4,
+      "metric_weighting": "unweighted"
+    }
+  },
+  "frequency": "monthly",
+  "late_rate_monthly": {
+    "mae": 0.039153582660729505,
+    "rmse": 0.04621293364575734,
+    "selected_model": "mean_baseline",
+    "failed_candidates": {},
+    "validation_mae": {
+      "naive_lag1": 0.05912248150791254,
+      "mean_baseline": 0.049926004427797835,
+      "persistence_linear": 0.07007112334259592,
+      "gradient_boosting": 0.06993081097026323,
+      "random_forest": 0.050610556450292776,
+      "extra_trees": 0.050037764723155256,
+      "arima": 0.051108002948532676
+    },
+    "selection_method": "rolling-origin over validation period (3 refits, step 2); baseline preferred within 2%",
+    "best_unpenalised_model": "mean_baseline",
+    "validation_selected_mae": 0.049926004427797835,
+    "naive_lag1_test_mae": 0.050454801356835,
+    "mean_baseline_test_mae": 0.039153582660729505,
+    "beats_naive_baseline_on_test": true,
+    "beats_mean_baseline_on_test": false,
+    "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
+    "is_baseline": true,
+    "metric_weighting": "shipment_count_weighted",
+    "n_train": 17,
+    "n_validation": 3,
+    "n_test": 4,
+    "last_actual": [
+      0.0153132902500702,
+      0.0602330900773336,
+      0.0,
+      0.0
+    ],
+    "last_pred": [
+      0.07533437732652168,
+      0.07533437732652168,
+      0.07533437732652168,
+      0.07533437732652168
+    ],
+    "artifact_dir": "/workspace/reports/models/forecast_late_rate_monthly"
+  },
+  "volume_monthly": {
+    "mae": 4172.716329125306,
+    "rmse": 5047.914871030775,
+    "selected_model": "gradient_boosting",
+    "failed_candidates": {},
+    "validation_mae": {
+      "naive_lag1": 2232.2,
+      "mean_baseline": 3082.281547619047,
+      "persistence_linear": 1697.1422212806806,
+      "gradient_boosting": 1581.1723406175338,
+      "random_forest": 3079.8930322751307,
+      "extra_trees": 2487.307482479557,
+      "arima": 1971.8612193060526
+    },
+    "selection_method": "rolling-origin over validation period (3 refits, step 2); baseline preferred within 2%",
+    "best_unpenalised_model": "gradient_boosting",
+    "validation_selected_mae": 1581.1723406175338,
+    "naive_lag1_test_mae": 3817.5,
+    "mean_baseline_test_mae": 4048.0,
+    "beats_naive_baseline_on_test": false,
+    "beats_mean_baseline_on_test": false,
+    "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
+    "is_baseline": false,
+    "metric_weighting": "unweighted",
+    "n_train": 17,
+    "n_validation": 3,
+    "n_test": 4,
+    "last_actual": [
+      8146.0,
+      10329.0,
+      2214.0,
+      69.0
+    ],
+    "last_pred": [
+      8710.428574940936,
+      6715.69224343749,
+      6205.392631110205,
+      8590.736353887576
+    ],
+    "artifact_dir": "/workspace/reports/models/forecast_volume_quantity_monthly"
+  },
+  "volume_by_product_group": {
+    "agro_industry_and_commerce": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.05
+    },
+    "air_conditioning": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.125
+    },
+    "art": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "arts_and_craftmanship": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 17,
+      "zero_month_share": 0.6470588235294118
+    },
+    "audio": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.08695652173913043
+    },
+    "auto": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.0
+    },
+    "baby": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.043478260869565216
+    },
+    "bed_bath_table": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "books_general_interest": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "books_imported": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 17,
+      "zero_month_share": 0.17647058823529413
+    },
+    "books_technical": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.0
+    },
+    "cds_dvds_musicals": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 10,
+      "zero_month_share": 0.4
+    },
+    "christmas_supplies": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 16,
+      "zero_month_share": 0.0
+    },
+    "cine_photo": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.15789473684210525
+    },
+    "computers": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.2631578947368421
+    },
+    "computers_accessories": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "consoles_games": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "construction_tools_construction": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.1
+    },
+    "construction_tools_lights": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 14,
+      "zero_month_share": 0.07142857142857142
+    },
+    "construction_tools_safety": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.2631578947368421
+    },
+    "cool_stuff": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "costruction_tools_garden": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "costruction_tools_tools": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 17,
+      "zero_month_share": 0.17647058823529413
+    },
+    "diapers_and_hygiene": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 22,
+      "zero_month_share": 0.5454545454545454
+    },
+    "drinks": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.10526315789473684
+    },
+    "dvds_blu_ray": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.10526315789473684
+    },
+    "electronics": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.08333333333333333
+    },
+    "fashio_female_clothing": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.34782608695652173
+    },
+    "fashion_bags_accessories": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.0
+    },
+    "fashion_childrens_clothes": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 13,
+      "zero_month_share": 0.6923076923076923
+    },
+    "fashion_male_clothing": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 22,
+      "zero_month_share": 0.22727272727272727
+    },
+    "fashion_shoes": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.13043478260869565
+    },
+    "fashion_sport": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 18,
+      "zero_month_share": 0.2777777777777778
+    },
+    "fashion_underwear_beach": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 18,
+      "zero_month_share": 0.0
+    },
+    "fixed_telephony": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.043478260869565216
+    },
+    "flowers": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 10,
+      "zero_month_share": 0.1
+    },
+    "food": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.08695652173913043
+    },
+    "food_drink": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "furniture_bedroom": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.05
+    },
+    "furniture_decor": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.0
+    },
+    "furniture_living_room": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "furniture_mattress_and_upholstery": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 15,
+      "zero_month_share": 0.3333333333333333
+    },
+    "garden_tools": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "health_beauty": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 25,
+      "zero_month_share": 0.04
+    },
+    "home_appliances": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "home_appliances_2": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.0
+    },
+    "home_comfort_2": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.42105263157894735
+    },
+    "home_confort": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "home_construction": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "housewares": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "industry_commerce_and_business": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.17391304347826086
+    },
+    "kitchen_dining_laundry_garden_furniture": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 19,
+      "zero_month_share": 0.0
+    },
+    "la_cuisine": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 13,
+      "zero_month_share": 0.3076923076923077
+    },
+    "luggage_accessories": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.0
+    },
+    "market_place": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "music": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.25
+    },
+    "musical_instruments": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.0
+    },
+    "office_furniture": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.08695652173913043
+    },
+    "party_supplies": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 14,
+      "zero_month_share": 0.07142857142857142
+    },
+    "pc_gamer": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 17,
+      "zero_month_share": 0.6470588235294118
+    },
+    "perfumery": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.043478260869565216
+    },
+    "pet_shop": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "portateis_cozinha_e_preparadores_de_alimentos": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 4,
+      "zero_month_share": 0.0
+    },
+    "security_and_services": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 8,
+      "zero_month_share": 0.75
+    },
+    "signaling_and_security": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 18,
+      "zero_month_share": 0.0
+    },
+    "small_appliances": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 21,
+      "zero_month_share": 0.0
+    },
+    "small_appliances_home_oven_and_coffee": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 15,
+      "zero_month_share": 0.26666666666666666
+    },
+    "sports_leisure": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "stationery": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 20,
+      "zero_month_share": 0.0
+    },
+    "tablets_printing_image": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 18,
+      "zero_month_share": 0.16666666666666666
+    },
+    "telephony": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "toys": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 24,
+      "zero_month_share": 0.041666666666666664
+    },
+    "unknown": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 23,
+      "zero_month_share": 0.043478260869565216
+    },
+    "watches_gifts": {
+      "status": "skipped_insufficient_history",
+      "n_periods": 25,
+      "zero_month_share": 0.04
+    }
+  },
+  "lstm": {
+    "trained": false,
+    "reason": "Classical monthly lag models are compared with explicit baselines; no neural model is justified without a demonstrated validation gain."
+  }
+}

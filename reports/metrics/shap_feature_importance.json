@@ -1,0 +1,122 @@
+[
+  {
+    "feature": "num__Scheduled_Month",
+    "mean_abs_shap": 0.7063595652580261
+  },
+  {
+    "feature": "num__vendor_hist_median_delay",
+    "mean_abs_shap": 0.24814367294311523
+  },
+  {
+    "feature": "num__vendor_hist_late_rate",
+    "mean_abs_shap": 0.18467923998832703
+  },
+  {
+    "feature": "num__Line_Item_Insurance_USD",
+    "mean_abs_shap": 0.13628949224948883
+  },
+  {
+    "feature": "num__Freight_Cost_USD_Numeric",
+    "mean_abs_shap": 0.12118656933307648
+  },
+  {
+    "feature": "cat__Country_RJ",
+    "mean_abs_shap": 0.10839240998029709
+  },
+  {
+    "feature": "cat__Managed_By_CrossState",
+    "mean_abs_shap": 0.10558202117681503
+  },
+  {
+    "feature": "cat__Country_MG",
+    "mean_abs_shap": 0.09045329689979553
+  },
+  {
+    "feature": "cat__Country_SP",
+    "mean_abs_shap": 0.06256464123725891
+  },
+  {
+    "feature": "num__Pack_Price",
+    "mean_abs_shap": 0.041880518198013306
+  },
+  {
+    "feature": "num__Line_Item_Quantity",
+    "mean_abs_shap": 0.04103723540902138
+  },
+  {
+    "feature": "cat__First_Line_Designation_No",
+    "mean_abs_shap": 0.040849171578884125
+  },
+  {
+    "feature": "cat__Country_PR",
+    "mean_abs_shap": 0.03441996872425079
+  },
+  {
+    "feature": "num__Weight_Kilograms_Numeric",
+    "mean_abs_shap": 0.03133638575673103
+  },
+  {
+    "feature": "cat__Sub_Classification_infrequent_sklearn",
+    "mean_abs_shap": 0.025849267840385437
+  },
+  {
+    "feature": "num__Scheduled_Quarter",
+    "mean_abs_shap": 0.022787291556596756
+  },
+  {
+    "feature": "cat__Country_RS",
+    "mean_abs_shap": 0.020972777158021927
+  },
+  {
+    "feature": "num__Line_Item_Value",
+    "mean_abs_shap": 0.01717236451804638
+  },
+  {
+    "feature": "cat__Sub_Classification_campinas",
+    "mean_abs_shap": 0.01661866344511509
+  },
+  {
+    "feature": "cat__Country_DF",
+    "mean_abs_shap": 0.01609155721962452
+  },
+  {
+    "feature": "cat__Vendor_INCO_Term_credit_card",
+    "mean_abs_shap": 0.016048353165388107
+  },
+  {
+    "feature": "cat__Vendor_infrequent_sklearn",
+    "mean_abs_shap": 0.015334546566009521
+  },
+  {
+    "feature": "cat__Vendor_620c87c171fb2a6dd6e8bb4dec959fc6",
+    "mean_abs_shap": 0.014738495461642742
+  },
+  {
+    "feature": "cat__Country_SC",
+    "mean_abs_shap": 0.0131812933832407
+  },
+  {
+    "feature": "num__Unit_Price",
+    "mean_abs_shap": 0.012870261445641518
+  },
+  {
+    "feature": "cat__Country_BA",
+    "mean_abs_shap": 0.012461203150451183
+  },
+  {
+    "feature": "cat__Vendor_INCO_Term_boleto",
+    "mean_abs_shap": 0.012023397721350193
+  },
+  {
+    "feature": "cat__Fulfill_Via_MultiSeller",
+    "mean_abs_shap": 0.011631888337433338
+  },
+  {
+    "feature": "cat__Sub_Classification_porto alegre",
+    "mean_abs_shap": 0.010364743880927563
+  },
+  {
+    "feature": "cat__Country_AL",
+    "mean_abs_shap": 0.010075066238641739
+  }
+]

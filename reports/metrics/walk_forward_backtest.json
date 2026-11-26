@@ -1,0 +1,192 @@
+{
+  "late_delivery": {
+    "procedure": "refit on outcomes known before calibration window; Platt + F1 threshold on previous 2 quarters",
+    "summary": {
+      "n_quarters": 5,
+      "mean_roc_auc": 0.5897394441635542,
+      "min_roc_auc": 0.4981931958399436,
+      "mean_vendor_only_roc_auc": 0.529186736976929,
+      "quarters_model_beats_vendor_only": 2,
+      "mean_ece_raw": 0.44972319497156066,
+      "mean_ece_calibrated": 0.05204391257857299,
+      "quarters_brier_beats_constant": 1,
+      "mean_precision": 0.07201639510702278,
+      "mean_recall": 0.5928060737134653,
+      "min_recall": 0.02107728337236534
+    },
+    "quarters": [
+      {
+        "quarter": "2017Q3",
+        "n": 11697,
+        "actual_late_rate": 0.030007694280584765,
+        "mean_predicted_raw": 0.9999998164720499,
+        "mean_predicted_calibrated": 0.036536372985999356,
+        "ece_raw": 0.9699921221914651,
+        "ece_calibrated": 0.006528678705414588,
+        "brier_calibrated": 0.029155953242155894,
+        "brier_constant": 0.029107232564547735,
+        "roc_auc": 0.4981931958399436,
+        "vendor_only_roc_auc": 0.5226552977742824,
+        "pr_auc": 0.030007694280584765,
+        "threshold": 0.03648317007514584,
+        "flag_rate": 1.0,
+        "precision": 0.030007694280584765,
+        "recall": 1.0
+      },
+      {
+        "quarter": "2017Q4",
+        "n": 15621,
+        "actual_late_rate": 0.08200499327827925,
+        "mean_predicted_raw": 0.01905339707801534,
+        "mean_predicted_calibrated": 0.02899369425233772,
+        "ece_raw": 0.07048618096334638,
+        "ece_calibrated": 0.053011299025941525,
+        "brier_calibrated": 0.07807926343063142,
+        "brier_constant": 0.0752801743557086,
+        "roc_auc": 0.5152659783532957,
+        "vendor_only_roc_auc": 0.6222578518569326,
+        "pr_auc": 0.0840339991396521,
+        "threshold": 0.04163264552213213,
+        "flag_rate": 0.022021637539210038,
+        "precision": 0.07848837209302326,
+        "recall": 0.02107728337236534
+      },
+      {
+        "quarter": "2018Q1",
+        "n": 20150,
+        "actual_late_rate": 0.10734491315136477,
+        "mean_predicted_raw": 0.3904989139813419,
+        "mean_predicted_calibrated": 0.043551217777357834,
+        "ece_raw": 0.2852825829113795,
+        "ece_calibrated": 0.06379369537400693,
+        "brier_calibrated": 0.10002208240343077,
+        "brier_constant": 0.09582198277189072,
+        "roc_auc": 0.5095729229213444,
+        "vendor_only_roc_auc": 0.6090349811124955,
+        "pr_auc": 0.11189333104875465,
+        "threshold": 0.06165895791702493,
+        "flag_rate": 0.13037220843672456,
+        "precision": 0.10354015987818804,
+        "recall": 0.12575127138233935
+      },
+      {
+        "quarter": "2018Q2",
+        "n": 18994,
+        "actual_late_rate": 0.08492155417500263,
+        "mean_predicted_raw": 0.5643762057769192,
+        "mean_predicted_calibrated": 0.08093023515634908,
+        "ece_raw": 0.47945465160191664,
+        "ece_calibrated": 0.003991319018653565,
+        "brier_calibrated": 0.07708573718607128,
+        "brier_constant": 0.07770988381150475,
+        "roc_auc": 0.6535586439118929,
+        "vendor_only_roc_auc": 0.4361161343954942,
+        "pr_auc": 0.14918479585953875,
+        "threshold": 0.07198245581021018,
+        "flag_rate": 0.8706433610613878,
+        "precision": 0.09282215637661002,
+        "recall": 0.9516429014259145
+      },
+      {
+        "quarter": "2018Q3",
+        "n": 18247,
+        "actual_late_rate": 0.03627993642790596,
+        "mean_predicted_raw": 0.47968037361760146,
+        "mean_predicted_calibrated": 0.16917450719675428,
+        "ece_raw": 0.4434004371896956,
+        "ece_calibrated": 0.13289457076884834,
+        "brier_calibrated": 0.05468448178673819,
+        "brier_constant": 0.03496370264069305,
+        "roc_auc": 0.7721064797912943,
+        "vendor_only_roc_auc": 0.45586941974544015,
+        "pr_auc": 0.1394283548852743,
+        "threshold": 0.1292995036832827,
+        "flag_rate": 0.5686414205074807,
+        "precision": 0.05522359290670779,
+        "recall": 0.8655589123867069
+      }
+    ]
+  },
+  "duration": {
+    "quarters": [
+      {
+        "quarter": "2017Q2",
+        "n": 8532,
+        "ml_mae": 5.075937822107295,
+        "median_baseline_mae": 5.644631973745898
+      },
+      {
+        "quarter": "2017Q3",
+        "n": 11689,
+        "ml_mae": 4.037309442391581,
+        "median_baseline_mae": 4.905466678073402
+      },
+      {
+        "quarter": "2017Q4",
+        "n": 15620,
+        "ml_mae": 5.006012886583625,
+        "median_baseline_mae": 6.04135723431498
+      },
+      {
+        "quarter": "2018Q1",
+        "n": 20148,
+        "ml_mae": 6.369343767924174,
+        "median_baseline_mae": 7.866041294421282
+      },
+      {
+        "quarter": "2018Q2",
+        "n": 18993,
+        "ml_mae": 5.79748755997431,
+        "median_baseline_mae": 6.789869952087611
+      },
+      {
+        "quarter": "2018Q3",
+        "n": 18222,
+        "ml_mae": 4.404428882534903,
+        "median_baseline_mae": 4.604928108879377
+      },
+      {
+        "quarter": "2018Q4",
+        "n": 50,
+        "ml_mae": 6.700705029297748,
+        "median_baseline_mae": 3.44
+      }
+    ],
+    "ml_beats_median_quarters": 6,
+    "n_quarters": 7,
+    "deployed_prediction_basis": "ml_model",
+    "conclusion": "ML adds value"
+  },
+  "forecasting": {
+    "late_rate": {
+      "n_origins": 7,
+      "mae": {
+        "naive_lag1": 0.054837233590709814,
+        "mean_baseline": 0.03958325669671015,
+        "persistence_linear": 0.057682322687387884,
+        "gradient_boosting": 0.054715073865654364,
+        "random_forest": 0.04426185973522155,
+        "extra_trees": 0.04216000129976938,
+        "arima": 0.04780415198911186
+      },
+      "best": "mean_baseline",
+      "deployed_model": "mean_baseline",
+      "deployed_rank": 1
+    },
+    "total_line_item_quantity": {
+      "n_origins": 7,
+      "mae": {
+        "naive_lag1": 2605.285714285714,
+        "mean_baseline": 3092.288320201102,
+        "persistence_linear": 1438.0820830621872,
+        "gradient_boosting": 1509.8919809874044,
+        "random_forest": 2933.7300354703443,
+        "extra_trees": 2648.662803593994,
+        "arima": 2230.813031201999
+      },
+      "best": "persistence_linear",
+      "deployed_model": "gradient_boosting",
+      "deployed_rank": 2
+    }
+  }
+}

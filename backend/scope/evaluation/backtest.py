@@ -65,7 +65,13 @@ def backtest_late_delivery(df: pd.DataFrame) -> dict[str, Any]:
         fit_rows = _known_before(lab, cal_start)
         cal_rows = _known_before(lab, q_start)
         cal_rows = cal_rows[cal_rows["Scheduled_Delivery_Date_Parsed"] >= cal_start]
-        if len(cal_rows) < 100 or cal_rows["is_late"].nunique() < 2:
+        # Short datasets (e.g. Olist ~2y) leave early quarters with no pre-calibration history.
+        if (
+            len(fit_rows) < 200
+            or fit_rows["is_late"].nunique() < 2
+            or len(cal_rows) < 100
+            or cal_rows["is_late"].nunique() < 2
+        ):
             continue
         model = clone(base).fit(fit_rows[features], fit_rows["is_late"])
         raw_cal = model.predict_proba(cal_rows[features])[:, 1]
@@ -168,14 +174,23 @@ def backtest_forecasts() -> dict[str, Any]:
         frame = _make_lag_frame(ts[col])
         feats = [c for c in frame.columns if c != "y"]
         errors: dict[str, list[float]] = {}
-        for origin in range(len(frame) - 24, len(frame) - 1, 2):
+        # Long monthly histories use a 24-step holdout walk; short series (Olist)
+        # start earlier so at least a few origins remain.
+        min_fit = 24 if len(frame) >= 36 else max(6, len(frame) // 3)
+        start = max(min_fit, len(frame) - 24) if len(frame) >= 36 else min_fit
+        for origin in range(start, len(frame) - 1, 2):
             fit_part, nxt = frame.iloc[:origin], frame.iloc[origin : origin + 1]
+            if len(fit_part) < 4:
+                continue
             for name, model in _candidates().items():
                 try:
                     pred = float(model.fit(fit_part[feats], fit_part["y"]).predict(nxt[feats])[0])
                 except Exception:  # noqa: BLE001
                     continue
                 errors.setdefault(name, []).append(abs(pred - float(nxt["y"].iloc[0])))
+        if not errors:
+            out[col] = {"n_origins": 0, "mae": {}, "best": None, "deployed_model": None, "status": "insufficient_history"}
+            continue
         n = max(len(v) for v in errors.values())
         mae = {k: float(np.mean(v)) for k, v in errors.items() if len(v) == n}
         bundle_name = "forecast_late_rate_monthly" if col == "late_rate" else "forecast_volume_quantity_monthly"
@@ -183,7 +198,7 @@ def backtest_forecasts() -> dict[str, Any]:
         out[col] = {
             "n_origins": n,
             "mae": mae,
-            "best": min(mae, key=mae.get),
+            "best": min(mae, key=mae.get) if mae else None,
             "deployed_model": deployed,
             "deployed_rank": sorted(mae, key=mae.get).index(deployed) + 1 if deployed in mae else None,
         }
