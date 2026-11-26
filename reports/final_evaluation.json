@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T13:58:57.187239+00:00",
+  "generated_at": "2026-11-26T14:31:04.815111+00:00",
   "late_delivery": {
     "target": "is_late",
     "definition": "1 if Delivered > Scheduled else 0",
@@ -13,6 +13,8 @@
       "Product_Group",
       "Sub_Classification",
       "Vendor",
+      "Manufacturing_Site",
+      "Brand",
       "Dosage_Form",
       "First_Line_Designation",
       "Line_Item_Quantity",
@@ -55,283 +57,376 @@
     "models": {
       "xgboost": {
         "val": {
-          "accuracy": 0.6724806201550387,
-          "precision": 0.33384146341463417,
-          "recall": 0.7577854671280276,
-          "f1": 0.4634920634920635,
-          "roc_auc": 0.7471602386691255,
-          "pr_auc": 0.33558290869967383,
+          "accuracy": 0.6686046511627907,
+          "precision": 0.33183183183183185,
+          "recall": 0.7647058823529411,
+          "f1": 0.46282722513089003,
+          "roc_auc": 0.7430802718695291,
+          "pr_auc": 0.3312187944031935,
           "confusion_matrix": [
             [
-              822,
-              437
+              814,
+              445
             ],
             [
-              70,
-              219
+              68,
+              221
             ]
           ],
           "classification_report": {
             "0": {
-              "precision": 0.92152466367713,
-              "recall": 0.6528991262907069,
-              "f1-score": 0.7642956764295676,
+              "precision": 0.9229024943310657,
+              "recall": 0.6465448768864178,
+              "f1-score": 0.7603923400280242,
               "support": 1259.0
             },
             "1": {
-              "precision": 0.33384146341463417,
-              "recall": 0.7577854671280276,
-              "f1-score": 0.4634920634920635,
+              "precision": 0.33183183183183185,
+              "recall": 0.7647058823529411,
+              "f1-score": 0.46282722513089003,
               "support": 289.0
             },
-            "accuracy": 0.6724806201550387,
+            "accuracy": 0.6686046511627907,
             "macro avg": {
-              "precision": 0.6276830635458821,
-              "recall": 0.7053422967093672,
-              "f1-score": 0.6138938699608156,
+              "precision": 0.6273671630814488,
+              "recall": 0.7056253796196794,
+              "f1-score": 0.6116097825794571,
               "support": 1548.0
             },
             "weighted avg": {
-              "precision": 0.8118086140157208,
-              "recall": 0.6724806201550387,
-              "f1-score": 0.7081378959780569,
+              "precision": 0.8125540308541417,
+              "recall": 0.6686046511627907,
+              "f1-score": 0.7048391628928357,
               "support": 1548.0
             }
           }
         },
         "test": {
-          "accuracy": 0.7012903225806452,
-          "precision": 0.22972972972972974,
-          "recall": 0.6502732240437158,
-          "f1": 0.33951497860199714,
-          "roc_auc": 0.7640399582668761,
-          "pr_auc": 0.27803987587075824,
+          "accuracy": 0.6954838709677419,
+          "precision": 0.23774954627949182,
+          "recall": 0.7158469945355191,
+          "f1": 0.3569482288828338,
+          "roc_auc": 0.7602404051790647,
+          "pr_auc": 0.28037894617664494,
           "confusion_matrix": [
             [
-              968,
-              399
+              947,
+              420
             ],
             [
-              64,
-              119
+              52,
+              131
             ]
           ],
           "classification_report": {
             "0": {
-              "precision": 0.937984496124031,
-              "recall": 0.7081199707388441,
-              "f1-score": 0.807002917882451,
+              "precision": 0.9479479479479479,
+              "recall": 0.6927578639356254,
+              "f1-score": 0.8005071851225697,
               "support": 1367.0
             },
             "1": {
-              "precision": 0.22972972972972974,
-              "recall": 0.6502732240437158,
-              "f1-score": 0.33951497860199714,
+              "precision": 0.23774954627949182,
+              "recall": 0.7158469945355191,
+              "f1-score": 0.3569482288828338,
               "support": 183.0
             },
-            "accuracy": 0.7012903225806452,
+            "accuracy": 0.6954838709677419,
             "macro avg": {
-              "precision": 0.5838571129268804,
-              "recall": 0.6791965973912799,
-              "f1-score": 0.5732589482422241,
+              "precision": 0.5928487471137198,
+              "recall": 0.7043024292355723,
+              "f1-score": 0.5787277070027017,
               "support": 1550.0
             },
             "weighted avg": {
-              "precision": 0.8543647398336071,
-              "recall": 0.701290322580645,
-              "f1-score": 0.7518091805351457,
+              "precision": 0.8640987172993495,
+              "recall": 0.6954838709677419,
+              "f1-score": 0.7481386115794267,
               "support": 1550.0
             }
           }
         },
-        "decision_threshold": 0.26957181096076965
+        "decision_threshold": 0.24221912026405334
       },
       "logistic_regression": {
         "val": {
-          "accuracy": 0.6511627906976745,
-          "precision": 0.3178519593613933,
-          "recall": 0.7577854671280276,
-          "f1": 0.44785276073619634,
-          "roc_auc": 0.7331517571753272,
-          "pr_auc": 0.30910061894058244,
+          "accuracy": 0.5516795865633075,
+          "precision": 0.28480340063761955,
+          "recall": 0.9273356401384083,
+          "f1": 0.43577235772357725,
+          "roc_auc": 0.7214629065194269,
+          "pr_auc": 0.2919365292371091,
           "confusion_matrix": [
             [
-              789,
-              470
+              586,
+              673
             ],
             [
-              70,
-              219
+              21,
+              268
             ]
           ],
           "classification_report": {
             "0": {
-              "precision": 0.9185098952270081,
-              "recall": 0.6266878474980143,
-              "f1-score": 0.7450424929178471,
+              "precision": 0.9654036243822076,
+              "recall": 0.4654487688641779,
+              "f1-score": 0.6280814576634512,
               "support": 1259.0
             },
             "1": {
-              "precision": 0.3178519593613933,
-              "recall": 0.7577854671280276,
-              "f1-score": 0.44785276073619634,
+              "precision": 0.28480340063761955,
+              "recall": 0.9273356401384083,
+              "f1-score": 0.43577235772357725,
               "support": 289.0
             },
-            "accuracy": 0.6511627906976745,
+            "accuracy": 0.5516795865633075,
             "macro avg": {
-              "precision": 0.6181809272942007,
-              "recall": 0.692236657313021,
-              "f1-score": 0.5964476268270217,
+              "precision": 0.6251035125099136,
+              "recall": 0.6963922045012931,
+              "f1-score": 0.5319269076935143,
               "support": 1548.0
             },
             "weighted avg": {
-              "precision": 0.8063715596551975,
-              "recall": 0.6511627906976745,
-              "f1-score": 0.6895593969226939,
+              "precision": 0.8383406627141289,
+              "recall": 0.5516795865633075,
+              "f1-score": 0.5921787897806194,
               "support": 1548.0
             }
           }
         },
         "test": {
-          "accuracy": 0.5316129032258065,
-          "precision": 0.1684981684981685,
-          "recall": 0.7540983606557377,
-          "f1": 0.2754491017964072,
-          "roc_auc": 0.6939970658895671,
-          "pr_auc": 0.19733047418702712,
+          "accuracy": 0.46774193548387094,
+          "precision": 0.16770186335403728,
+          "recall": 0.8852459016393442,
+          "f1": 0.2819843342036554,
+          "roc_auc": 0.6557297100667171,
+          "pr_auc": 0.16158661900504012,
           "confusion_matrix": [
             [
-              686,
-              681
+              563,
+              804
             ],
             [
-              45,
-              138
+              21,
+              162
             ]
           ],
           "classification_report": {
             "0": {
-              "precision": 0.9384404924760602,
-              "recall": 0.5018288222384785,
-              "f1-score": 0.6539561487130601,
+              "precision": 0.964041095890411,
+              "recall": 0.41185076810534016,
+              "f1-score": 0.5771399282419272,
               "support": 1367.0
             },
             "1": {
-              "precision": 0.1684981684981685,
-              "recall": 0.7540983606557377,
-              "f1-score": 0.2754491017964072,
+              "precision": 0.16770186335403728,
+              "recall": 0.8852459016393442,
+              "f1-score": 0.2819843342036554,
               "support": 183.0
             },
-            "accuracy": 0.5316129032258065,
+            "accuracy": 0.46774193548387094,
             "macro avg": {
-              "precision": 0.5534693304871143,
-              "recall": 0.627963591447108,
-              "f1-score": 0.4647026252547336,
+              "precision": 0.5658714796222242,
+              "recall": 0.6485483348723422,
+              "f1-score": 0.4295621312227913,
               "support": 1550.0
             },
             "weighted avg": {
-              "precision": 0.8475376245483478,
-              "recall": 0.5316129032258066,
-              "f1-score": 0.6092678973674165,
+              "precision": 0.8700216897264391,
+              "recall": 0.46774193548387094,
+              "f1-score": 0.5422925258490215,
               "support": 1550.0
             }
           }
         },
-        "decision_threshold": 0.6215784278194216
+        "decision_threshold": 0.4069084792639841
       },
       "random_forest": {
         "val": {
-          "accuracy": 0.687984496124031,
-          "precision": 0.36103151862464183,
-          "recall": 0.8719723183391004,
-          "f1": 0.5106382978723404,
-          "roc_auc": 0.7893107343390564,
-          "pr_auc": 0.3657082135760454,
+          "accuracy": 0.6621447028423773,
+          "precision": 0.35,
+          "recall": 0.9446366782006921,
+          "f1": 0.510757717492984,
+          "roc_auc": 0.7914338561663978,
+          "pr_auc": 0.36464254294274034,
           "confusion_matrix": [
             [
-              813,
-              446
+              752,
+              507
             ],
             [
-              37,
-              252
+              16,
+              273
             ]
           ],
           "classification_report": {
             "0": {
-              "precision": 0.9564705882352941,
-              "recall": 0.6457505957108817,
-              "f1-score": 0.7709815078236131,
+              "precision": 0.9791666666666666,
+              "recall": 0.5972994440031771,
+              "f1-score": 0.7419832264430193,
               "support": 1259.0
             },
             "1": {
-              "precision": 0.36103151862464183,
-              "recall": 0.8719723183391004,
-              "f1-score": 0.5106382978723404,
+              "precision": 0.35,
+              "recall": 0.9446366782006921,
+              "f1-score": 0.510757717492984,
               "support": 289.0
             },
-            "accuracy": 0.687984496124031,
+            "accuracy": 0.6621447028423773,
             "macro avg": {
-              "precision": 0.658751053429968,
-              "recall": 0.758861457024991,
-              "f1-score": 0.6408099028479768,
+              "precision": 0.6645833333333333,
+              "recall": 0.7709680611019346,
+              "f1-score": 0.6263704719680017,
               "support": 1548.0
             },
             "weighted avg": {
-              "precision": 0.8453065758855018,
-              "recall": 0.687984496124031,
-              "f1-score": 0.7223773814179814,
+              "precision": 0.8617059646856159,
+              "recall": 0.6621447028423773,
+              "f1-score": 0.6988151566196601,
               "support": 1548.0
             }
           }
         },
         "test": {
-          "accuracy": 0.743225806451613,
-          "precision": 0.29206963249516443,
-          "recall": 0.825136612021858,
-          "f1": 0.43142857142857144,
-          "roc_auc": 0.8071042248791778,
-          "pr_auc": 0.30691550525426403,
+          "accuracy": 0.7090322580645161,
+          "precision": 0.27364864864864863,
+          "recall": 0.8852459016393442,
+          "f1": 0.4180645161290323,
+          "roc_auc": 0.8062068028189845,
+          "pr_auc": 0.31013547672066355,
           "confusion_matrix": [
             [
-              1001,
-              366
+              937,
+              430
             ],
             [
-              32,
-              151
+              21,
+              162
             ]
           ],
           "classification_report": {
             "0": {
-              "precision": 0.9690222652468539,
-              "recall": 0.7322604242867593,
-              "f1-score": 0.8341666666666666,
+              "precision": 0.9780793319415448,
+              "recall": 0.6854425749817118,
+              "f1-score": 0.8060215053763441,
               "support": 1367.0
             },
             "1": {
-              "precision": 0.29206963249516443,
-              "recall": 0.825136612021858,
-              "f1-score": 0.43142857142857144,
+              "precision": 0.27364864864864863,
+              "recall": 0.8852459016393442,
+              "f1-score": 0.4180645161290323,
               "support": 183.0
             },
-            "accuracy": 0.743225806451613,
+            "accuracy": 0.7090322580645161,
             "macro avg": {
-              "precision": 0.6305459488710091,
-              "recall": 0.7786985181543087,
-              "f1-score": 0.632797619047619,
+              "precision": 0.6258639902950968,
+              "recall": 0.785344238310528,
+              "f1-score": 0.6120430107526882,
               "support": 1550.0
             },
             "weighted avg": {
-              "precision": 0.8890981802187512,
-              "recall": 0.743225806451613,
-              "f1-score": 0.7866175883256529,
+              "precision": 0.8949110641721255,
+              "recall": 0.7090322580645161,
+              "f1-score": 0.760217551161984,
               "support": 1550.0
             }
           }
         },
-        "decision_threshold": 0.217049956918077,
+        "decision_threshold": 0.15832726054121102,
         "probabilities": "calibrated"
+      },
+      "extra_trees": {
+        "val": {
+          "accuracy": 0.6492248062015504,
+          "precision": 0.3424317617866005,
+          "recall": 0.9550173010380623,
+          "f1": 0.5041095890410959,
+          "roc_auc": 0.7912455922891513,
+          "pr_auc": 0.39518661548105954,
+          "confusion_matrix": [
+            [
+              729,
+              530
+            ],
+            [
+              13,
+              276
+            ]
+          ],
+          "classification_report": {
+            "0": {
+              "precision": 0.9824797843665768,
+              "recall": 0.5790309769658459,
+              "f1-score": 0.7286356821589205,
+              "support": 1259.0
+            },
+            "1": {
+              "precision": 0.3424317617866005,
+              "recall": 0.9550173010380623,
+              "f1-score": 0.5041095890410959,
+              "support": 289.0
+            },
+            "accuracy": 0.6492248062015504,
+            "macro avg": {
+              "precision": 0.6624557730765886,
+              "recall": 0.7670241390019541,
+              "f1-score": 0.6163726356000082,
+              "support": 1548.0
+            },
+            "weighted avg": {
+              "precision": 0.8629876147763874,
+              "recall": 0.6492248062015504,
+              "f1-score": 0.686718343069094,
+              "support": 1548.0
+            }
+          }
+        },
+        "test": {
+          "accuracy": 0.6954838709677419,
+          "precision": 0.2673107890499195,
+          "recall": 0.907103825136612,
+          "f1": 0.4129353233830846,
+          "roc_auc": 0.8080935877295022,
+          "pr_auc": 0.30005255844568335,
+          "confusion_matrix": [
+            [
+              912,
+              455
+            ],
+            [
+              17,
+              166
+            ]
+          ],
+          "classification_report": {
+            "0": {
+              "precision": 0.9817007534983854,
+              "recall": 0.6671543525969276,
+              "f1-score": 0.794425087108014,
+              "support": 1367.0
+            },
+            "1": {
+              "precision": 0.2673107890499195,
+              "recall": 0.907103825136612,
+              "f1-score": 0.4129353233830846,
+              "support": 183.0
+            },
+            "accuracy": 0.6954838709677419,
+            "macro avg": {
+              "precision": 0.6245057712741524,
+              "recall": 0.7871290888667698,
+              "f1-score": 0.6036802052455492,
+              "support": 1550.0
+            },
+            "weighted avg": {
+              "precision": 0.8973566480183407,
+              "recall": 0.6954838709677419,
+              "f1-score": 0.7493846827456513,
+              "support": 1550.0
+            }
+          }
+        },
+        "decision_threshold": 0.4163428997369526
       }
     },
     "proposal_comparison": "xgboost vs logistic_regression (baseline); random_forest is an extra comparison",
@@ -523,130 +618,131 @@
         }
       }
     },
+    "selection_metric": "f1",
     "xgboost_vs_logistic_baseline_test": {
       "precision": {
-        "xgboost": 0.22972972972972974,
-        "logistic_regression": 0.1684981684981685,
-        "gain": 0.06123156123156123
+        "xgboost": 0.23774954627949182,
+        "logistic_regression": 0.16770186335403728,
+        "gain": 0.07004768292545455
       },
       "recall": {
-        "xgboost": 0.6502732240437158,
-        "logistic_regression": 0.7540983606557377,
-        "gain": -0.10382513661202186
+        "xgboost": 0.7158469945355191,
+        "logistic_regression": 0.8852459016393442,
+        "gain": -0.1693989071038251
       },
       "f1": {
-        "xgboost": 0.33951497860199714,
-        "logistic_regression": 0.2754491017964072,
-        "gain": 0.06406587680558995
+        "xgboost": 0.3569482288828338,
+        "logistic_regression": 0.2819843342036554,
+        "gain": 0.07496389467917841
       },
       "roc_auc": {
-        "xgboost": 0.7640399582668761,
-        "logistic_regression": 0.6939970658895671,
-        "gain": 0.07004289237730899
+        "xgboost": 0.7602404051790647,
+        "logistic_regression": 0.6557297100667171,
+        "gain": 0.10451069511234756
       },
       "pr_auc": {
-        "xgboost": 0.27803987587075824,
-        "logistic_regression": 0.19733047418702712,
-        "gain": 0.08070940168373111
+        "xgboost": 0.28037894617664494,
+        "logistic_regression": 0.16158661900504012,
+        "gain": 0.11879232717160482
       }
     },
     "rolling_origin_cv": {
       "method": "TimeSeriesSplit",
       "n_splits": 3,
       "period": "train_plus_validation",
-      "roc_auc_mean": 0.6208423335259511,
-      "roc_auc_std": 0.11603728981764848,
-      "pr_auc_mean": 0.20357515622933997,
-      "pr_auc_std": 0.07336251777476348
+      "roc_auc_mean": 0.6304146913271175,
+      "roc_auc_std": 0.10807678566595838,
+      "pr_auc_mean": 0.21009599003184243,
+      "pr_auc_std": 0.07280654127646176
     },
     "post_2010_training_sensitivity": {
       "n_train": 4207,
       "validation": {
-        "accuracy": 0.7416020671834626,
-        "precision": 0.36941176470588233,
-        "recall": 0.5432525951557093,
-        "f1": 0.43977591036414565,
-        "roc_auc": 0.7964798777521568,
-        "pr_auc": 0.38577720984394215,
+        "accuracy": 0.7073643410852714,
+        "precision": 0.37227414330218067,
+        "recall": 0.8269896193771626,
+        "f1": 0.5134264232008593,
+        "roc_auc": 0.7998026664761124,
+        "pr_auc": 0.38699956242051725,
         "confusion_matrix": [
           [
-            991,
-            268
+            856,
+            403
           ],
           [
-            132,
-            157
+            50,
+            239
           ]
         ],
         "classification_report": {
           "0": {
-            "precision": 0.8824577025823687,
-            "recall": 0.7871326449563145,
-            "f1-score": 0.8320738874895046,
+            "precision": 0.9448123620309051,
+            "recall": 0.6799046862589356,
+            "f1-score": 0.7907621247113163,
             "support": 1259.0
           },
           "1": {
-            "precision": 0.36941176470588233,
-            "recall": 0.5432525951557093,
-            "f1-score": 0.43977591036414565,
+            "precision": 0.37227414330218067,
+            "recall": 0.8269896193771626,
+            "f1-score": 0.5134264232008593,
             "support": 289.0
           },
-          "accuracy": 0.7416020671834626,
+          "accuracy": 0.7073643410852714,
           "macro avg": {
-            "precision": 0.6259347336441254,
-            "recall": 0.6651926200560119,
-            "f1-score": 0.6359248989268251,
+            "precision": 0.6585432526665429,
+            "recall": 0.7534471528180491,
+            "f1-score": 0.6520942739560878,
             "support": 1548.0
           },
           "weighted avg": {
-            "precision": 0.7866758705111124,
-            "recall": 0.7416020671834626,
-            "f1-score": 0.7588347948608039,
+            "precision": 0.8379237669323255,
+            "recall": 0.7073643410852714,
+            "f1-score": 0.7389856274655011,
             "support": 1548.0
           }
         }
       },
       "test": {
-        "accuracy": 0.8051612903225807,
-        "precision": 0.31347962382445144,
-        "recall": 0.546448087431694,
-        "f1": 0.398406374501992,
-        "roc_auc": 0.8132582616794785,
-        "pr_auc": 0.30684476651599024,
+        "accuracy": 0.7645161290322581,
+        "precision": 0.3112033195020747,
+        "recall": 0.819672131147541,
+        "f1": 0.45112781954887216,
+        "roc_auc": 0.8097785026442971,
+        "pr_auc": 0.310923264729644,
         "confusion_matrix": [
           [
-            1148,
-            219
+            1035,
+            332
           ],
           [
-            83,
-            100
+            33,
+            150
           ]
         ],
         "classification_report": {
           "0": {
-            "precision": 0.9325751421608448,
-            "recall": 0.8397951719092904,
-            "f1-score": 0.8837567359507313,
+            "precision": 0.9691011235955056,
+            "recall": 0.7571324067300659,
+            "f1-score": 0.8501026694045175,
             "support": 1367.0
           },
           "1": {
-            "precision": 0.31347962382445144,
-            "recall": 0.546448087431694,
-            "f1-score": 0.398406374501992,
+            "precision": 0.3112033195020747,
+            "recall": 0.819672131147541,
+            "f1-score": 0.45112781954887216,
             "support": 183.0
           },
-          "accuracy": 0.8051612903225807,
+          "accuracy": 0.7645161290322581,
           "macro avg": {
-            "precision": 0.6230273829926481,
-            "recall": 0.6931216296704923,
-            "f1-score": 0.6410815552263617,
+            "precision": 0.6401522215487901,
+            "recall": 0.7884022689388035,
+            "f1-score": 0.6506152444766948,
             "support": 1550.0
           },
           "weighted avg": {
-            "precision": 0.859481929350806,
-            "recall": 0.8051612903225807,
-            "f1-score": 0.8264540803732351,
+            "precision": 0.8914267376928618,
+            "recall": 0.7645161290322581,
+            "f1-score": 0.8029978968086575,
             "support": 1550.0
           }
         }
@@ -655,34 +751,34 @@
     },
     "calibration": {
       "method": "platt_on_validation",
-      "a": 1.566635899513822,
-      "b": -1.1302536236995853,
+      "a": 1.4422279033975043,
+      "b": -0.7493633132313999,
       "validation_raw": {
-        "brier": 0.16157884642373666,
+        "brier": 0.1449296322649503,
         "brier_constant_prevalence": 0.15183841449165048,
-        "ece": 0.17831084683732135,
-        "mean_predicted": 0.3650033532972697,
+        "ece": 0.1299993900462426,
+        "mean_predicted": 0.31669189650619095,
         "actual_rate": 0.1866925064599483
       },
       "validation_calibrated": {
-        "brier": 0.12705882479070219,
+        "brier": 0.12716762681648838,
         "brier_constant_prevalence": 0.15183841449165048,
-        "ece": 0.03457599602105337,
-        "mean_predicted": 0.18672091087967624,
+        "ece": 0.026551642497327593,
+        "mean_predicted": 0.18667436665131548,
         "actual_rate": 0.1866925064599483
       },
       "test_raw": {
-        "brier": 0.1356143380071171,
+        "brier": 0.11861081403497645,
         "brier_constant_prevalence": 0.10412528616024974,
-        "ece": 0.18994905137644347,
-        "mean_predicted": 0.30801356750547576,
+        "ece": 0.14919142917667694,
+        "mean_predicted": 0.2672559453057092,
         "actual_rate": 0.11806451612903225
       },
       "test_calibrated": {
-        "brier": 0.09027623903403953,
+        "brier": 0.09087988774533363,
         "brier_constant_prevalence": 0.10412528616024974,
-        "ece": 0.02863620165293085,
-        "mean_predicted": 0.14670071778196309,
+        "ece": 0.030803398955391047,
+        "mean_predicted": 0.1488679150844233,
         "actual_rate": 0.11806451612903225
       },
       "note": "Validation late rate differs from test (prior shift); use recalibrate_late_model() on recent delivered outcomes to refresh calibration and threshold as conditions drift."
@@ -691,9 +787,9 @@
       "positive_rate": 0.11806451612903225,
       "n": 1550
     },
-    "test_roc_auc_gain_over_vendor_only": 0.02043483996306361,
+    "test_roc_auc_gain_over_vendor_only": 0.019537417902870335,
     "best_model": "random_forest",
-    "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\late_delivery_classifier"
+    "artifact_dir": "/workspace/reports/models/late_delivery_classifier"
   },
   "duration": {
     "target": "delivery_duration_days",
@@ -708,6 +804,8 @@
       "Product_Group",
       "Sub_Classification",
       "Vendor",
+      "Manufacturing_Site",
+      "Brand",
       "Dosage_Form",
       "First_Line_Designation",
       "Line_Item_Quantity",
@@ -757,65 +855,83 @@
           "mean_pred": 105.0
         }
       },
-      "gradient_boosting": {
+      "shipment_mode_median": {
         "val": {
-          "mae": 88.25998410235977,
-          "rmse": 118.24405856100098,
-          "r2": -0.15894459501047664,
-          "median_ae": 68.74245328216739,
+          "mae": 86.21503957783641,
+          "rmse": 121.79110213544647,
+          "r2": -0.22951870416642106,
+          "median_ae": 47.0,
           "mean_actual": 131.9036939313984,
-          "mean_pred": 100.9071883264506
+          "mean_pred": 90.72823218997361
         },
         "test": {
-          "mae": 81.04166235868934,
-          "rmse": 108.17763627466398,
-          "r2": -0.14590132472416673,
-          "median_ae": 60.65577964402459,
+          "mae": 80.95701357466064,
+          "rmse": 114.95059188477732,
+          "r2": -0.29388199567790263,
+          "median_ae": 47.0,
           "mean_actual": 138.61990950226243,
-          "mean_pred": 102.84783103142037
+          "mean_pred": 90.29524886877829
+        }
+      },
+      "gradient_boosting": {
+        "val": {
+          "mae": 88.45401546281364,
+          "rmse": 117.69039834590131,
+          "r2": -0.14811683285044963,
+          "median_ae": 68.54637422123216,
+          "mean_actual": 131.9036939313984,
+          "mean_pred": 102.55188448090418
+        },
+        "test": {
+          "mae": 81.04522428523589,
+          "rmse": 108.29572447831185,
+          "r2": -0.148404453667361,
+          "median_ae": 60.812007711240064,
+          "mean_actual": 138.61990950226243,
+          "mean_pred": 103.98882196268573
         }
       },
       "xgboost": {
         "val": {
-          "mae": 87.0263881280743,
-          "rmse": 119.70461658263312,
-          "r2": -0.1877521317241453,
-          "median_ae": 65.12517547607422,
+          "mae": 87.49681930240037,
+          "rmse": 117.7908981836587,
+          "r2": -0.15007850216039098,
+          "median_ae": 68.68859481811523,
           "mean_actual": 131.9036939313984,
-          "mean_pred": 92.48487091064453
+          "mean_pred": 101.39329528808594
         },
         "test": {
-          "mae": 80.8006424235003,
-          "rmse": 109.25406481614782,
-          "r2": -0.1688195146550906,
-          "median_ae": 62.50624084472656,
+          "mae": 79.96995096077207,
+          "rmse": 106.47011929553952,
+          "r2": -0.11001213703392576,
+          "median_ae": 63.19709396362305,
           "mean_actual": 138.61990950226243,
-          "mean_pred": 98.3227310180664
+          "mean_pred": 109.64765167236328
         }
       },
       "random_forest": {
         "val": {
-          "mae": 86.41065162229009,
-          "rmse": 114.7926710762031,
-          "r2": -0.09227587523277947,
-          "median_ae": 70.78676089251616,
+          "mae": 87.66420266779191,
+          "rmse": 114.94917782223376,
+          "r2": -0.09525629333509777,
+          "median_ae": 70.76177419560747,
           "mean_actual": 131.9036939313984,
-          "mean_pred": 113.36432249062555
+          "mean_pred": 115.78471284541462
         },
         "test": {
-          "mae": 81.22336275142703,
-          "rmse": 107.16009807063604,
-          "r2": -0.12444560390728854,
-          "median_ae": 61.533004429897005,
+          "mae": 80.65114491273397,
+          "rmse": 104.73177172811963,
+          "r2": -0.07406149401296158,
+          "median_ae": 64.77166661231061,
           "mean_actual": 138.61990950226243,
-          "mean_pred": 116.32092286171628
+          "mean_pred": 121.06437625069486
         }
       }
     },
-    "selected_model_beats_median_baseline_on_validation": true,
-    "prediction_basis": "ml_model",
-    "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\delivery_duration_regressor",
-    "best_model": "random_forest"
+    "selected_model_beats_median_baseline_on_validation": false,
+    "prediction_basis": "historical_median_baseline",
+    "artifact_dir": "/workspace/reports/models/delivery_duration_regressor",
+    "best_model": "shipment_mode_median"
   },
   "forecasting": {
     "note": "Volume series is shipment/order quantity proxy, not verified warehouse demand.",
@@ -846,51 +962,61 @@
     "baselines": {
       "late_rate_naive": {
         "model": "naive_lag1",
-        "mae": 0.08721047083427215,
-        "rmse": 0.10814111504226519,
-        "n_test": 22,
+        "mae": 0.07561980269440548,
+        "rmse": 0.09296426577065897,
+        "n_test": 20,
         "metric_weighting": "shipment_count_weighted"
       },
       "volume_naive": {
         "model": "naive_lag1",
-        "mae": 947280.2272727273,
-        "rmse": 1215070.2988563143,
-        "n_test": 22,
+        "mae": 1002339.6,
+        "rmse": 1268171.403008915,
+        "n_test": 20,
         "metric_weighting": "unweighted"
       }
     },
     "frequency": "monthly",
     "late_rate_monthly": {
-      "mae": 0.06815115697827148,
-      "rmse": 0.08321332815533636,
-      "selected_model": "extra_trees",
-      "failed_candidates": {
-        "arima": "No module named 'statsmodels'"
-      },
+      "mae": 0.061021512815900285,
+      "rmse": 0.07189674765950628,
+      "selected_model": "mean_baseline",
+      "failed_candidates": {},
       "validation_mae": {
-        "naive_lag1": 0.09216710741282828,
-        "mean_baseline": 0.09232919975825905,
-        "persistence_linear": 0.08171232264990366,
-        "gradient_boosting": 0.08609346916966418,
-        "random_forest": 0.08335059980730147,
-        "extra_trees": 0.07269774453681252
+        "naive_lag1": 0.09711871818776979,
+        "mean_baseline": 0.08756732585749351,
+        "persistence_linear": 0.09657131160594384,
+        "gradient_boosting": 0.08895648278384485,
+        "random_forest": 0.09014075164553098,
+        "extra_trees": 0.08896904133958079,
+        "arima": 0.09340166318882595
       },
-      "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-      "best_unpenalised_model": "extra_trees",
-      "validation_selected_mae": 0.07269774453681252,
-      "naive_lag1_test_mae": 0.08721047083427215,
-      "mean_baseline_test_mae": 0.06395641339796747,
+      "recent_validation_mae": {
+        "naive_lag1": 0.10232642986054563,
+        "mean_baseline": 0.09443726812360996,
+        "persistence_linear": 0.08257471107576958,
+        "gradient_boosting": 0.09764659777720092,
+        "random_forest": 0.0986732557892444,
+        "extra_trees": 0.09633023262302756,
+        "arima": 0.08466664528158872
+      },
+      "holdout_validation_mae": {
+        "mean_baseline": 0.09885864806597179,
+        "naive_lag1": 0.11645384987522761
+      },
+      "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 5% on full or recent window; ML must beat naive on recent window and chronological val holdout",
+      "best_unpenalised_model": "mean_baseline",
+      "validation_selected_mae": 0.08756732585749351,
+      "naive_lag1_test_mae": 0.07561980269440548,
+      "mean_baseline_test_mae": 0.061021512815900285,
       "beats_naive_baseline_on_test": true,
       "beats_mean_baseline_on_test": false,
       "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-      "is_baseline": false,
+      "is_baseline": true,
       "metric_weighting": "shipment_count_weighted",
-      "n_train": 89,
-      "n_validation": 17,
-      "n_test": 22,
+      "n_train": 83,
+      "n_validation": 16,
+      "n_test": 20,
       "last_actual": [
-        0.04918032786885246,
-        0.2441860465116279,
         0.18181818181818182,
         0.27,
         0.10416666666666667,
@@ -913,62 +1039,71 @@
         0.0
       ],
       "last_pred": [
-        0.22740211837480265,
-        0.19453345779193787,
-        0.18027121651562386,
-        0.21000957915256915,
-        0.19594344925070728,
-        0.2001911591619277,
-        0.18857535621685018,
-        0.2062356978073102,
-        0.1806539468731726,
-        0.17048844817642,
-        0.1176431565784196,
-        0.08892719799459455,
-        0.0980754037809639,
-        0.15940739594479478,
-        0.1432675634814734,
-        0.15923016728187722,
-        0.10945649893908893,
-        0.10352659919122997,
-        0.06815802690247735,
-        0.12148580545342579,
-        0.08458823006906704,
-        0.06911397794180954
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191,
+        0.11249371543489191
       ],
-      "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_late_rate_monthly"
+      "artifact_dir": "/workspace/reports/models/forecast_late_rate_monthly"
     },
     "volume_monthly": {
-      "mae": 994005.1897767073,
-      "rmse": 1207766.3685824834,
-      "selected_model": "extra_trees",
-      "failed_candidates": {
-        "arima": "No module named 'statsmodels'"
-      },
+      "mae": 1002339.6,
+      "rmse": 1268171.403008915,
+      "selected_model": "naive_lag1",
+      "failed_candidates": {},
       "validation_mae": {
-        "naive_lag1": 1145379.6666666667,
-        "mean_baseline": 1189886.566204265,
-        "persistence_linear": 919578.0080589061,
-        "gradient_boosting": 822022.8209575531,
-        "random_forest": 812950.862487848,
-        "extra_trees": 777115.80566323
+        "naive_lag1": 1159641.1944444445,
+        "mean_baseline": 946506.7930201481,
+        "persistence_linear": 957564.1283082486,
+        "gradient_boosting": 813376.7816930828,
+        "random_forest": 727292.2902807918,
+        "extra_trees": 747112.4438832691,
+        "arima": 846889.2752678939
       },
-      "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-      "best_unpenalised_model": "extra_trees",
-      "validation_selected_mae": 777115.80566323,
-      "naive_lag1_test_mae": 947280.2272727273,
-      "mean_baseline_test_mae": 1205206.0606060608,
+      "recent_validation_mae": {
+        "naive_lag1": 905939.5,
+        "mean_baseline": 846363.3297087686,
+        "persistence_linear": 645049.9489472598,
+        "gradient_boosting": 610427.8727908051,
+        "random_forest": 494421.53465034504,
+        "extra_trees": 519412.7172858796,
+        "arima": 642403.0779085266
+      },
+      "holdout_validation_mae": {
+        "naive_lag1": 918606.3125,
+        "mean_baseline": 786981.4411764707,
+        "random_forest": 529429.2439580911
+      },
+      "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 5% on full or recent window; ML must beat naive on recent window and chronological val holdout",
+      "best_unpenalised_model": "random_forest",
+      "validation_selected_mae": 1159641.1944444445,
+      "naive_lag1_test_mae": 1002339.6,
+      "mean_baseline_test_mae": 1244626.1880952376,
       "beats_naive_baseline_on_test": false,
       "beats_mean_baseline_on_test": true,
       "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-      "is_baseline": false,
+      "is_baseline": true,
       "metric_weighting": "unweighted",
-      "n_train": 90,
-      "n_validation": 18,
-      "n_test": 22,
+      "n_train": 84,
+      "n_validation": 16,
+      "n_test": 20,
       "last_actual": [
-        1627812.0,
-        2004327.0,
         2957582.0,
         4519832.0,
         2548440.0,
@@ -991,30 +1126,28 @@
         7203.0
       ],
       "last_pred": [
-        2494604.992591705,
-        2240841.070389006,
-        2412773.959339127,
-        2367359.6270931736,
-        2204529.947511995,
-        2485289.797159743,
-        2080065.5173470962,
-        2290630.947529945,
-        2500320.581602843,
-        2364901.996764941,
-        2210235.629428435,
-        2101331.8367581777,
-        2305255.663172925,
-        2472044.6848448585,
-        2146584.3120207028,
-        2223873.0858647907,
-        2350500.478050032,
-        2501254.2494367547,
-        2134444.9082910195,
-        1952800.6930626396,
-        1170095.0563868696,
-        655353.891833112
+        2004327.0,
+        2957582.0,
+        4519832.0,
+        2548440.0,
+        2637618.0,
+        3198768.0,
+        1895477.0,
+        1749887.0,
+        1004264.0,
+        2518005.0,
+        4227072.0,
+        2957312.0,
+        2334566.0,
+        3435836.0,
+        4642264.0,
+        1527456.0,
+        1848748.0,
+        230869.0,
+        134500.0,
+        0.0
       ],
-      "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_volume_quantity_monthly"
+      "artifact_dir": "/workspace/reports/models/forecast_volume_quantity_monthly"
     },
     "volume_by_product_group": {
       "ACT": {
@@ -1029,35 +1162,47 @@
       },
       "ARV": {
         "status": "ok",
-        "mae": 987864.059004802,
-        "rmse": 1210176.576167105,
-        "selected_model": "extra_trees",
-        "failed_candidates": {
-          "arima": "No module named 'statsmodels'"
-        },
+        "mae": 1006110.85,
+        "rmse": 1269775.6190571426,
+        "selected_model": "naive_lag1",
+        "failed_candidates": {},
         "validation_mae": {
-          "naive_lag1": 1151170.1666666667,
-          "mean_baseline": 1066199.975980675,
-          "persistence_linear": 910851.821108008,
-          "gradient_boosting": 817020.2062177968,
-          "random_forest": 808406.7457291454,
-          "extra_trees": 759507.4850629722
+          "naive_lag1": 1154073.861111111,
+          "mean_baseline": 908436.9847192732,
+          "persistence_linear": 966008.557260132,
+          "gradient_boosting": 803006.2473094615,
+          "random_forest": 719583.1098594243,
+          "extra_trees": 753552.410665304,
+          "arima": 820078.0531314462
         },
-        "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-        "best_unpenalised_model": "extra_trees",
-        "validation_selected_mae": 759507.4850629722,
-        "naive_lag1_test_mae": 975669.8571428572,
-        "mean_baseline_test_mae": 1226645.7137445891,
+        "recent_validation_mae": {
+          "naive_lag1": 906214.3333333334,
+          "mean_baseline": 807365.487310015,
+          "persistence_linear": 645221.4250768507,
+          "gradient_boosting": 584661.2911200451,
+          "random_forest": 491848.2466968685,
+          "extra_trees": 541097.7856441098,
+          "arima": 660401.6140312735
+        },
+        "holdout_validation_mae": {
+          "naive_lag1": 916726.5625,
+          "mean_baseline": 745796.8798076923,
+          "random_forest": 553890.9810327401
+        },
+        "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 5% on full or recent window; ML must beat naive on recent window and chronological val holdout",
+        "best_unpenalised_model": "random_forest",
+        "validation_selected_mae": 1154073.861111111,
+        "naive_lag1_test_mae": 1006110.85,
+        "mean_baseline_test_mae": 1216598.718518519,
         "beats_naive_baseline_on_test": false,
         "beats_mean_baseline_on_test": true,
         "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-        "is_baseline": false,
+        "is_baseline": true,
         "metric_weighting": "unweighted",
-        "n_train": 88,
-        "n_validation": 17,
-        "n_test": 21,
+        "n_train": 81,
+        "n_validation": 16,
+        "n_test": 20,
         "last_actual": [
-          1935512.0,
           2931665.0,
           4481071.0,
           2479774.0,
@@ -1080,61 +1225,72 @@
           7203.0
         ],
         "last_pred": [
-          2203234.8448132253,
-          2315384.490476523,
-          2337033.105754332,
-          2108429.6230910188,
-          2381900.925827195,
-          2030581.9098346198,
-          2188349.681501203,
-          2416571.0591521193,
-          2364691.154926098,
-          2182117.7877384173,
-          2089860.761362927,
-          2256112.7582240463,
-          2350547.59514834,
-          2092028.141492328,
-          2175856.9958199584,
-          2261782.362296179,
-          2414879.14395717,
-          2081280.3248340634,
-          1921336.9194320845,
-          1165508.3536893371,
-          733620.2989723897
+          1935512.0,
+          2931665.0,
+          4481071.0,
+          2479774.0,
+          2568699.0,
+          3168442.0,
+          1883372.0,
+          1732135.0,
+          992473.0,
+          2464205.0,
+          4180775.0,
+          2940312.0,
+          2294432.0,
+          3327233.0,
+          4607139.0,
+          1485827.0,
+          1840342.0,
+          230869.0,
+          134500.0,
+          0.0
         ],
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_volume_arv_monthly"
+        "artifact_dir": "/workspace/reports/models/forecast_volume_arv_monthly"
       },
       "HRDT": {
         "status": "ok",
-        "mae": 25254.217809170408,
-        "rmse": 30907.63759099626,
-        "selected_model": "random_forest",
-        "failed_candidates": {
-          "arima": "No module named 'statsmodels'"
-        },
+        "mae": 24809.5,
+        "rmse": 31790.055863429996,
+        "selected_model": "naive_lag1",
+        "failed_candidates": {},
         "validation_mae": {
-          "naive_lag1": 28276.583333333332,
-          "mean_baseline": 21378.017562866407,
-          "persistence_linear": 20200.504750867283,
-          "gradient_boosting": 21203.001872794684,
-          "random_forest": 20028.527911453344,
-          "extra_trees": 20085.379052506996
+          "naive_lag1": 27993.416666666668,
+          "mean_baseline": 21593.46003544631,
+          "persistence_linear": 21763.338603466305,
+          "gradient_boosting": 21329.090184115765,
+          "random_forest": 20972.98077709337,
+          "extra_trees": 20217.772326404767,
+          "arima": 20420.100713118227
         },
-        "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 2%",
-        "best_unpenalised_model": "random_forest",
-        "validation_selected_mae": 20028.527911453344,
-        "naive_lag1_test_mae": 24435.0,
-        "mean_baseline_test_mae": 20966.117131910236,
+        "recent_validation_mae": {
+          "naive_lag1": 25798.75,
+          "mean_baseline": 22628.836407233932,
+          "persistence_linear": 21926.147171019013,
+          "gradient_boosting": 22721.973322601465,
+          "random_forest": 20592.08837332315,
+          "extra_trees": 20889.444594002594,
+          "arima": 19983.66509903852
+        },
+        "holdout_validation_mae": {
+          "mean_baseline": 24108.22265625,
+          "naive_lag1": 24854.625,
+          "extra_trees": 20946.41059612383
+        },
+        "selection_method": "rolling-origin over validation period (12 refits, step 3); baseline preferred within 5% on full or recent window; ML must beat naive on recent window and chronological val holdout",
+        "best_unpenalised_model": "extra_trees",
+        "validation_selected_mae": 27993.416666666668,
+        "naive_lag1_test_mae": 24809.5,
+        "mean_baseline_test_mae": 19741.60125,
         "beats_naive_baseline_on_test": false,
         "beats_mean_baseline_on_test": false,
         "test_result_note": "Selected with validation data only; test comparison is a final holdout diagnostic.",
-        "is_baseline": false,
+        "is_baseline": true,
         "metric_weighting": "unweighted",
-        "n_train": 87,
-        "n_validation": 17,
-        "n_test": 21,
+        "n_train": 80,
+        "n_validation": 16,
+        "n_test": 20,
         "last_actual": [
-          71040.0,
           49050.0,
           66404.0,
           59150.0,
@@ -1157,29 +1313,28 @@
           8380.0
         ],
         "last_pred": [
-          39457.21649711317,
-          67499.50909722959,
-          68479.95059171823,
-          39254.71987310932,
-          49145.51148046911,
-          45929.088336711204,
-          60084.67032262335,
-          29222.41047391216,
-          33650.95928216905,
-          64255.62946285922,
-          64025.45292052875,
-          30844.151299215107,
-          31221.359948134137,
-          32161.094300239794,
-          39401.2132886974,
-          47358.878696828506,
-          42541.730873656285,
-          28452.48086810125,
-          34104.2657530221,
-          68553.36921166746,
-          42859.65504824006
+          71040.0,
+          49050.0,
+          66404.0,
+          59150.0,
+          68815.0,
+          25917.0,
+          38761.0,
+          68666.0,
+          68919.0,
+          30326.0,
+          11035.0,
+          17752.0,
+          11791.0,
+          53800.0,
+          44927.0,
+          17000.0,
+          39554.0,
+          108603.0,
+          35125.0,
+          41540.0
         ],
-        "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\forecast_volume_hrdt_monthly"
+        "artifact_dir": "/workspace/reports/models/forecast_volume_hrdt_monthly"
       },
       "MRDT": {
         "status": "skipped_insufficient_history",
@@ -1190,6 +1345,18 @@
     "lstm": {
       "trained": false,
       "reason": "Classical monthly lag models are compared with explicit baselines; no neural model is justified without a demonstrated validation gain."
+    },
+    "proposal_baseline_test_scores": {
+      "late_rate": {
+        "naive_lag1": 0.07561980269440548,
+        "arima": 0.05844239200152118,
+        "mean_baseline": 0.061021512815900285
+      },
+      "volume": {
+        "naive_lag1": 1002339.6,
+        "arima": 1249357.1451330641,
+        "mean_baseline": 1244626.1880952376
+      }
     }
   },
   "vendor_segmentation": {
@@ -1985,307 +2152,7 @@
     ],
     "limitation": "Corpus is small and synthetic; absolute scores indicate wiring and rank quality, not performance on real procurement documents."
   },
-  "rag_index": {
-    "generated_at": "2026-11-14T13:45:23.071729+00:00",
-    "index_version": "2.0",
-    "n_chunks": 38,
-    "n_documents": 9,
-    "n_sections": 38,
-    "corpus": [
-      "README.md",
-      "SYNTHETIC_cold_chain_policy.md",
-      "SYNTHETIC_escalation_matrix.md",
-      "SYNTHETIC_inventory_policy.md",
-      "SYNTHETIC_procurement_policy.md",
-      "SYNTHETIC_quality_policy.md",
-      "SYNTHETIC_shipping_sla.md",
-      "SYNTHETIC_supplier_agreement.md",
-      "SYNTHETIC_vendor_compliance.md"
-    ],
-    "document_types": [
-      "compliance",
-      "contract",
-      "policy",
-      "sla"
-    ],
-    "indexed_dirs": [
-      "data/documents/synthetic",
-      "data/documents/uploads"
-    ],
-    "retrieval_stack": {
-      "dense": "BAAI/bge-small-en-v1.5",
-      "dense_dim": 384,
-      "lexical": "Okapi BM25 (k1=1.5, b=0.75)",
-      "fusion": "Reciprocal Rank Fusion (k=60)",
-      "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
-    },
-    "neural": {
-      "dense_available": true,
-      "reranker_available": true,
-      "reason": "fastembed"
-    },
-    "synthetic_corpus": true,
-    "note": "Synthetic fixtures only; project reports and docs are excluded from evidence.",
-    "artifact_dir": "T:\\SCOPE\\SCOPE\\reports\\models\\rag_index",
-    "retrieval_evaluation": {
-      "evaluation_type": "gold_section_retrieval_benchmark",
-      "generated_at": "2026-11-14T13:46:08.903245+00:00",
-      "n_queries": 20,
-      "n_chunks": 38,
-      "metrics": "MRR and Recall@k over 20 questions with gold document+section labels",
-      "primary": {
-        "variant": "hybrid_rrf_rerank",
-        "mrr": 1.0,
-        "section_recall_at_k": {
-          "1": 1.0,
-          "3": 1.0,
-          "5": 1.0
-        },
-        "file_recall_at_k": {
-          "1": 1.0,
-          "3": 1.0,
-          "5": 1.0
-        }
-      },
-      "ablations": {
-        "dense_only": {
-          "mrr": 0.9416666666666667,
-          "section_recall_at_k": {
-            "1": 0.9,
-            "3": 1.0,
-            "5": 1.0
-          },
-          "file_recall_at_k": {
-            "1": 0.9,
-            "3": 1.0,
-            "5": 1.0
-          }
-        },
-        "bm25_only": {
-          "mrr": 1.0,
-          "section_recall_at_k": {
-            "1": 1.0,
-            "3": 1.0,
-            "5": 1.0
-          },
-          "file_recall_at_k": {
-            "1": 1.0,
-            "3": 1.0,
-            "5": 1.0
-          }
-        },
-        "hybrid_rrf": {
-          "mrr": 0.975,
-          "section_recall_at_k": {
-            "1": 0.95,
-            "3": 1.0,
-            "5": 1.0
-          },
-          "file_recall_at_k": {
-            "1": 0.95,
-            "3": 1.0,
-            "5": 1.0
-          }
-        },
-        "hybrid_rrf_rerank": {
-          "mrr": 1.0,
-          "section_recall_at_k": {
-            "1": 1.0,
-            "3": 1.0,
-            "5": 1.0
-          },
-          "file_recall_at_k": {
-            "1": 1.0,
-            "3": 1.0,
-            "5": 1.0
-          }
-        }
-      },
-      "cases": [
-        {
-          "query": "How long is the recommended ocean shipment contingency buffer?",
-          "expected_file": "SYNTHETIC_shipping_sla.md",
-          "expected_section": "delivery windows",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_shipping_sla.md",
-          "top_section": "1. Delivery windows and buffers"
-        },
-        {
-          "query": "When must a vendor notify procurement about an expected delay?",
-          "expected_file": "SYNTHETIC_shipping_sla.md",
-          "expected_section": "delay notification",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_shipping_sla.md",
-          "top_section": "3. Delay notification"
-        },
-        {
-          "query": "Which mode should clinically urgent ARV shipments use?",
-          "expected_file": "SYNTHETIC_shipping_sla.md",
-          "expected_section": "mode selection",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_shipping_sla.md",
-          "top_section": "4. Mode selection"
-        },
-        {
-          "query": "What service credit applies for a late delivery?",
-          "expected_file": "SYNTHETIC_supplier_agreement.md",
-          "expected_section": "penalties",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_supplier_agreement.md",
-          "top_section": "2. Late delivery penalties"
-        },
-        {
-          "query": "What is the maximum penalty cap for repeated late weeks?",
-          "expected_file": "SYNTHETIC_supplier_agreement.md",
-          "expected_section": "penalties",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_supplier_agreement.md",
-          "top_section": "2. Late delivery penalties"
-        },
-        {
-          "query": "Which events are excluded from force majeure relief?",
-          "expected_file": "SYNTHETIC_supplier_agreement.md",
-          "expected_section": "force majeure",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_supplier_agreement.md",
-          "top_section": "4. Force majeure"
-        },
-        {
-          "query": "How long must shipment and delivery records be retained?",
-          "expected_file": "SYNTHETIC_supplier_agreement.md",
-          "expected_section": "audit rights",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_supplier_agreement.md",
-          "top_section": "5. Audit rights"
-        },
-        {
-          "query": "At what vendor late rate must procurement escalate?",
-          "expected_file": "SYNTHETIC_procurement_policy.md",
-          "expected_section": "escalation trigger",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_procurement_policy.md",
-          "top_section": "1. Escalation trigger"
-        },
-        {
-          "query": "How many shipments must a vendor quarter contain to be reviewed?",
-          "expected_file": "SYNTHETIC_procurement_policy.md",
-          "expected_section": "cadence",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_procurement_policy.md",
-          "top_section": "5. Investigation cadence"
-        },
-        {
-          "query": "What must a disruption claim cite as evidence?",
-          "expected_file": "SYNTHETIC_procurement_policy.md",
-          "expected_section": "evidence requirements",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_procurement_policy.md",
-          "top_section": "4. Evidence requirements"
-        },
-        {
-          "query": "Below how many days of stock cover is it an inventory emergency?",
-          "expected_file": "SYNTHETIC_inventory_policy.md",
-          "expected_section": "stock cover",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_inventory_policy.md",
-          "top_section": "1. Stock cover target"
-        },
-        {
-          "query": "When does a stockout occur?",
-          "expected_file": "SYNTHETIC_inventory_policy.md",
-          "expected_section": "stockout",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_inventory_policy.md",
-          "top_section": "3. Stockout definition"
-        },
-        {
-          "query": "What temperature range must cold chain products be kept in?",
-          "expected_file": "SYNTHETIC_cold_chain_policy.md",
-          "expected_section": "temperature range",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_cold_chain_policy.md",
-          "top_section": "1. Temperature range"
-        },
-        {
-          "query": "What happens after a temperature excursion longer than two hours?",
-          "expected_file": "SYNTHETIC_cold_chain_policy.md",
-          "expected_section": "excursion",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_cold_chain_policy.md",
-          "top_section": "2. Excursion handling"
-        },
-        {
-          "query": "What defect rate triggers a quality review?",
-          "expected_file": "SYNTHETIC_quality_policy.md",
-          "expected_section": "defect rate",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_quality_policy.md",
-          "top_section": "1. Defect rate threshold"
-        },
-        {
-          "query": "Can a missing temperature record block batch release?",
-          "expected_file": "SYNTHETIC_quality_policy.md",
-          "expected_section": "release decision",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_quality_policy.md",
-          "top_section": "3. Release decision"
-        },
-        {
-          "query": "How quickly must a Severity 1 disruption be acknowledged?",
-          "expected_file": "SYNTHETIC_escalation_matrix.md",
-          "expected_section": "response times",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_escalation_matrix.md",
-          "top_section": "2. Response times"
-        },
-        {
-          "query": "What must an escalation record reference?",
-          "expected_file": "SYNTHETIC_escalation_matrix.md",
-          "expected_section": "mandatory evidence",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_escalation_matrix.md",
-          "top_section": "4. Mandatory evidence"
-        },
-        {
-          "query": "Are anomaly scores proof of fraud?",
-          "expected_file": "SYNTHETIC_vendor_compliance.md",
-          "expected_section": "anomaly",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_vendor_compliance.md",
-          "top_section": "4. Anomaly interpretation"
-        },
-        {
-          "query": "Must missing freight cost be treated as zero?",
-          "expected_file": "SYNTHETIC_vendor_compliance.md",
-          "expected_section": "freight cost",
-          "section_rank": 1,
-          "file_rank": 1,
-          "top_file": "SYNTHETIC_vendor_compliance.md",
-          "top_section": "2. Freight cost recording"
-        }
-      ],
-      "limitation": "Corpus is small and synthetic; absolute scores indicate wiring and rank quality, not performance on real procurement documents."
-    }
-  },
+  "rag_index": null,
   "claim_checker_evaluation": {
     "generated_at": "2026-11-14T13:55:15.949053+00:00",
     "corpus_grounded": {
@@ -7389,50 +7256,50 @@
     "late_delivery": {
       "model": "late_delivery",
       "artifact": "late_delivery_classifier",
-      "evaluated_at": "2026-11-14T13:46:42.986576+00:00",
+      "evaluated_at": "2026-11-26T14:30:19.623357+00:00",
       "test": {
         "n_test": 1550,
-        "threshold": 0.217049956918077,
-        "accuracy": 0.743225806451613,
-        "precision": 0.29206963249516443,
-        "recall": 0.825136612021858,
-        "f1": 0.43142857142857144,
-        "roc_auc": 0.8071042248791778,
-        "pr_auc": 0.30691550525426403,
+        "threshold": 0.15832726054121102,
+        "accuracy": 0.7090322580645161,
+        "precision": 0.27364864864864863,
+        "recall": 0.8852459016393442,
+        "f1": 0.4180645161290323,
+        "roc_auc": 0.8062068028189845,
+        "pr_auc": 0.31013547672066355,
         "confusion_matrix": [
           [
-            1001,
-            366
+            937,
+            430
           ],
           [
-            32,
-            151
+            21,
+            162
           ]
         ],
         "classification_report": {
           "0": {
-            "precision": 0.9690222652468539,
-            "recall": 0.7322604242867593,
-            "f1-score": 0.8341666666666666,
+            "precision": 0.9780793319415448,
+            "recall": 0.6854425749817118,
+            "f1-score": 0.8060215053763441,
             "support": 1367.0
           },
           "1": {
-            "precision": 0.29206963249516443,
-            "recall": 0.825136612021858,
-            "f1-score": 0.43142857142857144,
+            "precision": 0.27364864864864863,
+            "recall": 0.8852459016393442,
+            "f1-score": 0.4180645161290323,
             "support": 183.0
           },
-          "accuracy": 0.743225806451613,
+          "accuracy": 0.7090322580645161,
           "macro avg": {
-            "precision": 0.6305459488710091,
-            "recall": 0.7786985181543087,
-            "f1-score": 0.632797619047619,
+            "precision": 0.6258639902950968,
+            "recall": 0.785344238310528,
+            "f1-score": 0.6120430107526882,
             "support": 1550.0
           },
           "weighted avg": {
-            "precision": 0.8890981802187512,
-            "recall": 0.743225806451613,
-            "f1-score": 0.7866175883256529,
+            "precision": 0.8949110641721255,
+            "recall": 0.7090322580645161,
+            "f1-score": 0.760217551161984,
             "support": 1550.0
           }
         }
@@ -7441,15 +7308,15 @@
     "duration": {
       "model": "duration",
       "artifact": "delivery_duration_regressor",
-      "evaluated_at": "2026-11-14T13:46:43.536522+00:00",
+      "evaluated_at": "2026-11-26T14:30:19.997655+00:00",
       "test": {
         "n_test": 884,
-        "mae": 81.22336275142703,
-        "rmse": 107.16009807063604,
-        "r2": -0.12444560390728854,
-        "median_ae": 61.533004429897005,
+        "mae": 80.95701357466064,
+        "rmse": 114.95059188477732,
+        "r2": -0.29388199567790263,
+        "median_ae": 47.0,
         "mean_actual": 138.61990950226243,
-        "mean_pred": 116.32092286171628
+        "mean_pred": 90.29524886877829
       }
     },
     "inventory": {
@@ -7510,28 +7377,26 @@
     "forecast_late_rate": {
       "model": "forecast_late_rate",
       "artifact": "forecast_late_rate_monthly",
-      "evaluated_at": "2026-11-14T13:46:45.813739+00:00",
+      "evaluated_at": "2026-11-26T14:30:20.007744+00:00",
       "test": {
         "frequency": "monthly",
-        "selected_model": "extra_trees",
-        "n_test": 22,
-        "mae": 0.06815115697827147,
-        "rmse": 0.08321332815533636,
+        "selected_model": "mean_baseline",
+        "n_test": 20,
+        "mae": 0.061021512815900285,
+        "rmse": 0.07189674765950628,
         "metric_weighting": "shipment_count_weighted",
         "baselines": {
           "naive_lag1": {
-            "mae": 0.08721047083427215
+            "mae": 0.07561980269440548
           },
           "development_mean": {
-            "mae": 0.06395641339796747
+            "mae": 0.061021512815900285
           }
         },
         "beats_naive_lag1": true,
         "beats_development_mean": false,
         "selection_note": "Model selected using validation data; test baseline comparisons are final holdout diagnostics.",
         "actual": [
-          0.04918032786885246,
-          0.2441860465116279,
           0.18181818181818182,
           0.27,
           0.10416666666666667,
@@ -7554,56 +7419,52 @@
           0.0
         ],
         "predicted": [
-          0.22740211837480265,
-          0.19453345779193787,
-          0.18027121651562386,
-          0.21000957915256915,
-          0.1959434492507073,
-          0.2001911591619277,
-          0.18857535621685018,
-          0.2062356978073102,
-          0.1806539468731726,
-          0.17048844817642,
-          0.1176431565784196,
-          0.08892719799459455,
-          0.09807540378096388,
-          0.15940739594479475,
-          0.1432675634814734,
-          0.15923016728187722,
-          0.10945649893908889,
-          0.10352659919123,
-          0.06815802690247735,
-          0.1214858054534258,
-          0.08458823006906704,
-          0.06911397794180951
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191,
+          0.11249371543489191
         ]
       }
     },
     "forecast_volume": {
       "model": "forecast_volume",
       "artifact": "forecast_volume_quantity_monthly",
-      "evaluated_at": "2026-11-14T13:46:46.816965+00:00",
+      "evaluated_at": "2026-11-26T14:30:20.014352+00:00",
       "test": {
         "frequency": "monthly",
-        "selected_model": "extra_trees",
-        "n_test": 22,
-        "mae": 994005.1897767073,
-        "rmse": 1207766.3685824834,
+        "selected_model": "naive_lag1",
+        "n_test": 20,
+        "mae": 1002339.6,
+        "rmse": 1268171.403008915,
         "metric_weighting": "unweighted",
         "baselines": {
           "naive_lag1": {
-            "mae": 947280.2272727273
+            "mae": 1002339.6
           },
           "development_mean": {
-            "mae": 1205206.0606060608
+            "mae": 1244626.1880952376
           }
         },
         "beats_naive_lag1": false,
         "beats_development_mean": true,
         "selection_note": "Model selected using validation data; test baseline comparisons are final holdout diagnostics.",
         "actual": [
-          1627812.0,
-          2004327.0,
           2957582.0,
           4519832.0,
           2548440.0,
@@ -7626,28 +7487,26 @@
           7203.0
         ],
         "predicted": [
-          2494604.992591705,
-          2240841.070389006,
-          2412773.9593391274,
-          2367359.6270931736,
-          2204529.9475119957,
-          2485289.797159743,
-          2080065.5173470958,
-          2290630.947529945,
-          2500320.581602843,
-          2364901.996764941,
-          2210235.6294284347,
-          2101331.8367581777,
-          2305255.663172925,
-          2472044.6848448585,
-          2146584.3120207023,
-          2223873.0858647902,
-          2350500.478050032,
-          2501254.2494367547,
-          2134444.908291019,
-          1952800.6930626396,
-          1170095.0563868696,
-          655353.891833112
+          2004327.0,
+          2957582.0,
+          4519832.0,
+          2548440.0,
+          2637618.0,
+          3198768.0,
+          1895477.0,
+          1749887.0,
+          1004264.0,
+          2518005.0,
+          4227072.0,
+          2957312.0,
+          2334566.0,
+          3435836.0,
+          4642264.0,
+          1527456.0,
+          1848748.0,
+          230869.0,
+          134500.0,
+          0.0
         ]
       }
     },
@@ -7764,7 +7623,7 @@
     }
   },
   "preprocessing": {
-    "generated_at": "2026-11-14T13:40:05.322664+00:00",
+    "generated_at": "2026-11-26T14:12:18.741374+00:00",
     "column_mapping": {
       "ID": "ID",
       "Project Code": "Project_Code",

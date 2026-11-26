@@ -70,6 +70,9 @@ reports/figures/*
 !reports/figures/.gitkeep
 reports/metrics/*
 !reports/metrics/.gitkeep
+!reports/metrics/model_results_*.csv
+!reports/metrics/model_vs_baseline_comparison.csv
+!reports/metrics/proposal_*.csv
 reports/models/*
 !reports/models/.gitkeep
 reports/investigations/*.json

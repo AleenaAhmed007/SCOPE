@@ -1,0 +1,21 @@
+task,model,role,split,metric_1,value_1,metric_2,value_2,metric_3,value_3,notes
+Late-delivery risk,xgboost,proposed_model,test,roc_auc,0.760,pr_auc,0.280,f1,0.357,Proposal models vs Logistic Regression baseline
+Late-delivery risk,random_forest,proposed_model,test,roc_auc,0.806,pr_auc,0.310,f1,0.418,Proposal models vs Logistic Regression baseline
+Late-delivery risk,logistic_regression,baseline,test,roc_auc,0.656,pr_auc,0.162,f1,0.282,Proposal models vs Logistic Regression baseline
+Delay forecasting (monthly late rate),LSTM,proposed_model,test,mae,,,,,,Classical monthly lag models are compared with explicit baselines; no neural model is justified without a demonstrated validation gain.
+Delay forecasting (monthly late rate),naive_forecast,baseline,test,mae,0.0756,,,,,Lower MAE is better; shipment-count weighted
+Delay forecasting (monthly late rate),ARIMA,baseline,test,mae,0.0584,,,,,Lower MAE is better; shipment-count weighted
+Delay forecasting (monthly late rate),mean_baseline,selected_classical,test,mae,0.0610,,,,,Lower MAE is better; shipment-count weighted
+Volume forecasting (monthly quantity),LSTM,proposed_model,test,mae,,,,,,Classical monthly lag models are compared with explicit baselines; no neural model is justified without a demonstrated validation gain.
+Volume forecasting (monthly quantity),naive_forecast,baseline,test,mae,1002339.6,,,,,Lower MAE is better; quantity proxy not warehouse demand
+Volume forecasting (monthly quantity),ARIMA,baseline,test,mae,1249357.1,,,,,Lower MAE is better; quantity proxy not warehouse demand
+Volume forecasting (monthly quantity),naive_lag1,selected_classical,test,mae,1002339.6,,,,,Lower MAE is better; quantity proxy not warehouse demand
+Lead-time prediction,gradient_boosting,proposed_model,test,mae_days,81.045,r2,-0.148,,,PO-to-client duration
+Lead-time prediction,historical_median,baseline,test,mae_days,81.188,r2,-0.111,,,Simple baseline
+Supplier segmentation,kmeans,proposed_model,full,k,4,silhouette,0.268,n_clustered_vendors,28,Unsupervised; no labeled baseline
+Anomaly detection,isolation_forest_unusual_profile,proposed_model,test,anomaly_rate,0.057,n_anomaly,550,,,Unsupervised; no ground-truth labels
+Anomaly detection,isolation_forest_vendor_kpi,proposed_model,all_periods,n_anomaly,10,n_periods,277,,,Proposal supplier-KPI anomaly model
+Inventory risk,random_forest,proposed_model,test,pr_auc,0.705,roc_auc,0.782,f1,0.651,Experimental; inventory provenance unverified
+Inventory risk,logistic_regression,baseline,validation,pr_auc,0.574,roc_auc,0.698,f1,0.559,Experimental; inventory provenance unverified
+Document retrieval,embeddings+BM25+cross-encoder,proposed_model,synthetic_queries,mrr,1.000,recall@3,1.000,,,"Wiring sanity check on synthetic queries, not a quality benchmark"
+Explanations,SHAP,proposed_model,sample,status,ok,n_samples,200,explainer,TreeExplainer,Global/local explanations for late-delivery model

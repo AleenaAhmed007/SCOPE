@@ -1,0 +1,11 @@
+task,selected_model,baseline,metric,model_value,baseline_value,delta_model_minus_baseline,beats_baseline,note
+late_delivery,random_forest,vendor_history_only,roc_auc,0.806,0.787,0.020,true,Higher is better
+late_delivery,random_forest,vendor_history_only,pr_auc,0.310,0.255,0.055,true,Higher is better
+late_delivery,random_forest,prevalence_probability,pr_auc,0.310,0.118,0.192,true,Higher is better; prevalence = positive rate
+delivery_duration,shipment_mode_median,dummy_median,mae_days,80.957,81.188,-0.231,true,Lower MAE is better
+monthly_late_rate,mean_baseline,naive_lag1,mae,0.0610,0.0756,-0.0146,true,Lower MAE is better; selection used validation only
+monthly_late_rate,mean_baseline,mean_baseline,mae,0.0610,0.0610,0.0000,false,Lower MAE is better; selection used validation only
+monthly_volume,naive_lag1,naive_lag1,mae,1002339.6,1002339.6,0.0,false,Lower MAE is better; selection used validation only
+monthly_volume,naive_lag1,mean_baseline,mae,1002339.6,1244626.2,-242286.6,true,Lower MAE is better; selection used validation only
+inventory_stockout_proxy,random_forest,training_prevalence_probability,pr_auc,0.652,0.338,0.314,true,Validation comparison used for selection; source unverified
+inventory_stockout_proxy,random_forest,test_prevalence,pr_auc,0.705,0.379,0.326,true,Experimental proxy; inventory provenance unverified
