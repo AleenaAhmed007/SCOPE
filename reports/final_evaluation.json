@@ -1345,6 +1345,18 @@
     "lstm": {
       "trained": false,
       "reason": "Classical monthly lag models are compared with explicit baselines; no neural model is justified without a demonstrated validation gain."
+    },
+    "proposal_baseline_test_scores": {
+      "late_rate": {
+        "naive_lag1": 0.07561980269440548,
+        "arima": 0.05844239200152118,
+        "mean_baseline": 0.061021512815900285
+      },
+      "volume": {
+        "naive_lag1": 1002339.6,
+        "arima": 1249357.1451330641,
+        "mean_baseline": 1244626.1880952376
+      }
     }
   },
   "vendor_segmentation": {

@@ -1,0 +1,9 @@
+task,proposed_models,baseline,implemented
+Late-delivery risk,"XGBoost, Random Forest",Logistic Regression,yes
+Delay and volume forecasting,LSTM,"Naive forecast, ARIMA",classical candidates trained; LSTM not trained (short monthly history)
+Lead-time prediction,Gradient-boosted regression,Historical median,yes
+Supplier segmentation,K-Means,N/A (unsupervised),yes
+Anomaly detection,Isolation Forest,N/A (unsupervised),yes
+Inventory risk,Classification on stock cover vs lead time,Logistic Regression / prevalence,yes (experimental)
+Document retrieval,"Embeddings, BM25, cross-encoder reranker",N/A (wiring benchmark),yes
+Explanations,SHAP,N/A,yes

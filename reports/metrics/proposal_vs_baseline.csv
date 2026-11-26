@@ -1,0 +1,11 @@
+task,proposed_model,baseline,metric,model_value,baseline_value,delta,beats_baseline,notes
+Late-delivery risk,xgboost,logistic_regression,roc_auc,0.760,0.656,0.105,true,Higher is better
+Late-delivery risk,xgboost,logistic_regression,pr_auc,0.280,0.162,0.119,true,Higher is better
+Late-delivery risk,xgboost,logistic_regression,f1,0.357,0.282,0.075,true,Higher is better
+Late-delivery risk,random_forest,logistic_regression,roc_auc,0.806,0.656,0.150,true,Higher is better
+Late-delivery risk,random_forest,logistic_regression,pr_auc,0.310,0.162,0.149,true,Higher is better
+Late-delivery risk,random_forest,logistic_regression,f1,0.418,0.282,0.136,true,Higher is better
+Delay forecasting (monthly late rate),ARIMA (classical stand-in; LSTM not trained),naive_forecast,mae,0.0584,0.0756,-0.0172,true,Lower MAE is better
+Volume forecasting (monthly quantity),ARIMA (classical stand-in; LSTM not trained),naive_forecast,mae,1249357.1,1002339.6,247017.5,false,Lower MAE is better
+Lead-time prediction,gradient_boosting,historical_median,mae_days,81.045,81.188,-0.143,true,Lower MAE is better
+Inventory risk,random_forest,logistic_regression,pr_auc,0.652,0.574,0.078,true,Validation comparison; higher is better
