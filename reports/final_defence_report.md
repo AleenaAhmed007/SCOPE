@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-26T14:30:20.014789+00:00`
+Generated: `2026-11-26T14:31:04.815111+00:00`
 
 ## System summary
 
@@ -39,14 +39,14 @@ SCOPE integrates:
 - Forecasting frequency: **monthly**; results include naive and mean baselines.
 - Monthly late-rate model MAE: **0.061021512815900285**; beats naive: **True**, beats mean: **False**.
 - Monthly volume model MAE: **1002339.6**; beats naive: **False**, beats mean: **True**.
-- Inventory proxy model: **None**; validation PR-AUC **None** vs prevalence baseline **None**; test ROC-AUC / PR-AUC: **None / None**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
-- Inventory rule agreement on test rows: **None** (consistency check, not model accuracy).
-- RAG retrieval wiring sanity MRR: **None** over None hand-authored synthetic queries; this is not a retrieval-quality claim.
+- Inventory proxy model: **random_forest**; validation PR-AUC **0.652053938119597** vs prevalence baseline **0.33785529715762275**; test ROC-AUC / PR-AUC: **0.7816059623443916 / 0.7050876153767016**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
+- Inventory rule agreement on test rows: **1.0** (consistency check, not model accuracy).
+- RAG retrieval wiring sanity MRR: **1.0** over 20 hand-authored synthetic queries; this is not a retrieval-quality claim.
 - RAG runtime components: **lexical fallback**; check per-query mode in the API response because optional components may be unavailable in another environment.
-- Claim Checker corpus-corruption evaluation: **None detection rate; None false-positive rate** over None cases (None extractive claims from the current corpus). This is a controlled synthetic-corpus evaluation, not a free-form semantic-accuracy estimate.
-- Vendor segmentation: **k=None, silhouette=None**, with small-history and profile-outlier vendors separated.
-- Unusual shipment profile flags: **None / None** test shipments; flagged late-rate diagnostic **None** (descriptive only).
-- SHAP status: **None**
+- Claim Checker corpus-corruption evaluation: **1.0 detection rate; 0.0 false-positive rate** over 414 cases (97 extractive claims from the current corpus). This is a controlled synthetic-corpus evaluation, not a free-form semantic-accuracy estimate.
+- Vendor segmentation: **k=4, silhouette=0.26827670925046854**, with small-history and profile-outlier vendors separated.
+- Unusual shipment profile flags: **89 / 1550** test shipments; flagged late-rate diagnostic **0.0898876404494382** (descriptive only).
+- SHAP status: **ok**
 
 ## Model evaluation table
 
@@ -77,9 +77,14 @@ Supervised metrics use the held-out test split unless marked as validation. Fore
 | Monthly volume forecast | random_forest | validation MAE 727292.290 | not scored on test | Validation candidate; n_test N/A; N/A |
 | Monthly volume forecast | extra_trees | validation MAE 747112.444 | not scored on test | Validation candidate; n_test N/A; N/A |
 | Monthly volume forecast | arima | validation MAE 846889.275 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Unusual shipment profile | Isolation Forest | N/A | Not evaluated | Saved model artifact or evaluation result missing |
-| Retrospective anomaly | Isolation Forest | N/A | Not evaluated | Saved model artifact or evaluation result missing |
-| Vendor KPI anomaly | Isolation Forest | N/A | Not evaluated | Saved model artifact or evaluation result missing |
+| Inventory stockout proxy | logistic_regression | val PR-AUC 0.574; F1 0.559 | test PR-AUC N/A; ROC-AUC N/A | Validation candidate; experimental, unverified source |
+| Inventory stockout proxy | random_forest | val PR-AUC 0.652; F1 0.621 | test PR-AUC 0.705; ROC-AUC 0.782 | Selected; experimental, unverified source |
+| Vendor segmentation | K-Means (k=4) | silhouette 0.268 | 28 clustered vendors; sizes {'0': 4, '1': 5, '2': 7, '3': 12} | Unsupervised; not a predictive accuracy score |
+| Unusual shipment profile | Isolation Forest | N/A | 89 flags / 1550 (5.7%) | Unsupervised; no ground-truth anomaly labels |
+| Retrospective anomaly | Isolation Forest | N/A | 85 flags / 1550 (5.5%) | Unsupervised; no ground-truth anomaly labels |
+| Vendor KPI anomaly | Isolation Forest | N/A | 1 flags / 48 (2.1%) | Unsupervised; no ground-truth anomaly labels |
+| RAG retrieval | lexical fallback | N/A | MRR 1.000; Recall@3 1.000 | Wiring check only; 20 synthetic queries |
+| Claim checker | verify_claims | 97 extracted corpus claims + 317 controlled corruptions | detection 1.000; false-positive rate 0.000 | Synthetic corpus and controlled corruption evaluation |
 
 ## Model vs baseline comparison
 
@@ -92,10 +97,10 @@ For MAE, lower is better; for AUC, PR-AUC, and F1, higher is better. Baselines a
 | Delivery duration | shipment_mode_median | median baseline MAE 81.188 days | MAE 80.957 days; delta -0.231 days | Better on test; validation beats median |
 | Monthly late rate | mean_baseline | naive MAE 0.076; mean MAE 0.061 | model MAE 0.061 | beats naive: yes; beats mean: no |
 | Monthly volume | naive_lag1 | naive MAE 1002339.600; mean MAE 1244626.188 | model MAE 1002339.600 | beats naive: no; beats mean: yes |
-| Inventory stockout proxy | None | validation prevalence PR-AUC N/A | validation PR-AUC N/A; test PR-AUC N/A vs test prevalence N/A | test AP delta N/A; label is derived and source unverified |
+| Inventory stockout proxy | random_forest | validation prevalence PR-AUC 0.338 | validation PR-AUC 0.652; test PR-AUC 0.705 vs test prevalence 0.379 | test AP delta 0.326; label is derived and source unverified |
 | Vendor segmentation | K-Means | No labeled baseline | silhouette only | N/A: descriptive clusters, not prediction |
 | Anomaly models | Isolation Forest | No labeled anomaly baseline | flag rates only | N/A: no ground truth labels |
-| RAG retrieval | lexical fallback | No representative relevance baseline | N/A-query synthetic benchmark | N/A: not a quality benchmark |
+| RAG retrieval | lexical fallback | No representative relevance baseline | 20-query synthetic benchmark | N/A: not a quality benchmark |
 
 ## Important limitations
 

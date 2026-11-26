@@ -1,6 +1,6 @@
 # Model Results and Baseline Comparison
 
-Source: `reports/final_evaluation.json` (generated `2026-11-26T14:30:20.014789+00:00`).
+Source: `reports/final_evaluation.json` (generated `2026-11-26T14:31:04.815111+00:00`).
 
 Regenerate with:
 
@@ -70,6 +70,11 @@ Selected model: **random_forest**. Inventory fields are unverified augmented dat
 
 | Model | Role | Split | Precision | Recall | F1 | ROC-AUC | PR-AUC |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| logistic_regression | candidate | validation | 0.490 | 0.652 | 0.559 | 0.698 | 0.574 |
+| random_forest | selected | validation | 0.535 | 0.738 | 0.621 | 0.776 | 0.652 |
+| random_forest | selected | test | 0.588 | 0.731 | 0.651 | 0.782 | 0.705 |
+| training_prevalence_probability | baseline | validation |  |  |  |  | 0.338 |
+| test_prevalence | baseline | test |  |  |  |  | 0.379 |
 
 ## 5. Selected model vs baseline (summary)
 
@@ -83,6 +88,8 @@ Selected model: **random_forest**. Inventory fields are unverified augmented dat
 | monthly_late_rate | mean_baseline | mean_baseline | mae | 0.0610 | 0.0610 | 0.0000 | false | Lower MAE is better; selection used validation only |
 | monthly_volume | naive_lag1 | naive_lag1 | mae | 1002339.6 | 1002339.6 | 0.0 | false | Lower MAE is better; selection used validation only |
 | monthly_volume | naive_lag1 | mean_baseline | mae | 1002339.6 | 1244626.2 | -242286.6 | true | Lower MAE is better; selection used validation only |
+| inventory_stockout_proxy | random_forest | training_prevalence_probability | pr_auc | 0.652 | 0.338 | 0.314 | true | Validation comparison used for selection; source unverified |
+| inventory_stockout_proxy | random_forest | test_prevalence | pr_auc | 0.705 | 0.379 | 0.326 | true | Experimental proxy; inventory provenance unverified |
 
 ## CSV outputs
 

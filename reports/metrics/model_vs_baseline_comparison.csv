@@ -7,3 +7,5 @@ monthly_late_rate,mean_baseline,naive_lag1,mae,0.0610,0.0756,-0.0146,true,Lower 
 monthly_late_rate,mean_baseline,mean_baseline,mae,0.0610,0.0610,0.0000,false,Lower MAE is better; selection used validation only
 monthly_volume,naive_lag1,naive_lag1,mae,1002339.6,1002339.6,0.0,false,Lower MAE is better; selection used validation only
 monthly_volume,naive_lag1,mean_baseline,mae,1002339.6,1244626.2,-242286.6,true,Lower MAE is better; selection used validation only
+inventory_stockout_proxy,random_forest,training_prevalence_probability,pr_auc,0.652,0.338,0.314,true,Validation comparison used for selection; source unverified
+inventory_stockout_proxy,random_forest,test_prevalence,pr_auc,0.705,0.379,0.326,true,Experimental proxy; inventory provenance unverified
