@@ -1,0 +1,14 @@
+{
+  "model": "duration",
+  "artifact": "delivery_duration_regressor",
+  "evaluated_at": "2026-11-26T15:29:33.413108+00:00",
+  "test": {
+    "n_test": 884,
+    "mae": 81.18778280542986,
+    "rmse": 106.50209778487552,
+    "r2": -0.11067902540114005,
+    "median_ae": 64.0,
+    "mean_actual": 138.61990950226243,
+    "mean_pred": 105.0
+  }
+}

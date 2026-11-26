@@ -1,0 +1,122 @@
+{
+  "target": "delivery_duration_days",
+  "definition": "Delivered_To_Client_Date - PO_Sent_To_Vendor_Date (plausible only)",
+  "note": "PO-to-client delivery duration \u2014 not generic supplier procurement lead time",
+  "features": [
+    "Country",
+    "Managed_By",
+    "Fulfill_Via",
+    "Vendor_INCO_Term",
+    "Shipment_Mode",
+    "Product_Group",
+    "Sub_Classification",
+    "Vendor",
+    "Dosage_Form",
+    "First_Line_Designation",
+    "Line_Item_Quantity",
+    "Line_Item_Value",
+    "Pack_Price",
+    "Unit_Price",
+    "Unit_Of_Measure_Per_Pack",
+    "Weight_Kilograms_Numeric",
+    "Freight_Cost_USD_Numeric",
+    "Line_Item_Insurance_USD",
+    "Scheduled_Month",
+    "Scheduled_Quarter",
+    "Scheduled_DOW",
+    "Weight_NonNumeric_Flag",
+    "Freight_NonNumeric_Flag",
+    "vendor_hist_late_rate",
+    "vendor_hist_median_delay"
+  ],
+  "n_train": 2485,
+  "n_val": 758,
+  "n_test": 884,
+  "target_diagnostics": {
+    "zero_day_rows_before_cap": 236,
+    "median_by_split": {
+      "train": 105.0,
+      "val": 108.5,
+      "test": 128.0
+    },
+    "extreme_value_cap_from_train_p99": 411.9000000000001
+  },
+  "models": {
+    "dummy_median": {
+      "val": {
+        "mae": 86.74802110817942,
+        "rmse": 113.0837653897453,
+        "r2": -0.059996766637777865,
+        "median_ae": 70.5,
+        "mean_actual": 131.9036939313984,
+        "mean_pred": 105.0
+      },
+      "test": {
+        "mae": 81.18778280542986,
+        "rmse": 106.50209778487552,
+        "r2": -0.11067902540114005,
+        "median_ae": 64.0,
+        "mean_actual": 138.61990950226243,
+        "mean_pred": 105.0
+      }
+    },
+    "gradient_boosting": {
+      "val": {
+        "mae": 88.85287137069221,
+        "rmse": 117.74952411317814,
+        "r2": -0.1492707135638709,
+        "median_ae": 68.74280906839758,
+        "mean_actual": 131.9036939313984,
+        "mean_pred": 102.80035199404632
+      },
+      "test": {
+        "mae": 81.20438135723691,
+        "rmse": 107.15149737206946,
+        "r2": -0.12426511453169842,
+        "median_ae": 62.306264098890495,
+        "mean_actual": 138.61990950226243,
+        "mean_pred": 105.97159238063054
+      }
+    },
+    "xgboost": {
+      "val": {
+        "mae": 87.38009601784256,
+        "rmse": 118.27987792285187,
+        "r2": -0.15964685344069207,
+        "median_ae": 69.83453369140625,
+        "mean_actual": 131.9036939313984,
+        "mean_pred": 99.19975280761719
+      },
+      "test": {
+        "mae": 81.36953973985905,
+        "rmse": 108.62807458659857,
+        "r2": -0.1554639752855851,
+        "median_ae": 63.69340515136719,
+        "mean_actual": 138.61990950226243,
+        "mean_pred": 105.36016082763672
+      }
+    },
+    "random_forest": {
+      "val": {
+        "mae": 86.9268585724458,
+        "rmse": 114.41838956242854,
+        "r2": -0.0851647558979971,
+        "median_ae": 71.32460183891646,
+        "mean_actual": 131.9036939313984,
+        "mean_pred": 115.36276208239711
+      },
+      "test": {
+        "mae": 80.72864806417086,
+        "rmse": 105.13736402364373,
+        "r2": -0.0823965882988138,
+        "median_ae": 65.30694077253868,
+        "mean_actual": 138.61990950226243,
+        "mean_pred": 119.95162479749095
+      }
+    }
+  },
+  "selected_model_beats_median_baseline_on_validation": false,
+  "prediction_basis": "historical_median_baseline",
+  "artifact_dir": "/workspace/reports/models/delivery_duration_regressor",
+  "best_model": "dummy_median"
+}

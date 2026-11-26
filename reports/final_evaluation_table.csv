@@ -1,0 +1,26 @@
+task,model,role,split,n,accuracy,precision,recall,f1,roc_auc,pr_auc,mae,rmse,r2,other,notes
+Late-delivery risk,xgboost,proposed,test,1550.0,0.6903225806451613,0.22851919561243145,0.6830601092896175,0.3424657534246575,0.7600605210244602,0.2980207183982587,,,,,best=random_forest
+Late-delivery risk,logistic_regression,baseline,test,1550.0,0.4535483870967742,0.16464646464646465,0.8907103825136612,0.27791986359761295,0.6958478739691639,0.19767896079140196,,,,,best=random_forest
+Late-delivery risk,random_forest,proposed,test,1550.0,0.7264516129032258,0.2828828828828829,0.8579234972677595,0.4254742547425474,0.8030808159545252,0.2961392230840407,,,,,best=random_forest
+Lead-time / delivery duration,dummy_median,baseline,test,884.0,,,,,,,81.18778280542986,106.50209778487552,-0.11067902540114005,median_ae=64.0,best=dummy_median; basis=historical_median_baseline
+Lead-time / delivery duration,gradient_boosting,proposed,test,884.0,,,,,,,81.20438135723691,107.15149737206946,-0.12426511453169842,median_ae=62.306264098890495,best=dummy_median; basis=historical_median_baseline
+Lead-time / delivery duration,xgboost,proposed,test,884.0,,,,,,,81.36953973985905,108.62807458659857,-0.1554639752855851,median_ae=63.69340515136719,best=dummy_median; basis=historical_median_baseline
+Lead-time / delivery duration,random_forest,proposed,test,884.0,,,,,,,80.72864806417086,105.13736402364373,-0.0823965882988138,median_ae=65.30694077253868,best=dummy_median; basis=historical_median_baseline
+Inventory stockout (experimental),logistic_regression,baseline,validation,,,0.4956521739130435,0.6539196940726577,0.5638911788953009,0.696683299911393,0.5721721595304885,,,,,validation only in training artifact
+Inventory stockout (experimental),random_forest,proposed,test,1550.0,0.7090322580645161,0.5947075208913649,0.727427597955707,0.6544061302681993,0.7732623244014923,0.6950332064125123,,,,,unverified augmented inventory
+Forecast late-rate (monthly),extra_trees,selected_classical,test,22.0,,,,,,,0.0681511569782715,0.08321332815533637,,beats_naive=True; beats_mean=False,
+Forecast late-rate (monthly),naive_lag1,baseline,test,22.0,,,,,,,0.08721047083427218,,,,baseline
+Forecast late-rate (monthly),mean_baseline,baseline,test,22.0,,,,,,,0.06395641339796747,,,,baseline
+Forecast volume (monthly),extra_trees,selected_classical,test,22.0,,,,,,,994005.1897767073,1207766.3685824834,,beats_naive=False; beats_mean=True,
+Forecast volume (monthly),naive_lag1,baseline,test,22.0,,,,,,,947280.2272727273,,,,baseline
+Forecast volume (monthly),mean_baseline,baseline,test,22.0,,,,,,,1205206.0606060608,,,,baseline
+Forecast late-rate (weekly),arima,selected_classical,test,95.0,,,,,,,0.11107845188680465,0.14333624748920565,,,weekly classical
+Forecast volume (weekly),persistence_linear,selected_classical,test,100.0,,,,,,,464212.5275853721,682923.5472745389,,,weekly classical
+Forecast late-rate (weekly neural),bilstm_exog_attn,neural_trial,test,96.0,,,,,,,0.13116225296617473,,,deploy=False; val_mae=0.08429374401579108,['No neural config clearly beats classical validation MAE on late_rate']
+Forecast volume (weekly neural),gru_lb12_h48,neural_trial,test,101.0,,,,,,,458616.80608087924,,,deploy=True; val_mae=314877.2000446961,['Neural config beats classical on validation (>=2%) and does not lose on test (volume)']
+Vendor segmentation,kmeans_k=4,unsupervised,full,73.0,,,,,,,,,,silhouette=0.26827670925046854,"Silhouette applies only to the modeled subset. Segments describe profiles, not vendor quality."
+Anomaly (unusual shipment profile),isolation_forest,unsupervised,test,1550.0,,,,,,,,,,anomaly_rate=0.05741935483870968; n_unusual=89,"Unsupervised unusual-profile flags, not delay predictions. There are no ground-truth anomaly labels."
+Document retrieval (RAG),hybrid_rrf_rerank,proposed,synthetic_queries,20.0,,,,,,,,,,MRR=1.0; recall@3=1.0,synthetic query wiring benchmark
+Explainability (SHAP),random_forest,explainer,sample,200.0,,,,,,,,,,status=ok; explainer=TreeExplainer,
+Walk-forward late delivery,refit_quarterly,backtest,quarters,10.0,,0.31866845011412864,0.7902536834967344,,0.7887769317046514,,,,,min_roc=0.7085450729120636; beats_vendor_only=9/10,SCMS out-of-time quarterly
+Walk-forward duration,rf_refit,backtest,quarters,8.0,,,,,,,,,,ml_beats_median=2/8,"No reliable ML signal; serve historical median, flagged as baseline."

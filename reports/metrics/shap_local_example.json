@@ -1,0 +1,65 @@
+{
+  "row_id": 86787,
+  "top_features": [
+    {
+      "feature": "cat__Country_Rwanda",
+      "shap": -0.08951557964187822,
+      "value": 1.0,
+      "abs_shap": 0.08951557964187822
+    },
+    {
+      "feature": "num__vendor_hist_late_rate",
+      "shap": 0.03984827216529395,
+      "value": 0.1687940560106686,
+      "abs_shap": 0.03984827216529395
+    },
+    {
+      "feature": "num__Weight_Kilograms_Numeric",
+      "shap": -0.027768174073885474,
+      "value": 12.0,
+      "abs_shap": 0.027768174073885474
+    },
+    {
+      "feature": "num__Line_Item_Quantity",
+      "shap": -0.022104803570557264,
+      "value": 200.0,
+      "abs_shap": 0.022104803570557264
+    },
+    {
+      "feature": "num__Freight_Cost_USD_Numeric",
+      "shap": -0.017061846747879802,
+      "value": 1301.94,
+      "abs_shap": 0.017061846747879802
+    },
+    {
+      "feature": "num__Line_Item_Insurance_USD",
+      "shap": -0.016494569881282853,
+      "value": 0.84,
+      "abs_shap": 0.016494569881282853
+    },
+    {
+      "feature": "cat__Vendor_INCO_Term_N/A - From RDC",
+      "shap": 0.015241135393973454,
+      "value": 1.0,
+      "abs_shap": 0.015241135393973454
+    },
+    {
+      "feature": "num__Line_Item_Value",
+      "shap": -0.01041522621913553,
+      "value": 710.0,
+      "abs_shap": 0.01041522621913553
+    },
+    {
+      "feature": "cat__Fulfill_Via_From RDC",
+      "shap": 0.009853539271228501,
+      "value": 1.0,
+      "abs_shap": 0.009853539271228501
+    },
+    {
+      "feature": "cat__Vendor_SCMS from RDC",
+      "shap": 0.009395098043093748,
+      "value": 1.0,
+      "abs_shap": 0.009395098043093748
+    }
+  ]
+}

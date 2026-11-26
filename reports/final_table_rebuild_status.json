@@ -1,0 +1,29 @@
+{
+  "03_late": {
+    "status": "ok"
+  },
+  "04_duration": {
+    "status": "ok"
+  },
+  "05_forecast": {
+    "status": "ok"
+  },
+  "06a_segments": {
+    "status": "ok"
+  },
+  "06b_anomaly": {
+    "status": "ok"
+  },
+  "07_inventory": {
+    "status": "ok"
+  },
+  "08_shap": {
+    "status": "ok"
+  },
+  "09_rag": {
+    "status": "ok"
+  },
+  "12_eval": {
+    "status": "ok"
+  }
+}
