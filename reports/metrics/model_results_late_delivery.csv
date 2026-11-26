@@ -1,0 +1,9 @@
+task,model,role,split,threshold,accuracy,precision,recall,f1,roc_auc,pr_auc
+late_delivery,xgboost,candidate,validation,0.270,0.672,0.334,0.758,0.463,0.747,0.336
+late_delivery,xgboost,candidate,test,0.270,0.701,0.230,0.650,0.340,0.764,0.278
+late_delivery,logistic_regression,candidate,validation,0.622,0.651,0.318,0.758,0.448,0.733,0.309
+late_delivery,logistic_regression,candidate,test,0.622,0.532,0.168,0.754,0.275,0.694,0.197
+late_delivery,random_forest,selected,validation,0.217,0.688,0.361,0.872,0.511,0.789,0.366
+late_delivery,random_forest,selected,test,0.217,0.743,0.292,0.825,0.431,0.807,0.307
+late_delivery,vendor_history_only,baseline,test,,0.882,0.000,0.000,0.000,0.787,0.255
+late_delivery,prevalence_probability,baseline,test,,0.882,0.000,0.000,0.000,0.500,0.118

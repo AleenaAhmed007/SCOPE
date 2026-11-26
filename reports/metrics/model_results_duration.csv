@@ -1,0 +1,9 @@
+task,model,role,split,mae_days,rmse_days,median_ae_days,r2
+delivery_duration,dummy_median,baseline,validation,86.748,113.084,70.500,-0.060
+delivery_duration,dummy_median,baseline,test,81.188,106.502,64.000,-0.111
+delivery_duration,gradient_boosting,candidate,validation,88.260,118.244,68.742,-0.159
+delivery_duration,gradient_boosting,candidate,test,81.042,108.178,60.656,-0.146
+delivery_duration,xgboost,candidate,validation,87.026,119.705,65.125,-0.188
+delivery_duration,xgboost,candidate,test,80.801,109.254,62.506,-0.169
+delivery_duration,random_forest,selected,validation,86.411,114.793,70.787,-0.092
+delivery_duration,random_forest,selected,test,81.223,107.160,61.533,-0.124
