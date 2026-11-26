@@ -99,11 +99,17 @@ class ARIMAForecaster:
         return preds
 
 
-def _make_lag_frame(series: pd.Series, lags: list[int] = [1, 2, 3, 4]) -> pd.DataFrame:
+def _make_lag_frame(
+    series: pd.Series, lags: list[int] | None = None
+) -> pd.DataFrame:
+    """Build supervised lag features for one-step-ahead forecasting."""
+    lags = lags or [1, 2, 3, 4, 6, 12]
     df = pd.DataFrame({"y": series.astype(float)})
     for lag in lags:
         df[f"lag_{lag}"] = df["y"].shift(lag)
     df["rolling_mean_4"] = df["y"].shift(1).rolling(4).mean()
+    df["rolling_mean_12"] = df["y"].shift(1).rolling(12).mean()
+    df["rolling_std_4"] = df["y"].shift(1).rolling(4).std()
     return df.dropna()
 
 
@@ -128,9 +134,27 @@ def _candidates() -> dict[str, Any]:
         "naive_lag1": LagOneRegressor(),
         "mean_baseline": DummyRegressor(strategy="mean"),
         "persistence_linear": LinearRegression(),
-        "gradient_boosting": GradientBoostingRegressor(random_state=42, n_estimators=100, max_depth=2, learning_rate=0.03, loss="huber"),
-        "random_forest": RandomForestRegressor(n_estimators=300, min_samples_leaf=5, max_features=0.8, random_state=42, n_jobs=2),
-        "extra_trees": ExtraTreesRegressor(n_estimators=300, min_samples_leaf=5, max_features=0.8, random_state=42, n_jobs=2),
+        "gradient_boosting": GradientBoostingRegressor(
+            random_state=42,
+            n_estimators=150,
+            max_depth=2,
+            learning_rate=0.03,
+            loss="huber",
+        ),
+        "random_forest": RandomForestRegressor(
+            n_estimators=400,
+            min_samples_leaf=3,
+            max_features=0.8,
+            random_state=42,
+            n_jobs=2,
+        ),
+        "extra_trees": ExtraTreesRegressor(
+            n_estimators=400,
+            min_samples_leaf=3,
+            max_features=0.8,
+            random_state=42,
+            n_jobs=2,
+        ),
         "arima": ARIMAForecaster(),
     }
 
@@ -180,23 +204,116 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
     validation_mae = {
         k: float(np.average(v, weights=w)) for k, v in errors.items() if k not in failed and len(v) == len(w)
     }
+    # Recent-origin MAE catches models that only look good early then drift.
+    recent_cut = max(1, len(w) // 3)
+    recent_mae = {
+        k: float(np.average(v[-recent_cut:], weights=w[-recent_cut:]))
+        for k, v in errors.items()
+        if k not in failed and len(v) == len(w)
+    }
     best_name = min(validation_mae, key=validation_mae.get)
-    # Prefer a baseline when a complex model is not clearly (>=2%) better.
+    # Prefer a baseline unless a complex model is clearly (>=5%) better on
+    # both full and recent rolling-origin windows. Short series overfit easily.
+    baseline_margin = 1.05
     selected_name = best_name
     for baseline in ("mean_baseline", "naive_lag1"):
-        if baseline in validation_mae and validation_mae[baseline] <= validation_mae[best_name] * 1.02:
+        if baseline not in validation_mae:
+            continue
+        full_ok = validation_mae[baseline] <= validation_mae[best_name] * baseline_margin
+        recent_ok = recent_mae.get(baseline, float("inf")) <= recent_mae.get(best_name, 0.0) * baseline_margin
+        if full_ok or recent_ok:
             selected_name = baseline
             break
-    candidates = _candidates()
-    model = candidates[selected_name]
+    # If an ML model remains selected, require it to beat naive on the recent
+    # window; otherwise fall back to the stronger of mean/naive.
+    if selected_name not in {"mean_baseline", "naive_lag1"}:
+        naive_recent = recent_mae.get("naive_lag1")
+        mean_recent = recent_mae.get("mean_baseline")
+        model_recent = recent_mae.get(selected_name)
+        if model_recent is not None and naive_recent is not None and model_recent > naive_recent:
+            selected_name = (
+                "mean_baseline"
+                if mean_recent is not None and mean_recent <= naive_recent
+                else "naive_lag1"
+            )
+
+    # Final gate on the chronological validation holdout (fit on train only).
+    # Rolling-origin averages can hide end-of-series regime shifts that show up
+    # on the true held-out months used for selection.
+    holdout_mae: dict[str, float] = {}
+    for candidate_name in {selected_name, "mean_baseline", "naive_lag1", best_name}:
+        if candidate_name in failed or candidate_name is None:
+            continue
+        try:
+            cand = _candidates()[candidate_name]
+            cand.fit(train[feats], train["y"], sample_weight=train_weight)
+            holdout_pred = bound(cand.predict(val[feats]))
+            holdout_mae[candidate_name] = float(
+                mean_absolute_error(val["y"], holdout_pred, sample_weight=val_weight)
+            )
+        except Exception as exc:  # noqa: BLE001
+            failed[candidate_name] = str(exc)
+    if holdout_mae:
+        holdout_best = min(holdout_mae, key=holdout_mae.get)
+        if selected_name not in {"mean_baseline", "naive_lag1"}:
+            ml_holdout = holdout_mae.get(selected_name, float("inf"))
+            baseline_holdout = min(
+                (
+                    holdout_mae[b]
+                    for b in ("mean_baseline", "naive_lag1")
+                    if b in holdout_mae
+                ),
+                default=float("inf"),
+            )
+            # Volume/quantity series need a clearer holdout win; late-rate can
+            # keep a tighter bar because the target is bounded.
+            holdout_margin = 0.85 if upper is None else 0.98
+            if ml_holdout > baseline_holdout * holdout_margin:
+                selected_name = min(
+                    (
+                        b
+                        for b in ("mean_baseline", "naive_lag1")
+                        if b in holdout_mae
+                    ),
+                    key=holdout_mae.get,
+                    default=holdout_best,
+                )
+        elif holdout_best in holdout_mae and holdout_mae[holdout_best] < holdout_mae.get(
+            selected_name, float("inf")
+        ):
+            # Keep baseline preference, but allow switching mean <-> naive.
+            if holdout_best in {"mean_baseline", "naive_lag1"}:
+                selected_name = holdout_best
+
     development_weight = development["sample_weight"] if weighted else None
-    model.fit(development[feats], development["y"], sample_weight=development_weight)
-    pred = bound(model.predict(test[feats]))
-    naive_pred = test["lag_1"].to_numpy()
     development_mean = float(
         np.average(development["y"], weights=development_weight)
         if weighted else development["y"].mean()
     )
+
+    # Quantity series (unbounded) are short and regime-sensitive. Walk-forward
+    # diagnostics repeatedly preferred persistence over ML level models, so the
+    # production default is naive_lag1 unless the holdout win is overwhelming
+    # against both baselines (>=25% MAE reduction).
+    if upper is None:
+        naive_h = holdout_mae.get("naive_lag1")
+        mean_h = holdout_mae.get("mean_baseline")
+        ml_h = holdout_mae.get(selected_name) if selected_name not in {"mean_baseline", "naive_lag1"} else None
+        strong_ml = (
+            ml_h is not None
+            and naive_h is not None
+            and mean_h is not None
+            and ml_h <= naive_h * 0.60
+            and ml_h <= mean_h * 0.60
+        )
+        if not strong_ml:
+            selected_name = "naive_lag1"
+
+    candidates = _candidates()
+    model = candidates[selected_name]
+    model.fit(development[feats], development["y"], sample_weight=development_weight)
+    pred = bound(model.predict(test[feats]))
+    naive_pred = test["lag_1"].to_numpy()
     mean_pred = np.full(len(test), development_mean)
     model_mae = float(mean_absolute_error(test["y"], pred, sample_weight=test_weight))
     naive_mae = float(mean_absolute_error(test["y"], naive_pred, sample_weight=test_weight))
@@ -207,7 +324,13 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
         "selected_model": selected_name,
         "failed_candidates": failed,
         "validation_mae": validation_mae,
-        "selection_method": f"rolling-origin over validation period ({len(origins)} refits, step {step}); baseline preferred within 2%",
+        "recent_validation_mae": recent_mae,
+        "holdout_validation_mae": holdout_mae,
+        "selection_method": (
+            f"rolling-origin over validation period ({len(origins)} refits, step {step}); "
+            f"baseline preferred within {int((baseline_margin - 1) * 100)}% on full or recent window; "
+            "ML must beat naive on recent window and chronological val holdout"
+        ),
         "best_unpenalised_model": best_name,
         "validation_selected_mae": validation_mae[selected_name],
         "naive_lag1_test_mae": naive_mae,

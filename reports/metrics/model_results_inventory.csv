@@ -1,6 +1,0 @@
-task,model,role,split,precision,recall,f1,roc_auc,pr_auc
-inventory_stockout_proxy,logistic_regression,candidate,validation,0.490,0.652,0.559,0.698,0.574
-inventory_stockout_proxy,random_forest,selected,validation,0.535,0.738,0.621,0.776,0.652
-inventory_stockout_proxy,random_forest,selected,test,0.588,0.731,0.651,0.782,0.705
-inventory_stockout_proxy,training_prevalence_probability,baseline,validation,,,,,0.338
-inventory_stockout_proxy,test_prevalence,baseline,test,,,,,0.379

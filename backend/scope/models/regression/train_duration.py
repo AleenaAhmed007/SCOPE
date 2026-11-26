@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing import Any
 
 import numpy as np
+import pandas as pd
+from sklearn.base import BaseEstimator, RegressorMixin
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, median_absolute_error, r2_score
@@ -23,6 +25,34 @@ from scope.models.common import (
 )
 
 logger = setup_logging()
+
+
+class GroupMedianRegressor(BaseEstimator, RegressorMixin):
+    """Predict the training median within a categorical group (fallback = global)."""
+
+    def __init__(self, group_col: str = "Shipment_Mode") -> None:
+        self.group_col = group_col
+
+    def fit(self, X: pd.DataFrame, y: pd.Series) -> "GroupMedianRegressor":
+        frame = X.copy()
+        frame["__y__"] = np.asarray(y, dtype=float)
+        self.global_median_ = float(np.median(frame["__y__"]))
+        self.group_medians_ = (
+            frame.groupby(self.group_col)["__y__"].median().to_dict()
+            if self.group_col in frame.columns
+            else {}
+        )
+        return self
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        if self.group_col not in X.columns:
+            return np.full(len(X), self.global_median_)
+        return (
+            X[self.group_col]
+            .map(self.group_medians_)
+            .fillna(self.global_median_)
+            .to_numpy(dtype=float)
+        )
 
 
 def _reg_metrics(y_true, y_pred) -> dict[str, Any]:
@@ -53,8 +83,9 @@ def train_delivery_duration() -> dict[str, Any]:
     # Models are selected on validation MAE, so the boosted models optimise an
     # absolute-error loss; the right-skewed target otherwise pulls squared-error
     # fits toward rare very long deliveries.
-    models = {
+    models: dict[str, Any] = {
         "dummy_median": DummyRegressor(strategy="median"),
+        "shipment_mode_median": GroupMedianRegressor(group_col="Shipment_Mode"),
         "gradient_boosting": GradientBoostingRegressor(
             loss="absolute_error",
             n_estimators=300,
@@ -65,16 +96,16 @@ def train_delivery_duration() -> dict[str, Any]:
         ),
         "xgboost": XGBRegressor(
             objective="reg:absoluteerror",
-            n_estimators=250,
+            n_estimators=300,
             max_depth=5,
-            learning_rate=0.05,
-            subsample=0.8,
-            colsample_bytree=0.8,
+            learning_rate=0.04,
+            subsample=0.85,
+            colsample_bytree=0.75,
             random_state=42,
             n_jobs=2,
         ),
         "random_forest": RandomForestRegressor(
-            n_estimators=250,
+            n_estimators=300,
             max_depth=12,
             min_samples_leaf=5,
             random_state=42,
@@ -102,30 +133,55 @@ def train_delivery_duration() -> dict[str, Any]:
     }
 
     best_name, best_mae, best_pipe = None, float("inf"), None
+    baseline_names = {"dummy_median", "shipment_mode_median"}
     for name, reg in models.items():
-        pipe = Pipeline([("pre", build_preprocessor(num, cat)), ("model", reg)])
-        pipe.fit(train[features], train["delivery_duration_days"])
+        if name in baseline_names:
+            # Group/global medians operate on the raw frame (need the group column).
+            model = reg
+            model.fit(train[features], train["delivery_duration_days"])
+            predict = lambda part, m=model: m.predict(part[features])
+            pipe: Any = model
+        else:
+            pipe = Pipeline([("pre", build_preprocessor(num, cat)), ("model", reg)])
+            pipe.fit(train[features], train["delivery_duration_days"])
+            predict = lambda part, p=pipe: p.predict(part[features])
         split_metrics = {}
         for split_name, part in [("val", val), ("test", test)]:
             if len(part) == 0:
                 continue
-            pred = pipe.predict(part[features])
+            pred = predict(part)
             split_metrics[split_name] = _reg_metrics(part["delivery_duration_days"], pred)
         results["models"][name] = split_metrics
         mae = split_metrics.get("val", {}).get("mae", float("inf"))
         if mae < best_mae:
             best_mae, best_name, best_pipe = mae, name, pipe
 
-    baseline_val_mae = results["models"]["dummy_median"].get("val", {}).get("mae")
+    # Prefer a simple baseline unless a learned model clearly beats the stronger
+    # shipment-mode median on validation (>=1% MAE reduction).
+    mode_val_mae = results["models"]["shipment_mode_median"].get("val", {}).get("mae")
+    global_val_mae = results["models"]["dummy_median"].get("val", {}).get("mae")
+    if (
+        best_name not in baseline_names
+        and mode_val_mae is not None
+        and best_mae > mode_val_mae * 0.99
+    ):
+        best_name = "shipment_mode_median"
+        best_mae = float(mode_val_mae)
+        best_pipe = models["shipment_mode_median"]
+        best_pipe.fit(train[features], train["delivery_duration_days"])
+
+    baseline_val_mae = mode_val_mae if mode_val_mae is not None else global_val_mae
     results["selected_model_beats_median_baseline_on_validation"] = bool(
-        baseline_val_mae is not None and best_mae < baseline_val_mae - 1e-9
+        baseline_val_mae is not None
+        and best_name not in baseline_names
+        and best_mae < baseline_val_mae - 1e-9
     )
 
     # If no learned model beats the median on validation, the saved "model" is
     # the median itself. Say so explicitly so consumers never present it as an
     # order-specific ML estimate (walk-forward checks confirmed no signal).
     prediction_basis = (
-        "historical_median_baseline" if best_name == "dummy_median" else "ml_model"
+        "historical_median_baseline" if best_name in baseline_names else "ml_model"
     )
     results["prediction_basis"] = prediction_basis
     bundle = {

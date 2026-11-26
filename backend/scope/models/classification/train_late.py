@@ -12,7 +12,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 from sklearn.base import clone
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_curve
 from sklearn.model_selection import TimeSeriesSplit, cross_validate
@@ -54,6 +54,8 @@ CAT = [
     "Product_Group",
     "Sub_Classification",
     "Vendor",
+    "Manufacturing_Site",
+    "Brand",
     "Dosage_Form",
     "First_Line_Designation",
 ]
@@ -110,21 +112,32 @@ def train_late_delivery() -> dict[str, Any]:
     spw = float(neg / max(pos, 1))
 
     xgb = XGBClassifier(
-        n_estimators=200,
+        n_estimators=300,
         max_depth=5,
-        learning_rate=0.05,
-        subsample=0.8,
-        colsample_bytree=0.8,
+        learning_rate=0.04,
+        subsample=0.85,
+        colsample_bytree=0.75,
         min_child_weight=2,
-        eval_metric="logloss",
+        reg_lambda=1.25,
+        eval_metric="aucpr",
         scale_pos_weight=spw,
         random_state=42,
         n_jobs=2,
     )
     rf = RandomForestClassifier(
-        n_estimators=300,
-        max_depth=12,
-        min_samples_leaf=5,
+        n_estimators=400,
+        max_depth=14,
+        min_samples_leaf=3,
+        max_features="sqrt",
+        class_weight="balanced_subsample",
+        random_state=42,
+        n_jobs=2,
+    )
+    et = ExtraTreesClassifier(
+        n_estimators=400,
+        max_depth=14,
+        min_samples_leaf=3,
+        max_features="sqrt",
         class_weight="balanced",
         random_state=42,
         n_jobs=2,
@@ -140,6 +153,7 @@ def train_late_delivery() -> dict[str, Any]:
         ("xgboost", xgb, build_preprocessor(num, cat)),
         ("logistic_regression", logreg, build_preprocessor(num, cat, scale_numeric=True)),
         ("random_forest", rf, build_preprocessor(num, cat)),
+        ("extra_trees", et, build_preprocessor(num, cat)),
     ]
 
     results: dict[str, Any] = {
@@ -184,6 +198,9 @@ def train_late_delivery() -> dict[str, Any]:
     best_f1 = -1.0
     best_pipe = None
     best_threshold = 0.5
+    # Primary selection: validation F1 at the F1-optimal threshold. Break ties
+    # with validation PR-AUC so ranking quality still influences the choice.
+    selection_metric = "f1"
 
     for name, clf, pre in candidates:
         pipe = Pipeline([("pre", pre), ("model", clf)])
@@ -207,11 +224,16 @@ def train_late_delivery() -> dict[str, Any]:
         split_metrics["decision_threshold"] = float(threshold)
         results["models"][name] = split_metrics
         val_f1 = split_metrics.get("val", {}).get("f1", 0.0) or 0.0
-        if val_f1 > best_f1:
-            best_f1 = val_f1
+        val_pr = split_metrics.get("val", {}).get("pr_auc", 0.0) or 0.0
+        best_pr = (
+            results["models"].get(best_name or "", {}).get("val", {}).get("pr_auc", 0.0) or 0.0
+        )
+        if val_f1 > best_f1 + 1e-12 or (abs(val_f1 - best_f1) <= 1e-12 and val_pr > best_pr):
+            best_f1 = float(val_f1)
             best_name = name
             best_pipe = pipe
             best_threshold = float(threshold)
+    results["selection_metric"] = selection_metric
 
     xgb_test = results["models"].get("xgboost", {}).get("test", {})
     lr_test = results["models"].get("logistic_regression", {}).get("test", {})

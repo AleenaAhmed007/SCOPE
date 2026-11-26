@@ -1,9 +1,11 @@
 task,model,role,split,mae_days,rmse_days,median_ae_days,r2
 delivery_duration,dummy_median,baseline,validation,86.748,113.084,70.500,-0.060
 delivery_duration,dummy_median,baseline,test,81.188,106.502,64.000,-0.111
-delivery_duration,gradient_boosting,candidate,validation,88.260,118.244,68.742,-0.159
-delivery_duration,gradient_boosting,candidate,test,81.042,108.178,60.656,-0.146
-delivery_duration,xgboost,candidate,validation,87.026,119.705,65.125,-0.188
-delivery_duration,xgboost,candidate,test,80.801,109.254,62.506,-0.169
-delivery_duration,random_forest,selected,validation,86.411,114.793,70.787,-0.092
-delivery_duration,random_forest,selected,test,81.223,107.160,61.533,-0.124
+delivery_duration,shipment_mode_median,baseline,validation,86.215,121.791,47.000,-0.230
+delivery_duration,shipment_mode_median,baseline,test,80.957,114.951,47.000,-0.294
+delivery_duration,gradient_boosting,candidate,validation,88.454,117.690,68.546,-0.148
+delivery_duration,gradient_boosting,candidate,test,81.045,108.296,60.812,-0.148
+delivery_duration,xgboost,candidate,validation,87.497,117.791,68.689,-0.150
+delivery_duration,xgboost,candidate,test,79.970,106.470,63.197,-0.110
+delivery_duration,random_forest,candidate,validation,87.664,114.949,70.762,-0.095
+delivery_duration,random_forest,candidate,test,80.651,104.732,64.772,-0.074

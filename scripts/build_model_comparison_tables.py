@@ -125,7 +125,11 @@ def _duration_rows(fe: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[
     best = dur.get("best_model")
     results: list[dict[str, Any]] = []
     for name, block in dur["models"].items():
-        role = "baseline" if name == "dummy_median" else ("selected" if name == best else "candidate")
+        role = (
+            "baseline"
+            if name in {"dummy_median", "shipment_mode_median"}
+            else ("selected" if name == best else "candidate")
+        )
         for split_key, split_label in (("val", "validation"), ("test", "test")):
             m = block[split_key]
             results.append(
@@ -142,7 +146,8 @@ def _duration_rows(fe: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[
             )
 
     selected = dur["models"][best]["test"]
-    median = dur["models"]["dummy_median"]["test"]
+    global_median = dur["models"]["dummy_median"]["test"]
+    mode_median = dur["models"].get("shipment_mode_median", {}).get("test")
     comparison = [
         {
             "task": "delivery_duration",
@@ -150,12 +155,26 @@ def _duration_rows(fe: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[
             "baseline": "dummy_median",
             "metric": "mae_days",
             "model_value": _r(selected["mae"]),
-            "baseline_value": _r(median["mae"]),
-            "delta_model_minus_baseline": _r(selected["mae"] - median["mae"]),
-            "beats_baseline": str(selected["mae"] < median["mae"]).lower(),
-            "note": "Lower MAE is better; selected beat median on validation only",
+            "baseline_value": _r(global_median["mae"]),
+            "delta_model_minus_baseline": _r(selected["mae"] - global_median["mae"]),
+            "beats_baseline": str(selected["mae"] < global_median["mae"]).lower(),
+            "note": "Lower MAE is better",
         }
     ]
+    if mode_median and best != "shipment_mode_median":
+        comparison.append(
+            {
+                "task": "delivery_duration",
+                "selected_model": best,
+                "baseline": "shipment_mode_median",
+                "metric": "mae_days",
+                "model_value": _r(selected["mae"]),
+                "baseline_value": _r(mode_median["mae"]),
+                "delta_model_minus_baseline": _r(selected["mae"] - mode_median["mae"]),
+                "beats_baseline": str(selected["mae"] < mode_median["mae"]).lower(),
+                "note": "Lower MAE is better",
+            }
+        )
     return results, comparison
 
 
@@ -242,7 +261,9 @@ def _forecast_rows(fe: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[
 
 
 def _inventory_rows(fe: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    inv = fe["inventory"]
+    inv = fe.get("inventory") or {}
+    if not inv or not inv.get("models"):
+        return [], []
     best = inv.get("best_model")
     results: list[dict[str, Any]] = []
     for name, block in inv["models"].items():

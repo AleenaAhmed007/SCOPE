@@ -3,30 +3,31 @@ random_seed: 42
 
 # Values below document what the training code uses.
 classification:
-  algorithm: xgboost
-  baseline: logistic_regression   # proposal baseline; random_forest also compared
+  algorithm: random_forest         # selected by validation F1 (PR-AUC tie-break)
+  baseline: logistic_regression
+  selection_metric: f1
   params:
-    n_estimators: 200
-    max_depth: 5
-    learning_rate: 0.05
-    subsample: 0.8
-    colsample_bytree: 0.8
-    eval_metric: logloss
+    n_estimators: 400
+    max_depth: 14
+    min_samples_leaf: 3
+    class_weight: balanced_subsample
 
 regression:
-  algorithm: xgboost
-  objective: reg:absoluteerror    # selection metric is MAE
+  algorithm: shipment_mode_median  # preferred unless ML beats it by >=1% val MAE
+  objective: reg:absoluteerror
   params:
-    n_estimators: 200
-    max_depth: 6
-    learning_rate: 0.05
-    subsample: 0.8
-    colsample_bytree: 0.8
+    n_estimators: 300
+    max_depth: 5
+    learning_rate: 0.04
+    subsample: 0.85
+    colsample_bytree: 0.75
 
 forecasting:
   candidates: [naive_lag1, mean_baseline, persistence_linear, gradient_boosting, random_forest, extra_trees, arima]
-  arima_order_selection: aic       # (p,d,q) in {0..2}x{0,1}x{0,1}, optional seasonal AR(12)
-  horizon: 1                       # rolling one-step-ahead
+  lags: [1, 2, 3, 4, 6, 12]
+  baseline_preference_margin: 0.05  # require 5% val MAE gain to prefer ML
+  arima_order_selection: aic
+  horizon: 1
   frequency: monthly
   per_product_group: true
 
