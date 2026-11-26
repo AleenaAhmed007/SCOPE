@@ -122,7 +122,7 @@ def _forecast_splits(ts: pd.DataFrame, value_col: str) -> tuple[pd.DataFrame, pd
     return train, val, test
 
 
-def _candidates() -> dict[str, Any]:
+def _candidates(seasonal_period: int = 12) -> dict[str, Any]:
     """Fresh, unfitted forecast candidates."""
     return {
         "naive_lag1": LagOneRegressor(),
@@ -131,11 +131,19 @@ def _candidates() -> dict[str, Any]:
         "gradient_boosting": GradientBoostingRegressor(random_state=42, n_estimators=100, max_depth=2, learning_rate=0.03, loss="huber"),
         "random_forest": RandomForestRegressor(n_estimators=300, min_samples_leaf=5, max_features=0.8, random_state=42, n_jobs=2),
         "extra_trees": ExtraTreesRegressor(n_estimators=300, min_samples_leaf=5, max_features=0.8, random_state=42, n_jobs=2),
-        "arima": ARIMAForecaster(),
+        "arima": ARIMAForecaster(seasonal_period=seasonal_period),
     }
 
-
-def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
+def _train_one(
+    ts: pd.DataFrame,
+    value_col: str,
+    name: str,
+    *,
+    seasonal_period: int = 12,
+    selection_min_origin: int = 24,
+    selection_tail: int = 36,
+    selection_step: int = 3,
+) -> dict[str, Any]:
     train, val, test = _forecast_splits(ts, value_col)
     development = pd.concat([train, val])
     frame = pd.concat([train, val, test])
@@ -152,12 +160,12 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
     # Rolling-origin selection: refit every candidate on an expanding window
     # and forecast the next block, across the whole validation period. A single
     # validation window picked models that lost to the mean on later data.
-    # The window spans the last 36 development months (not just the ~18-month
-    # validation slice): one short window was too noisy to rank candidates.
-    step = 3
-    first_origin = max(24, min(len(train), len(development) - 36))
+    # The window spans the last ``selection_tail`` development periods (not just
+    # the validation slice): one short window was too noisy to rank candidates.
+    step = selection_step
+    first_origin = max(selection_min_origin, min(len(train), len(development) - selection_tail))
     origins = list(range(first_origin, len(development), step))
-    errors: dict[str, list[float]] = {name_: [] for name_ in _candidates()}
+    errors: dict[str, list[float]] = {name_: [] for name_ in _candidates(seasonal_period)}
     weights: list[float] = []
     failed: dict[str, str] = {}
     for start in origins:
@@ -166,7 +174,7 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
         fit_w = fit_part["sample_weight"] if weighted else None
         block_w = block["sample_weight"].to_numpy() if weighted else np.ones(len(block))
         weights.extend(block_w.tolist())
-        for candidate_name, candidate in _candidates().items():
+        for candidate_name, candidate in _candidates(seasonal_period).items():
             if candidate_name in failed:
                 continue
             try:
@@ -187,7 +195,7 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
         if baseline in validation_mae and validation_mae[baseline] <= validation_mae[best_name] * 1.02:
             selected_name = baseline
             break
-    candidates = _candidates()
+    candidates = _candidates(seasonal_period)
     model = candidates[selected_name]
     development_weight = development["sample_weight"] if weighted else None
     model.fit(development[feats], development["y"], sample_weight=development_weight)
@@ -241,13 +249,22 @@ def _train_one(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
     return metrics
 
 
-def _suitability(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
+def _suitability(
+    ts: pd.DataFrame,
+    value_col: str,
+    name: str,
+    *,
+    min_periods: int = 120,
+    gap_days: int = 45,
+) -> dict[str, Any]:
     s = ts.dropna(subset=[value_col]).sort_values("period_start")
     n = len(s)
-    gaps = int(s["period_start"].diff().dt.days.gt(45).sum()) if n else 0
-    recommend_lstm = n >= 120 and gaps < n * 0.1
+    gaps = int(s["period_start"].diff().dt.days.gt(gap_days).sum()) if n else 0
+    recommend_lstm = n >= min_periods and gaps < n * 0.1
+    freq = "weekly" if "weekly" in name else "monthly"
     return {
         "series": name,
+        "frequency": freq,
         "n_periods": n,
         "min_period": str(s["period_start"].min()) if n else None,
         "max_period": str(s["period_start"].max()) if n else None,
@@ -256,13 +273,99 @@ def _suitability(ts: pd.DataFrame, value_col: str, name: str) -> dict[str, Any]:
         "std": float(s[value_col].std()) if n else None,
         "lstm_recommended": recommend_lstm,
         "rationale": (
-            "Monthly sample length and regularity support trying a neural model"
+            f"{freq.capitalize()} sample length and regularity support trying a neural model"
             if recommend_lstm
-            else "Monthly history is too short or irregular; prefer classical baselines."
+            else f"{freq.capitalize()} history is too short or irregular; prefer classical baselines."
         ),
     }
 
 
+def _train_weekly_lstm_block(
+    delay_w: pd.DataFrame,
+    volume_w: pd.DataFrame,
+) -> dict[str, Any]:
+    """Train weekly classical baselines + neural technique sweep."""
+    from scope.models.forecasting.lstm import sweep_weekly_models, torch_available
+
+    # Seasonal period 4 ≈ month-in-weeks; full 52-week SARIMA is too heavy for
+    # the rolling-origin selection loop on ~500 weeks.
+    classical = {
+        "late_rate_weekly": _train_one(
+            delay_w,
+            "late_rate",
+            "late_rate_weekly",
+            seasonal_period=4,
+            selection_min_origin=52,
+            selection_tail=78,
+            selection_step=4,
+        ),
+        "volume_weekly": _train_one(
+            volume_w,
+            "total_line_item_quantity",
+            "volume_quantity_weekly",
+            seasonal_period=4,
+            selection_min_origin=52,
+            selection_tail=78,
+            selection_step=4,
+        ),
+    }
+
+    lstm_block: dict[str, Any] = {"torch_available": torch_available()}
+    if not torch_available():
+        lstm_block.update({"trained": False, "reason": "torch_not_installed"})
+        return {"classical": classical, "lstm": lstm_block}
+
+    sweep = sweep_weekly_models(
+        delay_w,
+        volume_w,
+        classical_val_mae={
+            "late_rate": float(classical["late_rate_weekly"]["validation_selected_mae"]),
+            "volume": float(classical["volume_weekly"]["validation_selected_mae"]),
+        },
+        classical_test_mae={
+            "late_rate": float(classical["late_rate_weekly"]["mae"]),
+            "volume": float(classical["volume_weekly"]["mae"]),
+        },
+    )
+    late_v = sweep.get("late_rate_verdict", {})
+    vol_v = sweep.get("volume_verdict", {})
+    # Compact verdict + best config for reporting / deploy decision
+    lstm_block.update(
+        {
+            "trained": bool(sweep.get("trained")),
+            "techniques": sweep.get("techniques"),
+            "n_configs": sweep.get("n_configs"),
+            "late_rate": late_v.get("best"),
+            "volume": vol_v.get("best"),
+            "late_rate_verdict": {
+                "deploy_lstm": late_v.get("deploy_lstm"),
+                "classical_validation_mae": late_v.get("classical_validation_mae"),
+                "lstm_validation_mae": (late_v.get("best") or {}).get("validation_mae"),
+                "classical_selected_model": classical["late_rate_weekly"].get("selected_model"),
+                "classical_test_mae": classical["late_rate_weekly"].get("mae"),
+                "lstm_test_mae": (late_v.get("best") or {}).get("test_mae"),
+                "best_config": (late_v.get("best") or {}).get("config"),
+                "ranking_top5": (late_v.get("ranking") or [])[:5],
+                "reason": late_v.get("reason"),
+            },
+            "volume_verdict": {
+                "deploy_lstm": vol_v.get("deploy_lstm"),
+                "classical_validation_mae": vol_v.get("classical_validation_mae"),
+                "lstm_validation_mae": (vol_v.get("best") or {}).get("validation_mae"),
+                "classical_selected_model": classical["volume_weekly"].get("selected_model"),
+                "classical_test_mae": classical["volume_weekly"].get("mae"),
+                "lstm_test_mae": (vol_v.get("best") or {}).get("test_mae"),
+                "best_config": (vol_v.get("best") or {}).get("config"),
+                "ranking_top5": (vol_v.get("ranking") or [])[:5],
+                "reason": vol_v.get("reason"),
+            },
+            "full_sweep": {
+                "late_rate_ranking": late_v.get("ranking"),
+                "volume_ranking": vol_v.get("ranking"),
+            },
+        }
+    )
+    return {"classical": classical, "lstm": lstm_block}
 def _baseline_naive(ts: pd.DataFrame, value_col: str) -> dict[str, Any]:
     _, _, test = _forecast_splits(ts, value_col)
     if len(test) < 1:
@@ -311,17 +414,32 @@ def train_forecasts() -> dict[str, Any]:
     paths = project_paths()
     delay = read_table(paths["processed"] / "delay_timeseries_monthly.csv")
     volume = read_table(paths["processed"] / "volume_timeseries_monthly.csv")
+    delay_w = read_table(paths["processed"] / "delay_timeseries.csv")
+    volume_w = read_table(paths["processed"] / "volume_timeseries.csv")
 
     suitability = {
         "late_rate_monthly": _suitability(delay, "late_rate", "late_rate_monthly"),
         "volume_monthly": _suitability(
             volume, "total_line_item_quantity", "volume_quantity_monthly"
         ),
+        "late_rate_weekly": _suitability(
+            delay_w, "late_rate", "late_rate_weekly", min_periods=120, gap_days=14
+        ),
+        "volume_weekly": _suitability(
+            volume_w,
+            "total_line_item_quantity",
+            "volume_quantity_weekly",
+            min_periods=120,
+            gap_days=14,
+        ),
     }
-    # Keep neural models out unless monthly history and validation gain justify them.
+    weekly = _train_weekly_lstm_block(delay_w, volume_w)
+    # Keep neural models out of the deployed monthly path unless history + validation gain justify them.
     results = {
         "note": (
-            "Volume series is shipment/order quantity proxy, not verified warehouse demand."
+            "Volume series is shipment/order quantity proxy, not verified warehouse demand. "
+            "LSTM is evaluated on weekly series only; monthly deployment stays classical unless "
+            "a clear validation gain is shown."
         ),
         "suitability": suitability,
         "baselines": {
@@ -334,16 +452,25 @@ def train_forecasts() -> dict[str, Any]:
             volume, "total_line_item_quantity", "volume_quantity_monthly"
         ),
         "volume_by_product_group": _train_by_product_group(),
+        "weekly": weekly,
         "lstm": {
-            "trained": False,
-            "reason": "Classical monthly lag models are compared with explicit baselines; no neural model is justified without a demonstrated validation gain.",
+            "trained": weekly["lstm"].get("trained", False),
+            "frequency": "weekly",
+            "late_rate": weekly["lstm"].get("late_rate"),
+            "volume": weekly["lstm"].get("volume"),
+            "late_rate_verdict": weekly["lstm"].get("late_rate_verdict"),
+            "volume_verdict": weekly["lstm"].get("volume_verdict"),
+            "reason": (
+                "Evaluated on weekly SCMS series against classical candidates; "
+                "deploy only when validation MAE beats classical by >=2%."
+            ),
         },
     }
     save_json(paths["metrics"] / "forecasting.json", results)
     save_json(paths["metrics"] / "forecast_suitability.json", suitability)
-    logger.info("Forecast models trained")
+    save_json(paths["metrics"] / "forecast_weekly_lstm.json", weekly)
+    logger.info("Forecast models trained (monthly + weekly LSTM trial)")
     return results
-
 
 if __name__ == "__main__":
     print(train_forecasts())
