@@ -9,8 +9,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Unique shipment/line-item identifier
 - **Missing %:** 0.0
-- **Unique count:** 10324
-- **Example values:** ['1', '3', '4', '15', '16']
+- **Unique count:** 96470
+- **Example values:** ['1', '2', '3', '4', '5']
 - **Identifier:** True
 - **ML suitability:** No — identifier
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -21,8 +21,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Supply-chain project identifier
 - **Missing %:** 0.0
-- **Unique count:** 142
-- **Example values:** ['100-CI-T01', '108-VN-T01', '112-NG-T01', '110-ZM-T01', '109-TZ-T01']
+- **Unique count:** 27
+- **Example values:** ['SP', 'BA', 'GO', 'RN', 'PR']
 - **Identifier:** True
 - **ML suitability:** No — identifier
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -33,8 +33,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Price quote number
 - **Missing %:** 0.0
-- **Unique count:** 1237
-- **Example values:** ['Pre-PQ Process', 'FPQ-4587', 'FPQ-12051', 'FPQ-14827', 'FPQ-9066']
+- **Unique count:** 1
+- **Example values:** ['Olist-N/A']
 - **Identifier:** True
 - **ML suitability:** No — identifier
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -45,8 +45,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Purchase order / sales order number
 - **Missing %:** 0.0
-- **Unique count:** 6233
-- **Example values:** ['SCMS-4', 'SCMS-13', 'SCMS-20', 'SCMS-78', 'SCMS-81']
+- **Unique count:** 96470
+- **Example values:** ['e481f51cbdc54678b7cc49136f2d6af7', '53cdb2fc8bc7dce0b6741e2150273451', '47770eb9100c2d0c44946d9cf07ec65d', '949d5b44dbf5de918fe9c16f97b45f8a', 'ad21c59c0840e6cb83a9ceb5573f8159']
 - **Identifier:** True
 - **ML suitability:** No — identifier
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -57,8 +57,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Advanced shipping notice / delivery note number
 - **Missing %:** 0.0
-- **Unique count:** 7030
-- **Example values:** ['ASN-8', 'ASN-85', 'ASN-14', 'ASN-50', 'ASN-55']
+- **Unique count:** 96470
+- **Example values:** ['e481f51cbdc54678b7cc49136f2d6af7', '53cdb2fc8bc7dce0b6741e2150273451', '47770eb9100c2d0c44946d9cf07ec65d', '949d5b44dbf5de918fe9c16f97b45f8a', 'ad21c59c0840e6cb83a9ceb5573f8159']
 - **Identifier:** True
 - **ML suitability:** No — identifier
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -69,8 +69,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Destination country
 - **Missing %:** 0.0
-- **Unique count:** 43
-- **Example values:** ["Côte d'Ivoire", 'Vietnam', 'Nigeria', 'Zambia', 'Tanzania']
+- **Unique count:** 27
+- **Example values:** ['SP', 'BA', 'GO', 'RN', 'PR']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -81,8 +81,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Managing organization / office
 - **Missing %:** 0.0
-- **Unique count:** 4
-- **Example values:** ['PMO - US', 'South Africa Field Office', 'Haiti Field Office', 'Ethiopia Field Office']
+- **Unique count:** 2
+- **Example values:** ['SameState', 'CrossState']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -94,7 +94,7 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Business meaning:** Fulfillment channel (e.g. Direct Drop, RDC)
 - **Missing %:** 0.0
 - **Unique count:** 2
-- **Example values:** ['Direct Drop', 'From RDC']
+- **Example values:** ['SingleSeller', 'MultiSeller']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -104,9 +104,9 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 - **Data type:** `object`
 - **Business meaning:** Incoterms governing vendor shipment responsibility
-- **Missing %:** 0.0
-- **Unique count:** 8
-- **Example values:** ['EXW', 'FCA', 'DDU', 'CIP', 'DDP']
+- **Missing %:** 0.001
+- **Unique count:** 4
+- **Example values:** ['voucher', 'boleto', 'credit_card', 'debit_card']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -116,9 +116,9 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 - **Data type:** `object`
 - **Business meaning:** Transport mode (Air, Ocean, Truck, etc.)
-- **Missing %:** 3.487
-- **Unique count:** 4
-- **Example values:** ['Air', 'Truck', 'Air Charter', 'Ocean']
+- **Missing %:** 0.0
+- **Unique count:** 5
+- **Example values:** ['Local', 'Long', 'VeryLong', 'Medium', 'Short']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -129,8 +129,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Date PQ was first sent to client (may contain process placeholders)
 - **Missing %:** 0.0
-- **Unique count:** 765
-- **Example values:** ['Pre-PQ Process', 'Date Not Captured', '11/18/09', '05/03/2013', '8/19/14']
+- **Unique count:** 612
+- **Example values:** ['2017-10-02', '2018-07-24', '2018-08-08', '2017-11-18', '2018-02-13']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -141,8 +141,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Date PO was sent to vendor (may contain RDC / not-captured placeholders)
 - **Missing %:** 0.0
-- **Unique count:** 897
-- **Example values:** ['Date Not Captured', '11/13/06', '12/01/2006', '12/22/06', '01/10/2007']
+- **Unique count:** 609
+- **Example values:** ['2017-10-02', '2018-07-26', '2018-08-08', '2017-11-18', '2018-02-13']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -153,8 +153,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Planned delivery date to client
 - **Missing %:** 0.0
-- **Unique count:** 2006
-- **Example values:** ['02-Jun-06', '14-Nov-06', '27-Aug-06', '01-Sept-06', '11-Aug-06']
+- **Unique count:** 445
+- **Example values:** ['2017-10-18', '2018-08-13', '2018-09-04', '2017-12-15', '2018-02-26']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -165,8 +165,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Actual delivery date to client
 - **Missing %:** 0.0
-- **Unique count:** 2093
-- **Example values:** ['02-Jun-06', '14-Nov-06', '27-Aug-06', '01-Sept-06', '11-Aug-06']
+- **Unique count:** 645
+- **Example values:** ['2017-10-10', '2018-08-07', '2018-08-17', '2017-12-02', '2018-02-16']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Unknown / Needs confirmation
@@ -177,8 +177,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Date delivery was recorded in the system
 - **Missing %:** 0.0
-- **Unique count:** 2042
-- **Example values:** ['02-Jun-06', '14-Nov-06', '27-Aug-06', '01-Sept-06', '11-Aug-06']
+- **Unique count:** 645
+- **Example values:** ['2017-10-10', '2018-08-07', '2018-08-17', '2017-12-02', '2018-02-16']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Unknown / Needs confirmation
@@ -189,8 +189,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** High-level product category
 - **Missing %:** 0.0
-- **Unique count:** 5
-- **Example values:** ['HRDT', 'ARV', 'ACT', 'MRDT', 'ANTM']
+- **Unique count:** 74
+- **Example values:** ['housewares', 'perfumery', 'auto', 'pet_shop', 'stationery']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -201,8 +201,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Product sub-classification
 - **Missing %:** 0.0
-- **Unique count:** 6
-- **Example values:** ['HIV test', 'Pediatric', 'Adult', 'HIV test - Ancillary', 'ACT']
+- **Unique count:** 22
+- **Example values:** ['SP', 'MG', 'ES', 'RS', 'DF']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -213,8 +213,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Supplier / vendor name
 - **Missing %:** 0.0
-- **Unique count:** 73
-- **Example values:** ['RANBAXY Fine Chemicals LTD.', 'Aurobindo Pharma Limited', 'Abbott GmbH & Co. KG', 'SUN PHARMACEUTICAL INDUSTRIES LTD (RANBAXY LABORATORIES LIMITED)', 'MERCK SHARP & DOHME IDEA GMBH (FORMALLY MERCK SHARP & DOHME B.V.)']
+- **Unique count:** 22
+- **Example values:** ['SP', 'MG', 'ES', 'RS', 'DF']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -225,8 +225,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Full product/item description
 - **Missing %:** 0.0
-- **Unique count:** 184
-- **Example values:** ['HIV, Reveal G3 Rapid HIV-1 Antibody Test, 30 Tests', 'Nevirapine 10mg/ml, oral suspension, Bottle, 240 ml', 'HIV 1/2, Determine Complete HIV Kit, 100 Tests', 'Lamivudine 150mg, tablets, 60 Tabs', 'Stavudine 30mg, capsules, 60 Caps']
+- **Unique count:** 74
+- **Example values:** ['housewares', 'perfumery', 'auto', 'pet_shop', 'stationery']
 - **Identifier:** False
 - **ML suitability:** Maybe — text feature / embedding later; high cardinality
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -237,8 +237,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Active molecule or diagnostic test type
 - **Missing %:** 0.0
-- **Unique count:** 86
-- **Example values:** ['HIV, Reveal G3 Rapid HIV-1 Antibody Test', 'Nevirapine', 'HIV 1/2, Determine Complete HIV Kit', 'Lamivudine', 'Stavudine']
+- **Unique count:** 74
+- **Example values:** ['housewares', 'perfumery', 'auto', 'pet_shop', 'stationery']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -249,8 +249,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Product brand
 - **Missing %:** 0.0
-- **Unique count:** 48
-- **Example values:** ['Reveal', 'Generic', 'Determine', 'Stocrin/Sustiva', 'Aluvia']
+- **Unique count:** 22
+- **Example values:** ['SP', 'MG', 'ES', 'RS', 'DF']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -258,13 +258,13 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 ## `Dosage`
 
-- **Data type:** `object`
+- **Data type:** `float64`
 - **Business meaning:** Dosage strength
-- **Missing %:** 16.8152
-- **Unique count:** 54
-- **Example values:** ['10mg/ml', '150mg', '30mg', '200mg', '200/50mg']
+- **Missing %:** 100.0
+- **Unique count:** 0
+- **Example values:** []
 - **Identifier:** False
-- **ML suitability:** Candidate — subject to leakage and availability review
+- **ML suitability:** No — constant / non-informative
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
 - **Leakage risk:** low/unknown — confirm availability at prediction time
 
@@ -272,9 +272,9 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 - **Data type:** `object`
 - **Business meaning:** Formulation / dosage form
-- **Missing %:** 0.0
-- **Unique count:** 17
-- **Example values:** ['Test kit', 'Oral suspension', 'Tablet', 'Capsule', 'Oral solution']
+- **Missing %:** 0.001
+- **Unique count:** 4
+- **Example values:** ['voucher', 'boleto', 'credit_card', 'debit_card']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -282,11 +282,11 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 ## `Unit of Measure (Per Pack)`
 
-- **Data type:** `int64`
+- **Data type:** `float64`
 - **Business meaning:** Units contained in one pack
 - **Missing %:** 0.0
-- **Unique count:** 31
-- **Example values:** ['30', '240', '100', '60', '90']
+- **Unique count:** 93880
+- **Example values:** ['15.5440625', '19.137766203703706', '26.63971064814815', '26.188819444444444', '12.112048611111112']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -297,8 +297,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Ordered / shipped quantity for the line item
 - **Missing %:** 0.0
-- **Unique count:** 5065
-- **Example values:** ['19', '1000', '500', '31920', '38000']
+- **Unique count:** 17
+- **Example values:** ['1', '2', '4', '5', '3']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -309,8 +309,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `float64`
 - **Business meaning:** Monetary value of the line item
 - **Missing %:** 0.0
-- **Unique count:** 8741
-- **Example values:** ['551.0', '6200.0', '40000.0', '127360.8', '121600.0']
+- **Unique count:** 7498
+- **Example values:** ['29.99', '118.7', '159.9', '45.0', '19.9']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -321,8 +321,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `float64`
 - **Business meaning:** Price per pack
 - **Missing %:** 0.0
-- **Unique count:** 1175
-- **Example values:** ['29.0', '6.2', '80.0', '3.99', '3.2']
+- **Unique count:** 6957
+- **Example values:** ['29.99', '118.7', '159.9', '45.0', '19.9']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -333,8 +333,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `float64`
 - **Business meaning:** Price per unit
 - **Missing %:** 0.0
-- **Unique count:** 183
-- **Example values:** ['0.97', '0.03', '0.8', '0.07', '0.05']
+- **Unique count:** 6957
+- **Example values:** ['29.99', '118.7', '159.9', '45.0', '19.9']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -345,8 +345,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Manufacturing site name
 - **Missing %:** 0.0
-- **Unique count:** 88
-- **Example values:** ['Ranbaxy Fine Chemicals LTD', 'Aurobindo Unit III, India', 'ABBVIE GmbH & Co.KG Wiesbaden', 'Ranbaxy, Paonta Shahib, India', 'MSD South Granville Australia']
+- **Unique count:** 22
+- **Example values:** ['SP', 'MG', 'ES', 'RS', 'DF']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -366,11 +366,11 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 ## `Weight (Kilograms)`
 
-- **Data type:** `object`
+- **Data type:** `float64`
 - **Business meaning:** Shipment weight; may contain cross-reference text
 - **Missing %:** 0.0
-- **Unique count:** 4688
-- **Example values:** ['13', '358', '171', '1855', '7590']
+- **Unique count:** 2859
+- **Example values:** ['0.5', '0.4', '0.42', '0.45', '0.25']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Unknown / Needs confirmation
@@ -378,11 +378,11 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 ## `Freight Cost (USD)`
 
-- **Data type:** `object`
+- **Data type:** `float64`
 - **Business meaning:** Freight cost; may contain inclusion / cross-reference text
 - **Missing %:** 0.0
-- **Unique count:** 6733
-- **Example values:** ['780.34', '4521.5', '1653.78', '16007.06', '45450.08']
+- **Unique count:** 7612
+- **Example values:** ['8.72', '22.76', '19.22', '27.2', '27.36']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Unknown / Needs confirmation
@@ -392,9 +392,9 @@ Inventory_* fields are treated as **unverified augmented data**.
 
 - **Data type:** `float64`
 - **Business meaning:** Insurance cost for the line item
-- **Missing %:** 2.7799
-- **Unique count:** 6722
-- **Example values:** ['192.0', '128.0', '224.93', '3.07', '65.75']
+- **Missing %:** 0.4945
+- **Unique count:** 90272
+- **Example values:** ['18.681711262724065', '861.0353666986242', '514.5471404341032', '1821.8026563808453', '29.59309456315452']
 - **Identifier:** False
 - **ML suitability:** Candidate — subject to leakage and availability review
 - **Availability time:** Likely available at/before shipment planning — Needs confirmation
@@ -405,8 +405,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Augmented inventory product key (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 184
-- **Example values:** ['HIV, Reveal G3 Rapid HIV-1 Antibody Test, 30 Tests', 'Nevirapine 10mg/ml, oral suspension, Bottle, 240 ml', 'HIV 1/2, Determine Complete HIV Kit, 100 Tests', 'Lamivudine 150mg, tablets, 60 Tabs', 'Stavudine 30mg, capsules, 60 Caps']
+- **Unique count:** 74
+- **Example values:** ['housewares', 'perfumery', 'auto', 'pet_shop', 'stationery']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -417,8 +417,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Augmented warehouse identifier (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 43
-- **Example values:** ['SYN-WH-C-TE-D-IVOIRE', 'SYN-WH-VIETNAM', 'SYN-WH-NIGERIA', 'SYN-WH-ZAMBIA', 'SYN-WH-TANZANIA']
+- **Unique count:** 22
+- **Example values:** ['SP', 'MG', 'ES', 'RS', 'DF']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -429,8 +429,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `object`
 - **Business meaning:** Augmented inventory snapshot date (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 2093
-- **Example values:** ['02/06/2006', '14/11/2006', '27/08/2006', '01/09/2006', '11/08/2006']
+- **Unique count:** 612
+- **Example values:** ['2017-10-02', '2018-07-24', '2018-08-08', '2017-11-18', '2018-02-13']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -441,8 +441,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Augmented opening stock (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 5851
-- **Example values:** ['57', '3000', '6756', '73800', '71625']
+- **Unique count:** 31
+- **Example values:** ['2', '1', '3', '4', '7']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -465,8 +465,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Augmented stock-out quantity (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 5065
-- **Example values:** ['19', '1000', '500', '31920', '38000']
+- **Unique count:** 17
+- **Example values:** ['1', '2', '4', '5', '3']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -477,8 +477,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Augmented closing stock (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 5195
-- **Example values:** ['38', '2000', '6256', '41880', '33625']
+- **Unique count:** 21
+- **Example values:** ['1', '0', '2', '3', '8']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -489,8 +489,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Augmented reorder threshold (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 760
-- **Example values:** ['29', '1500', '3378', '22730', '23358']
+- **Unique count:** 16
+- **Example values:** ['1', '2', '5', '4', '3']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -525,8 +525,8 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **Data type:** `int64`
 - **Business meaning:** Augmented shortage quantity (provenance unverified)
 - **Missing %:** 0.0
-- **Unique count:** 2456
-- **Example values:** ['0', '3372', '1123', '2', '4068']
+- **Unique count:** 5
+- **Example values:** ['0', '1', '2', '3', '4']
 - **Identifier:** False
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
@@ -543,3 +543,39 @@ Inventory_* fields are treated as **unverified augmented data**.
 - **ML suitability:** Caution — unverified augmented inventory field
 - **Availability time:** Unknown / Needs confirmation
 - **Leakage risk:** high — often known only after delivery / outcome
+
+## `Olist_is_late`
+
+- **Data type:** `int64`
+- **Business meaning:** Unknown / Needs confirmation
+- **Missing %:** 0.0
+- **Unique count:** 2
+- **Example values:** ['0', '1']
+- **Identifier:** False
+- **ML suitability:** Candidate — subject to leakage and availability review
+- **Availability time:** Likely available at/before shipment planning — Needs confirmation
+- **Leakage risk:** low/unknown — confirm availability at prediction time
+
+## `Olist_distance_km`
+
+- **Data type:** `float64`
+- **Business meaning:** Unknown / Needs confirmation
+- **Missing %:** 0.4945
+- **Unique count:** 90272
+- **Example values:** ['18.681711262724065', '861.0353666986242', '514.5471404341032', '1821.8026563808453', '29.59309456315452']
+- **Identifier:** False
+- **ML suitability:** Candidate — subject to leakage and availability review
+- **Availability time:** Likely available at/before shipment planning — Needs confirmation
+- **Leakage risk:** low/unknown — confirm availability at prediction time
+
+## `Olist_estimated_delivery_days`
+
+- **Data type:** `float64`
+- **Business meaning:** Unknown / Needs confirmation
+- **Missing %:** 0.0
+- **Unique count:** 93880
+- **Example values:** ['15.5440625', '19.137766203703706', '26.63971064814815', '26.188819444444444', '12.112048611111112']
+- **Identifier:** False
+- **ML suitability:** Candidate — subject to leakage and availability review
+- **Availability time:** Likely available at/before shipment planning — Needs confirmation
+- **Leakage risk:** low/unknown — confirm availability at prediction time

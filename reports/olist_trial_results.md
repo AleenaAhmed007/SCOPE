@@ -25,10 +25,11 @@ Inventory_* columns on this branch are **synthetic trial proxies** (not real war
 
 ## What ran
 
-Phases 02–13 completed on Olist after short-series forecast + walk-forward guards:
+Full rerun completed (adapt + Phase 01 EDA + phases 02–13, including Postgres-backed evidence/investigation):
 
 | Phase | Status |
 |---|---|
+| 01 EDA | ok |
 | 02 Preprocessing | ok |
 | 03 Late classification | ok — best = logistic_regression |
 | 04 Duration regression | ok — best = gradient_boosting |
@@ -36,7 +37,9 @@ Phases 02–13 completed on Olist after short-series forecast + walk-forward gua
 | 06 Vendor seg + anomaly | ok |
 | 07 Inventory experiment | ok (synthetic labels) |
 | 08 SHAP | ok |
-| 09–11 RAG / evidence / sample investigation | ok |
+| 09 RAG | ok |
+| 10 Evidence ledger | ok |
+| 11 Sample investigation | ok |
 | 12 Model evaluation | ok |
 | 12b Walk-forward | ok (5 late quarters; early quarters skipped — insufficient pre-calibration history) |
 | 13 Final defence report | regenerated |

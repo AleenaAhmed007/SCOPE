@@ -1,7 +1,7 @@
 {
   "model": "forecast_volume",
   "artifact": "forecast_volume_quantity_monthly",
-  "evaluated_at": "2026-11-26T16:06:17.017673+00:00",
+  "evaluated_at": "2026-11-26T16:18:50.610379+00:00",
   "test": {
     "frequency": "monthly",
     "selected_model": "gradient_boosting",

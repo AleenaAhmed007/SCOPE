@@ -1,7 +1,7 @@
 {
   "model": "late_delivery",
   "artifact": "late_delivery_classifier",
-  "evaluated_at": "2026-11-26T16:06:13.970484+00:00",
+  "evaluated_at": "2026-11-26T16:18:47.532128+00:00",
   "test": {
     "n_test": 14471,
     "threshold": 0.10739849456850696,

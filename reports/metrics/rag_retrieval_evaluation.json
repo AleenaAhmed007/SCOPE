@@ -1,6 +1,6 @@
 {
   "evaluation_type": "gold_section_retrieval_benchmark",
-  "generated_at": "2026-11-26T15:59:42.396998+00:00",
+  "generated_at": "2026-11-26T16:18:44.559898+00:00",
   "n_queries": 20,
   "n_chunks": 50,
   "metrics": "MRR and Recall@k over 20 questions with gold document+section labels",

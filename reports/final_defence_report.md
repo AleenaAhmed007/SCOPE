@@ -1,6 +1,6 @@
 # SCOPE Final Evaluation and Defence Report
 
-Generated: `2026-11-26T16:12:00.723777+00:00`
+Generated: `2026-11-26T16:23:34.796072+00:00`
 
 ## System summary
 
@@ -39,13 +39,13 @@ SCOPE integrates:
 - Forecasting frequency: **monthly**; results include naive and mean baselines.
 - Monthly late-rate model MAE: **0.039153582660729505**; beats naive: **True**, beats mean: **False**.
 - Monthly volume model MAE: **4172.716329125306**; beats naive: **False**, beats mean: **False**.
-- Inventory proxy model: **random_forest**; validation PR-AUC **0.6041455013585483** vs prevalence baseline **0.5763648928818245**; test ROC-AUC / PR-AUC: **0.5305797791086244 / 0.5921733326486542**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
+- Inventory proxy model: **random_forest**; validation PR-AUC **0.602029180480256** vs prevalence baseline **0.5763648928818245**; test ROC-AUC / PR-AUC: **0.530827302510382 / 0.5932922568730234**. It excludes the two operands of the deterministic target rule and is experimental against unverified augmented fields.
 - Inventory rule agreement on test rows: **0.4373574735678253** (consistency check, not model accuracy).
 - RAG retrieval wiring sanity MRR: **1.0** over 20 hand-authored synthetic queries; this is not a retrieval-quality claim.
 - RAG runtime components: **Okapi BM25**; check per-query mode in the API response because optional components may be unavailable in another environment.
 - Claim Checker corpus-corruption evaluation: **1.0 detection rate; 0.0 false-positive rate** over 414 cases (97 extractive claims from the current corpus). This is a controlled synthetic-corpus evaluation, not a free-form semantic-accuracy estimate.
-- Vendor segmentation: **k=2, silhouette=0.3530388634705743**, with small-history and profile-outlier vendors separated.
-- Unusual shipment profile flags: **793 / 14471** test shipments; flagged late-rate diagnostic **0.05170239596469105** (descriptive only).
+- Vendor segmentation: **k=2, silhouette=0.3599517794717767**, with small-history and profile-outlier vendors separated.
+- Unusual shipment profile flags: **1099 / 14471** test shipments; flagged late-rate diagnostic **0.06642402183803457** (descriptive only).
 - SHAP status: **ok**
 
 ## Model evaluation table
@@ -75,12 +75,12 @@ Supervised metrics use the held-out test split unless marked as validation. Fore
 | Monthly volume forecast | random_forest | validation MAE 3079.893 | not scored on test | Validation candidate; n_test N/A; N/A |
 | Monthly volume forecast | extra_trees | validation MAE 2487.307 | not scored on test | Validation candidate; n_test N/A; N/A |
 | Monthly volume forecast | arima | validation MAE 1971.861 | not scored on test | Validation candidate; n_test N/A; N/A |
-| Inventory stockout proxy | logistic_regression | val PR-AUC 0.599; F1 0.745 | test PR-AUC N/A; ROC-AUC N/A | Validation candidate; experimental, unverified source |
-| Inventory stockout proxy | random_forest | val PR-AUC 0.604; F1 0.745 | test PR-AUC 0.593; ROC-AUC 0.535 | Selected; experimental, unverified source |
-| Vendor segmentation | K-Means (k=2) | silhouette 0.353 | 18 clustered vendors; sizes {'0': 1, '1': 17} | Unsupervised; not a predictive accuracy score |
-| Unusual shipment profile | Isolation Forest | N/A | 793 flags / 14471 (5.5%) | Unsupervised; no ground-truth anomaly labels |
-| Retrospective anomaly | Isolation Forest | N/A | 825 flags / 14471 (5.7%) | Unsupervised; no ground-truth anomaly labels |
-| Vendor KPI anomaly | Isolation Forest | N/A | 7 flags / 777 (0.9%) | Unsupervised; no ground-truth anomaly labels |
+| Inventory stockout proxy | logistic_regression | val PR-AUC 0.600; F1 0.745 | test PR-AUC N/A; ROC-AUC N/A | Validation candidate; experimental, unverified source |
+| Inventory stockout proxy | random_forest | val PR-AUC 0.602; F1 0.745 | test PR-AUC 0.593; ROC-AUC 0.531 | Selected; experimental, unverified source |
+| Vendor segmentation | K-Means (k=2) | silhouette 0.360 | 14 clustered vendors; sizes {'0': 11, '1': 3} | Unsupervised; not a predictive accuracy score |
+| Unusual shipment profile | Isolation Forest | N/A | 1099 flags / 14471 (7.6%) | Unsupervised; no ground-truth anomaly labels |
+| Retrospective anomaly | Isolation Forest | N/A | 1247 flags / 14471 (8.6%) | Unsupervised; no ground-truth anomaly labels |
+| Vendor KPI anomaly | Isolation Forest | N/A | 0 flags / 17 (0.0%) | Unsupervised; no ground-truth anomaly labels |
 | RAG retrieval | Okapi BM25 | N/A | MRR 1.000; Recall@3 1.000 | Wiring check only; 20 synthetic queries |
 | Claim checker | verify_claims | 97 extracted corpus claims + 317 controlled corruptions | detection 1.000; false-positive rate 0.000 | Synthetic corpus and controlled corruption evaluation |
 
@@ -95,7 +95,7 @@ For MAE, lower is better; for AUC, PR-AUC, and F1, higher is better. Baselines a
 | Delivery duration | gradient_boosting | median baseline MAE 5.001 days | MAE 4.823 days; delta -0.179 days | Better on test; validation beats median |
 | Monthly late rate | mean_baseline | naive MAE 0.050; mean MAE 0.039 | model MAE 0.039 | beats naive: yes; beats mean: no |
 | Monthly volume | gradient_boosting | naive MAE 3817.500; mean MAE 4048.000 | model MAE 4172.716 | beats naive: no; beats mean: no |
-| Inventory stockout proxy | random_forest | validation prevalence PR-AUC 0.576 | validation PR-AUC 0.604; test PR-AUC 0.592 vs test prevalence 0.582 | test AP delta 0.010; label is derived and source unverified |
+| Inventory stockout proxy | random_forest | validation prevalence PR-AUC 0.576 | validation PR-AUC 0.602; test PR-AUC 0.593 vs test prevalence 0.582 | test AP delta 0.011; label is derived and source unverified |
 | Vendor segmentation | K-Means | No labeled baseline | silhouette only | N/A: descriptive clusters, not prediction |
 | Anomaly models | Isolation Forest | No labeled anomaly baseline | flag rates only | N/A: no ground truth labels |
 | RAG retrieval | Okapi BM25 | No representative relevance baseline | 20-query synthetic benchmark | N/A: not a quality benchmark |

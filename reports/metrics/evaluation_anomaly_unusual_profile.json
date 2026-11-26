@@ -1,18 +1,18 @@
 {
   "model": "anomaly_unusual_profile",
   "artifact": "anomaly_unusual_profile",
-  "evaluated_at": "2026-11-26T16:06:17.905448+00:00",
+  "evaluated_at": "2026-11-26T16:18:51.431075+00:00",
   "test": {
     "label": "unusual_shipment_profile",
     "n_test": 14471,
-    "n_unusual": 793,
-    "anomaly_rate": 0.05479925367977334,
-    "mean_anomaly_score": -0.12182857335121014,
+    "n_unusual": 1099,
+    "anomaly_rate": 0.07594499343514616,
+    "mean_anomaly_score": -0.10052131692857086,
     "note": "Unsupervised unusual-profile flags, not delay predictions. There are no ground-truth anomaly labels.",
     "source_scores": "/workspace/data/processed/anomaly_scores_unusual_profile.csv",
     "late_rate_diagnostic": {
-      "flagged": 0.05170239596469105,
-      "unflagged": 0.042403860213481505,
+      "flagged": 0.06642402183803457,
+      "unflagged": 0.04098115465151062,
       "interpretation": "Descriptive association only; it is not anomaly-model accuracy or a delay-prediction metric."
     }
   }

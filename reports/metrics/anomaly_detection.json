@@ -10,9 +10,9 @@
     ],
     "min_shipments_per_period": 5,
     "adverse_reference_train_medians": {
-      "late_rate": 0.025,
-      "mean_delay_days": -11.805405405405406,
-      "median_lead_time_days": 10.5
+      "late_rate": 0.037037037037037035,
+      "mean_delay_days": -14.036585365853659,
+      "median_lead_time_days": 11.0
     },
     "trend_detector": {
       "trailing_periods": 4,
@@ -20,51 +20,51 @@
       "min_increase": 0.1,
       "p_value": 0.01
     },
-    "n_periods": 3682,
-    "n_train_periods": 2190,
-    "n_anomaly": 124,
-    "n_deteriorating": 50,
-    "n_unusual_but_favourable_dropped": 8,
+    "n_periods": 111,
+    "n_train_periods": 79,
+    "n_anomaly": 5,
+    "n_deteriorating": 2,
+    "n_unusual_but_favourable_dropped": 1,
     "signal_rate_by_split": {
-      "test": 0.009009009009009009,
-      "train": 0.06164383561643835,
-      "val": 0.023776223776223775
+      "test": 0.0,
+      "train": 0.06329113924050633,
+      "val": 0.06666666666666667
     },
     "injected_disruption_check": {
       "unit": "unseen (val+test) vendor-quarters",
-      "n_periods": 1492,
+      "n_periods": 32,
       "false_alarm_rate_clean": {
-        "isolation_forest": 0.014075067024128687,
-        "trend": 0.004691689008042895,
-        "combined": 0.0160857908847185
+        "isolation_forest": 0.03125,
+        "trend": 0.03125,
+        "combined": 0.03125
       },
       "sensitivity": [
         {
           "late_rate_increase": 0.1,
           "delay_increase_days": 7,
-          "detected_isolation_forest": 0.10723860589812333,
-          "detected_trend": 0.06099195710455764,
-          "detected_combined": 0.14142091152815014
+          "detected_isolation_forest": 0.375,
+          "detected_trend": 0.1875,
+          "detected_combined": 0.4375
         },
         {
           "late_rate_increase": 0.2,
           "delay_increase_days": 14,
-          "detected_isolation_forest": 0.7553619302949062,
-          "detected_trend": 0.1903485254691689,
-          "detected_combined": 0.7627345844504021
+          "detected_isolation_forest": 1.0,
+          "detected_trend": 0.75,
+          "detected_combined": 1.0
         },
         {
           "late_rate_increase": 0.3,
           "delay_increase_days": 30,
           "detected_isolation_forest": 1.0,
-          "detected_trend": 0.31970509383378015,
+          "detected_trend": 0.90625,
           "detected_combined": 1.0
         },
         {
           "late_rate_increase": 0.5,
           "delay_increase_days": 60,
           "detected_isolation_forest": 1.0,
-          "detected_trend": 0.43766756032171583,
+          "detected_trend": 0.9375,
           "detected_combined": 1.0
         }
       ],
@@ -76,24 +76,24 @@
   },
   "unusual_profile": {
     "n_scored": 96470,
-    "n_anomaly": 5057,
-    "anomaly_rate": 0.05242044158805846,
+    "n_anomaly": 5426,
+    "anomaly_rate": 0.05624546491137141,
     "anomaly_rate_by_split": {
-      "test": 0.05479925367977334,
+      "test": 0.07594499343514616,
       "train": 0.05000814464896563,
-      "val": 0.0612992398064962
+      "val": 0.06565307532826538
     },
     "artifact_dir": "/workspace/reports/models/anomaly_unusual_profile",
     "scores_path": "/workspace/data/processed/anomaly_scores_unusual_profile.csv"
   },
   "retrospective": {
     "n_scored": 96470,
-    "n_anomaly": 5022,
-    "anomaly_rate": 0.05205763449777133,
+    "n_anomaly": 5519,
+    "anomaly_rate": 0.057209495179848656,
     "anomaly_rate_by_split": {
-      "test": 0.057010572869877686,
+      "test": 0.08617234468937876,
       "train": 0.05000814464896563,
-      "val": 0.056668970283344854
+      "val": 0.06185210780926054
     },
     "artifact_dir": "/workspace/reports/models/anomaly_retrospective",
     "scores_path": "/workspace/data/processed/anomaly_scores_retrospective.csv"

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-06T12:54:42.621247+00:00",
+  "generated_at": "2026-11-26T16:15:24.690402+00:00",
   "dataset_path": "data/raw/SCMS_with_inventory.csv",
   "overview": {
-    "n_rows": 10324,
-    "n_columns": 45,
-    "memory_bytes": 19872899.0,
-    "memory_mb": 19.873,
+    "n_rows": 96470,
+    "n_columns": 48,
+    "memory_bytes": 163776836.0,
+    "memory_mb": 163.777,
     "columns": [
       "ID",
       "Project Code",
@@ -51,7 +51,10 @@
       "Inventory_Lead_Time_Days",
       "Inventory_Stockout_Flag",
       "Inventory_Shortage_Quantity",
-      "Inventory_Replenishment_Triggered"
+      "Inventory_Replenishment_Triggered",
+      "Olist_is_late",
+      "Olist_distance_km",
+      "Olist_estimated_delivery_days"
     ],
     "dtypes": {
       "ID": "int64",
@@ -75,17 +78,17 @@
       "Item Description": "object",
       "Molecule/Test Type": "object",
       "Brand": "object",
-      "Dosage": "object",
+      "Dosage": "float64",
       "Dosage Form": "object",
-      "Unit of Measure (Per Pack)": "int64",
+      "Unit of Measure (Per Pack)": "float64",
       "Line Item Quantity": "int64",
       "Line Item Value": "float64",
       "Pack Price": "float64",
       "Unit Price": "float64",
       "Manufacturing Site": "object",
       "First Line Designation": "object",
-      "Weight (Kilograms)": "object",
-      "Freight Cost (USD)": "object",
+      "Weight (Kilograms)": "float64",
+      "Freight Cost (USD)": "float64",
       "Line Item Insurance (USD)": "float64",
       "Inventory_Product_Key": "object",
       "Inventory_Warehouse_ID": "object",
@@ -98,54 +101,60 @@
       "Inventory_Lead_Time_Days": "int64",
       "Inventory_Stockout_Flag": "int64",
       "Inventory_Shortage_Quantity": "int64",
-      "Inventory_Replenishment_Triggered": "int64"
+      "Inventory_Replenishment_Triggered": "int64",
+      "Olist_is_late": "int64",
+      "Olist_distance_km": "float64",
+      "Olist_estimated_delivery_days": "float64"
     },
     "unique_counts": {
-      "ID": 10324,
-      "Project Code": 142,
-      "PQ #": 1237,
-      "PO / SO #": 6233,
-      "ASN/DN #": 7030,
-      "Country": 43,
-      "Managed By": 4,
+      "ID": 96470,
+      "Project Code": 27,
+      "PQ #": 1,
+      "PO / SO #": 96470,
+      "ASN/DN #": 96470,
+      "Country": 27,
+      "Managed By": 2,
       "Fulfill Via": 2,
-      "Vendor INCO Term": 8,
-      "Shipment Mode": 4,
-      "PQ First Sent to Client Date": 765,
-      "PO Sent to Vendor Date": 897,
-      "Scheduled Delivery Date": 2006,
-      "Delivered to Client Date": 2093,
-      "Delivery Recorded Date": 2042,
-      "Product Group": 5,
-      "Sub Classification": 6,
-      "Vendor": 73,
-      "Item Description": 184,
-      "Molecule/Test Type": 86,
-      "Brand": 48,
-      "Dosage": 54,
-      "Dosage Form": 17,
-      "Unit of Measure (Per Pack)": 31,
-      "Line Item Quantity": 5065,
-      "Line Item Value": 8741,
-      "Pack Price": 1175,
-      "Unit Price": 183,
-      "Manufacturing Site": 88,
+      "Vendor INCO Term": 4,
+      "Shipment Mode": 5,
+      "PQ First Sent to Client Date": 612,
+      "PO Sent to Vendor Date": 609,
+      "Scheduled Delivery Date": 445,
+      "Delivered to Client Date": 645,
+      "Delivery Recorded Date": 645,
+      "Product Group": 74,
+      "Sub Classification": 22,
+      "Vendor": 22,
+      "Item Description": 74,
+      "Molecule/Test Type": 74,
+      "Brand": 22,
+      "Dosage": 0,
+      "Dosage Form": 4,
+      "Unit of Measure (Per Pack)": 93880,
+      "Line Item Quantity": 17,
+      "Line Item Value": 7498,
+      "Pack Price": 6957,
+      "Unit Price": 6957,
+      "Manufacturing Site": 22,
       "First Line Designation": 2,
-      "Weight (Kilograms)": 4688,
-      "Freight Cost (USD)": 6733,
-      "Line Item Insurance (USD)": 6722,
-      "Inventory_Product_Key": 184,
-      "Inventory_Warehouse_ID": 43,
-      "Inventory_Date": 2093,
-      "Inventory_Opening_Stock": 5851,
+      "Weight (Kilograms)": 2859,
+      "Freight Cost (USD)": 7612,
+      "Line Item Insurance (USD)": 90272,
+      "Inventory_Product_Key": 74,
+      "Inventory_Warehouse_ID": 22,
+      "Inventory_Date": 612,
+      "Inventory_Opening_Stock": 31,
       "Inventory_Stock_In": 1,
-      "Inventory_Stock_Out": 5065,
-      "Inventory_Closing_Stock": 5195,
-      "Inventory_Reorder_Level": 760,
+      "Inventory_Stock_Out": 17,
+      "Inventory_Closing_Stock": 21,
+      "Inventory_Reorder_Level": 16,
       "Inventory_Lead_Time_Days": 1,
       "Inventory_Stockout_Flag": 2,
-      "Inventory_Shortage_Quantity": 2456,
-      "Inventory_Replenishment_Triggered": 2
+      "Inventory_Shortage_Quantity": 5,
+      "Inventory_Replenishment_Triggered": 2,
+      "Olist_is_late": 2,
+      "Olist_distance_km": 90272,
+      "Olist_estimated_delivery_days": 93880
     },
     "duplicate_rows": 0,
     "duplicate_ids": 0
@@ -153,66 +162,75 @@
   "missing_values": [
     {
       "column": "Dosage",
-      "dtype": "object",
-      "missing_count": 1736,
-      "missing_pct": 16.8152,
-      "n_unique": 54,
-      "most_frequent": "300mg",
-      "most_frequent_count": 990
-    },
-    {
-      "column": "Shipment Mode",
-      "dtype": "object",
-      "missing_count": 360,
-      "missing_pct": 3.487,
-      "n_unique": 4,
-      "most_frequent": "Air",
-      "most_frequent_count": 6113
+      "dtype": "float64",
+      "missing_count": 96470,
+      "missing_pct": 100.0,
+      "n_unique": 0,
+      "most_frequent": null,
+      "most_frequent_count": 0
     },
     {
       "column": "Line Item Insurance (USD)",
       "dtype": "float64",
-      "missing_count": 287,
-      "missing_pct": 2.7799,
-      "n_unique": 6722,
+      "missing_count": 477,
+      "missing_pct": 0.4945,
+      "n_unique": 90272,
       "most_frequent": 0.0,
-      "most_frequent_count": 54
+      "most_frequent_count": 23
     },
     {
-      "column": "Project Code",
+      "column": "Olist_distance_km",
+      "dtype": "float64",
+      "missing_count": 477,
+      "missing_pct": 0.4945,
+      "n_unique": 90272,
+      "most_frequent": 0.0,
+      "most_frequent_count": 23
+    },
+    {
+      "column": "Vendor INCO Term",
       "dtype": "object",
+      "missing_count": 1,
+      "missing_pct": 0.001,
+      "n_unique": 4,
+      "most_frequent": "credit_card",
+      "most_frequent_count": 72818
+    },
+    {
+      "column": "Dosage Form",
+      "dtype": "object",
+      "missing_count": 1,
+      "missing_pct": 0.001,
+      "n_unique": 4,
+      "most_frequent": "credit_card",
+      "most_frequent_count": 72818
+    },
+    {
+      "column": "ID",
+      "dtype": "int64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 142,
-      "most_frequent": "116-ZA-T30",
-      "most_frequent_count": 768
+      "n_unique": 96470,
+      "most_frequent": 1,
+      "most_frequent_count": 1
     },
     {
       "column": "PQ #",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 1237,
-      "most_frequent": "Pre-PQ Process",
-      "most_frequent_count": 2681
+      "n_unique": 1,
+      "most_frequent": "Olist-N/A",
+      "most_frequent_count": 96470
     },
     {
-      "column": "ASN/DN #",
+      "column": "Project Code",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 7030,
-      "most_frequent": "ASN-19166",
-      "most_frequent_count": 54
-    },
-    {
-      "column": "Country",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 43,
-      "most_frequent": "South Africa",
-      "most_frequent_count": 1406
+      "n_unique": 27,
+      "most_frequent": "SP",
+      "most_frequent_count": 40494
     },
     {
       "column": "Fulfill Via",
@@ -220,206 +238,188 @@
       "missing_count": 0,
       "missing_pct": 0.0,
       "n_unique": 2,
-      "most_frequent": "From RDC",
-      "most_frequent_count": 5404
+      "most_frequent": "SingleSeller",
+      "most_frequent_count": 95195
     },
     {
-      "column": "Managed By",
+      "column": "Shipment Mode",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 4,
-      "most_frequent": "PMO - US",
-      "most_frequent_count": 10265
-    },
-    {
-      "column": "Vendor INCO Term",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 8,
-      "most_frequent": "N/A - From RDC",
-      "most_frequent_count": 5404
+      "n_unique": 5,
+      "most_frequent": "Medium",
+      "most_frequent_count": 30235
     },
     {
       "column": "PQ First Sent to Client Date",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 765,
-      "most_frequent": "Pre-PQ Process",
-      "most_frequent_count": 2476
-    },
-    {
-      "column": "PO / SO #",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 6233,
-      "most_frequent": "SCMS-199289",
-      "most_frequent_count": 67
-    },
-    {
-      "column": "ID",
-      "dtype": "int64",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 10324,
-      "most_frequent": 1,
-      "most_frequent_count": 1
-    },
-    {
-      "column": "Scheduled Delivery Date",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 2006,
-      "most_frequent": "29-Aug-14",
-      "most_frequent_count": 97
+      "n_unique": 612,
+      "most_frequent": "2017-11-24",
+      "most_frequent_count": 1147
     },
     {
       "column": "PO Sent to Vendor Date",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 897,
-      "most_frequent": "N/A - From RDC",
-      "most_frequent_count": 5404
+      "n_unique": 609,
+      "most_frequent": "2018-04-24",
+      "most_frequent_count": 976
+    },
+    {
+      "column": "ASN/DN #",
+      "dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 96470,
+      "most_frequent": "00010242fe8c5a6d1ba2dd792cb16214",
+      "most_frequent_count": 1
+    },
+    {
+      "column": "Country",
+      "dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 27,
+      "most_frequent": "SP",
+      "most_frequent_count": 40494
+    },
+    {
+      "column": "Managed By",
+      "dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 2,
+      "most_frequent": "CrossState",
+      "most_frequent_count": 61779
+    },
+    {
+      "column": "PO / SO #",
+      "dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 96470,
+      "most_frequent": "00010242fe8c5a6d1ba2dd792cb16214",
+      "most_frequent_count": 1
     },
     {
       "column": "Product Group",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 5,
-      "most_frequent": "ARV",
-      "most_frequent_count": 8550
-    },
-    {
-      "column": "Delivered to Client Date",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 2093,
-      "most_frequent": "29-Aug-14",
-      "most_frequent_count": 74
-    },
-    {
-      "column": "Vendor",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 73,
-      "most_frequent": "SCMS from RDC",
-      "most_frequent_count": 5404
-    },
-    {
-      "column": "Item Description",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 184,
-      "most_frequent": "Efavirenz 600mg, tablets, 30 Tabs",
-      "most_frequent_count": 755
-    },
-    {
-      "column": "Molecule/Test Type",
-      "dtype": "object",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 86,
-      "most_frequent": "Efavirenz",
-      "most_frequent_count": 1125
+      "n_unique": 74,
+      "most_frequent": "bed_bath_table",
+      "most_frequent_count": 9181
     },
     {
       "column": "Delivery Recorded Date",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 2042,
-      "most_frequent": "29-Aug-14",
-      "most_frequent_count": 67
+      "n_unique": 645,
+      "most_frequent": "2018-08-27",
+      "most_frequent_count": 446
     },
     {
-      "column": "Brand",
+      "column": "Delivered to Client Date",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 48,
-      "most_frequent": "Generic",
-      "most_frequent_count": 7285
+      "n_unique": 645,
+      "most_frequent": "2018-08-27",
+      "most_frequent_count": 446
     },
     {
-      "column": "Dosage Form",
+      "column": "Scheduled Delivery Date",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 17,
-      "most_frequent": "Tablet",
-      "most_frequent_count": 3532
+      "n_unique": 445,
+      "most_frequent": "2017-12-20",
+      "most_frequent_count": 507
     },
     {
-      "column": "Unit of Measure (Per Pack)",
-      "dtype": "int64",
+      "column": "Molecule/Test Type",
+      "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 31,
-      "most_frequent": 60,
-      "most_frequent_count": 4121
+      "n_unique": 74,
+      "most_frequent": "bed_bath_table",
+      "most_frequent_count": 9181
     },
     {
-      "column": "Line Item Quantity",
-      "dtype": "int64",
+      "column": "Item Description",
+      "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 5065,
-      "most_frequent": 10000,
-      "most_frequent_count": 93
-    },
-    {
-      "column": "Line Item Value",
-      "dtype": "float64",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 8741,
-      "most_frequent": 200000.0,
-      "most_frequent_count": 29
-    },
-    {
-      "column": "Pack Price",
-      "dtype": "float64",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 1175,
-      "most_frequent": 32.0,
-      "most_frequent_count": 368
-    },
-    {
-      "column": "Unit Price",
-      "dtype": "float64",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 183,
-      "most_frequent": 0.04,
-      "most_frequent_count": 713
+      "n_unique": 74,
+      "most_frequent": "bed_bath_table",
+      "most_frequent_count": 9181
     },
     {
       "column": "Sub Classification",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 6,
-      "most_frequent": "Adult",
-      "most_frequent_count": 6595
+      "n_unique": 22,
+      "most_frequent": "SP",
+      "most_frequent_count": 68387
+    },
+    {
+      "column": "Vendor",
+      "dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 22,
+      "most_frequent": "SP",
+      "most_frequent_count": 68387
+    },
+    {
+      "column": "Line Item Quantity",
+      "dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 17,
+      "most_frequent": 1,
+      "most_frequent_count": 86835
+    },
+    {
+      "column": "Line Item Value",
+      "dtype": "float64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 7498,
+      "most_frequent": 59.9,
+      "most_frequent_count": 1688
+    },
+    {
+      "column": "Pack Price",
+      "dtype": "float64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 6957,
+      "most_frequent": 59.9,
+      "most_frequent_count": 1969
+    },
+    {
+      "column": "Unit Price",
+      "dtype": "float64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 6957,
+      "most_frequent": 59.9,
+      "most_frequent_count": 1969
     },
     {
       "column": "Manufacturing Site",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 88,
-      "most_frequent": "Aurobindo Unit III, India",
-      "most_frequent_count": 3172
+      "n_unique": 22,
+      "most_frequent": "SP",
+      "most_frequent_count": 68387
     },
     {
       "column": "First Line Designation",
@@ -428,61 +428,70 @@
       "missing_pct": 0.0,
       "n_unique": 2,
       "most_frequent": "Yes",
-      "most_frequent_count": 7030
+      "most_frequent_count": 68387
     },
     {
-      "column": "Weight (Kilograms)",
+      "column": "Brand",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 4688,
-      "most_frequent": "Weight Captured Separately",
-      "most_frequent_count": 1507
+      "n_unique": 22,
+      "most_frequent": "SP",
+      "most_frequent_count": 68387
+    },
+    {
+      "column": "Unit of Measure (Per Pack)",
+      "dtype": "float64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 93880,
+      "most_frequent": 20.065555555555555,
+      "most_frequent_count": 4
     },
     {
       "column": "Freight Cost (USD)",
-      "dtype": "object",
+      "dtype": "float64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 6733,
-      "most_frequent": "Freight Included in Commodity Cost",
-      "most_frequent_count": 1442
+      "n_unique": 7612,
+      "most_frequent": 15.1,
+      "most_frequent_count": 2898
     },
     {
-      "column": "Inventory_Product_Key",
-      "dtype": "object",
+      "column": "Weight (Kilograms)",
+      "dtype": "float64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 184,
-      "most_frequent": "Efavirenz 600mg, tablets, 30 Tabs",
-      "most_frequent_count": 755
+      "n_unique": 2859,
+      "most_frequent": 0.2,
+      "most_frequent_count": 5339
     },
     {
       "column": "Inventory_Warehouse_ID",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 43,
-      "most_frequent": "SYN-WH-SOUTH-AFRICA",
-      "most_frequent_count": 1406
+      "n_unique": 22,
+      "most_frequent": "SP",
+      "most_frequent_count": 68387
     },
     {
-      "column": "Inventory_Date",
+      "column": "Inventory_Product_Key",
       "dtype": "object",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 2093,
-      "most_frequent": "29/08/2014",
-      "most_frequent_count": 74
+      "n_unique": 74,
+      "most_frequent": "bed_bath_table",
+      "most_frequent_count": 9181
     },
     {
       "column": "Inventory_Opening_Stock",
       "dtype": "int64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 5851,
-      "most_frequent": 0,
-      "most_frequent_count": 1444
+      "n_unique": 31,
+      "most_frequent": 1,
+      "most_frequent_count": 53529
     },
     {
       "column": "Inventory_Stock_In",
@@ -491,34 +500,52 @@
       "missing_pct": 0.0,
       "n_unique": 1,
       "most_frequent": 0,
-      "most_frequent_count": 10324
+      "most_frequent_count": 96470
     },
     {
       "column": "Inventory_Stock_Out",
       "dtype": "int64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 5065,
-      "most_frequent": 10000,
-      "most_frequent_count": 93
+      "n_unique": 17,
+      "most_frequent": 1,
+      "most_frequent_count": 86835
+    },
+    {
+      "column": "Inventory_Date",
+      "dtype": "object",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 612,
+      "most_frequent": "2017-11-24",
+      "most_frequent_count": 1147
     },
     {
       "column": "Inventory_Closing_Stock",
       "dtype": "int64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 5195,
+      "n_unique": 21,
       "most_frequent": 0,
-      "most_frequent_count": 3183
+      "most_frequent_count": 55627
     },
     {
       "column": "Inventory_Reorder_Level",
       "dtype": "int64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 760,
-      "most_frequent": 75000,
-      "most_frequent_count": 280
+      "n_unique": 16,
+      "most_frequent": 1,
+      "most_frequent_count": 93604
+    },
+    {
+      "column": "Inventory_Stockout_Flag",
+      "dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 2,
+      "most_frequent": 1,
+      "most_frequent_count": 55627
     },
     {
       "column": "Inventory_Lead_Time_Days",
@@ -527,25 +554,16 @@
       "missing_pct": 0.0,
       "n_unique": 1,
       "most_frequent": 30,
-      "most_frequent_count": 10324
-    },
-    {
-      "column": "Inventory_Stockout_Flag",
-      "dtype": "int64",
-      "missing_count": 0,
-      "missing_pct": 0.0,
-      "n_unique": 2,
-      "most_frequent": 0,
-      "most_frequent_count": 7181
+      "most_frequent_count": 96470
     },
     {
       "column": "Inventory_Shortage_Quantity",
       "dtype": "int64",
       "missing_count": 0,
       "missing_pct": 0.0,
-      "n_unique": 2456,
+      "n_unique": 5,
       "most_frequent": 0,
-      "most_frequent_count": 7181
+      "most_frequent_count": 94469
     },
     {
       "column": "Inventory_Replenishment_Triggered",
@@ -553,8 +571,26 @@
       "missing_count": 0,
       "missing_pct": 0.0,
       "n_unique": 2,
+      "most_frequent": 1,
+      "most_frequent_count": 55627
+    },
+    {
+      "column": "Olist_is_late",
+      "dtype": "int64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 2,
       "most_frequent": 0,
-      "most_frequent_count": 6576
+      "most_frequent_count": 88644
+    },
+    {
+      "column": "Olist_estimated_delivery_days",
+      "dtype": "float64",
+      "missing_count": 0,
+      "missing_pct": 0.0,
+      "n_unique": 93880,
+      "most_frequent": 20.065555555555555,
+      "most_frequent_count": 4
     }
   ],
   "duplicates": {
@@ -563,159 +599,116 @@
   },
   "constants": {
     "constant": [
+      "PQ #",
+      "Dosage",
       "Inventory_Stock_In",
       "Inventory_Lead_Time_Days"
     ],
-    "near_constant": [
-      {
-        "column": "Managed By",
-        "dominant_value": "PMO - US",
-        "dominant_share": 0.9943,
-        "n_unique": 4
-      }
-    ]
+    "near_constant": []
   },
   "date_parsing": {
     "PQ First Sent to Client Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
-      "n_placeholder": 2681,
-      "n_parse_ok": 7643,
+      "n_placeholder": 0,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
-      "placeholder_counts": {
-        "Pre-PQ Process": 2476,
-        "Date Not Captured": 205
-      },
-      "min_parsed": "2009-01-07T00:00:00",
-      "max_parsed": "2015-12-01T00:00:00"
+      "placeholder_counts": {},
+      "min_parsed": "2016-09-15T00:00:00",
+      "max_parsed": "2018-08-29T00:00:00"
     },
     "PO Sent to Vendor Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
-      "n_placeholder": 5732,
-      "n_parse_ok": 4592,
+      "n_placeholder": 0,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
-      "placeholder_counts": {
-        "N/A - From RDC": 5404,
-        "Date Not Captured": 328
-      },
-      "min_parsed": "2006-01-12T00:00:00",
-      "max_parsed": "2015-12-05T00:00:00"
+      "placeholder_counts": {},
+      "min_parsed": "2016-09-15T00:00:00",
+      "max_parsed": "2018-08-29T00:00:00"
     },
     "Scheduled Delivery Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-12-31T00:00:00"
+      "min_parsed": "2016-10-04T00:00:00",
+      "max_parsed": "2018-10-25T00:00:00"
     },
     "Delivered to Client Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-09-14T00:00:00"
+      "min_parsed": "2016-10-11T00:00:00",
+      "max_parsed": "2018-10-17T00:00:00"
     },
     "Delivery Recorded Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-09-14T00:00:00"
+      "min_parsed": "2016-10-11T00:00:00",
+      "max_parsed": "2018-10-17T00:00:00"
     },
     "Inventory_Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-09-14T00:00:00"
+      "min_parsed": "2016-09-15T00:00:00",
+      "max_parsed": "2018-08-29T00:00:00"
     }
   },
   "chronology_issues": {
-    "delivered_before_scheduled_count": 2814,
-    "delivered_after_scheduled_count": 1186,
-    "delivered_on_scheduled_count": 6324,
-    "valid_schedule_delivery_pairs": 10324,
-    "recorded_before_delivered_count": 3,
-    "valid_delivered_recorded_pairs": 10324,
-    "po_sent_after_delivered_count": 432,
-    "valid_po_delivered_pairs": 4592
+    "delivered_before_scheduled_count": 88644,
+    "delivered_after_scheduled_count": 6534,
+    "delivered_on_scheduled_count": 1292,
+    "valid_schedule_delivery_pairs": 96470,
+    "recorded_before_delivered_count": 0,
+    "valid_delivered_recorded_pairs": 96470,
+    "po_sent_after_delivered_count": 38,
+    "valid_po_delivered_pairs": 96470
   },
   "dirty_numeric_fields": {
     "Weight (Kilograms)": {
-      "n_numeric": 6372,
-      "n_non_numeric": 3952,
+      "n_numeric": 96470,
+      "n_non_numeric": 0,
       "n_null_original": 0,
-      "top_non_numeric": {
-        "Weight Captured Separately": 1507,
-        "See DN-304 (ID#:10589)": 16,
-        "See ASN-32231 (ID#:13648)": 14,
-        "See ASN-31750 (ID#:19272)": 14,
-        "See ASN-28279 (ID#:13547)": 13,
-        "See DN-3015 (ID#:82554)": 12,
-        "See ASN-26738 (ID#:15115)": 10,
-        "See DN-3561 (ID#:82654)": 10,
-        "See DN-2035 (ID#:82356)": 10,
-        "See DN-2812 (ID#:83068)": 9,
-        "See ASN-24721 (ID#:13708)": 9,
-        "See DN-2981 (ID#:82538)": 9,
-        "See DN-332 (ID#:10613)": 9,
-        "See DN-3843 (ID#:82707)": 9,
-        "See DN-2090 (ID#:82366)": 8
-      }
+      "top_non_numeric": {}
     },
     "Freight Cost (USD)": {
-      "n_numeric": 6198,
-      "n_non_numeric": 4126,
+      "n_numeric": 96470,
+      "n_non_numeric": 0,
       "n_null_original": 0,
-      "top_non_numeric": {
-        "Freight Included in Commodity Cost": 1442,
-        "Invoiced Separately": 239,
-        "See DN-304 (ID#:10589)": 16,
-        "See ASN-32231 (ID#:13648)": 14,
-        "See ASN-31750 (ID#:19272)": 14,
-        "See ASN-28279 (ID#:13547)": 13,
-        "See DN-3015 (ID#:82554)": 12,
-        "See ASN-26738 (ID#:15115)": 10,
-        "See DN-3561 (ID#:82654)": 10,
-        "See DN-2035 (ID#:82356)": 10,
-        "See DN-2812 (ID#:83068)": 9,
-        "See ASN-24721 (ID#:13708)": 9,
-        "See DN-2981 (ID#:82538)": 9,
-        "See DN-332 (ID#:10613)": 9,
-        "See DN-3843 (ID#:82707)": 9
-      }
+      "top_non_numeric": {}
     }
   },
   "late_delivery_target": {
-    "n_valid_target": 10324,
+    "n_valid_target": 96470,
     "n_excluded": 0,
-    "n_late": 1186,
-    "n_on_time": 9138,
-    "late_pct": 11.4878,
-    "delay_days_mean": -6.023537388609066,
-    "delay_days_median": 0.0,
-    "delay_days_std": 27.233640041310977,
-    "delay_days_min": -372.0,
-    "delay_days_max": 192.0,
+    "n_late": 6534,
+    "n_on_time": 89936,
+    "late_pct": 6.7731,
+    "delay_days_mean": -11.875888877371203,
+    "delay_days_median": -12.0,
+    "delay_days_std": 10.182105073994864,
+    "delay_days_min": -147.0,
+    "delay_days_max": 188.0,
     "exclusion_reason": "Rows excluded when Scheduled Delivery Date or Delivered to Client Date could not be parsed to a valid datetime (null/placeholder/invalid)."
   },
   "inventory_audit": {
@@ -749,14 +742,14 @@
     "lead_time_all_30": true,
     "arithmetic": {
       "formula": "Expected Closing = Opening + Stock_In - Stock_Out",
-      "n_match": 7181,
-      "n_mismatch": 3143,
-      "match_pct": 69.5564
+      "n_match": 94469,
+      "n_mismatch": 2001,
+      "match_pct": 97.9258
     },
     "flag_shortage_alignment": {
-      "n_aligned": 10324,
-      "n_misaligned": 0,
-      "aligned_pct": 100.0,
+      "n_aligned": 42844,
+      "n_misaligned": 53626,
+      "aligned_pct": 44.4117,
       "rule": "flag==1 iff shortage_quantity > 0"
     },
     "negative_value_counts": {
@@ -767,13 +760,13 @@
       "Inventory_Reorder_Level": 0,
       "Inventory_Shortage_Quantity": 0
     },
-    "duplicate_product_warehouse_date": 2218,
-    "closing_below_reorder_count": 6397,
-    "replenishment_triggered_rate": 0.363,
-    "stockout_flag_rate": 0.3044,
-    "n_unique_products": 184,
-    "n_unique_warehouses": 43,
-    "n_unique_inventory_dates": 2093,
+    "duplicate_product_warehouse_date": 61574,
+    "closing_below_reorder_count": 55725,
+    "replenishment_triggered_rate": 0.5766,
+    "stockout_flag_rate": 0.5766,
+    "n_unique_products": 74,
+    "n_unique_warehouses": 22,
+    "n_unique_inventory_dates": 612,
     "leakage_risks": [
       {
         "field": "Inventory_Stockout_Flag",
@@ -805,11 +798,7 @@
     },
     {
       "rule": "Date placeholders not parsed as datetimes",
-      "placeholders": [
-        "Date Not Captured",
-        "N/A - From RDC",
-        "Pre-PQ Process"
-      ],
+      "placeholders": [],
       "action": "Flagged via *_is_placeholder; originals preserved"
     }
   ],

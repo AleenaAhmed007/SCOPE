@@ -2,64 +2,64 @@
   "row_id": 39534,
   "top_features": [
     {
-      "feature": "num__Scheduled_Month",
-      "shap": -0.7522333860397339,
-      "value": 7.0,
-      "abs_shap": 0.7522333860397339
+      "feature": "num__Line_Item_Value",
+      "shap": -1.0130598472117796,
+      "value": 1.2967892188028263,
+      "abs_shap": 1.0130598472117796
     },
     {
       "feature": "cat__Country_PR",
-      "shap": -0.42872440814971924,
+      "shap": -0.6169364206078216,
       "value": 1.0,
-      "abs_shap": 0.42872440814971924
+      "abs_shap": 0.6169364206078216
     },
     {
-      "feature": "num__vendor_hist_median_delay",
-      "shap": -0.39888715744018555,
-      "value": -15.0,
-      "abs_shap": 0.39888715744018555
-    },
-    {
-      "feature": "num__vendor_hist_late_rate",
-      "shap": -0.26371002197265625,
-      "value": 0.0169491525423728,
-      "abs_shap": 0.26371002197265625
+      "feature": "num__Unit_Price",
+      "shap": 0.5564015453396571,
+      "value": 1.4054365059660332,
+      "abs_shap": 0.5564015453396571
     },
     {
       "feature": "num__Pack_Price",
-      "shap": 0.13830286264419556,
-      "value": 279.9,
-      "abs_shap": 0.13830286264419556
+      "shap": 0.5564015453396571,
+      "value": 1.4054365059660332,
+      "abs_shap": 0.5564015453396571
     },
     {
-      "feature": "cat__Country_RJ",
-      "shap": -0.10725297778844833,
-      "value": 0.0,
-      "abs_shap": 0.10725297778844833
+      "feature": "num__Scheduled_Quarter",
+      "shap": -0.40725838916888696,
+      "value": 0.7081238526608005,
+      "abs_shap": 0.40725838916888696
     },
     {
-      "feature": "cat__First_Line_Designation_No",
-      "shap": -0.1038578674197197,
-      "value": 1.0,
-      "abs_shap": 0.1038578674197197
+      "feature": "num__Unit_Of_Measure_Per_Pack",
+      "shap": -0.29535902121115737,
+      "value": 0.5059661201036995,
+      "abs_shap": 0.29535902121115737
     },
     {
       "feature": "num__Line_Item_Insurance_USD",
-      "shap": -0.10158967971801758,
-      "value": 784.4256797068165,
-      "abs_shap": 0.10158967971801758
+      "shap": 0.23225631553428466,
+      "value": 0.6388647532622289,
+      "abs_shap": 0.23225631553428466
     },
     {
-      "feature": "num__Freight_Cost_USD_Numeric",
-      "shap": 0.07379449158906937,
-      "value": 23.89,
-      "abs_shap": 0.07379449158906937
+      "feature": "cat__First_Line_Designation_No",
+      "shap": -0.20832450769584876,
+      "value": 1.0,
+      "abs_shap": 0.20832450769584876
     },
     {
-      "feature": "cat__Country_MG",
-      "shap": 0.052655916661024094,
+      "feature": "num__Scheduled_Month",
+      "shap": 0.19462886648230593,
+      "value": 0.5037792818744018,
+      "abs_shap": 0.19462886648230593
+    },
+    {
+      "feature": "cat__Country_SP",
+      "shap": 0.15177998499534961,
       "value": 0.0,
-      "abs_shap": 0.052655916661024094
+      "abs_shap": 0.15177998499534961
     }
   ]
 }

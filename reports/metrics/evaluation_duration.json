@@ -1,7 +1,7 @@
 {
   "model": "duration",
   "artifact": "delivery_duration_regressor",
-  "evaluated_at": "2026-11-26T16:06:14.874889+00:00",
+  "evaluated_at": "2026-11-26T16:18:48.399289+00:00",
   "test": {
     "n_test": 14430,
     "mae": 4.82266881756141,

@@ -1,23 +1,23 @@
 # SCOPE EDA Report — Phase 01
 
-Generated: `2026-11-06T12:54:42.609579+00:00`
+Generated: `2026-11-26T16:15:24.686824+00:00`
 
 ## 1. Dataset Overview
 
-- Rows: **10324**
-- Columns: **45**
-- Memory: **19.873 MB**
+- Rows: **96470**
+- Columns: **48**
+- Memory: **163.777 MB**
 - Duplicate rows: **0**
 - Duplicate IDs: **0**
 
 ## 2. Late Delivery
 
-- Valid target rows: **10324**
+- Valid target rows: **96470**
 - Excluded (invalid dates): **0**
-- Late: **1186** (11.4878%)
-- On-time: **9138**
-- Mean delay days: **-6.024**
-- Median delay days: **0.000**
+- Late: **6534** (6.7731%)
+- On-time: **89936**
+- Mean delay days: **-11.876**
+- Median delay days: **-12.000**
 
 Exclusion rule: Rows excluded when Scheduled Delivery Date or Delivered to Client Date could not be parsed to a valid datetime (null/placeholder/invalid).
 
@@ -25,30 +25,31 @@ Exclusion rule: Rows excluded when Scheduled Delivery Date or Delivered to Clien
 
 | Shipment Mode | shipment_count | late_count | delay_mean | delay_median | on_time_count | late_rate |
 | --- | --- | --- | --- | --- | --- | --- |
-| Ocean | 371 | 65 | 5.8706 | 0.0000 | 306 | 0.1752 |
-| Truck | 2830 | 455 | -9.9219 | 0.0000 | 2375 | 0.1608 |
-| Air Charter | 650 | 75 | -19.0369 | -13.0000 | 575 | 0.1154 |
-| Air | 6113 | 587 | -3.7638 | 0.0000 | 5526 | 0.0960 |
+| VeryLong | 15342 | 1598 | -12.8048 | -14.0000 | 13744 | 0.1042 |
+| Long | 25762 | 1834 | -12.6860 | -14.0000 | 23928 | 0.0712 |
+| Medium | 30235 | 1941 | -12.2756 | -13.0000 | 28294 | 0.0642 |
+| Short | 12900 | 596 | -10.4723 | -10.0000 | 12304 | 0.0462 |
+| Local | 12231 | 565 | -9.4964 | -9.0000 | 11666 | 0.0462 |
 
 ## 4. Top Countries by Late Rate (valid sample)
 
 | Country | shipment_count | late_count | delay_mean | delay_median | on_time_count | late_rate |
 | --- | --- | --- | --- | --- | --- | --- |
-| Burundi | 98 | 38 | -8.4490 | 0.0000 | 60 | 0.3878 |
-| Senegal | 3 | 1 | 1.0000 | 0.0000 | 2 | 0.3333 |
-| Togo | 3 | 1 | 5.3333 | 0.0000 | 2 | 0.3333 |
-| Congo, DRC | 333 | 83 | 11.2402 | 0.0000 | 250 | 0.2492 |
-| Benin | 13 | 3 | 2.3846 | -4.0000 | 10 | 0.2308 |
-| Mozambique | 631 | 116 | -1.2092 | 0.0000 | 515 | 0.1838 |
-| Zambia | 683 | 108 | -5.2343 | 0.0000 | 575 | 0.1581 |
-| Zimbabwe | 538 | 77 | -11.0074 | 0.0000 | 461 | 0.1431 |
-| Ghana | 58 | 8 | -0.2241 | 0.0000 | 50 | 0.1379 |
-| Guatemala | 15 | 2 | -1.0000 | 0.0000 | 13 | 0.1333 |
-| South Sudan | 164 | 21 | -1.0671 | 0.0000 | 143 | 0.1280 |
-| Tanzania | 519 | 66 | -4.3950 | 0.0000 | 453 | 0.1272 |
-| Kenya | 111 | 14 | 0.8919 | 0.0000 | 97 | 0.1261 |
-| Uganda | 779 | 98 | -7.5815 | 0.0000 | 681 | 0.1258 |
-| Libya | 8 | 1 | -8.7500 | 0.0000 | 7 | 0.1250 |
+| AL | 397 | 85 | -8.7078 | -10.0000 | 312 | 0.2141 |
+| MA | 717 | 125 | -9.5718 | -11.0000 | 592 | 0.1743 |
+| SE | 335 | 51 | -10.0209 | -13.0000 | 284 | 0.1522 |
+| PI | 476 | 66 | -11.3067 | -14.0000 | 410 | 0.1387 |
+| CE | 1279 | 176 | -10.8045 | -13.0000 | 1103 | 0.1376 |
+| RR | 41 | 5 | -17.2927 | -20.0000 | 36 | 0.1220 |
+| BA | 3256 | 396 | -10.7945 | -12.0000 | 2860 | 0.1216 |
+| RJ | 12350 | 1495 | -11.7612 | -13.0000 | 10855 | 0.1211 |
+| PA | 946 | 106 | -14.0666 | -16.0000 | 840 | 0.1121 |
+| ES | 1995 | 214 | -10.4962 | -12.0000 | 1781 | 0.1073 |
+| PB | 517 | 54 | -13.2611 | -14.0000 | 463 | 0.1044 |
+| TO | 274 | 27 | -12.1314 | -13.0000 | 247 | 0.0985 |
+| MS | 701 | 68 | -11.0528 | -12.0000 | 633 | 0.0970 |
+| PE | 1593 | 153 | -13.2938 | -14.0000 | 1440 | 0.0960 |
+| RN | 474 | 44 | -13.6498 | -15.0000 | 430 | 0.0928 |
 
 ## 5. Top Vendors by Volume
 
@@ -56,24 +57,24 @@ Vendors with small sample sizes should not be ranked as poor performers.
 
 | Vendor | shipment_count | late_count | delay_mean | delay_median | avg_quantity | avg_value | on_time_count | late_rate | small_sample_flag |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| SCMS from RDC | 5404 | 927 | -8.2840 | 0.0000 | 24909.3164 | 200846.1205 | 4477 | 0.1715 | False |
-| Orgenics, Ltd | 754 | 98 | 0.8382 | 0.0000 | 2529.3064 | 195893.0385 | 656 | 0.1300 | False |
-| S. BUYS WHOLESALER | 715 | 11 | -28.6783 | 0.0000 | 1108.5524 | 13833.5715 | 704 | 0.0154 | False |
-| Aurobindo Pharma Limited | 668 | 94 | 4.4117 | 0.0000 | 25443.0389 | 136801.9621 | 574 | 0.1407 | False |
-| Trinity Biotech, Plc | 356 | 1 | 0.0843 | 0.0000 | 1789.9213 | 58340.8462 | 355 | 0.0028 | False |
-| ABBVIE LOGISTICS (FORMERLY ABBOTT LOGISTICS BV) | 347 | 4 | 0.2939 | 0.0000 | 2518.9395 | 84864.7297 | 343 | 0.0115 | False |
-| PHARMACY DIRECT | 326 | 0 | 0.0000 | 0.0000 | 97.0982 | 2678.9437 | 326 | 0.0000 | False |
-| MYLAN LABORATORIES LTD (FORMERLY MATRIX LABORATORIES) | 317 | 2 | -0.6151 | 0.0000 | 24414.7129 | 227803.3612 | 315 | 0.0063 | False |
-| HETERO LABS LIMITED | 277 | 2 | -0.2094 | 0.0000 | 27187.1805 | 154807.1013 | 275 | 0.0072 | False |
-| CIPLA LIMITED | 175 | 23 | 4.7771 | 0.0000 | 35701.1429 | 226621.1120 | 152 | 0.1314 | False |
+| SP | 68387 | 5014 | -11.1250 | -12.0000 | 1.1482 | 124.3991 | 63373 | 0.0733 | False |
+| MG | 7662 | 370 | -13.3149 | -13.0000 | 1.1270 | 127.7952 | 7292 | 0.0483 | False |
+| PR | 7444 | 402 | -14.0897 | -15.0000 | 1.1445 | 165.5734 | 7042 | 0.0540 | False |
+| RJ | 4183 | 301 | -12.4093 | -13.0000 | 1.1212 | 196.2320 | 3882 | 0.0720 | False |
+| SC | 3558 | 175 | -14.0253 | -14.0000 | 1.1265 | 172.3623 | 3383 | 0.0492 | False |
+| RS | 1944 | 61 | -16.2253 | -17.0000 | 1.1152 | 192.2622 | 1883 | 0.0314 | False |
+| DF | 806 | 43 | -13.2370 | -14.0000 | 1.0980 | 117.8513 | 763 | 0.0533 | False |
+| BA | 547 | 27 | -12.5996 | -13.0000 | 1.1389 | 507.1511 | 520 | 0.0494 | False |
+| GO | 448 | 13 | -13.9821 | -14.0000 | 1.1250 | 144.3892 | 435 | 0.0290 | False |
+| PE | 400 | 15 | -15.7025 | -15.0000 | 1.1025 | 227.5609 | 385 | 0.0375 | False |
 
 ## 6. Inventory Highlights (Unverified Provenance)
 
 - Note: Inventory fields appear augmented/synthetic relative to classic SCMS shipment data. Do not treat them as authentic operational inventory records without independent evidence.
 - Stock In all zero: **True**
 - Lead time all 30: **True**
-- Arithmetic match %: **69.5564**
-- Flag/shortage alignment %: **100.0**
+- Arithmetic match %: **97.9258**
+- Flag/shortage alignment %: **44.4117**
 
 ## 7. Figures
 

@@ -1,61 +1,193 @@
 {
   "title": "SCOPE Investigation Report",
-  "generated_at": "2026-11-14T16:07:31.093050+00:00",
-  "query": "Investigate potential disruption and late delivery risk",
+  "generated_at": "2026-11-26T16:24:13.051763+00:00",
+  "query": "Investigate late delivery risk and policy obligations",
   "plan": [
     "Resolve shipment context",
     "Run relevant shipment risk models",
+    "Retrieve policy/document evidence",
     "Record evidence",
     "Run claim Checker"
   ],
   "order_id": 1,
   "predictions": {
-    "late_probability": 0.0060745587972450416,
+    "late_probability": 0.003679437578548862,
     "late_prediction": 0,
-    "predicted_duration_days": 89.14351895917875,
+    "predicted_duration_days": 4.185786061830481,
     "unusual_shipment_profile": {
-      "score": 0.006075822256285113,
-      "is_anomaly": 1,
+      "score": -0.0965647445413434,
+      "is_anomaly": 0,
       "label": "unusual_shipment_profile"
     }
   },
   "observations": {
-    "vendor": "RANBAXY Fine Chemicals LTD.",
-    "country": "C\u00f4te d'Ivoire",
-    "shipment_mode": "Air",
+    "vendor": "SP",
+    "country": "SP",
+    "shipment_mode": "Local",
     "actual_is_late_if_known": 0
   },
-  "document_answer": null,
-  "citations": null,
+  "document_answer": "- Each escalation record must reference the shipment identifiers, the measured late\nrate, the affected product groups and the governing policy clause. [2]\n- Direct Drop and RDC fulfilment have different operational risk profiles. [3]\n- | File | Type |\n|---|---|\n| SYNTHETIC_shipping_sla.md | sla |\n| SYNTHETIC_procurement_policy.md | policy |\n| SYNTHETIC_vendor_compliance.md | compliance |\n| SYNTHETIC_supplier_agreement.md | contract |\n| SYNTHETIC_inventory_policy.md | policy |\n| SYNTHETIC_escalation_matrix.md | policy |\n| SYNTHETIC_cold_chain_policy.m [4]",
+  "citations": [
+    {
+      "index": 1,
+      "chunk_id": "SYNTHETIC_supplier_agreement::c2",
+      "document_id": "SYNTHETIC_supplier_agreement",
+      "file_name": "SYNTHETIC_supplier_agreement.md",
+      "document_type": "contract",
+      "section": "2. Late delivery penalties",
+      "page": 2,
+      "source": "data/documents/synthetic/SYNTHETIC_supplier_agreement.md",
+      "score": 0.01639344262295082,
+      "synthetic": true
+    },
+    {
+      "index": 2,
+      "chunk_id": "SYNTHETIC_escalation_matrix::c4",
+      "document_id": "SYNTHETIC_escalation_matrix",
+      "file_name": "SYNTHETIC_escalation_matrix.md",
+      "document_type": "policy",
+      "section": "4. Mandatory evidence",
+      "page": 4,
+      "source": "data/documents/synthetic/SYNTHETIC_escalation_matrix.md",
+      "score": 0.016129032258064516,
+      "synthetic": true
+    },
+    {
+      "index": 3,
+      "chunk_id": "SYNTHETIC_procurement_policy::c3",
+      "document_id": "SYNTHETIC_procurement_policy",
+      "file_name": "SYNTHETIC_procurement_policy.md",
+      "document_type": "policy",
+      "section": "3. Fulfilment routes",
+      "page": 3,
+      "source": "data/documents/synthetic/SYNTHETIC_procurement_policy.md",
+      "score": 0.015873015873015872,
+      "synthetic": true
+    },
+    {
+      "index": 4,
+      "chunk_id": "README::c1",
+      "document_id": "README",
+      "file_name": "README.md",
+      "document_type": "contract",
+      "section": "Synthetic documents",
+      "page": 1,
+      "source": "data/documents/synthetic/README.md",
+      "score": 0.015625,
+      "synthetic": true
+    }
+  ],
   "evidence_ids": [
-    "9edc1b4b-23d0-4eef-93c4-25b73ead5dc9"
+    "544f9b29-28a4-4ffd-a7a0-b7bda878dad0",
+    "954d2c0f-a0db-4bdf-84b6-a1e65cea9da1",
+    "286d811a-b22a-4a7e-b297-6f7944da3188",
+    "48413eb4-ec89-4a63-b5f9-dc691df869db",
+    "3278e715-8761-4a3b-ba11-94adbc404307"
   ],
   "checker_result": {
-    "checked": 1,
+    "checked": 4,
     "needs_review": 0,
-    "validated": 1,
+    "validated": 4,
     "results": [
       {
-        "evidence_id": "9edc1b4b-23d0-4eef-93c4-25b73ead5dc9",
+        "evidence_id": "544f9b29-28a4-4ffd-a7a0-b7bda878dad0",
         "status": "validated",
         "notes": "All numeric values match the evidence payload (at stated precision); Source present"
+      },
+      {
+        "evidence_id": "286d811a-b22a-4a7e-b297-6f7944da3188",
+        "status": "validated",
+        "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
+      },
+      {
+        "evidence_id": "3278e715-8761-4a3b-ba11-94adbc404307",
+        "status": "validated",
+        "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
+      },
+      {
+        "evidence_id": "48413eb4-ec89-4a63-b5f9-dc691df869db",
+        "status": "validated",
+        "notes": "No numeric claims to verify; Synthetic source labeled correctly \u2014 treat as non-authoritative"
       }
     ],
     "claim_verification": {
-      "claims_checked": 0,
-      "supported": 0,
+      "claims_checked": 3,
+      "supported": 3,
       "unsupported": 0,
       "needs_review": 0,
-      "support_rate": null,
-      "status_counts": {},
-      "verdicts": [],
+      "support_rate": 1.0,
+      "status_counts": {
+        "supported": 3
+      },
+      "verdicts": [
+        {
+          "claim": "Each escalation record must reference the shipment identifiers, the measured late\nrate, the affected product groups and the governing policy clause.",
+          "status": "supported",
+          "ok": true,
+          "support": 1.0,
+          "cited_chunk_ids": [
+            "SYNTHETIC_escalation_matrix::c4"
+          ],
+          "notes": [
+            "Supported by cited passage (overlap 1.00)."
+          ]
+        },
+        {
+          "claim": "Direct Drop and RDC fulfilment have different operational risk profiles.",
+          "status": "supported",
+          "ok": true,
+          "support": 1.0,
+          "cited_chunk_ids": [
+            "SYNTHETIC_procurement_policy::c3"
+          ],
+          "notes": [
+            "Supported by cited passage (overlap 1.00)."
+          ]
+        },
+        {
+          "claim": "| File | Type |\n|---|---|\n| SYNTHETIC_shipping_sla.md | sla |\n| SYNTHETIC_procurement_policy.md | policy |\n| SYNTHETIC_vendor_compliance.md | compliance |\n| SYNTHETIC_supplier_agreement.md | contract |\n| SYNTHETIC_inventory_policy.md | policy |\n| SYNTHETIC_escalation_matrix.md | policy |\n| SYNTHETIC_cold_chain_policy.m",
+          "status": "supported",
+          "ok": true,
+          "support": 0.878,
+          "cited_chunk_ids": [
+            "README::c1"
+          ],
+          "notes": [
+            "Supported by cited passage (overlap 0.88)."
+          ]
+        }
+      ],
       "support_threshold": 0.42,
       "method": "citation resolution + token-overlap entailment proxy + numeric grounding"
     }
   },
   "validation_status": "validated",
-  "excluded_claims": [],
-  "revision_history": [],
+  "excluded_claims": [
+    {
+      "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
+      "verdict": {
+        "claim": "A late delivery attracts a service credit of 2% of line item value per commenced\nweek of delay, capped at 10% of the line item value.",
+        "status": "numeric_mismatch",
+        "ok": false,
+        "support": 1.0,
+        "cited_chunk_ids": [
+          "SYNTHETIC_supplier_agreement::c2"
+        ],
+        "notes": [
+          "Numeric values not supported by payload: ['10']"
+        ]
+      },
+      "evidence_id": "954d2c0f-a0db-4bdf-84b6-a1e65cea9da1"
+    }
+  ],
+  "revision_history": [
+    {
+      "attempt": 1,
+      "action": "Removed claims rejected by the Checker; preserved them as needs_review evidence.",
+      "removed_claims": 1,
+      "remaining_claims": 3
+    }
+  ],
   "assumptions": [
     "ML outputs are probabilistic estimates, not certain outcomes.",
     "Synthetic documents are non-authoritative; official extracts apply only within their stated jurisdiction.",

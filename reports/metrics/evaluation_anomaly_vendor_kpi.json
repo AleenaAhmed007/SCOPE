@@ -1,51 +1,51 @@
 {
   "model": "anomaly_vendor_kpi",
   "artifact": "anomaly_vendor_kpi",
-  "evaluated_at": "2026-11-26T16:06:18.042276+00:00",
+  "evaluated_at": "2026-11-26T16:18:51.546079+00:00",
   "test": {
     "label": "adverse_supplier_kpi_period",
-    "n_test_periods": 777,
-    "n_unusual": 7,
-    "anomaly_rate": 0.009009009009009009,
-    "mean_late_rate_flagged": 0.14751995286303496,
-    "mean_late_rate_unflagged": 0.03297521963610448,
+    "n_test_periods": 17,
+    "n_unusual": 0,
+    "anomaly_rate": 0.0,
+    "mean_late_rate_flagged": null,
+    "mean_late_rate_unflagged": 0.03467621305111618,
     "n_deteriorating": 0,
-    "disruption_signal_rate": 0.009009009009009009,
+    "disruption_signal_rate": 0.0,
     "injected_disruption_check": {
       "unit": "unseen (val+test) vendor-quarters",
-      "n_periods": 1492,
+      "n_periods": 32,
       "false_alarm_rate_clean": {
-        "isolation_forest": 0.014075067024128687,
-        "trend": 0.004691689008042895,
-        "combined": 0.0160857908847185
+        "isolation_forest": 0.03125,
+        "trend": 0.03125,
+        "combined": 0.03125
       },
       "sensitivity": [
         {
           "late_rate_increase": 0.1,
           "delay_increase_days": 7,
-          "detected_isolation_forest": 0.10723860589812333,
-          "detected_trend": 0.06099195710455764,
-          "detected_combined": 0.14142091152815014
+          "detected_isolation_forest": 0.375,
+          "detected_trend": 0.1875,
+          "detected_combined": 0.4375
         },
         {
           "late_rate_increase": 0.2,
           "delay_increase_days": 14,
-          "detected_isolation_forest": 0.7553619302949062,
-          "detected_trend": 0.1903485254691689,
-          "detected_combined": 0.7627345844504021
+          "detected_isolation_forest": 1.0,
+          "detected_trend": 0.75,
+          "detected_combined": 1.0
         },
         {
           "late_rate_increase": 0.3,
           "delay_increase_days": 30,
           "detected_isolation_forest": 1.0,
-          "detected_trend": 0.31970509383378015,
+          "detected_trend": 0.90625,
           "detected_combined": 1.0
         },
         {
           "late_rate_increase": 0.5,
           "delay_increase_days": 60,
           "detected_isolation_forest": 1.0,
-          "detected_trend": 0.43766756032171583,
+          "detected_trend": 0.9375,
           "detected_combined": 1.0
         }
       ],

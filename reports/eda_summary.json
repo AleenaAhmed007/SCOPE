@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-06T12:54:42.609579+00:00",
+  "generated_at": "2026-11-26T16:15:24.686824+00:00",
   "overview": {
-    "n_rows": 10324,
-    "n_columns": 45,
-    "memory_bytes": 19872899.0,
-    "memory_mb": 19.873,
+    "n_rows": 96470,
+    "n_columns": 48,
+    "memory_bytes": 163776836.0,
+    "memory_mb": 163.777,
     "columns": [
       "ID",
       "Project Code",
@@ -50,7 +50,10 @@
       "Inventory_Lead_Time_Days",
       "Inventory_Stockout_Flag",
       "Inventory_Shortage_Quantity",
-      "Inventory_Replenishment_Triggered"
+      "Inventory_Replenishment_Triggered",
+      "Olist_is_late",
+      "Olist_distance_km",
+      "Olist_estimated_delivery_days"
     ],
     "dtypes": {
       "ID": "int64",
@@ -74,17 +77,17 @@
       "Item Description": "object",
       "Molecule/Test Type": "object",
       "Brand": "object",
-      "Dosage": "object",
+      "Dosage": "float64",
       "Dosage Form": "object",
-      "Unit of Measure (Per Pack)": "int64",
+      "Unit of Measure (Per Pack)": "float64",
       "Line Item Quantity": "int64",
       "Line Item Value": "float64",
       "Pack Price": "float64",
       "Unit Price": "float64",
       "Manufacturing Site": "object",
       "First Line Designation": "object",
-      "Weight (Kilograms)": "object",
-      "Freight Cost (USD)": "object",
+      "Weight (Kilograms)": "float64",
+      "Freight Cost (USD)": "float64",
       "Line Item Insurance (USD)": "float64",
       "Inventory_Product_Key": "object",
       "Inventory_Warehouse_ID": "object",
@@ -97,318 +100,281 @@
       "Inventory_Lead_Time_Days": "int64",
       "Inventory_Stockout_Flag": "int64",
       "Inventory_Shortage_Quantity": "int64",
-      "Inventory_Replenishment_Triggered": "int64"
+      "Inventory_Replenishment_Triggered": "int64",
+      "Olist_is_late": "int64",
+      "Olist_distance_km": "float64",
+      "Olist_estimated_delivery_days": "float64"
     },
     "unique_counts": {
-      "ID": 10324,
-      "Project Code": 142,
-      "PQ #": 1237,
-      "PO / SO #": 6233,
-      "ASN/DN #": 7030,
-      "Country": 43,
-      "Managed By": 4,
+      "ID": 96470,
+      "Project Code": 27,
+      "PQ #": 1,
+      "PO / SO #": 96470,
+      "ASN/DN #": 96470,
+      "Country": 27,
+      "Managed By": 2,
       "Fulfill Via": 2,
-      "Vendor INCO Term": 8,
-      "Shipment Mode": 4,
-      "PQ First Sent to Client Date": 765,
-      "PO Sent to Vendor Date": 897,
-      "Scheduled Delivery Date": 2006,
-      "Delivered to Client Date": 2093,
-      "Delivery Recorded Date": 2042,
-      "Product Group": 5,
-      "Sub Classification": 6,
-      "Vendor": 73,
-      "Item Description": 184,
-      "Molecule/Test Type": 86,
-      "Brand": 48,
-      "Dosage": 54,
-      "Dosage Form": 17,
-      "Unit of Measure (Per Pack)": 31,
-      "Line Item Quantity": 5065,
-      "Line Item Value": 8741,
-      "Pack Price": 1175,
-      "Unit Price": 183,
-      "Manufacturing Site": 88,
+      "Vendor INCO Term": 4,
+      "Shipment Mode": 5,
+      "PQ First Sent to Client Date": 612,
+      "PO Sent to Vendor Date": 609,
+      "Scheduled Delivery Date": 445,
+      "Delivered to Client Date": 645,
+      "Delivery Recorded Date": 645,
+      "Product Group": 74,
+      "Sub Classification": 22,
+      "Vendor": 22,
+      "Item Description": 74,
+      "Molecule/Test Type": 74,
+      "Brand": 22,
+      "Dosage": 0,
+      "Dosage Form": 4,
+      "Unit of Measure (Per Pack)": 93880,
+      "Line Item Quantity": 17,
+      "Line Item Value": 7498,
+      "Pack Price": 6957,
+      "Unit Price": 6957,
+      "Manufacturing Site": 22,
       "First Line Designation": 2,
-      "Weight (Kilograms)": 4688,
-      "Freight Cost (USD)": 6733,
-      "Line Item Insurance (USD)": 6722,
-      "Inventory_Product_Key": 184,
-      "Inventory_Warehouse_ID": 43,
-      "Inventory_Date": 2093,
-      "Inventory_Opening_Stock": 5851,
+      "Weight (Kilograms)": 2859,
+      "Freight Cost (USD)": 7612,
+      "Line Item Insurance (USD)": 90272,
+      "Inventory_Product_Key": 74,
+      "Inventory_Warehouse_ID": 22,
+      "Inventory_Date": 612,
+      "Inventory_Opening_Stock": 31,
       "Inventory_Stock_In": 1,
-      "Inventory_Stock_Out": 5065,
-      "Inventory_Closing_Stock": 5195,
-      "Inventory_Reorder_Level": 760,
+      "Inventory_Stock_Out": 17,
+      "Inventory_Closing_Stock": 21,
+      "Inventory_Reorder_Level": 16,
       "Inventory_Lead_Time_Days": 1,
       "Inventory_Stockout_Flag": 2,
-      "Inventory_Shortage_Quantity": 2456,
-      "Inventory_Replenishment_Triggered": 2
+      "Inventory_Shortage_Quantity": 5,
+      "Inventory_Replenishment_Triggered": 2,
+      "Olist_is_late": 2,
+      "Olist_distance_km": 90272,
+      "Olist_estimated_delivery_days": 93880
     },
     "duplicate_rows": 0,
     "duplicate_ids": 0
   },
   "dirty_numeric": {
     "Weight (Kilograms)": {
-      "n_numeric": 6372,
-      "n_non_numeric": 3952,
+      "n_numeric": 96470,
+      "n_non_numeric": 0,
       "n_null_original": 0,
-      "top_non_numeric": {
-        "Weight Captured Separately": 1507,
-        "See DN-304 (ID#:10589)": 16,
-        "See ASN-32231 (ID#:13648)": 14,
-        "See ASN-31750 (ID#:19272)": 14,
-        "See ASN-28279 (ID#:13547)": 13,
-        "See DN-3015 (ID#:82554)": 12,
-        "See ASN-26738 (ID#:15115)": 10,
-        "See DN-3561 (ID#:82654)": 10,
-        "See DN-2035 (ID#:82356)": 10,
-        "See DN-2812 (ID#:83068)": 9,
-        "See ASN-24721 (ID#:13708)": 9,
-        "See DN-2981 (ID#:82538)": 9,
-        "See DN-332 (ID#:10613)": 9,
-        "See DN-3843 (ID#:82707)": 9,
-        "See DN-2090 (ID#:82366)": 8
-      }
+      "top_non_numeric": {}
     },
     "Freight Cost (USD)": {
-      "n_numeric": 6198,
-      "n_non_numeric": 4126,
+      "n_numeric": 96470,
+      "n_non_numeric": 0,
       "n_null_original": 0,
-      "top_non_numeric": {
-        "Freight Included in Commodity Cost": 1442,
-        "Invoiced Separately": 239,
-        "See DN-304 (ID#:10589)": 16,
-        "See ASN-32231 (ID#:13648)": 14,
-        "See ASN-31750 (ID#:19272)": 14,
-        "See ASN-28279 (ID#:13547)": 13,
-        "See DN-3015 (ID#:82554)": 12,
-        "See ASN-26738 (ID#:15115)": 10,
-        "See DN-3561 (ID#:82654)": 10,
-        "See DN-2035 (ID#:82356)": 10,
-        "See DN-2812 (ID#:83068)": 9,
-        "See ASN-24721 (ID#:13708)": 9,
-        "See DN-2981 (ID#:82538)": 9,
-        "See DN-332 (ID#:10613)": 9,
-        "See DN-3843 (ID#:82707)": 9
-      }
+      "top_non_numeric": {}
     }
   },
   "date_parsing": {
     "PQ First Sent to Client Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
-      "n_placeholder": 2681,
-      "n_parse_ok": 7643,
+      "n_placeholder": 0,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
-      "placeholder_counts": {
-        "Pre-PQ Process": 2476,
-        "Date Not Captured": 205
-      },
-      "min_parsed": "2009-01-07T00:00:00",
-      "max_parsed": "2015-12-01T00:00:00"
+      "placeholder_counts": {},
+      "min_parsed": "2016-09-15T00:00:00",
+      "max_parsed": "2018-08-29T00:00:00"
     },
     "PO Sent to Vendor Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
-      "n_placeholder": 5732,
-      "n_parse_ok": 4592,
+      "n_placeholder": 0,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
-      "placeholder_counts": {
-        "N/A - From RDC": 5404,
-        "Date Not Captured": 328
-      },
-      "min_parsed": "2006-01-12T00:00:00",
-      "max_parsed": "2015-12-05T00:00:00"
+      "placeholder_counts": {},
+      "min_parsed": "2016-09-15T00:00:00",
+      "max_parsed": "2018-08-29T00:00:00"
     },
     "Scheduled Delivery Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-12-31T00:00:00"
+      "min_parsed": "2016-10-04T00:00:00",
+      "max_parsed": "2018-10-25T00:00:00"
     },
     "Delivered to Client Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-09-14T00:00:00"
+      "min_parsed": "2016-10-11T00:00:00",
+      "max_parsed": "2018-10-17T00:00:00"
     },
     "Delivery Recorded Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-09-14T00:00:00"
+      "min_parsed": "2016-10-11T00:00:00",
+      "max_parsed": "2018-10-17T00:00:00"
     },
     "Inventory_Date": {
       "present": true,
-      "n_rows": 10324,
+      "n_rows": 96470,
       "n_null": 0,
       "n_placeholder": 0,
-      "n_parse_ok": 10324,
+      "n_parse_ok": 96470,
       "n_parse_failed": 0,
       "placeholder_counts": {},
-      "min_parsed": "2006-05-02T00:00:00",
-      "max_parsed": "2015-09-14T00:00:00"
+      "min_parsed": "2016-09-15T00:00:00",
+      "max_parsed": "2018-08-29T00:00:00"
     }
   },
   "chronology": {
-    "delivered_before_scheduled_count": 2814,
-    "delivered_after_scheduled_count": 1186,
-    "delivered_on_scheduled_count": 6324,
-    "valid_schedule_delivery_pairs": 10324,
-    "recorded_before_delivered_count": 3,
-    "valid_delivered_recorded_pairs": 10324,
-    "po_sent_after_delivered_count": 432,
-    "valid_po_delivered_pairs": 4592
+    "delivered_before_scheduled_count": 88644,
+    "delivered_after_scheduled_count": 6534,
+    "delivered_on_scheduled_count": 1292,
+    "valid_schedule_delivery_pairs": 96470,
+    "recorded_before_delivered_count": 0,
+    "valid_delivered_recorded_pairs": 96470,
+    "po_sent_after_delivered_count": 38,
+    "valid_po_delivered_pairs": 96470
   },
   "constants": {
     "constant": [
+      "PQ #",
+      "Dosage",
       "Inventory_Stock_In",
       "Inventory_Lead_Time_Days"
     ],
-    "near_constant": [
-      {
-        "column": "Managed By",
-        "dominant_value": "PMO - US",
-        "dominant_share": 0.9943,
-        "n_unique": 4
-      }
-    ]
+    "near_constant": []
   },
   "numerical_profile": [
     {
       "column": "Line Item Quantity",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 18332.534870205345,
-      "median": 3000.0,
-      "std": 40035.30296149489,
+      "mean": 1.1422100134756918,
+      "median": 1.0,
+      "std": 0.5388244844026,
       "min": 1.0,
-      "q25": 408.0,
-      "q75": 17039.75,
-      "max": 619999.0,
-      "skewness": 5.038314698810932,
-      "iqr_outlier_count": 1371
+      "q25": 1.0,
+      "q75": 1.0,
+      "max": 21.0,
+      "skewness": 7.557602141464502,
+      "iqr_outlier_count": 0
     },
     {
       "column": "Line Item Value",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 157650.56734695853,
-      "median": 30471.465,
-      "std": 345292.0669788389,
-      "min": 0.0,
-      "q25": 4314.592500000001,
-      "q75": 166447.13999999998,
-      "max": 5951990.4,
-      "skewness": 5.8370201862389655,
-      "iqr_outlier_count": 1127
+      "mean": 137.0400013475692,
+      "median": 86.5,
+      "std": 209.05260846299177,
+      "min": 0.85,
+      "q25": 45.9,
+      "q75": 149.9,
+      "max": 13440.0,
+      "skewness": 9.885399776798433,
+      "iqr_outlier_count": 7658
     },
     {
       "column": "Pack Price",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 21.910241185586983,
-      "median": 9.3,
-      "std": 45.60922308447081,
-      "min": 0.0,
-      "q25": 4.12,
-      "q75": 23.5925,
-      "max": 1345.64,
-      "skewness": 12.988432142155938,
-      "iqr_outlier_count": 1160
+      "mean": 125.23151273125306,
+      "median": 79.0,
+      "std": 189.70443492037225,
+      "min": 0.85,
+      "q25": 41.9,
+      "q75": 139.9,
+      "max": 6735.0,
+      "skewness": 7.869020314387142,
+      "iqr_outlier_count": 7336
     },
     {
       "column": "Unit Price",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 0.6117008911274701,
-      "median": 0.16,
-      "std": 3.275807740843419,
-      "min": 0.0,
-      "q25": 0.08,
-      "q75": 0.47,
-      "max": 238.65,
-      "skewness": 40.584849393028136,
-      "iqr_outlier_count": 880
+      "mean": 125.23151273125306,
+      "median": 79.0,
+      "std": 189.70443492037225,
+      "min": 0.85,
+      "q25": 41.9,
+      "q75": 139.9,
+      "max": 6735.0,
+      "skewness": 7.869020314387142,
+      "iqr_outlier_count": 7336
     },
     {
       "column": "Weight (Kilograms)",
-      "count": 6372,
-      "missing": 3952,
-      "mean": 3424.441305712492,
-      "median": 1047.0,
-      "std": 13526.968269833156,
+      "count": 96470,
+      "missing": 0,
+      "mean": 2.386472437027055,
+      "median": 0.75,
+      "std": 4.76981331815749,
       "min": 0.0,
-      "q25": 206.75,
-      "q75": 3334.0,
-      "max": 857354.0,
-      "skewness": 42.50590318409664,
-      "iqr_outlier_count": 623
+      "q25": 0.3,
+      "q75": 2.05,
+      "max": 184.4,
+      "skewness": 6.572976023196613,
+      "iqr_outlier_count": 13544
     },
     {
       "column": "Freight Cost (USD)",
-      "count": 6198,
-      "missing": 4126,
-      "mean": 11103.234819296547,
-      "median": 5869.655000000001,
-      "std": 15813.02669238992,
-      "min": 0.75,
-      "q25": 2131.12,
-      "q75": 14406.57,
-      "max": 289653.2,
-      "skewness": 4.688022585166202,
-      "iqr_outlier_count": 388
+      "count": 96470,
+      "missing": 0,
+      "mean": 22.785797657302783,
+      "median": 17.17,
+      "std": 21.559959446538635,
+      "min": 0.0,
+      "q25": 13.85,
+      "q75": 24.02,
+      "max": 1794.96,
+      "skewness": 12.276901497893045,
+      "iqr_outlier_count": 9694
     },
     {
       "column": "Line Item Insurance (USD)",
-      "count": 10037,
-      "missing": 287,
-      "mean": 240.11762578459698,
-      "median": 47.04,
-      "std": 500.19056766255534,
+      "count": 95993,
+      "missing": 477,
+      "mean": 600.3950294775077,
+      "median": 433.77304392362703,
+      "std": 592.3642174591731,
       "min": 0.0,
-      "q25": 6.51,
-      "q75": 252.4,
-      "max": 7708.44,
-      "skewness": 4.8271623737952964,
-      "iqr_outlier_count": 1116
+      "q25": 185.22278326460471,
+      "q75": 798.2828222846146,
+      "max": 3398.4856046627337,
+      "skewness": 1.6561259491095626,
+      "iqr_outlier_count": 7414
     },
     {
       "column": "Inventory_Opening_Stock",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 23944.71406431616,
-      "median": 5016.0,
-      "std": 44022.76693151062,
-      "min": 0.0,
-      "q25": 386.75,
-      "q75": 25550.0,
-      "max": 465000.0,
-      "skewness": 3.2370018187387237,
-      "iqr_outlier_count": 1291
+      "mean": 1.6329843474655332,
+      "median": 1.0,
+      "std": 1.1775289293262694,
+      "min": 1.0,
+      "q25": 1.0,
+      "q75": 2.0,
+      "max": 44.0,
+      "skewness": 6.847610305921307,
+      "iqr_outlier_count": 4601
     },
     {
       "column": "Inventory_Stock_In",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
       "mean": 0.0,
       "median": 0.0,
@@ -422,166 +388,156 @@
     },
     {
       "column": "Inventory_Stock_Out",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 18332.534870205345,
-      "median": 3000.0,
-      "std": 40035.30296149489,
+      "mean": 1.1422100134756918,
+      "median": 1.0,
+      "std": 0.5388244844026,
       "min": 1.0,
-      "q25": 408.0,
-      "q75": 17039.75,
-      "max": 619999.0,
-      "skewness": 5.038314698810932,
-      "iqr_outlier_count": 1371
+      "q25": 1.0,
+      "q75": 1.0,
+      "max": 21.0,
+      "skewness": 7.557602141464502,
+      "iqr_outlier_count": 0
     },
     {
       "column": "Inventory_Closing_Stock",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 14266.372917473847,
-      "median": 999.0,
-      "std": 33721.30962249872,
+      "mean": 0.5142013061055251,
+      "median": 0.0,
+      "std": 0.8088905446872448,
       "min": 0.0,
       "q25": 0.0,
-      "q75": 10529.5,
-      "max": 381250.0,
-      "skewness": 4.410226520259753,
-      "iqr_outlier_count": 1590
+      "q75": 1.0,
+      "max": 25.0,
+      "skewness": 4.909693938725509,
+      "iqr_outlier_count": 2481
     },
     {
       "column": "Inventory_Reorder_Level",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 18934.186555598604,
-      "median": 5475.0,
-      "std": 28485.043213687823,
-      "min": 2.0,
-      "q25": 791.0,
-      "q75": 23693.0,
-      "max": 195750.0,
-      "skewness": 2.2384908783617306,
-      "iqr_outlier_count": 1425
+      "mean": 1.0425520887322484,
+      "median": 1.0,
+      "std": 0.3094587014236714,
+      "min": 1.0,
+      "q25": 1.0,
+      "q75": 1.0,
+      "max": 17.0,
+      "skewness": 14.893638500577561,
+      "iqr_outlier_count": 0
     },
     {
       "column": "Inventory_Shortage_Quantity",
-      "count": 10324,
+      "count": 96470,
       "missing": 0,
-      "mean": 8654.193723363038,
+      "mean": 0.023426972115683634,
       "median": 0.0,
-      "std": 30573.48313295678,
+      "std": 0.17064211932719806,
       "min": 0.0,
       "q25": 0.0,
-      "q75": 405.0,
-      "max": 515000.0,
-      "skewness": 6.629098629407544,
-      "iqr_outlier_count": 2383
+      "q75": 0.0,
+      "max": 4.0,
+      "skewness": 8.668994706131372,
+      "iqr_outlier_count": 0
     }
   ],
   "categorical_profile": {
     "Country": {
-      "n_unique": 43,
+      "n_unique": 27,
       "top": [
         {
-          "value": "South Africa",
-          "count": 1406,
-          "pct": 13.62
+          "value": "SP",
+          "count": 40494,
+          "pct": 41.98
         },
         {
-          "value": "Nigeria",
-          "count": 1194,
-          "pct": 11.57
+          "value": "RJ",
+          "count": 12350,
+          "pct": 12.8
         },
         {
-          "value": "Côte d'Ivoire",
-          "count": 1083,
-          "pct": 10.49
+          "value": "MG",
+          "count": 11354,
+          "pct": 11.77
         },
         {
-          "value": "Uganda",
-          "count": 779,
-          "pct": 7.55
+          "value": "RS",
+          "count": 5344,
+          "pct": 5.54
         },
         {
-          "value": "Vietnam",
-          "count": 688,
-          "pct": 6.66
+          "value": "PR",
+          "count": 4923,
+          "pct": 5.1
         },
         {
-          "value": "Zambia",
-          "count": 683,
-          "pct": 6.62
+          "value": "SC",
+          "count": 3546,
+          "pct": 3.68
         },
         {
-          "value": "Haiti",
-          "count": 655,
-          "pct": 6.34
+          "value": "BA",
+          "count": 3256,
+          "pct": 3.38
         },
         {
-          "value": "Mozambique",
-          "count": 631,
-          "pct": 6.11
+          "value": "DF",
+          "count": 2080,
+          "pct": 2.16
         },
         {
-          "value": "Zimbabwe",
-          "count": 538,
-          "pct": 5.21
+          "value": "ES",
+          "count": 1995,
+          "pct": 2.07
         },
         {
-          "value": "Tanzania",
-          "count": 519,
-          "pct": 5.03
+          "value": "GO",
+          "count": 1957,
+          "pct": 2.03
         },
         {
-          "value": "Rwanda",
-          "count": 430,
-          "pct": 4.17
+          "value": "PE",
+          "count": 1593,
+          "pct": 1.65
         },
         {
-          "value": "Congo, DRC",
-          "count": 333,
-          "pct": 3.23
+          "value": "CE",
+          "count": 1279,
+          "pct": 1.33
         },
         {
-          "value": "Guyana",
-          "count": 237,
-          "pct": 2.3
+          "value": "PA",
+          "count": 946,
+          "pct": 0.98
         },
         {
-          "value": "Ethiopia",
-          "count": 216,
-          "pct": 2.09
+          "value": "MT",
+          "count": 886,
+          "pct": 0.92
         },
         {
-          "value": "South Sudan",
-          "count": 164,
-          "pct": 1.59
+          "value": "MA",
+          "count": 717,
+          "pct": 0.74
         }
       ],
-      "other_count": 768,
-      "other_pct": 7.44
+      "other_count": 3750,
+      "other_pct": 3.89
     },
     "Managed By": {
-      "n_unique": 4,
+      "n_unique": 2,
       "top": [
         {
-          "value": "PMO - US",
-          "count": 10265,
-          "pct": 99.43
+          "value": "CrossState",
+          "count": 61779,
+          "pct": 64.04
         },
         {
-          "value": "South Africa Field Office",
-          "count": 57,
-          "pct": 0.55
-        },
-        {
-          "value": "Haiti Field Office",
-          "count": 1,
-          "pct": 0.01
-        },
-        {
-          "value": "Ethiopia Field Office",
-          "count": 1,
-          "pct": 0.01
+          "value": "SameState",
+          "count": 34691,
+          "pct": 35.96
         }
       ],
       "other_count": 0,
@@ -591,591 +547,1251 @@
       "n_unique": 2,
       "top": [
         {
-          "value": "From RDC",
-          "count": 5404,
-          "pct": 52.34
+          "value": "SingleSeller",
+          "count": 95195,
+          "pct": 98.68
         },
         {
-          "value": "Direct Drop",
-          "count": 4920,
-          "pct": 47.66
+          "value": "MultiSeller",
+          "count": 1275,
+          "pct": 1.32
         }
       ],
       "other_count": 0,
       "other_pct": 0.0
     },
     "Vendor INCO Term": {
-      "n_unique": 8,
+      "n_unique": 4,
       "top": [
         {
-          "value": "N/A - From RDC",
-          "count": 5404,
-          "pct": 52.34
+          "value": "credit_card",
+          "count": 72818,
+          "pct": 75.48
         },
         {
-          "value": "EXW",
-          "count": 2778,
-          "pct": 26.91
+          "value": "boleto",
+          "count": 19191,
+          "pct": 19.89
         },
         {
-          "value": "DDP",
-          "count": 1443,
-          "pct": 13.98
+          "value": "voucher",
+          "count": 2977,
+          "pct": 3.09
         },
         {
-          "value": "FCA",
-          "count": 397,
-          "pct": 3.85
+          "value": "debit_card",
+          "count": 1483,
+          "pct": 1.54
         },
         {
-          "value": "CIP",
-          "count": 275,
-          "pct": 2.66
-        },
-        {
-          "value": "DDU",
-          "count": 15,
-          "pct": 0.15
-        },
-        {
-          "value": "DAP",
-          "count": 9,
-          "pct": 0.09
-        },
-        {
-          "value": "CIF",
-          "count": 3,
-          "pct": 0.03
+          "value": "(Missing)",
+          "count": 1,
+          "pct": 0.0
         }
       ],
       "other_count": 0,
       "other_pct": 0.0
     },
     "Shipment Mode": {
-      "n_unique": 4,
+      "n_unique": 5,
       "top": [
         {
-          "value": "Air",
-          "count": 6113,
-          "pct": 59.21
+          "value": "Medium",
+          "count": 30235,
+          "pct": 31.34
         },
         {
-          "value": "Truck",
-          "count": 2830,
-          "pct": 27.41
+          "value": "Long",
+          "count": 25762,
+          "pct": 26.7
         },
         {
-          "value": "Air Charter",
-          "count": 650,
-          "pct": 6.3
+          "value": "VeryLong",
+          "count": 15342,
+          "pct": 15.9
         },
         {
-          "value": "Ocean",
-          "count": 371,
-          "pct": 3.59
+          "value": "Short",
+          "count": 12900,
+          "pct": 13.37
         },
         {
-          "value": "(Missing)",
-          "count": 360,
-          "pct": 3.49
+          "value": "Local",
+          "count": 12231,
+          "pct": 12.68
         }
       ],
       "other_count": 0,
       "other_pct": 0.0
     },
     "Product Group": {
-      "n_unique": 5,
+      "n_unique": 74,
       "top": [
         {
-          "value": "ARV",
-          "count": 8550,
-          "pct": 82.82
+          "value": "bed_bath_table",
+          "count": 9181,
+          "pct": 9.52
         },
         {
-          "value": "HRDT",
-          "count": 1728,
-          "pct": 16.74
+          "value": "health_beauty",
+          "count": 8613,
+          "pct": 8.93
         },
         {
-          "value": "ANTM",
-          "count": 22,
-          "pct": 0.21
+          "value": "sports_leisure",
+          "count": 7492,
+          "pct": 7.77
         },
         {
-          "value": "ACT",
-          "count": 16,
-          "pct": 0.15
+          "value": "computers_accessories",
+          "count": 6511,
+          "pct": 6.75
         },
         {
-          "value": "MRDT",
-          "count": 8,
-          "pct": 0.08
+          "value": "furniture_decor",
+          "count": 6188,
+          "pct": 6.41
+        },
+        {
+          "value": "housewares",
+          "count": 5680,
+          "pct": 5.89
+        },
+        {
+          "value": "watches_gifts",
+          "count": 5476,
+          "pct": 5.68
+        },
+        {
+          "value": "telephony",
+          "count": 4073,
+          "pct": 4.22
+        },
+        {
+          "value": "auto",
+          "count": 3793,
+          "pct": 3.93
+        },
+        {
+          "value": "toys",
+          "count": 3787,
+          "pct": 3.93
+        },
+        {
+          "value": "cool_stuff",
+          "count": 3530,
+          "pct": 3.66
+        },
+        {
+          "value": "garden_tools",
+          "count": 3400,
+          "pct": 3.52
+        },
+        {
+          "value": "perfumery",
+          "count": 3070,
+          "pct": 3.18
+        },
+        {
+          "value": "baby",
+          "count": 2759,
+          "pct": 2.86
+        },
+        {
+          "value": "electronics",
+          "count": 2503,
+          "pct": 2.59
         }
       ],
-      "other_count": 0,
-      "other_pct": 0.0
+      "other_count": 20414,
+      "other_pct": 21.16
     },
     "Sub Classification": {
-      "n_unique": 6,
+      "n_unique": 22,
       "top": [
         {
-          "value": "Adult",
-          "count": 6595,
-          "pct": 63.88
+          "value": "SP",
+          "count": 68387,
+          "pct": 70.89
         },
         {
-          "value": "Pediatric",
-          "count": 1955,
-          "pct": 18.94
+          "value": "MG",
+          "count": 7662,
+          "pct": 7.94
         },
         {
-          "value": "HIV test",
-          "count": 1567,
-          "pct": 15.18
+          "value": "PR",
+          "count": 7444,
+          "pct": 7.72
         },
         {
-          "value": "HIV test - Ancillary",
-          "count": 161,
-          "pct": 1.56
+          "value": "RJ",
+          "count": 4183,
+          "pct": 4.34
         },
         {
-          "value": "Malaria",
-          "count": 30,
-          "pct": 0.29
+          "value": "SC",
+          "count": 3558,
+          "pct": 3.69
         },
         {
-          "value": "ACT",
-          "count": 16,
-          "pct": 0.15
-        }
-      ],
-      "other_count": 0,
-      "other_pct": 0.0
-    },
-    "Vendor": {
-      "n_unique": 73,
-      "top": [
-        {
-          "value": "SCMS from RDC",
-          "count": 5404,
-          "pct": 52.34
+          "value": "RS",
+          "count": 1944,
+          "pct": 2.02
         },
         {
-          "value": "Orgenics, Ltd",
-          "count": 754,
-          "pct": 7.3
+          "value": "DF",
+          "count": 806,
+          "pct": 0.84
         },
         {
-          "value": "S. BUYS WHOLESALER",
-          "count": 715,
-          "pct": 6.93
+          "value": "BA",
+          "count": 547,
+          "pct": 0.57
         },
         {
-          "value": "Aurobindo Pharma Limited",
-          "count": 668,
-          "pct": 6.47
+          "value": "GO",
+          "count": 448,
+          "pct": 0.46
         },
         {
-          "value": "Trinity Biotech, Plc",
-          "count": 356,
-          "pct": 3.45
+          "value": "PE",
+          "count": 400,
+          "pct": 0.41
         },
         {
-          "value": "ABBVIE LOGISTICS (FORMERLY ABBOTT LOGISTICS BV)",
-          "count": 347,
-          "pct": 3.36
-        },
-        {
-          "value": "PHARMACY DIRECT",
-          "count": 326,
-          "pct": 3.16
-        },
-        {
-          "value": "MYLAN LABORATORIES LTD (FORMERLY MATRIX LABORATORIES)",
-          "count": 317,
-          "pct": 3.07
-        },
-        {
-          "value": "HETERO LABS LIMITED",
-          "count": 277,
-          "pct": 2.68
-        },
-        {
-          "value": "CIPLA LIMITED",
-          "count": 175,
-          "pct": 1.7
-        },
-        {
-          "value": "CHEMBIO DIAGNOSTIC SYSTEMS, INC.",
-          "count": 109,
-          "pct": 1.06
-        },
-        {
-          "value": "Standard Diagnostics, Inc.",
-          "count": 98,
-          "pct": 0.95
-        },
-        {
-          "value": "STRIDES ARCOLAB LIMITED",
-          "count": 93,
-          "pct": 0.9
-        },
-        {
-          "value": "SHANGHAI KEHUA BIOENGINEERING CO.,LTD.  (KHB)",
-          "count": 70,
-          "pct": 0.68
-        },
-        {
-          "value": "MERCK SHARP & DOHME IDEA GMBH (FORMALLY MERCK SHARP & DOHME B.V.)",
-          "count": 68,
-          "pct": 0.66
-        }
-      ],
-      "other_count": 547,
-      "other_pct": 5.3
-    },
-    "Manufacturing Site": {
-      "n_unique": 88,
-      "top": [
-        {
-          "value": "Aurobindo Unit III, India",
-          "count": 3172,
-          "pct": 30.72
-        },
-        {
-          "value": "Mylan (formerly Matrix) Nashik",
-          "count": 1415,
-          "pct": 13.71
-        },
-        {
-          "value": "Hetero Unit III Hyderabad IN",
-          "count": 869,
-          "pct": 8.42
-        },
-        {
-          "value": "Cipla, Goa, India",
-          "count": 665,
-          "pct": 6.44
-        },
-        {
-          "value": "Strides, Bangalore, India.",
-          "count": 540,
-          "pct": 5.23
-        },
-        {
-          "value": "Alere Medical Co., Ltd.",
-          "count": 481,
-          "pct": 4.66
-        },
-        {
-          "value": "Trinity Biotech, Plc",
-          "count": 405,
-          "pct": 3.92
-        },
-        {
-          "value": "ABBVIE Ludwigshafen Germany",
-          "count": 366,
-          "pct": 3.55
-        },
-        {
-          "value": "Inverness Japan",
-          "count": 345,
-          "pct": 3.34
-        },
-        {
-          "value": "ABBVIE (Abbott) Logis. UK",
-          "count": 219,
-          "pct": 2.12
-        },
-        {
-          "value": "BMS Meymac, France",
-          "count": 148,
-          "pct": 1.43
-        },
-        {
-          "value": "Aspen-OSD, Port Elizabeth, SA",
-          "count": 141,
-          "pct": 1.37
-        },
-        {
-          "value": "Chembio Diagnostics Sys. Inc.",
-          "count": 124,
-          "pct": 1.2
-        },
-        {
-          "value": "MSD, Haarlem, NL",
-          "count": 121,
-          "pct": 1.17
-        },
-        {
-          "value": "Standard Diagnostics, Korea",
-          "count": 114,
-          "pct": 1.1
-        }
-      ],
-      "other_count": 1199,
-      "other_pct": 11.61
-    },
-    "Brand": {
-      "n_unique": 48,
-      "top": [
-        {
-          "value": "Generic",
-          "count": 7285,
-          "pct": 70.56
-        },
-        {
-          "value": "Determine",
-          "count": 799,
-          "pct": 7.74
-        },
-        {
-          "value": "Uni-Gold",
-          "count": 373,
-          "pct": 3.61
-        },
-        {
-          "value": "Aluvia",
-          "count": 250,
-          "pct": 2.42
-        },
-        {
-          "value": "Kaletra",
-          "count": 165,
-          "pct": 1.6
-        },
-        {
-          "value": "Norvir",
-          "count": 136,
-          "pct": 1.32
-        },
-        {
-          "value": "Stat-Pak",
-          "count": 115,
-          "pct": 1.11
-        },
-        {
-          "value": "Bioline",
-          "count": 113,
-          "pct": 1.09
-        },
-        {
-          "value": "Truvada",
-          "count": 94,
-          "pct": 0.91
-        },
-        {
-          "value": "Videx",
-          "count": 84,
-          "pct": 0.81
-        },
-        {
-          "value": "Colloidal Gold",
-          "count": 70,
-          "pct": 0.68
-        },
-        {
-          "value": "Stocrin/Sustiva",
-          "count": 69,
-          "pct": 0.67
-        },
-        {
-          "value": "OraQuick",
-          "count": 60,
-          "pct": 0.58
-        },
-        {
-          "value": "Invirase",
-          "count": 53,
-          "pct": 0.51
-        },
-        {
-          "value": "Viread",
-          "count": 52,
-          "pct": 0.5
-        }
-      ],
-      "other_count": 606,
-      "other_pct": 5.87
-    },
-    "Dosage Form": {
-      "n_unique": 17,
-      "top": [
-        {
-          "value": "Tablet",
-          "count": 3532,
-          "pct": 34.21
-        },
-        {
-          "value": "Tablet - FDC",
-          "count": 2749,
-          "pct": 26.63
-        },
-        {
-          "value": "Test kit",
-          "count": 1575,
-          "pct": 15.26
-        },
-        {
-          "value": "Capsule",
-          "count": 729,
-          "pct": 7.06
-        },
-        {
-          "value": "Oral solution",
-          "count": 727,
-          "pct": 7.04
-        },
-        {
-          "value": "Chewable/dispersible tablet - FDC",
-          "count": 239,
-          "pct": 2.31
-        },
-        {
-          "value": "Oral suspension",
-          "count": 214,
-          "pct": 2.07
-        },
-        {
-          "value": "Test kit - Ancillary",
-          "count": 161,
-          "pct": 1.56
-        },
-        {
-          "value": "Chewable/dispersible tablet",
-          "count": 146,
-          "pct": 1.41
-        },
-        {
-          "value": "Delayed-release capsules",
-          "count": 131,
-          "pct": 1.27
-        },
-        {
-          "value": "Delayed-release capsules - blister",
-          "count": 41,
+          "value": "MA",
+          "count": 388,
           "pct": 0.4
         },
         {
-          "value": "Powder for oral solution",
-          "count": 28,
-          "pct": 0.27
+          "value": "ES",
+          "count": 310,
+          "pct": 0.32
         },
         {
-          "value": "Tablet - FDC + co-blister",
-          "count": 20,
-          "pct": 0.19
+          "value": "MT",
+          "count": 135,
+          "pct": 0.14
         },
         {
-          "value": "Tablet - FDC + blister",
-          "count": 15,
-          "pct": 0.15
+          "value": "CE",
+          "count": 84,
+          "pct": 0.09
         },
         {
-          "value": "Tablet - blister",
-          "count": 10,
-          "pct": 0.1
+          "value": "RN",
+          "count": 49,
+          "pct": 0.05
         }
       ],
-      "other_count": 7,
-      "other_pct": 0.07
+      "other_count": 125,
+      "other_pct": 0.13
+    },
+    "Vendor": {
+      "n_unique": 22,
+      "top": [
+        {
+          "value": "SP",
+          "count": 68387,
+          "pct": 70.89
+        },
+        {
+          "value": "MG",
+          "count": 7662,
+          "pct": 7.94
+        },
+        {
+          "value": "PR",
+          "count": 7444,
+          "pct": 7.72
+        },
+        {
+          "value": "RJ",
+          "count": 4183,
+          "pct": 4.34
+        },
+        {
+          "value": "SC",
+          "count": 3558,
+          "pct": 3.69
+        },
+        {
+          "value": "RS",
+          "count": 1944,
+          "pct": 2.02
+        },
+        {
+          "value": "DF",
+          "count": 806,
+          "pct": 0.84
+        },
+        {
+          "value": "BA",
+          "count": 547,
+          "pct": 0.57
+        },
+        {
+          "value": "GO",
+          "count": 448,
+          "pct": 0.46
+        },
+        {
+          "value": "PE",
+          "count": 400,
+          "pct": 0.41
+        },
+        {
+          "value": "MA",
+          "count": 388,
+          "pct": 0.4
+        },
+        {
+          "value": "ES",
+          "count": 310,
+          "pct": 0.32
+        },
+        {
+          "value": "MT",
+          "count": 135,
+          "pct": 0.14
+        },
+        {
+          "value": "CE",
+          "count": 84,
+          "pct": 0.09
+        },
+        {
+          "value": "RN",
+          "count": 49,
+          "pct": 0.05
+        }
+      ],
+      "other_count": 125,
+      "other_pct": 0.13
+    },
+    "Manufacturing Site": {
+      "n_unique": 22,
+      "top": [
+        {
+          "value": "SP",
+          "count": 68387,
+          "pct": 70.89
+        },
+        {
+          "value": "MG",
+          "count": 7662,
+          "pct": 7.94
+        },
+        {
+          "value": "PR",
+          "count": 7444,
+          "pct": 7.72
+        },
+        {
+          "value": "RJ",
+          "count": 4183,
+          "pct": 4.34
+        },
+        {
+          "value": "SC",
+          "count": 3558,
+          "pct": 3.69
+        },
+        {
+          "value": "RS",
+          "count": 1944,
+          "pct": 2.02
+        },
+        {
+          "value": "DF",
+          "count": 806,
+          "pct": 0.84
+        },
+        {
+          "value": "BA",
+          "count": 547,
+          "pct": 0.57
+        },
+        {
+          "value": "GO",
+          "count": 448,
+          "pct": 0.46
+        },
+        {
+          "value": "PE",
+          "count": 400,
+          "pct": 0.41
+        },
+        {
+          "value": "MA",
+          "count": 388,
+          "pct": 0.4
+        },
+        {
+          "value": "ES",
+          "count": 310,
+          "pct": 0.32
+        },
+        {
+          "value": "MT",
+          "count": 135,
+          "pct": 0.14
+        },
+        {
+          "value": "CE",
+          "count": 84,
+          "pct": 0.09
+        },
+        {
+          "value": "RN",
+          "count": 49,
+          "pct": 0.05
+        }
+      ],
+      "other_count": 125,
+      "other_pct": 0.13
+    },
+    "Brand": {
+      "n_unique": 22,
+      "top": [
+        {
+          "value": "SP",
+          "count": 68387,
+          "pct": 70.89
+        },
+        {
+          "value": "MG",
+          "count": 7662,
+          "pct": 7.94
+        },
+        {
+          "value": "PR",
+          "count": 7444,
+          "pct": 7.72
+        },
+        {
+          "value": "RJ",
+          "count": 4183,
+          "pct": 4.34
+        },
+        {
+          "value": "SC",
+          "count": 3558,
+          "pct": 3.69
+        },
+        {
+          "value": "RS",
+          "count": 1944,
+          "pct": 2.02
+        },
+        {
+          "value": "DF",
+          "count": 806,
+          "pct": 0.84
+        },
+        {
+          "value": "BA",
+          "count": 547,
+          "pct": 0.57
+        },
+        {
+          "value": "GO",
+          "count": 448,
+          "pct": 0.46
+        },
+        {
+          "value": "PE",
+          "count": 400,
+          "pct": 0.41
+        },
+        {
+          "value": "MA",
+          "count": 388,
+          "pct": 0.4
+        },
+        {
+          "value": "ES",
+          "count": 310,
+          "pct": 0.32
+        },
+        {
+          "value": "MT",
+          "count": 135,
+          "pct": 0.14
+        },
+        {
+          "value": "CE",
+          "count": 84,
+          "pct": 0.09
+        },
+        {
+          "value": "RN",
+          "count": 49,
+          "pct": 0.05
+        }
+      ],
+      "other_count": 125,
+      "other_pct": 0.13
+    },
+    "Dosage Form": {
+      "n_unique": 4,
+      "top": [
+        {
+          "value": "credit_card",
+          "count": 72818,
+          "pct": 75.48
+        },
+        {
+          "value": "boleto",
+          "count": 19191,
+          "pct": 19.89
+        },
+        {
+          "value": "voucher",
+          "count": 2977,
+          "pct": 3.09
+        },
+        {
+          "value": "debit_card",
+          "count": 1483,
+          "pct": 1.54
+        },
+        {
+          "value": "(Missing)",
+          "count": 1,
+          "pct": 0.0
+        }
+      ],
+      "other_count": 0,
+      "other_pct": 0.0
     }
   },
   "late_delivery": {
-    "n_valid_target": 10324,
+    "n_valid_target": 96470,
     "n_excluded": 0,
-    "n_late": 1186,
-    "n_on_time": 9138,
-    "late_pct": 11.4878,
-    "delay_days_mean": -6.023537388609066,
-    "delay_days_median": 0.0,
-    "delay_days_std": 27.233640041310977,
-    "delay_days_min": -372.0,
-    "delay_days_max": 192.0,
+    "n_late": 6534,
+    "n_on_time": 89936,
+    "late_pct": 6.7731,
+    "delay_days_mean": -11.875888877371203,
+    "delay_days_median": -12.0,
+    "delay_days_std": 10.182105073994864,
+    "delay_days_min": -147.0,
+    "delay_days_max": 188.0,
     "exclusion_reason": "Rows excluded when Scheduled Delivery Date or Delivered to Client Date could not be parsed to a valid datetime (null/placeholder/invalid)."
   },
   "late_rate_by_shipment_mode": [
     {
-      "Shipment Mode": "Ocean",
-      "shipment_count": 371,
-      "late_count": 65,
-      "delay_mean": 5.870619946091645,
-      "delay_median": 0.0,
-      "on_time_count": 306,
-      "late_rate": 0.1752021563342318
+      "Shipment Mode": "VeryLong",
+      "shipment_count": 15342,
+      "late_count": 1598,
+      "delay_mean": -12.804849432929213,
+      "delay_median": -14.0,
+      "on_time_count": 13744,
+      "late_rate": 0.10415851909790119
     },
     {
-      "Shipment Mode": "Truck",
-      "shipment_count": 2830,
-      "late_count": 455,
-      "delay_mean": -9.92190812720848,
-      "delay_median": 0.0,
-      "on_time_count": 2375,
-      "late_rate": 0.1607773851590106
+      "Shipment Mode": "Long",
+      "shipment_count": 25762,
+      "late_count": 1834,
+      "delay_mean": -12.686049219781072,
+      "delay_median": -14.0,
+      "on_time_count": 23928,
+      "late_rate": 0.07119012499029578
     },
     {
-      "Shipment Mode": "Air Charter",
-      "shipment_count": 650,
-      "late_count": 75,
-      "delay_mean": -19.036923076923078,
+      "Shipment Mode": "Medium",
+      "shipment_count": 30235,
+      "late_count": 1941,
+      "delay_mean": -12.275640813626591,
       "delay_median": -13.0,
-      "on_time_count": 575,
-      "late_rate": 0.11538461538461539
+      "on_time_count": 28294,
+      "late_rate": 0.06419712254010253
     },
     {
-      "Shipment Mode": "Air",
-      "shipment_count": 6113,
-      "late_count": 587,
-      "delay_mean": -3.763782103713398,
-      "delay_median": 0.0,
-      "on_time_count": 5526,
-      "late_rate": 0.09602486504171438
+      "Shipment Mode": "Short",
+      "shipment_count": 12900,
+      "late_count": 596,
+      "delay_mean": -10.47232558139535,
+      "delay_median": -10.0,
+      "on_time_count": 12304,
+      "late_rate": 0.0462015503875969
+    },
+    {
+      "Shipment Mode": "Local",
+      "shipment_count": 12231,
+      "late_count": 565,
+      "delay_mean": -9.496361703867223,
+      "delay_median": -9.0,
+      "on_time_count": 11666,
+      "late_rate": 0.0461940969667239
     }
   ],
   "late_rate_by_product_group": [
     {
-      "Product Group": "ARV",
-      "shipment_count": 8550,
-      "late_count": 1073,
-      "delay_mean": -7.244093567251462,
-      "delay_median": 0.0,
-      "on_time_count": 7477,
-      "late_rate": 0.1254970760233918
-    },
-    {
-      "Product Group": "HRDT",
-      "shipment_count": 1728,
-      "late_count": 113,
-      "delay_mean": -0.011574074074074073,
-      "delay_median": 0.0,
-      "on_time_count": 1615,
-      "late_rate": 0.06539351851851852
-    },
-    {
-      "Product Group": "ANTM",
+      "Product Group": "home_comfort_2",
       "shipment_count": 22,
+      "late_count": 3,
+      "delay_mean": -7.909090909090909,
+      "delay_median": -10.5,
+      "on_time_count": 19,
+      "late_rate": 0.13636363636363635
+    },
+    {
+      "Product Group": "furniture_mattress_and_upholstery",
+      "shipment_count": 37,
+      "late_count": 5,
+      "delay_mean": -7.162162162162162,
+      "delay_median": -10.0,
+      "on_time_count": 32,
+      "late_rate": 0.13513513513513514
+    },
+    {
+      "Product Group": "audio",
+      "shipment_count": 344,
+      "late_count": 41,
+      "delay_mean": -10.005813953488373,
+      "delay_median": -11.0,
+      "on_time_count": 303,
+      "late_rate": 0.11918604651162791
+    },
+    {
+      "Product Group": "home_confort",
+      "shipment_count": 371,
+      "late_count": 36,
+      "delay_mean": -9.690026954177897,
+      "delay_median": -11.0,
+      "on_time_count": 335,
+      "late_rate": 0.09703504043126684
+    },
+    {
+      "Product Group": "fashion_underwear_beach",
+      "shipment_count": 117,
+      "late_count": 11,
+      "delay_mean": -10.504273504273504,
+      "delay_median": -11.0,
+      "on_time_count": 106,
+      "late_rate": 0.09401709401709402
+    },
+    {
+      "Product Group": "books_technical",
+      "shipment_count": 253,
+      "late_count": 21,
+      "delay_mean": -11.24901185770751,
+      "delay_median": -12.0,
+      "on_time_count": 232,
+      "late_rate": 0.08300395256916997
+    },
+    {
+      "Product Group": "baby",
+      "shipment_count": 2759,
+      "late_count": 224,
+      "delay_mean": -11.461036607466474,
+      "delay_median": -12.0,
+      "on_time_count": 2535,
+      "late_rate": 0.08118883653497644
+    },
+    {
+      "Product Group": "office_furniture",
+      "shipment_count": 1251,
+      "late_count": 101,
+      "delay_mean": -11.796163069544365,
+      "delay_median": -13.0,
+      "on_time_count": 1150,
+      "late_rate": 0.08073541167066348
+    },
+    {
+      "Product Group": "christmas_supplies",
+      "shipment_count": 124,
+      "late_count": 10,
+      "delay_mean": -12.185483870967742,
+      "delay_median": -13.5,
+      "on_time_count": 114,
+      "late_rate": 0.08064516129032258
+    },
+    {
+      "Product Group": "portateis_cozinha_e_preparadores_de_alimentos",
+      "shipment_count": 13,
+      "late_count": 1,
+      "delay_mean": -9.76923076923077,
+      "delay_median": -10.0,
+      "on_time_count": 12,
+      "late_rate": 0.07692307692307693
+    },
+    {
+      "Product Group": "electronics",
+      "shipment_count": 2503,
+      "late_count": 192,
+      "delay_mean": -10.972832600878945,
+      "delay_median": -12.0,
+      "on_time_count": 2311,
+      "late_rate": 0.07670795045944866
+    },
+    {
+      "Product Group": "furniture_living_room",
+      "shipment_count": 409,
+      "late_count": 31,
+      "delay_mean": -11.577017114914426,
+      "delay_median": -11.0,
+      "on_time_count": 378,
+      "late_rate": 0.07579462102689487
+    },
+    {
+      "Product Group": "musical_instruments",
+      "shipment_count": 607,
+      "late_count": 46,
+      "delay_mean": -11.43492586490939,
+      "delay_median": -13.0,
+      "on_time_count": 561,
+      "late_rate": 0.0757825370675453
+    },
+    {
+      "Product Group": "health_beauty",
+      "shipment_count": 8613,
+      "late_count": 649,
+      "delay_mean": -11.965749448508069,
+      "delay_median": -13.0,
+      "on_time_count": 7964,
+      "late_rate": 0.07535121328224777
+    },
+    {
+      "Product Group": "bed_bath_table",
+      "shipment_count": 9181,
+      "late_count": 686,
+      "delay_mean": -11.350070798387975,
+      "delay_median": -12.0,
+      "on_time_count": 8495,
+      "late_rate": 0.07471952946302146
+    },
+    {
+      "Product Group": "construction_tools_construction",
+      "shipment_count": 724,
+      "late_count": 54,
+      "delay_mean": -11.027624309392266,
+      "delay_median": -11.0,
+      "on_time_count": 670,
+      "late_rate": 0.07458563535911603
+    },
+    {
+      "Product Group": "watches_gifts",
+      "shipment_count": 5476,
+      "late_count": 406,
+      "delay_mean": -11.783235938641344,
+      "delay_median": -13.0,
+      "on_time_count": 5070,
+      "late_rate": 0.07414170927684441
+    },
+    {
+      "Product Group": "auto",
+      "shipment_count": 3793,
+      "late_count": 278,
+      "delay_mean": -11.195623517005009,
+      "delay_median": -12.0,
+      "on_time_count": 3515,
+      "late_rate": 0.07329290798839969
+    },
+    {
+      "Product Group": "dvds_blu_ray",
+      "shipment_count": 55,
+      "late_count": 4,
+      "delay_mean": -13.054545454545455,
+      "delay_median": -14.0,
+      "on_time_count": 51,
+      "late_rate": 0.07272727272727272
+    },
+    {
+      "Product Group": "furniture_decor",
+      "shipment_count": 6188,
+      "late_count": 448,
+      "delay_mean": -12.258080155138979,
+      "delay_median": -12.0,
+      "on_time_count": 5740,
+      "late_rate": 0.07239819004524888
+    },
+    {
+      "Product Group": "unknown",
+      "shipment_count": 1361,
+      "late_count": 98,
+      "delay_mean": -11.330639235855989,
+      "delay_median": -12.0,
+      "on_time_count": 1263,
+      "late_rate": 0.07200587803085966
+    },
+    {
+      "Product Group": "telephony",
+      "shipment_count": 4073,
+      "late_count": 291,
+      "delay_mean": -11.232261232506751,
+      "delay_median": -12.0,
+      "on_time_count": 3782,
+      "late_rate": 0.07144610851951878
+    },
+    {
+      "Product Group": "food",
+      "shipment_count": 436,
+      "late_count": 31,
+      "delay_mean": -9.69954128440367,
+      "delay_median": -10.0,
+      "on_time_count": 405,
+      "late_rate": 0.07110091743119266
+    },
+    {
+      "Product Group": "industry_commerce_and_business",
+      "shipment_count": 229,
+      "late_count": 16,
+      "delay_mean": -12.196506550218341,
+      "delay_median": -12.0,
+      "on_time_count": 213,
+      "late_rate": 0.06986899563318777
+    },
+    {
+      "Product Group": "furniture_bedroom",
+      "shipment_count": 90,
+      "late_count": 6,
+      "delay_mean": -13.333333333333334,
+      "delay_median": -13.0,
+      "on_time_count": 84,
+      "late_rate": 0.06666666666666667
+    },
+    {
+      "Product Group": "garden_tools",
+      "shipment_count": 3400,
+      "late_count": 225,
+      "delay_mean": -11.791176470588235,
+      "delay_median": -13.0,
+      "on_time_count": 3175,
+      "late_rate": 0.0661764705882353
+    },
+    {
+      "Product Group": "stationery",
+      "shipment_count": 2244,
+      "late_count": 148,
+      "delay_mean": -11.997326203208557,
+      "delay_median": -13.0,
+      "on_time_count": 2096,
+      "late_rate": 0.0659536541889483
+    },
+    {
+      "Product Group": "sports_leisure",
+      "shipment_count": 7492,
+      "late_count": 494,
+      "delay_mean": -11.835157501334757,
+      "delay_median": -13.0,
+      "on_time_count": 6998,
+      "late_rate": 0.06593699946609717
+    },
+    {
+      "Product Group": "perfumery",
+      "shipment_count": 3070,
+      "late_count": 202,
+      "delay_mean": -12.325407166123778,
+      "delay_median": -13.0,
+      "on_time_count": 2868,
+      "late_rate": 0.06579804560260587
+    },
+    {
+      "Product Group": "construction_tools_lights",
+      "shipment_count": 230,
+      "late_count": 15,
+      "delay_mean": -11.3,
+      "delay_median": -12.0,
+      "on_time_count": 215,
+      "late_rate": 0.06521739130434782
+    },
+    {
+      "Product Group": "books_general_interest",
+      "shipment_count": 492,
+      "late_count": 32,
+      "delay_mean": -11.892276422764228,
+      "delay_median": -13.0,
+      "on_time_count": 460,
+      "late_rate": 0.06504065040650407
+    },
+    {
+      "Product Group": "cine_photo",
+      "shipment_count": 62,
+      "late_count": 4,
+      "delay_mean": -10.67741935483871,
+      "delay_median": -10.5,
+      "on_time_count": 58,
+      "late_rate": 0.06451612903225806
+    },
+    {
+      "Product Group": "toys",
+      "shipment_count": 3787,
+      "late_count": 243,
+      "delay_mean": -12.06152627409559,
+      "delay_median": -13.0,
+      "on_time_count": 3544,
+      "late_rate": 0.06416688671771852
+    },
+    {
+      "Product Group": "computers_accessories",
+      "shipment_count": 6511,
+      "late_count": 417,
+      "delay_mean": -12.358316694824143,
+      "delay_median": -13.0,
+      "on_time_count": 6094,
+      "late_rate": 0.06404546152664721
+    },
+    {
+      "Product Group": "art",
+      "shipment_count": 193,
+      "late_count": 12,
+      "delay_mean": -12.875647668393782,
+      "delay_median": -12.0,
+      "on_time_count": 181,
+      "late_rate": 0.06217616580310881
+    },
+    {
+      "Product Group": "costruction_tools_tools",
+      "shipment_count": 97,
+      "late_count": 6,
+      "delay_mean": -12.175257731958762,
+      "delay_median": -13.0,
+      "on_time_count": 91,
+      "late_rate": 0.061855670103092786
+    },
+    {
+      "Product Group": "home_appliances_2",
+      "shipment_count": 227,
+      "late_count": 14,
+      "delay_mean": -12.33920704845815,
+      "delay_median": -13.0,
+      "on_time_count": 213,
+      "late_rate": 0.06167400881057269
+    },
+    {
+      "Product Group": "home_construction",
+      "shipment_count": 473,
+      "late_count": 29,
+      "delay_mean": -11.304439746300211,
+      "delay_median": -12.0,
+      "on_time_count": 444,
+      "late_rate": 0.0613107822410148
+    },
+    {
+      "Product Group": "consoles_games",
+      "shipment_count": 1013,
+      "late_count": 62,
+      "delay_mean": -11.498519249753208,
+      "delay_median": -12.0,
+      "on_time_count": 951,
+      "late_rate": 0.06120434353405726
+    },
+    {
+      "Product Group": "cool_stuff",
+      "shipment_count": 3530,
+      "late_count": 209,
+      "delay_mean": -12.385269121813032,
+      "delay_median": -13.0,
+      "on_time_count": 3321,
+      "late_rate": 0.05920679886685552
+    },
+    {
+      "Product Group": "fashio_female_clothing",
+      "shipment_count": 35,
+      "late_count": 2,
+      "delay_mean": -12.028571428571428,
+      "delay_median": -11.0,
+      "on_time_count": 33,
+      "late_rate": 0.05714285714285714
+    },
+    {
+      "Product Group": "computers",
+      "shipment_count": 177,
+      "late_count": 10,
+      "delay_mean": -11.581920903954803,
+      "delay_median": -13.0,
+      "on_time_count": 167,
+      "late_rate": 0.05649717514124294
+    },
+    {
+      "Product Group": "fashion_bags_accessories",
+      "shipment_count": 1809,
+      "late_count": 101,
+      "delay_mean": -13.170812603648425,
+      "delay_median": -13.0,
+      "on_time_count": 1708,
+      "late_rate": 0.05583195135433942
+    },
+    {
+      "Product Group": "small_appliances_home_oven_and_coffee",
+      "shipment_count": 72,
+      "late_count": 4,
+      "delay_mean": -11.51388888888889,
+      "delay_median": -12.0,
+      "on_time_count": 68,
+      "late_rate": 0.05555555555555555
+    },
+    {
+      "Product Group": "housewares",
+      "shipment_count": 5680,
+      "late_count": 308,
+      "delay_mean": -12.033978873239437,
+      "delay_median": -12.0,
+      "on_time_count": 5372,
+      "late_rate": 0.054225352112676053
+    },
+    {
+      "Product Group": "music",
+      "shipment_count": 37,
+      "late_count": 2,
+      "delay_mean": -13.972972972972974,
+      "delay_median": -14.0,
+      "on_time_count": 35,
+      "late_rate": 0.05405405405405406
+    },
+    {
+      "Product Group": "costruction_tools_garden",
+      "shipment_count": 186,
+      "late_count": 10,
+      "delay_mean": -13.446236559139784,
+      "delay_median": -13.0,
+      "on_time_count": 176,
+      "late_rate": 0.053763440860215055
+    },
+    {
+      "Product Group": "drinks",
+      "shipment_count": 282,
+      "late_count": 15,
+      "delay_mean": -10.879432624113475,
+      "delay_median": -11.0,
+      "on_time_count": 267,
+      "late_rate": 0.05319148936170213
+    },
+    {
+      "Product Group": "tablets_printing_image",
+      "shipment_count": 78,
+      "late_count": 4,
+      "delay_mean": -13.166666666666666,
+      "delay_median": -14.0,
+      "on_time_count": 74,
+      "late_rate": 0.05128205128205128
+    },
+    {
+      "Product Group": "pet_shop",
+      "shipment_count": 1681,
+      "late_count": 84,
+      "delay_mean": -12.37120761451517,
+      "delay_median": -13.0,
+      "on_time_count": 1597,
+      "late_rate": 0.049970255800118976
+    },
+    {
+      "Product Group": "small_appliances",
+      "shipment_count": 606,
+      "late_count": 29,
+      "delay_mean": -13.83993399339934,
+      "delay_median": -14.0,
+      "on_time_count": 577,
+      "late_rate": 0.04785478547854786
+    },
+    {
+      "Product Group": "fixed_telephony",
+      "shipment_count": 212,
+      "late_count": 10,
+      "delay_mean": -14.90566037735849,
+      "delay_median": -14.0,
+      "on_time_count": 202,
+      "late_rate": 0.04716981132075472
+    },
+    {
+      "Product Group": "fashion_male_clothing",
+      "shipment_count": 106,
+      "late_count": 5,
+      "delay_mean": -13.443396226415095,
+      "delay_median": -14.5,
+      "on_time_count": 101,
+      "late_rate": 0.04716981132075472
+    },
+    {
+      "Product Group": "fashion_shoes",
+      "shipment_count": 234,
+      "late_count": 11,
+      "delay_mean": -14.307692307692308,
+      "delay_median": -14.0,
+      "on_time_count": 223,
+      "late_rate": 0.04700854700854701
+    },
+    {
+      "Product Group": "kitchen_dining_laundry_garden_furniture",
+      "shipment_count": 237,
+      "late_count": 11,
+      "delay_mean": -12.240506329113924,
+      "delay_median": -11.0,
+      "on_time_count": 226,
+      "late_rate": 0.046413502109704644
+    },
+    {
+      "Product Group": "arts_and_craftmanship",
+      "shipment_count": 22,
+      "late_count": 1,
+      "delay_mean": -6.7727272727272725,
+      "delay_median": -6.0,
+      "on_time_count": 21,
+      "late_rate": 0.045454545454545456
+    },
+    {
+      "Product Group": "home_appliances",
+      "shipment_count": 747,
+      "late_count": 33,
+      "delay_mean": -12.607764390896921,
+      "delay_median": -12.0,
+      "on_time_count": 714,
+      "late_rate": 0.04417670682730924
+    },
+    {
+      "Product Group": "signaling_and_security",
+      "shipment_count": 137,
+      "late_count": 6,
+      "delay_mean": -11.635036496350365,
+      "delay_median": -11.0,
+      "on_time_count": 131,
+      "late_rate": 0.043795620437956206
+    },
+    {
+      "Product Group": "luggage_accessories",
+      "shipment_count": 1013,
+      "late_count": 43,
+      "delay_mean": -12.600197433366239,
+      "delay_median": -13.0,
+      "on_time_count": 970,
+      "late_rate": 0.04244817374136229
+    },
+    {
+      "Product Group": "market_place",
+      "shipment_count": 268,
+      "late_count": 11,
+      "delay_mean": -13.832089552238806,
+      "delay_median": -12.0,
+      "on_time_count": 257,
+      "late_rate": 0.041044776119402986
+    },
+    {
+      "Product Group": "air_conditioning",
+      "shipment_count": 245,
+      "late_count": 10,
+      "delay_mean": -13.910204081632653,
+      "delay_median": -14.0,
+      "on_time_count": 235,
+      "late_rate": 0.04081632653061224
+    },
+    {
+      "Product Group": "books_imported",
+      "shipment_count": 50,
+      "late_count": 2,
+      "delay_mean": -11.22,
+      "delay_median": -11.0,
+      "on_time_count": 48,
+      "late_rate": 0.04
+    },
+    {
+      "Product Group": "fashion_sport",
+      "shipment_count": 25,
+      "late_count": 1,
+      "delay_mean": -12.08,
+      "delay_median": -14.0,
+      "on_time_count": 24,
+      "late_rate": 0.04
+    },
+    {
+      "Product Group": "agro_industry_and_commerce",
+      "shipment_count": 177,
+      "late_count": 7,
+      "delay_mean": -11.259887005649718,
+      "delay_median": -10.0,
+      "on_time_count": 170,
+      "late_rate": 0.03954802259887006
+    },
+    {
+      "Product Group": "food_drink",
+      "shipment_count": 219,
+      "late_count": 8,
+      "delay_mean": -11.365296803652969,
+      "delay_median": -12.0,
+      "on_time_count": 211,
+      "late_rate": 0.0365296803652968
+    },
+    {
+      "Product Group": "flowers",
+      "shipment_count": 29,
+      "late_count": 1,
+      "delay_mean": -11.827586206896552,
+      "delay_median": -11.0,
+      "on_time_count": 28,
+      "late_rate": 0.034482758620689655
+    },
+    {
+      "Product Group": "construction_tools_safety",
+      "shipment_count": 154,
+      "late_count": 4,
+      "delay_mean": -12.967532467532468,
+      "delay_median": -13.0,
+      "on_time_count": 150,
+      "late_rate": 0.025974025974025976
+    },
+    {
+      "Product Group": "party_supplies",
+      "shipment_count": 37,
       "late_count": 0,
-      "delay_mean": -2.772727272727273,
-      "delay_median": 0.0,
-      "on_time_count": 22,
+      "delay_mean": -14.891891891891891,
+      "delay_median": -14.0,
+      "on_time_count": 37,
       "late_rate": 0.0
     },
     {
-      "Product Group": "ACT",
-      "shipment_count": 16,
+      "Product Group": "diapers_and_hygiene",
+      "shipment_count": 25,
       "late_count": 0,
-      "delay_mean": -10.5625,
-      "delay_median": 0.0,
-      "on_time_count": 16,
+      "delay_mean": -12.44,
+      "delay_median": -9.0,
+      "on_time_count": 25,
       "late_rate": 0.0
     },
     {
-      "Product Group": "MRDT",
-      "shipment_count": 8,
+      "Product Group": "la_cuisine",
+      "shipment_count": 13,
       "late_count": 0,
-      "delay_mean": 0.0,
-      "delay_median": 0.0,
-      "on_time_count": 8,
+      "delay_mean": -16.384615384615383,
+      "delay_median": -16.0,
+      "on_time_count": 13,
+      "late_rate": 0.0
+    },
+    {
+      "Product Group": "cds_dvds_musicals",
+      "shipment_count": 12,
+      "late_count": 0,
+      "delay_mean": -15.833333333333334,
+      "delay_median": -15.0,
+      "on_time_count": 12,
+      "late_rate": 0.0
+    },
+    {
+      "Product Group": "pc_gamer",
+      "shipment_count": 7,
+      "late_count": 0,
+      "delay_mean": -10.714285714285714,
+      "delay_median": -13.0,
+      "on_time_count": 7,
+      "late_rate": 0.0
+    },
+    {
+      "Product Group": "fashion_childrens_clothes",
+      "shipment_count": 6,
+      "late_count": 0,
+      "delay_mean": -15.333333333333334,
+      "delay_median": -17.0,
+      "on_time_count": 6,
+      "late_rate": 0.0
+    },
+    {
+      "Product Group": "security_and_services",
+      "shipment_count": 2,
+      "late_count": 0,
+      "delay_mean": -17.0,
+      "delay_median": -17.0,
+      "on_time_count": 2,
       "late_rate": 0.0
     }
   ],
@@ -1185,14 +1801,14 @@
     "lead_time_all_30": true,
     "arithmetic": {
       "formula": "Expected Closing = Opening + Stock_In - Stock_Out",
-      "n_match": 7181,
-      "n_mismatch": 3143,
-      "match_pct": 69.5564
+      "n_match": 94469,
+      "n_mismatch": 2001,
+      "match_pct": 97.9258
     },
     "flag_shortage_alignment": {
-      "n_aligned": 10324,
-      "n_misaligned": 0,
-      "aligned_pct": 100.0,
+      "n_aligned": 42844,
+      "n_misaligned": 53626,
+      "aligned_pct": 44.4117,
       "rule": "flag==1 iff shortage_quantity > 0"
     },
     "constant_columns": {
@@ -1229,22 +1845,22 @@
     ]
   },
   "figure_paths": {
-    "missingness": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\01_missingness.png",
-    "numerical_distributions": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\02_numerical_distributions.png",
-    "numerical_boxplots": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\03_numerical_boxplots.png",
-    "shipment_mode": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\05_shipment_mode_distribution.png",
-    "top_vendors": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\06_top_vendors.png",
-    "countries": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\07_country_distribution.png",
-    "late_target": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\08_late_target_distribution.png",
-    "delay_hist": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\09_delay_distribution.png",
-    "late_by_vendor": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\10_late_rate_by_vendor.png",
-    "late_by_mode": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\11_late_rate_by_shipment_mode.png",
-    "late_by_country": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\12_late_rate_by_country.png",
-    "inventory_dist": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\13_inventory_distributions.png",
-    "inventory_consistency": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\14_inventory_consistency.png",
-    "date_coverage": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\15_date_coverage.png",
-    "correlation_pearson": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\04_correlation_heatmap_pearson.png",
-    "correlation_spearman": "D:\\PROJECTS\\mlp\\reports\\figures\\eda\\04b_correlation_heatmap_spearman.png"
+    "missingness": "/workspace/reports/figures/eda/01_missingness.png",
+    "numerical_distributions": "/workspace/reports/figures/eda/02_numerical_distributions.png",
+    "numerical_boxplots": "/workspace/reports/figures/eda/03_numerical_boxplots.png",
+    "shipment_mode": "/workspace/reports/figures/eda/05_shipment_mode_distribution.png",
+    "top_vendors": "/workspace/reports/figures/eda/06_top_vendors.png",
+    "countries": "/workspace/reports/figures/eda/07_country_distribution.png",
+    "late_target": "/workspace/reports/figures/eda/08_late_target_distribution.png",
+    "delay_hist": "/workspace/reports/figures/eda/09_delay_distribution.png",
+    "late_by_vendor": "/workspace/reports/figures/eda/10_late_rate_by_vendor.png",
+    "late_by_mode": "/workspace/reports/figures/eda/11_late_rate_by_shipment_mode.png",
+    "late_by_country": "/workspace/reports/figures/eda/12_late_rate_by_country.png",
+    "inventory_dist": "/workspace/reports/figures/eda/13_inventory_distributions.png",
+    "inventory_consistency": "/workspace/reports/figures/eda/14_inventory_consistency.png",
+    "date_coverage": "/workspace/reports/figures/eda/15_date_coverage.png",
+    "correlation_pearson": "/workspace/reports/figures/eda/04_correlation_heatmap_pearson.png",
+    "correlation_spearman": "/workspace/reports/figures/eda/04b_correlation_heatmap_spearman.png"
   },
   "correlations_note": "Pearson and Spearman matrices saved under reports/figures/eda/"
 }
